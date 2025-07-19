@@ -125,6 +125,41 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Geography Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-secondary mb-4">География присутствия</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Мы работаем во всех крупных городах России, обеспечивая быстрый и качественный сервис по утилизации ИТ-оборудования
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 max-w-6xl mx-auto">
+            {["Москва", "СПб", "Новосибирск", "Екатеринбург", "Казань", "Н.Новгород", 
+              "Челябинск", "Самара", "Омск", "Ростов-на-Дону", "Уфа", "Красноярск",
+              "Воронеж", "Пермь", "Волгоград", "Краснодар", "Саратов", "Тюмень"].map((city, index) => (
+              <div key={index} className="text-center p-3 bg-professional-lightGray rounded-lg hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer">
+                <Icon name="MapPin" size={16} className="mx-auto mb-2" />
+                <div className="text-sm font-medium">{city}</div>
+              </div>
+            ))}
+          </div>
+          
+          <div className="text-center mt-12">
+            <div className="bg-blue-50 rounded-lg p-6 max-w-4xl mx-auto">
+              <Icon name="Phone" size={24} className="text-primary mx-auto mb-4" />
+              <h3 className="text-xl font-bold text-secondary mb-2">Единый федеральный номер</h3>
+              <p className="text-gray-600 mb-4">
+                Один номер для всех регионов России. Мы автоматически переадресуем ваш звонок в ближайший офис.
+              </p>
+              <div className="text-2xl font-bold text-primary">8 (800) 123-45-67</div>
+              <div className="text-sm text-gray-500 mt-1">Звонок бесплатный из любого региона</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Services Section */}
       <section id="services" className="py-20 bg-professional-lightGray">
         <div className="container mx-auto px-4">
@@ -286,9 +321,14 @@ const Index = () => {
                 За это время мы помогли более чем 500 компаниям экологически безопасно утилизировать 
                 свое устаревшее оборудование.
               </p>
-              <p className="text-gray-600 mb-8">
+              <p className="text-gray-600 mb-6">
                 Наша команда сертифицированных специалистов обеспечивает полное соответствие 
                 процесса утилизации всем требованиям российского и международного законодательства.
+              </p>
+              <p className="text-gray-600 mb-8">
+                <strong>Мы работаем во всех крупных городах России:</strong> Москва, Санкт-Петербург, 
+                Новосибирск, Екатеринбург, Казань, Нижний Новгород, Челябинск, Самара, Омск, Ростов-на-Дону, 
+                Уфа, Красноярск, Воронеж, Пермь, Волгоград и других региональных центрах.
               </p>
               
               <div className="grid grid-cols-2 gap-6">
@@ -301,8 +341,8 @@ const Index = () => {
                   <div className="text-gray-600">Единиц утилизировано</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">8</div>
-                  <div className="text-gray-600">Лет опыта</div>
+                  <div className="text-3xl font-bold text-primary mb-2">30+</div>
+                  <div className="text-gray-600">Городов России</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold text-primary mb-2">24/7</div>
@@ -499,8 +539,9 @@ const Index = () => {
                 <div className="flex items-center">
                   <Icon name="MapPin" size={20} className="text-primary mr-4" />
                   <div>
-                    <div className="font-semibold">Адрес</div>
+                    <div className="font-semibold">Головной офис</div>
                     <div className="text-gray-600">г. Москва, ул. Примерная, д. 123</div>
+                    <div className="text-sm text-primary mt-1">Филиалы в 30+ городах России</div>
                   </div>
                 </div>
                 <div className="flex items-center">
