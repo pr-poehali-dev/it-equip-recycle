@@ -28,18 +28,19 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				primary: {
-					DEFAULT: '#8B4513',
+					DEFAULT: '#6F4E37',
 					foreground: '#FFFFFF'
 				},
 				secondary: {
-					DEFAULT: '#4A2C2A',
-					foreground: '#FDF6E3'
+					DEFAULT: '#2F1B14',
+					foreground: '#F5E6D3'
 				},
 				professional: {
-					chocolate: '#8B4513',
-					darkChocolate: '#4A2C2A',
-					lightChocolate: '#D2B48C',
-					cream: '#FDF6E3'
+					chocolate: '#6F4E37',
+					darkChocolate: '#2F1B14',
+					deepChocolate: '#1A0F0A',
+					lightChocolate: '#A0522D',
+					cream: '#F5E6D3'
 				},
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',

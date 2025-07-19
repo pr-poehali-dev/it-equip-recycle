@@ -52,22 +52,22 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-professional-deepChocolate">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+      <header className="bg-professional-darkChocolate border-b border-professional-chocolate sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <Icon name="Recycle" size={32} className="text-primary" />
-              <span className="text-2xl font-bold text-secondary">ИТ-Утилизация</span>
+              <span className="text-2xl font-bold text-professional-cream">ИТ-Утилизация</span>
             </div>
             <nav className="hidden md:flex items-center space-x-8">
-              <a href="#services" className="text-secondary hover:text-primary transition-colors">Услуги</a>
-              <a href="#prices" className="text-secondary hover:text-primary transition-colors">Цены</a>
-              <a href="#about" className="text-secondary hover:text-primary transition-colors">О нас</a>
-              <a href="#licenses" className="text-secondary hover:text-primary transition-colors">Лицензии</a>
-              <a href="#faq" className="text-secondary hover:text-primary transition-colors">Вопросы</a>
-              <a href="#contacts" className="text-secondary hover:text-primary transition-colors">Контакты</a>
+              <a href="#services" className="text-professional-cream hover:text-primary transition-colors">Услуги</a>
+              <a href="#prices" className="text-professional-cream hover:text-primary transition-colors">Цены</a>
+              <a href="#about" className="text-professional-cream hover:text-primary transition-colors">О нас</a>
+              <a href="#licenses" className="text-professional-cream hover:text-primary transition-colors">Лицензии</a>
+              <a href="#faq" className="text-professional-cream hover:text-primary transition-colors">Вопросы</a>
+              <a href="#contacts" className="text-professional-cream hover:text-primary transition-colors">Контакты</a>
             </nav>
             <Button className="bg-primary hover:bg-primary/90">
               <Icon name="Phone" size={16} className="mr-2" />
@@ -78,7 +78,7 @@ const Index = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-professional-chocolate to-amber-900 text-white py-20">
+      <section className="bg-gradient-to-r from-professional-darkChocolate to-professional-chocolate text-white py-20">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-5xl font-bold mb-6">
             Профессиональная утилизация <br />
@@ -126,10 +126,10 @@ const Index = () => {
       </section>
 
       {/* Geography Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-professional-darkChocolate">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-secondary mb-4">География присутствия</h2>
+            <h2 className="text-3xl font-bold text-professional-cream mb-4">География присутствия</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Мы работаем во всех крупных городах России, обеспечивая быстрый и качественный сервис по утилизации ИТ-оборудования
             </p>
@@ -307,7 +307,7 @@ const Index = () => {
       <section id="services" className="py-20 bg-professional-cream">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-secondary mb-4">Наши услуги</h2>
+            <h2 className="text-4xl font-bold text-professional-cream mb-4">Наши услуги</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Комплексное решение по утилизации любого ИТ-оборудования с соблюдением экологических норм
             </p>
@@ -338,8 +338,8 @@ const Index = () => {
       <section id="prices" className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-secondary mb-4">Прозрачное ценообразование</h2>
-            <p className="text-gray-600">Стоимость зависит от типа и количества оборудования</p>
+            <h2 className="text-4xl font-bold text-professional-cream mb-4">Прозрачное ценообразование</h2>
+            <p className="text-professional-cream/80">Стоимость зависит от типа и количества оборудования</p>
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -458,17 +458,17 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-4xl font-bold text-secondary mb-6">О компании</h2>
-              <p className="text-gray-600 mb-6">
+              <h2 className="text-4xl font-bold text-professional-cream mb-6">О компании</h2>
+              <p className="text-professional-cream/80 mb-6">
                 Мы специализируемся на профессиональной утилизации ИТ-оборудования с 2015 года. 
                 За это время мы помогли более чем 500 компаниям экологически безопасно утилизировать 
                 свое устаревшее оборудование.
               </p>
-              <p className="text-gray-600 mb-6">
+              <p className="text-professional-cream/80 mb-6">
                 Наша команда сертифицированных специалистов обеспечивает полное соответствие 
                 процесса утилизации всем требованиям российского и международного законодательства.
               </p>
-              <p className="text-gray-600 mb-8">
+              <p className="text-professional-cream/80 mb-8">
                 <strong>Мы работаем во всех крупных городах России:</strong> Москва, Санкт-Петербург, 
                 Новосибирск, Екатеринбург, Казань, Нижний Новгород, Челябинск, Самара, Омск, Ростов-на-Дону, 
                 Уфа, Красноярск, Воронеж, Пермь, Волгоград и других региональных центрах.
@@ -494,35 +494,35 @@ const Index = () => {
               </div>
             </div>
             
-            <div className="bg-white p-8 rounded-lg shadow-lg">
-              <h3 className="text-2xl font-bold text-secondary mb-6">Наши преимущества</h3>
+            <div className="bg-professional-darkChocolate border border-professional-chocolate p-8 rounded-lg shadow-lg">
+              <h3 className="text-2xl font-bold text-professional-cream mb-6">Наши преимущества</h3>
               <div className="space-y-4">
                 <div className="flex items-start">
                   <Icon name="Award" size={20} className="text-primary mr-3 mt-1" />
                   <div>
                     <h4 className="font-semibold mb-1">Сертифицированные процессы</h4>
-                    <p className="text-gray-600 text-sm">Соответствие ISO 14001 и российским стандартам</p>
+                    <p className="text-professional-cream/70 text-sm">Соответствие ISO 14001 и российским стандартам</p>
                   </div>
                 </div>
                 <div className="flex items-start">
                   <Icon name="Clock" size={20} className="text-primary mr-3 mt-1" />
                   <div>
                     <h4 className="font-semibold mb-1">Быстрое реагирование</h4>
-                    <p className="text-gray-600 text-sm">Выезд в течение 24 часов после заявки</p>
+                    <p className="text-professional-cream/70 text-sm">Выезд в течение 24 часов после заявки</p>
                   </div>
                 </div>
                 <div className="flex items-start">
                   <Icon name="Shield" size={20} className="text-primary mr-3 mt-1" />
                   <div>
                     <h4 className="font-semibold mb-1">Полная ответственность</h4>
-                    <p className="text-gray-600 text-sm">Страхование всех процессов утилизации</p>
+                    <p className="text-professional-cream/70 text-sm">Страхование всех процессов утилизации</p>
                   </div>
                 </div>
                 <div className="flex items-start">
                   <Icon name="Leaf" size={20} className="text-primary mr-3 mt-1" />
                   <div>
                     <h4 className="font-semibold mb-1">Экологичность</h4>
-                    <p className="text-gray-600 text-sm">100% переработка материалов без вреда природе</p>
+                    <p className="text-professional-cream/70 text-sm">100% переработка материалов без вреда природе</p>
                   </div>
                 </div>
               </div>
@@ -535,8 +535,8 @@ const Index = () => {
       <section id="licenses" className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-secondary mb-4">Лицензии и документы</h2>
-            <p className="text-gray-600">Полное соответствие требованиям законодательства</p>
+            <h2 className="text-4xl font-bold text-professional-cream mb-4">Лицензии и документы</h2>
+            <p className="text-professional-cream/80">Полное соответствие требованиям законодательства</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -632,18 +632,18 @@ const Index = () => {
       <section id="faq" className="py-20 bg-professional-cream">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-secondary mb-4">Часто задаваемые вопросы</h2>
-            <p className="text-gray-600">Ответы на популярные вопросы об утилизации ИТ-оборудования</p>
+            <h2 className="text-4xl font-bold text-professional-cream mb-4">Часто задаваемые вопросы</h2>
+            <p className="text-professional-cream/80">Ответы на популярные вопросы об утилизации ИТ-оборудования</p>
           </div>
           
           <div className="max-w-3xl mx-auto">
             <Accordion type="single" collapsible className="space-y-4">
               {faqItems.map((item, index) => (
                 <AccordionItem key={index} value={`item-${index}`} className="bg-white rounded-lg px-6">
-                  <AccordionTrigger className="text-left font-semibold text-secondary hover:text-primary">
+                  <AccordionTrigger className="text-left font-semibold text-professional-cream hover:text-primary">
                     {item.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-gray-600 pt-4">
+                  <AccordionContent className="text-professional-cream/80 pt-4">
                     {item.answer}
                   </AccordionContent>
                 </AccordionItem>
@@ -657,33 +657,33 @@ const Index = () => {
       <section id="contacts" className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-secondary mb-4">Свяжитесь с нами</h2>
-            <p className="text-gray-600">Готовы ответить на ваши вопросы и принять заявку</p>
+            <h2 className="text-4xl font-bold text-professional-cream mb-4">Свяжитесь с нами</h2>
+            <p className="text-professional-cream/80">Готовы ответить на ваши вопросы и принять заявку</p>
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
             <div>
-              <h3 className="text-2xl font-bold text-secondary mb-6">Контактная информация</h3>
+              <h3 className="text-2xl font-bold text-professional-cream mb-6">Контактная информация</h3>
               <div className="space-y-6">
                 <div className="flex items-center">
                   <Icon name="Phone" size={20} className="text-primary mr-4" />
                   <div>
                     <div className="font-semibold">Телефон</div>
-                    <div className="text-gray-600">+7 (495) 123-45-67</div>
+                    <div className="text-professional-cream">+7 (495) 123-45-67</div>
                   </div>
                 </div>
                 <div className="flex items-center">
                   <Icon name="Mail" size={20} className="text-primary mr-4" />
                   <div>
                     <div className="font-semibold">Email</div>
-                    <div className="text-gray-600">info@it-utilization.ru</div>
+                    <div className="text-professional-cream">info@it-utilization.ru</div>
                   </div>
                 </div>
                 <div className="flex items-center">
                   <Icon name="MapPin" size={20} className="text-primary mr-4" />
                   <div>
                     <div className="font-semibold">Головной офис</div>
-                    <div className="text-gray-600">г. Москва, ул. Примерная, д. 123</div>
+                    <div className="text-professional-cream">г. Москва, ул. Примерная, д. 123</div>
                     <div className="text-sm text-primary mt-1">Филиалы в 30+ городах России</div>
                   </div>
                 </div>
@@ -691,14 +691,14 @@ const Index = () => {
                   <Icon name="Clock" size={20} className="text-primary mr-4" />
                   <div>
                     <div className="font-semibold">Режим работы</div>
-                    <div className="text-gray-600">Пн-Пт: 9:00-18:00, Сб-Вс: выезд по заявкам</div>
+                    <div className="text-professional-cream">Пн-Пт: 9:00-18:00, Сб-Вс: выезд по заявкам</div>
                   </div>
                 </div>
               </div>
               
               <div className="bg-professional-cream p-6 rounded-lg mt-8">
-                <h4 className="font-bold text-secondary mb-4">Экстренная утилизация 24/7</h4>
-                <p className="text-gray-600 mb-4">
+                <h4 className="font-bold text-professional-cream mb-4">Экстренная утилизация 24/7</h4>
+                <p className="text-professional-cream/80 mb-4">
                   Для срочных случаев мы предоставляем услугу экстренной утилизации в любое время суток.
                 </p>
                 <Button className="bg-red-600 hover:bg-red-700">
