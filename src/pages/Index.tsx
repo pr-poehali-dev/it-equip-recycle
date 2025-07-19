@@ -78,13 +78,13 @@ const Index = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-professional-blue to-blue-600 text-white py-20">
+      <section className="bg-gradient-to-r from-professional-chocolate to-amber-900 text-white py-20">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-5xl font-bold mb-6">
             Профессиональная утилизация <br />
             ИТ-оборудования
           </h1>
-          <p className="text-xl mb-8 max-w-2xl mx-auto text-blue-100">
+          <p className="text-xl mb-8 max-w-2xl mx-auto text-amber-100">
             Экологически безопасная утилизация компьютерной техники с полным пакетом документов. 
             Соответствие всем требованиям законодательства.
           </p>
@@ -105,21 +105,21 @@ const Index = () => {
                 <Icon name="Shield" size={24} />
               </div>
               <h3 className="font-semibold mb-2">Лицензии и сертификаты</h3>
-              <p className="text-blue-100 text-sm">Полное соответствие экологическим требованиям</p>
+              <p className="text-amber-100 text-sm">Полное соответствие экологическим требованиям</p>
             </div>
             <div className="text-center">
               <div className="bg-white/10 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
                 <Icon name="Truck" size={24} />
               </div>
               <h3 className="font-semibold mb-2">Бесплатный вывоз</h3>
-              <p className="text-blue-100 text-sm">От 10 единиц техники по Москве и области</p>
+              <p className="text-amber-100 text-sm">От 10 единиц техники по Москве и области</p>
             </div>
             <div className="text-center">
               <div className="bg-white/10 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
                 <Icon name="FileCheck" size={24} />
               </div>
               <h3 className="font-semibold mb-2">Документооборот</h3>
-              <p className="text-blue-100 text-sm">Акты, справки и сертификаты об утилизации</p>
+              <p className="text-amber-100 text-sm">Акты, справки и сертификаты об утилизации</p>
             </div>
           </div>
         </div>
@@ -147,7 +147,7 @@ const Index = () => {
           </div>
           
           <div className="text-center mt-12">
-            <div className="bg-blue-50 rounded-lg p-6 max-w-4xl mx-auto">
+            <div className="bg-amber-50 rounded-lg p-6 max-w-4xl mx-auto">
               <Icon name="Phone" size={24} className="text-primary mx-auto mb-4" />
               <h3 className="text-xl font-bold text-secondary mb-2">Единый федеральный номер</h3>
               <p className="text-gray-600 mb-4">
@@ -161,7 +161,7 @@ const Index = () => {
       </section>
 
       {/* Calculator Section */}
-      <section id="calculator" className="py-20 bg-gradient-to-br from-blue-50 to-indigo-100">
+      <section id="calculator" className="py-20 bg-gradient-to-br from-amber-50 to-orange-100">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-secondary mb-4">Быстрая оценка стоимости</h2>
@@ -177,7 +177,7 @@ const Index = () => {
                   <Icon name="Calculator" size={24} className="mr-2" />
                   Калькулятор стоимости утилизации
                 </CardTitle>
-                <CardDescription className="text-blue-100">
+                <CardDescription className="text-amber-100">
                   Заполните форму и прикрепите спецификацию оборудования для точного расчета
                 </CardDescription>
               </CardHeader>
@@ -304,7 +304,7 @@ const Index = () => {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-20 bg-professional-lightGray">
+      <section id="services" className="py-20 bg-professional-cream">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-secondary mb-4">Наши услуги</h2>
@@ -454,7 +454,7 @@ const Index = () => {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 bg-professional-lightGray">
+      <section id="about" className="py-20 bg-professional-cream">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -629,7 +629,7 @@ const Index = () => {
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="py-20 bg-professional-lightGray">
+      <section id="faq" className="py-20 bg-professional-cream">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-secondary mb-4">Часто задаваемые вопросы</h2>
@@ -696,7 +696,7 @@ const Index = () => {
                 </div>
               </div>
               
-              <div className="bg-professional-lightGray p-6 rounded-lg mt-8">
+              <div className="bg-professional-cream p-6 rounded-lg mt-8">
                 <h4 className="font-bold text-secondary mb-4">Экстренная утилизация 24/7</h4>
                 <p className="text-gray-600 mb-4">
                   Для срочных случаев мы предоставляем услугу экстренной утилизации в любое время суток.
