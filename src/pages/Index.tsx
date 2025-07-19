@@ -89,7 +89,7 @@ const Index = () => {
             Соответствие всем требованиям законодательства.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button size="lg" className="bg-white text-primary hover:bg-gray-100">
+            <Button size="lg" className="bg-white text-primary hover:bg-gray-100" onClick={() => document.getElementById('calculator')?.scrollIntoView({behavior: 'smooth'})}>
               <Icon name="Calculator" size={20} className="mr-2" />
               Рассчитать стоимость
             </Button>
@@ -156,6 +156,149 @@ const Index = () => {
               <div className="text-2xl font-bold text-primary">8 (800) 123-45-67</div>
               <div className="text-sm text-gray-500 mt-1">Звонок бесплатный из любого региона</div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Calculator Section */}
+      <section id="calculator" className="py-20 bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-secondary mb-4">Быстрая оценка стоимости</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Прикрепите спецификацию оборудования и получите предварительную стоимость утилизации в течение 30 минут
+            </p>
+          </div>
+          
+          <div className="max-w-4xl mx-auto">
+            <Card className="shadow-xl">
+              <CardHeader className="bg-primary text-white text-center">
+                <CardTitle className="text-2xl flex items-center justify-center">
+                  <Icon name="Calculator" size={24} className="mr-2" />
+                  Калькулятор стоимости утилизации
+                </CardTitle>
+                <CardDescription className="text-blue-100">
+                  Заполните форму и прикрепите спецификацию оборудования для точного расчета
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="p-8">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  <div className="space-y-6">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="text-sm font-medium text-gray-700 mb-2 block">Контактное лицо *</label>
+                        <input 
+                          type="text" 
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" 
+                          placeholder="Ваше имя"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-gray-700 mb-2 block">Компания</label>
+                        <input 
+                          type="text" 
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" 
+                          placeholder="Название компании"
+                        />
+                      </div>
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="text-sm font-medium text-gray-700 mb-2 block">Телефон *</label>
+                        <input 
+                          type="tel" 
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" 
+                          placeholder="+7 (___) ___-__-__"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-gray-700 mb-2 block">Email *</label>
+                        <input 
+                          type="email" 
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" 
+                          placeholder="your@email.com"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="text-sm font-medium text-gray-700 mb-2 block">Город</label>
+                      <select className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                        <option value="">Выберите город</option>
+                        <option>Москва</option>
+                        <option>Санкт-Петербург</option>
+                        <option>Новосибирск</option>
+                        <option>Екатеринбург</option>
+                        <option>Казань</option>
+                        <option>Нижний Новгород</option>
+                        <option>Другой город</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-6">
+                    <div>
+                      <label className="text-sm font-medium text-gray-700 mb-2 block">
+                        📎 Спецификация оборудования *
+                        <span className="text-xs text-gray-500 block mt-1">Прикрепите файл с описанием оборудования</span>
+                      </label>
+                      <div className="border-2 border-dashed border-primary/30 rounded-lg p-6 text-center hover:border-primary transition-all duration-300 cursor-pointer bg-blue-50/50">
+                        <Icon name="Upload" size={32} className="text-primary mx-auto mb-3" />
+                        <p className="text-sm text-gray-700 mb-2">
+                          <span className="text-primary font-semibold">Выберите файл</span> или перетащите сюда
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          Excel (.xlsx, .xls), Word (.docx, .doc), PDF • до 10 МБ
+                        </p>
+                        <input type="file" className="hidden" accept=".xlsx,.xls,.docx,.doc,.pdf" />
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="text-sm font-medium text-gray-700 mb-2 block">Дополнительная информация</label>
+                      <textarea 
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary h-24 resize-none" 
+                        placeholder="Укажите срочность, особые требования, вопросы по утилизации..."
+                      />
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="mt-8 border-t pt-6">
+                  <div className="flex items-start space-x-3 mb-6">
+                    <input type="checkbox" id="calc-agreement" className="mt-1 rounded border-gray-300" required />
+                    <label htmlFor="calc-agreement" className="text-sm text-gray-600">
+                      Согласен с <a href="#" className="text-primary hover:underline">политикой конфиденциальности</a> и 
+                      обработкой персональных данных. Подтверждаю, что указанная информация достоверна.
+                    </label>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <Button className="w-full" size="lg">
+                      <Icon name="Calculator" size={20} className="mr-2" />
+                      Получить расчет стоимости
+                    </Button>
+                    <Button variant="outline" className="w-full" size="lg">
+                      <Icon name="Phone" size={20} className="mr-2" />
+                      Обсудить по телефону
+                    </Button>
+                  </div>
+                  
+                  <div className="mt-4 text-center">
+                    <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+                      <div className="flex items-center justify-center text-green-700">
+                        <Icon name="Clock" size={16} className="mr-2" />
+                        <span className="text-sm font-medium">Ответим в течение 30 минут в рабочее время</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
@@ -624,15 +767,36 @@ const Index = () => {
                   />
                 </div>
                 <div>
+                  <label className="text-sm font-medium text-gray-700 mb-2 block">
+                    Спецификация оборудования
+                    <span className="text-xs text-gray-500 ml-1">(Excel, Word, PDF)</span>
+                  </label>
+                  <div className="border-2 border-dashed border-gray-300 rounded-md p-6 text-center hover:border-primary transition-colors cursor-pointer">
+                    <Icon name="Upload" size={24} className="text-gray-400 mx-auto mb-2" />
+                    <p className="text-sm text-gray-600 mb-1">
+                      <span className="text-primary font-medium">Нажмите для выбора файла</span> или перетащите сюда
+                    </p>
+                    <p className="text-xs text-gray-400">Поддерживаются: .xlsx, .xls, .docx, .doc, .pdf (макс. 10 МБ)</p>
+                    <input type="file" className="hidden" accept=".xlsx,.xls,.docx,.doc,.pdf" />
+                  </div>
+                </div>
+                <div>
                   <label className="text-sm font-medium text-gray-700 mb-2 block">Комментарий</label>
                   <textarea 
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary h-20 resize-none" 
-                    placeholder="Дополнительная информация..."
+                    placeholder="Дополнительная информация, особые требования к утилизации..."
                   />
                 </div>
+                <div className="flex items-center space-x-2 text-sm text-gray-600">
+                  <input type="checkbox" id="agreement" className="rounded border-gray-300" />
+                  <label htmlFor="agreement">
+                    Согласен с <a href="#" className="text-primary hover:underline">политикой конфиденциальности</a> и 
+                    <a href="#" className="text-primary hover:underline ml-1">условиями обработки данных</a>
+                  </label>
+                </div>
                 <Button className="w-full">
-                  <Icon name="Send" size={16} className="mr-2" />
-                  Отправить заявку
+                  <Icon name="Calculator" size={16} className="mr-2" />
+                  Получить расчет стоимости
                 </Button>
               </CardContent>
             </Card>
