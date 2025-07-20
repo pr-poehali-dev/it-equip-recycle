@@ -846,7 +846,7 @@ const Index = () => {
             <div>
               <h4 className="font-semibold mb-4">Контакты</h4>
               <ul className="space-y-2 text-sm text-gray-300">
-                <li>+7 (495) 123-45-67</li>
+                <li>+7 (985) 550-06-73</li>
                 <li>commerce@rusutil-1.ru</li>
                 <li>г. Москва, ул. Примерная, д. 123</li>
                 <li>Пн-Пт: 10:00-18:00</li>
