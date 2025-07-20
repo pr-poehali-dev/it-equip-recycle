@@ -542,20 +542,46 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 max-w-7xl mx-auto">
             {[
-              "X5 Retail Group", "МТС", "Альфа-Банк", "Мегафон", "ВТБ Банк", "АО Тандер",
-              "Газпром", "РЖД", "Роснефть", "СБЕР", "Сургутнефтегаз", "Сетевая Компания",
-              "Аптечная Сеть 36.6", "Ozon", "Яндекс", "Ростелеком", "Сегежа", "МВидео",
-              "Честный Знак", "Лента", "АК Барс Банк", "АО «СТРОЙГАЗМОНТАЖ»", "ООО СИБУР", "ООО \"МАРС\"",
-              "Красное-Белое", "АО Селектел", "Авито"
+              { name: "X5 Retail Group", logo: "/img/b231d753-2fc7-4305-9358-89df2bc39a84.jpg" },
+              { name: "МТС", logo: "/img/b231d753-2fc7-4305-9358-89df2bc39a84.jpg" },
+              { name: "Альфа-Банк", logo: "/img/b231d753-2fc7-4305-9358-89df2bc39a84.jpg" },
+              { name: "Мегафон", logo: "/img/b231d753-2fc7-4305-9358-89df2bc39a84.jpg" },
+              { name: "ВТБ Банк", logo: "/img/b231d753-2fc7-4305-9358-89df2bc39a84.jpg" },
+              { name: "АО Тандер", logo: "/img/b231d753-2fc7-4305-9358-89df2bc39a84.jpg" },
+              { name: "Газпром", logo: "/img/572c9757-2e0e-41d5-b3bd-28a8ea910381.jpg" },
+              { name: "РЖД", logo: "/img/572c9757-2e0e-41d5-b3bd-28a8ea910381.jpg" },
+              { name: "Роснефть", logo: "/img/572c9757-2e0e-41d5-b3bd-28a8ea910381.jpg" },
+              { name: "СБЕР", logo: "/img/572c9757-2e0e-41d5-b3bd-28a8ea910381.jpg" },
+              { name: "Сургутнефтегаз", logo: "/img/572c9757-2e0e-41d5-b3bd-28a8ea910381.jpg" },
+              { name: "Сетевая Компания", logo: "/img/572c9757-2e0e-41d5-b3bd-28a8ea910381.jpg" },
+              { name: "Аптечная Сеть 36.6", logo: "/img/4eca8804-2b53-4da6-802d-68efb626e140.jpg" },
+              { name: "Ozon", logo: "/img/e63b4b07-6247-4d5b-bd92-92b100c9e578.jpg" },
+              { name: "Яндекс", logo: "/img/e63b4b07-6247-4d5b-bd92-92b100c9e578.jpg" },
+              { name: "Ростелеком", logo: "/img/e63b4b07-6247-4d5b-bd92-92b100c9e578.jpg" },
+              { name: "Сегежа", logo: "/img/4eca8804-2b53-4da6-802d-68efb626e140.jpg" },
+              { name: "МВидео", logo: "/img/e63b4b07-6247-4d5b-bd92-92b100c9e578.jpg" },
+              { name: "Честный Знак", logo: "/img/4eca8804-2b53-4da6-802d-68efb626e140.jpg" },
+              { name: "Лента", logo: "/img/4eca8804-2b53-4da6-802d-68efb626e140.jpg" },
+              { name: "АК Барс Банк", logo: "/img/4eca8804-2b53-4da6-802d-68efb626e140.jpg" },
+              { name: "АО «СТРОЙГАЗМОНТАЖ»", logo: "/img/4eca8804-2b53-4da6-802d-68efb626e140.jpg" },
+              { name: "ООО СИБУР", logo: "/img/4eca8804-2b53-4da6-802d-68efb626e140.jpg" },
+              { name: "ООО \"МАРС\"", logo: "/img/4eca8804-2b53-4da6-802d-68efb626e140.jpg" },
+              { name: "Красное-Белое", logo: "/img/4eca8804-2b53-4da6-802d-68efb626e140.jpg" },
+              { name: "АО Селектел", logo: "/img/4eca8804-2b53-4da6-802d-68efb626e140.jpg" },
+              { name: "Авито", logo: "/img/e63b4b07-6247-4d5b-bd92-92b100c9e578.jpg" }
             ].map((client, index) => (
-              <div key={index} className="flex items-center justify-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300 hover:shadow-md">
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-primary/20 rounded-full flex items-center justify-center mx-auto mb-2">
-                    <Icon name="Building2" size={24} className="text-primary" />
+              <div key={index} className="flex items-center justify-center p-4 bg-white border border-gray-200 rounded-lg hover:shadow-lg transition-all duration-300 hover:scale-105 group">
+                <div className="text-center w-full">
+                  <div className="w-20 h-20 mx-auto mb-3 rounded-lg overflow-hidden bg-gray-50 flex items-center justify-center">
+                    <img 
+                      src={client.logo} 
+                      alt={`${client.name} логотип`}
+                      className="w-full h-full object-contain filter group-hover:brightness-110 transition-all duration-300"
+                    />
                   </div>
-                  <div className="text-xs font-medium text-gray-700 leading-tight">{client}</div>
+                  <div className="text-xs font-medium text-gray-600 leading-tight px-1">{client.name}</div>
                 </div>
               </div>
             ))}
