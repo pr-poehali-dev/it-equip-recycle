@@ -698,9 +698,9 @@ const Index = () => {
               
               <div className="bg-red-600 p-6 rounded-lg mt-8">
                 <h4 className="font-bold text-white mb-4">Экстренная утилизация 24/7</h4>
-                <p className="text-gray-100 mb-4">
-                  Для срочных случаев мы предоставляем услугу экстренной утилизации в любое время суток.
-                </p>
+                <p className="text-gray-100 mb-4">Для срочных случаев мы предоставляем услугу экстренной утилизации в любое время суток. 
+
+* Только Москва + Московская область, г. Казань.</p>
                 <Button className="bg-white text-red-600 hover:bg-gray-100">
                   <Icon name="AlertCircle" size={16} className="mr-2" />
                   Экстренный вызов
