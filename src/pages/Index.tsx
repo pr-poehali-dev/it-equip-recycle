@@ -548,9 +548,9 @@ const Index = () => {
               { name: "МТС", logo: "https://cdn.poehali.dev/files/c1dff300-8b45-475d-92b8-f17a50a172bf.png" },
               { name: "Альфа-Банк", logo: "https://cdn.poehali.dev/files/80317c5a-d49d-4df6-9bc8-cd40c8083959.jpg" },
               { name: "Мегафон", logo: "https://cdn.poehali.dev/files/72a8f653-8a39-464a-b090-83e4a4fd5cf1.jpg" },
-              { name: "ВТБ Банк", logo: "/img/0eb78255-136a-43aa-9f49-38b891133b85.jpg" },
-              { name: "АО Тандер", logo: "/img/692f1fb0-be4e-43ae-bc57-05ac9efb5cb1.jpg" },
-              { name: "Газпром", logo: "/img/6eeb8816-5ae9-4a65-8e7d-eb27fd92bd23.jpg" },
+              { name: "ВТБ Банк", logo: "https://cdn.poehali.dev/files/1f60c8b1-fb45-41e1-9478-2ca7b9ed7fb3.jpg" },
+              { name: "АО Тандер", logo: "https://cdn.poehali.dev/files/07f9ba71-02cc-4f46-8908-f8b21ece5fa2.png" },
+              { name: "Газпром", logo: "https://cdn.poehali.dev/files/832f6188-3e36-4516-88d6-d6594dc539b7.jpg" },
               { name: "РЖД", logo: "/img/7a629961-3ff5-4fe8-8bfc-ce733dd0df80.jpg" },
               { name: "Роснефть", logo: "/img/e7b803cc-54ad-4561-ba34-0327ca373142.jpg" },
               { name: "СБЕР", logo: "/img/3e3e3628-173d-4f9f-af4f-0d551afce11a.jpg" },
@@ -564,12 +564,12 @@ const Index = () => {
               { name: "МВидео", logo: "https://cdn.poehali.dev/files/f0325b45-c5cc-4006-a3c8-66f6e2917a3b.png" },
               { name: "Честный Знак", logo: "/img/981f5b7f-2a51-4720-9f28-aa79ef4ce18d.jpg" },
               { name: "Лента", logo: "/img/462cfe12-874c-426c-8e07-50773d2965bb.jpg" },
-              { name: "АК Барс Банк", logo: "/img/c88430cf-6bbc-484e-963a-9d2817f97c38.jpg" },
+              { name: "АК Барс Банк", logo: "https://cdn.poehali.dev/files/e3bb5c6c-40ed-4f43-9576-8b3d7c13e0dd.png" },
               { name: "АО «СТРОЙГАЗМОНТАЖ»", logo: "/img/981f5b7f-2a51-4720-9f28-aa79ef4ce18d.jpg" },
               { name: "ООО СИБУР", logo: "https://cdn.poehali.dev/files/74564939-0d84-437d-b786-af177e84f945.jpg" },
               { name: "ООО \"МАРС\"", logo: "/img/981f5b7f-2a51-4720-9f28-aa79ef4ce18d.jpg" },
               { name: "Красное-Белое", logo: "https://cdn.poehali.dev/files/621f0488-9829-467b-9fac-e3b6c0ee20e0.jpg" },
-              { name: "АО Селектел", logo: "/img/981f5b7f-2a51-4720-9f28-aa79ef4ce18d.jpg" },
+              { name: "АО Селектел", logo: "https://cdn.poehali.dev/files/a22ae5d4-8399-4de1-aaad-1edac937a295.jpg" },
               { name: "Авито", logo: "/img/896702a0-63fe-4be2-b730-0e179965107d.jpg" }
             ].map((client, index) => (
               <div key={index} className="flex items-center justify-center p-6 bg-white border border-gray-200 rounded-lg hover:shadow-lg transition-all duration-300 hover:scale-105 group">
