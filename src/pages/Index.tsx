@@ -153,7 +153,7 @@ const Index = () => {
               <p className="text-gray-600 mb-4">
                 Один номер для всех регионов России. Мы автоматически переадресуем ваш звонок в ближайший офис.
               </p>
-              <div className="text-2xl font-bold text-primary">8 (985) 550-06-73</div>
+              <div className="text-2xl font-bold text-primary">8 (901) 862-81-81</div>
               <div className="text-sm text-gray-500 mt-1">Звонок бесплатный из любого региона</div>
             </div>
           </div>
