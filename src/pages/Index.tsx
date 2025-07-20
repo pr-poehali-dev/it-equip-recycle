@@ -554,11 +554,11 @@ const Index = () => {
               { name: "РЖД", logo: "https://cdn.poehali.dev/files/7bd20793-9a6b-4c17-bc33-0c2c085b25c4.jpg" },
               { name: "Роснефть", logo: "https://cdn.poehali.dev/files/db70b93b-a8f4-4094-94a5-e803774e3c95.png" },
               { name: "СБЕР", logo: "https://cdn.poehali.dev/files/9d250503-5454-4120-9ac2-b95b40552a5a.jpg" },
-              { name: "Сургутнефтегаз", logo: "/img/394577a2-0405-49a3-a0d2-d767e511ba2e.jpg" },
+              { name: "Сургутнефтегаз", logo: "https://cdn.poehali.dev/files/d4878f97-ab8e-4d50-a2cc-685ff5e98324.png" },
               { name: "Сетевая Компания", logo: "https://cdn.poehali.dev/files/05956c81-7d92-440c-95e5-1f23442dd970.jpg" },
               { name: "Аптечная Сеть 36.6", logo: "https://cdn.poehali.dev/files/70bf1c92-2e30-4b15-9e96-d58e3b135474.jpg" },
               { name: "Ozon", logo: "https://cdn.poehali.dev/files/16104369-f255-460e-ab4c-56e091f1eb94.png" },
-              { name: "Яндекс", logo: "/img/7bb6cc3b-7136-49c7-b6fe-129e3c9cbb3a.jpg" },
+              { name: "Яндекс", logo: "https://cdn.poehali.dev/files/11b91071-ec0c-4501-876d-f1b81cd5bd5f.jpg" },
               { name: "Ростелеком", logo: "https://cdn.poehali.dev/files/0bf6ea4c-a844-4b7b-ac5c-bb51ec55590f.png" },
               { name: "Сегежа", logo: "https://cdn.poehali.dev/files/93f1e2a8-a309-457f-80d2-c0e06cd65f42.png" },
               { name: "МВидео", logo: "https://cdn.poehali.dev/files/f0325b45-c5cc-4006-a3c8-66f6e2917a3b.png" },
@@ -570,7 +570,8 @@ const Index = () => {
               { name: "ООО \"МАРС\"", logo: "https://cdn.poehali.dev/files/13488320-f16b-4768-87f6-d512709b9e37.png" },
               { name: "Красное-Белое", logo: "https://cdn.poehali.dev/files/621f0488-9829-467b-9fac-e3b6c0ee20e0.jpg" },
               { name: "АО Селектел", logo: "https://cdn.poehali.dev/files/a22ae5d4-8399-4de1-aaad-1edac937a295.jpg" },
-              { name: "Авито", logo: "https://cdn.poehali.dev/files/1aa2eeb2-6e1d-4810-b06a-bf4d1fce4e96.png" }
+              { name: "Авито", logo: "https://cdn.poehali.dev/files/1aa2eeb2-6e1d-4810-b06a-bf4d1fce4e96.png" },
+              { name: "ТБанк", logo: "https://cdn.poehali.dev/files/e547fe52-d2b5-4a93-a328-6bc767ac0455.jpg" }
             ].map((client, index) => (
               <div key={index} className="flex items-center justify-center p-6 bg-white border border-gray-200 rounded-lg hover:shadow-lg transition-all duration-300 hover:scale-105 group">
                 <div className="w-24 h-24 rounded-lg overflow-hidden bg-gray-50 flex items-center justify-center">
