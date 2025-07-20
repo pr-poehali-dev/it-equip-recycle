@@ -544,10 +544,10 @@ const Index = () => {
           
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 max-w-7xl mx-auto">
             {[
-              { name: "X5 Retail Group", logo: "/img/981f5b7f-2a51-4720-9f28-aa79ef4ce18d.jpg" },
+              { name: "X5 Retail Group", logo: "https://cdn.poehali.dev/files/057ea779-59d6-4be1-a312-e2355d930e8c.jpg" },
               { name: "МТС", logo: "https://cdn.poehali.dev/files/c1dff300-8b45-475d-92b8-f17a50a172bf.png" },
-              { name: "Альфа-Банк", logo: "/img/c88430cf-6bbc-484e-963a-9d2817f97c38.jpg" },
-              { name: "Мегафон", logo: "/img/725ee372-bba2-4eb3-ad57-8527ed53dd70.jpg" },
+              { name: "Альфа-Банк", logo: "https://cdn.poehali.dev/files/80317c5a-d49d-4df6-9bc8-cd40c8083959.jpg" },
+              { name: "Мегафон", logo: "https://cdn.poehali.dev/files/72a8f653-8a39-464a-b090-83e4a4fd5cf1.jpg" },
               { name: "ВТБ Банк", logo: "/img/0eb78255-136a-43aa-9f49-38b891133b85.jpg" },
               { name: "АО Тандер", logo: "/img/692f1fb0-be4e-43ae-bc57-05ac9efb5cb1.jpg" },
               { name: "Газпром", logo: "/img/6eeb8816-5ae9-4a65-8e7d-eb27fd92bd23.jpg" },
@@ -561,12 +561,12 @@ const Index = () => {
               { name: "Яндекс", logo: "/img/7bb6cc3b-7136-49c7-b6fe-129e3c9cbb3a.jpg" },
               { name: "Ростелеком", logo: "https://cdn.poehali.dev/files/0bf6ea4c-a844-4b7b-ac5c-bb51ec55590f.png" },
               { name: "Сегежа", logo: "/img/981f5b7f-2a51-4720-9f28-aa79ef4ce18d.jpg" },
-              { name: "МВидео", logo: "/img/311dc170-aa8a-47e9-ae9a-40dfc2906150.jpg" },
+              { name: "МВидео", logo: "https://cdn.poehali.dev/files/f0325b45-c5cc-4006-a3c8-66f6e2917a3b.png" },
               { name: "Честный Знак", logo: "/img/981f5b7f-2a51-4720-9f28-aa79ef4ce18d.jpg" },
               { name: "Лента", logo: "/img/462cfe12-874c-426c-8e07-50773d2965bb.jpg" },
               { name: "АК Барс Банк", logo: "/img/c88430cf-6bbc-484e-963a-9d2817f97c38.jpg" },
               { name: "АО «СТРОЙГАЗМОНТАЖ»", logo: "/img/981f5b7f-2a51-4720-9f28-aa79ef4ce18d.jpg" },
-              { name: "ООО СИБУР", logo: "/img/cf791694-79f3-47dd-89b9-2263da301948.jpg" },
+              { name: "ООО СИБУР", logo: "https://cdn.poehali.dev/files/74564939-0d84-437d-b786-af177e84f945.jpg" },
               { name: "ООО \"МАРС\"", logo: "/img/981f5b7f-2a51-4720-9f28-aa79ef4ce18d.jpg" },
               { name: "Красное-Белое", logo: "https://cdn.poehali.dev/files/621f0488-9829-467b-9fac-e3b6c0ee20e0.jpg" },
               { name: "АО Селектел", logo: "/img/981f5b7f-2a51-4720-9f28-aa79ef4ce18d.jpg" },
