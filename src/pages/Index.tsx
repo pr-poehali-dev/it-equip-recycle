@@ -112,7 +112,7 @@ const Index = () => {
                 <Icon name="Truck" size={24} />
               </div>
               <h3 className="font-semibold mb-2">Бесплатный вывоз</h3>
-              <p className="text-amber-100 text-sm">От 10 единиц техники по Москве и области</p>
+              <p className="text-amber-100 text-sm">От 10 единиц техники по Москве и Московской области</p>
             </div>
             <div className="text-center">
               <div className="bg-white/10 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
@@ -136,7 +136,7 @@ const Index = () => {
           </div>
           
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 max-w-6xl mx-auto bg-gray-200">
-            {["Москва", "СПб", "Новосибирск", "Екатеринбург", "Казань", "Н.Новгород", 
+            {["Москва и Московская область", "Санкт-Петербург и Ленинградская область", "Новосибирск", "Екатеринбург", "Казань", "Н.Новгород", 
               "Челябинск", "Самара", "Омск", "Ростов-на-Дону", "Уфа", "Красноярск",
               "Воронеж", "Пермь", "Волгоград", "Краснодар", "Саратов", "Тюмень"].map((city, index) => (
               <div key={index} className="text-center p-3 bg-professional-lightGray rounded-lg hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer">
@@ -229,8 +229,8 @@ const Index = () => {
                       <label className="text-sm font-medium text-gray-700 mb-2 block">Город</label>
                       <select className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
                         <option value="">Выберите город</option>
-                        <option>Москва</option>
-                        <option>Санкт-Петербург</option>
+                        <option>Москва и Московская область</option>
+                        <option>Санкт-Петербург и Ленинградская область</option>
                         <option>Новосибирск</option>
                         <option>Екатеринбург</option>
                         <option>Казань</option>
@@ -469,7 +469,7 @@ const Index = () => {
                 процесса утилизации всем требованиям российского и международного законодательства.
               </p>
               <p className="text-gray-600 mb-8">
-                <strong>Мы работаем во всех крупных городах России:</strong> Москва, Санкт-Петербург, 
+                <strong>Мы работаем во всех крупных городах России:</strong> Москва и Московская область, Санкт-Петербург и Ленинградская область, 
                 Новосибирск, Екатеринбург, Казань, Нижний Новгород, Челябинск, Самара, Омск, Ростов-на-Дону, 
                 Уфа, Красноярск, Воронеж, Пермь, Волгоград и других региональных центрах.
               </p>
@@ -700,7 +700,7 @@ const Index = () => {
                 <h4 className="font-bold text-white mb-4">Экстренная утилизация 24/7 *</h4>
                 <p className="text-gray-100 mb-4">Для срочных случаев мы предоставляем услугу экстренной утилизации в любое время суток. 
 
-* Только Москва + Московская область, г. Казань.</p>
+* Только Москва и Московская область, г. Казань.</p>
                 <Button className="bg-white text-red-600 hover:bg-gray-100">
                   <Icon name="AlertCircle" size={16} className="mr-2" />
                   Экстренный вызов
@@ -848,7 +848,7 @@ const Index = () => {
               <ul className="space-y-2 text-sm text-gray-300">
                 <li>+7 (901) 862-81-81</li>
                 <li>commerce@rusutil-1.ru</li>
-                <li>г. Москва, ул. Лефортовский вал, дом 16А, этаж 1, помещение I, комната 21Б, офис 28</li>
+                <li>г. Москва и Московская область, ул. Лефортовский вал, дом 16А, этаж 1, помещение I, комната 21Б, офис 28</li>
                 <li>Пн-Пт: 10:00-18:00</li>
               </ul>
             </div>
