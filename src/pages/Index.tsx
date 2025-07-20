@@ -65,6 +65,7 @@ const Index = () => {
               <a href="#services" className="text-white hover:text-primary transition-colors">Услуги</a>
               <a href="#prices" className="text-white hover:text-primary transition-colors">Цены</a>
               <a href="#about" className="text-white hover:text-primary transition-colors">О нас</a>
+              <a href="#clients" className="text-white hover:text-primary transition-colors">Клиенты</a>
               <a href="#licenses" className="text-white hover:text-primary transition-colors">Лицензии</a>
               <a href="#faq" className="text-white hover:text-primary transition-colors">Вопросы</a>
               <a href="#contacts" className="text-white hover:text-primary transition-colors">Контакты</a>
@@ -524,6 +525,58 @@ const Index = () => {
                     <h4 className="font-semibold mb-1">Экологичность</h4>
                     <p className="text-gray-600 text-sm">100% переработка материалов без вреда природе</p>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Clients Section */}
+      <section id="clients" className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-800 mb-4">Наши клиенты</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Нам доверяют ведущие российские компании из различных отраслей экономики
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 max-w-6xl mx-auto">
+            {[
+              "X5 Retail Group", "МТС", "Альфа-Банк", "Мегафон", "ВТБ Банк", "АО Тандер",
+              "Газпром", "РЖД", "Роснефть", "СБЕР", "Сургутнефтегаз", "Сетевая Компания",
+              "Аптечная Сеть 36.6", "Ozon", "Яндекс", "Ростелеком", "Сегежа", "МВидео",
+              "Честный Знак", "Лента", "АК Барс Банк", "АО «СТРОЙГАЗМОНТАЖ»", "ООО СИБУР", "ООО \"МАРС\"",
+              "Красное-Белое", "АО Селектел", "Авито"
+            ].map((client, index) => (
+              <div key={index} className="flex items-center justify-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300 hover:shadow-md">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-primary/20 rounded-full flex items-center justify-center mx-auto mb-2">
+                    <Icon name="Building2" size={24} className="text-primary" />
+                  </div>
+                  <div className="text-xs font-medium text-gray-700 leading-tight">{client}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          <div className="text-center mt-12">
+            <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-lg p-8 max-w-4xl mx-auto">
+              <Icon name="Award" size={32} className="text-primary mx-auto mb-4" />
+              <h3 className="text-2xl font-bold text-gray-800 mb-4">Почему нас выбирают</h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+                <div>
+                  <h4 className="font-semibold text-gray-800 mb-2">🏆 Проверенное качество</h4>
+                  <p className="text-gray-600 text-sm">Работаем с крупнейшими компаниями России с 2015 года</p>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-gray-800 mb-2">📋 Полный комплаенс</h4>
+                  <p className="text-gray-600 text-sm">Соответствие всем требованиям корпоративного документооборота</p>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-gray-800 mb-2">🔒 Конфиденциальность</h4>
+                  <p className="text-gray-600 text-sm">Гарантированное уничтожение данных с носителей информации</p>
                 </div>
               </div>
             </div>
