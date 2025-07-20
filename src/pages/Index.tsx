@@ -663,31 +663,31 @@ const Index = () => {
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
             <div>
-              <h3 className="text-2xl font-bold text-white mb-6">Контактная информация</h3>
+              <h3 className="text-2xl font-bold mb-6 text-[#ffffff]">Контактная информация</h3>
               <div className="space-y-6">
-                <div className="flex items-center">
+                <div className="flex items-center bg-gray-800">
                   <Icon name="Phone" size={20} className="text-primary mr-4" />
                   <div>
-                    <div className="font-semibold">Телефон</div>
+                    <div className="font-semibold bg-gray-800">Телефон</div>
                     <div className="text-white">+7 (901) 862-81-81</div>
                   </div>
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-center bg-slate-800">
                   <Icon name="Mail" size={20} className="text-primary mr-4" />
                   <div>
                     <div className="font-semibold">Email</div>
                     <div className="text-white">commerce@rusutil-1.ru</div>
                   </div>
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-center bg-gray-800">
                   <Icon name="MapPin" size={20} className="text-primary mr-4" />
                   <div>
-                    <div className="font-semibold">Головной офис</div>
-                    <div className="text-white">г. Москва, ул. Лефортовский вал, дом 16А, этаж 1, помещение I, комната 21Б, офис 28</div>
+                    <div className="font-semibold bg-slate-800">Головной офис</div>
+                    <div className="text-white bg-gray-800">г. Москва, ул. Лефортовский вал, дом 16А, этаж 1, помещение I, комната 21Б, офис 28</div>
                     <div className="text-sm text-primary mt-1">Филиалы в 30+ городах России</div>
                   </div>
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-center bg-gray-800">
                   <Icon name="Clock" size={20} className="text-primary mr-4" />
                   <div>
                     <div className="font-semibold">Режим работы</div>
