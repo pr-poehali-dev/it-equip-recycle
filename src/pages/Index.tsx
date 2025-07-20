@@ -545,7 +545,7 @@ const Index = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 max-w-7xl mx-auto">
             {[
               { name: "X5 Retail Group", logo: "/img/981f5b7f-2a51-4720-9f28-aa79ef4ce18d.jpg" },
-              { name: "МТС", logo: "/img/ddb82d20-45ca-4e28-a196-0de37c6f963a.jpg" },
+              { name: "МТС", logo: "https://cdn.poehali.dev/files/c1dff300-8b45-475d-92b8-f17a50a172bf.png" },
               { name: "Альфа-Банк", logo: "/img/c88430cf-6bbc-484e-963a-9d2817f97c38.jpg" },
               { name: "Мегафон", logo: "/img/725ee372-bba2-4eb3-ad57-8527ed53dd70.jpg" },
               { name: "ВТБ Банк", logo: "/img/0eb78255-136a-43aa-9f49-38b891133b85.jpg" },
@@ -555,11 +555,11 @@ const Index = () => {
               { name: "Роснефть", logo: "/img/e7b803cc-54ad-4561-ba34-0327ca373142.jpg" },
               { name: "СБЕР", logo: "/img/3e3e3628-173d-4f9f-af4f-0d551afce11a.jpg" },
               { name: "Сургутнефтегаз", logo: "/img/394577a2-0405-49a3-a0d2-d767e511ba2e.jpg" },
-              { name: "Сетевая Компания", logo: "/img/981f5b7f-2a51-4720-9f28-aa79ef4ce18d.jpg" },
-              { name: "Аптечная Сеть 36.6", logo: "/img/14a01fe3-5b5d-4bcb-9e6c-62d6c62d2751.jpg" },
+              { name: "Сетевая Компания", logo: "https://cdn.poehali.dev/files/05956c81-7d92-440c-95e5-1f23442dd970.jpg" },
+              { name: "Аптечная Сеть 36.6", logo: "https://cdn.poehali.dev/files/70bf1c92-2e30-4b15-9e96-d58e3b135474.jpg" },
               { name: "Ozon", logo: "/img/dd17a692-dea8-408e-9999-fe5a3d96182e.jpg" },
               { name: "Яндекс", logo: "/img/7bb6cc3b-7136-49c7-b6fe-129e3c9cbb3a.jpg" },
-              { name: "Ростелеком", logo: "/img/e31da5ee-4cca-40ee-8e5f-1de1f1c976ea.jpg" },
+              { name: "Ростелеком", logo: "https://cdn.poehali.dev/files/0bf6ea4c-a844-4b7b-ac5c-bb51ec55590f.png" },
               { name: "Сегежа", logo: "/img/981f5b7f-2a51-4720-9f28-aa79ef4ce18d.jpg" },
               { name: "МВидео", logo: "/img/311dc170-aa8a-47e9-ae9a-40dfc2906150.jpg" },
               { name: "Честный Знак", logo: "/img/981f5b7f-2a51-4720-9f28-aa79ef4ce18d.jpg" },
@@ -568,7 +568,7 @@ const Index = () => {
               { name: "АО «СТРОЙГАЗМОНТАЖ»", logo: "/img/981f5b7f-2a51-4720-9f28-aa79ef4ce18d.jpg" },
               { name: "ООО СИБУР", logo: "/img/cf791694-79f3-47dd-89b9-2263da301948.jpg" },
               { name: "ООО \"МАРС\"", logo: "/img/981f5b7f-2a51-4720-9f28-aa79ef4ce18d.jpg" },
-              { name: "Красное-Белое", logo: "/img/981f5b7f-2a51-4720-9f28-aa79ef4ce18d.jpg" },
+              { name: "Красное-Белое", logo: "https://cdn.poehali.dev/files/621f0488-9829-467b-9fac-e3b6c0ee20e0.jpg" },
               { name: "АО Селектел", logo: "/img/981f5b7f-2a51-4720-9f28-aa79ef4ce18d.jpg" },
               { name: "Авито", logo: "/img/896702a0-63fe-4be2-b730-0e179965107d.jpg" }
             ].map((client, index) => (
