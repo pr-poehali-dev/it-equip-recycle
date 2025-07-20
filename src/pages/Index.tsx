@@ -544,44 +544,41 @@ const Index = () => {
           
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 max-w-7xl mx-auto">
             {[
-              { name: "X5 Retail Group", logo: "/img/b231d753-2fc7-4305-9358-89df2bc39a84.jpg" },
-              { name: "МТС", logo: "/img/b231d753-2fc7-4305-9358-89df2bc39a84.jpg" },
-              { name: "Альфа-Банк", logo: "/img/b231d753-2fc7-4305-9358-89df2bc39a84.jpg" },
-              { name: "Мегафон", logo: "/img/b231d753-2fc7-4305-9358-89df2bc39a84.jpg" },
-              { name: "ВТБ Банк", logo: "/img/b231d753-2fc7-4305-9358-89df2bc39a84.jpg" },
-              { name: "АО Тандер", logo: "/img/b231d753-2fc7-4305-9358-89df2bc39a84.jpg" },
-              { name: "Газпром", logo: "/img/572c9757-2e0e-41d5-b3bd-28a8ea910381.jpg" },
-              { name: "РЖД", logo: "/img/572c9757-2e0e-41d5-b3bd-28a8ea910381.jpg" },
-              { name: "Роснефть", logo: "/img/572c9757-2e0e-41d5-b3bd-28a8ea910381.jpg" },
-              { name: "СБЕР", logo: "/img/572c9757-2e0e-41d5-b3bd-28a8ea910381.jpg" },
-              { name: "Сургутнефтегаз", logo: "/img/572c9757-2e0e-41d5-b3bd-28a8ea910381.jpg" },
-              { name: "Сетевая Компания", logo: "/img/572c9757-2e0e-41d5-b3bd-28a8ea910381.jpg" },
-              { name: "Аптечная Сеть 36.6", logo: "/img/4eca8804-2b53-4da6-802d-68efb626e140.jpg" },
-              { name: "Ozon", logo: "/img/e63b4b07-6247-4d5b-bd92-92b100c9e578.jpg" },
-              { name: "Яндекс", logo: "/img/e63b4b07-6247-4d5b-bd92-92b100c9e578.jpg" },
-              { name: "Ростелеком", logo: "/img/e63b4b07-6247-4d5b-bd92-92b100c9e578.jpg" },
-              { name: "Сегежа", logo: "/img/4eca8804-2b53-4da6-802d-68efb626e140.jpg" },
-              { name: "МВидео", logo: "/img/e63b4b07-6247-4d5b-bd92-92b100c9e578.jpg" },
-              { name: "Честный Знак", logo: "/img/4eca8804-2b53-4da6-802d-68efb626e140.jpg" },
-              { name: "Лента", logo: "/img/4eca8804-2b53-4da6-802d-68efb626e140.jpg" },
-              { name: "АК Барс Банк", logo: "/img/4eca8804-2b53-4da6-802d-68efb626e140.jpg" },
-              { name: "АО «СТРОЙГАЗМОНТАЖ»", logo: "/img/4eca8804-2b53-4da6-802d-68efb626e140.jpg" },
-              { name: "ООО СИБУР", logo: "/img/4eca8804-2b53-4da6-802d-68efb626e140.jpg" },
-              { name: "ООО \"МАРС\"", logo: "/img/4eca8804-2b53-4da6-802d-68efb626e140.jpg" },
-              { name: "Красное-Белое", logo: "/img/4eca8804-2b53-4da6-802d-68efb626e140.jpg" },
-              { name: "АО Селектел", logo: "/img/4eca8804-2b53-4da6-802d-68efb626e140.jpg" },
-              { name: "Авито", logo: "/img/e63b4b07-6247-4d5b-bd92-92b100c9e578.jpg" }
+              { name: "X5 Retail Group", logo: "/img/981f5b7f-2a51-4720-9f28-aa79ef4ce18d.jpg" },
+              { name: "МТС", logo: "/img/ddb82d20-45ca-4e28-a196-0de37c6f963a.jpg" },
+              { name: "Альфа-Банк", logo: "/img/c88430cf-6bbc-484e-963a-9d2817f97c38.jpg" },
+              { name: "Мегафон", logo: "/img/725ee372-bba2-4eb3-ad57-8527ed53dd70.jpg" },
+              { name: "ВТБ Банк", logo: "/img/0eb78255-136a-43aa-9f49-38b891133b85.jpg" },
+              { name: "АО Тандер", logo: "/img/692f1fb0-be4e-43ae-bc57-05ac9efb5cb1.jpg" },
+              { name: "Газпром", logo: "/img/6eeb8816-5ae9-4a65-8e7d-eb27fd92bd23.jpg" },
+              { name: "РЖД", logo: "/img/7a629961-3ff5-4fe8-8bfc-ce733dd0df80.jpg" },
+              { name: "Роснефть", logo: "/img/e7b803cc-54ad-4561-ba34-0327ca373142.jpg" },
+              { name: "СБЕР", logo: "/img/3e3e3628-173d-4f9f-af4f-0d551afce11a.jpg" },
+              { name: "Сургутнефтегаз", logo: "/img/394577a2-0405-49a3-a0d2-d767e511ba2e.jpg" },
+              { name: "Сетевая Компания", logo: "/img/981f5b7f-2a51-4720-9f28-aa79ef4ce18d.jpg" },
+              { name: "Аптечная Сеть 36.6", logo: "/img/14a01fe3-5b5d-4bcb-9e6c-62d6c62d2751.jpg" },
+              { name: "Ozon", logo: "/img/dd17a692-dea8-408e-9999-fe5a3d96182e.jpg" },
+              { name: "Яндекс", logo: "/img/7bb6cc3b-7136-49c7-b6fe-129e3c9cbb3a.jpg" },
+              { name: "Ростелеком", logo: "/img/e31da5ee-4cca-40ee-8e5f-1de1f1c976ea.jpg" },
+              { name: "Сегежа", logo: "/img/981f5b7f-2a51-4720-9f28-aa79ef4ce18d.jpg" },
+              { name: "МВидео", logo: "/img/311dc170-aa8a-47e9-ae9a-40dfc2906150.jpg" },
+              { name: "Честный Знак", logo: "/img/981f5b7f-2a51-4720-9f28-aa79ef4ce18d.jpg" },
+              { name: "Лента", logo: "/img/462cfe12-874c-426c-8e07-50773d2965bb.jpg" },
+              { name: "АК Барс Банк", logo: "/img/c88430cf-6bbc-484e-963a-9d2817f97c38.jpg" },
+              { name: "АО «СТРОЙГАЗМОНТАЖ»", logo: "/img/981f5b7f-2a51-4720-9f28-aa79ef4ce18d.jpg" },
+              { name: "ООО СИБУР", logo: "/img/cf791694-79f3-47dd-89b9-2263da301948.jpg" },
+              { name: "ООО \"МАРС\"", logo: "/img/981f5b7f-2a51-4720-9f28-aa79ef4ce18d.jpg" },
+              { name: "Красное-Белое", logo: "/img/981f5b7f-2a51-4720-9f28-aa79ef4ce18d.jpg" },
+              { name: "АО Селектел", logo: "/img/981f5b7f-2a51-4720-9f28-aa79ef4ce18d.jpg" },
+              { name: "Авито", logo: "/img/896702a0-63fe-4be2-b730-0e179965107d.jpg" }
             ].map((client, index) => (
-              <div key={index} className="flex items-center justify-center p-4 bg-white border border-gray-200 rounded-lg hover:shadow-lg transition-all duration-300 hover:scale-105 group">
-                <div className="text-center w-full">
-                  <div className="w-20 h-20 mx-auto mb-3 rounded-lg overflow-hidden bg-gray-50 flex items-center justify-center">
-                    <img 
-                      src={client.logo} 
-                      alt={`${client.name} логотип`}
-                      className="w-full h-full object-contain filter group-hover:brightness-110 transition-all duration-300"
-                    />
-                  </div>
-                  <div className="text-xs font-medium text-gray-600 leading-tight px-1">{client.name}</div>
+              <div key={index} className="flex items-center justify-center p-6 bg-white border border-gray-200 rounded-lg hover:shadow-lg transition-all duration-300 hover:scale-105 group">
+                <div className="w-24 h-24 rounded-lg overflow-hidden bg-gray-50 flex items-center justify-center">
+                  <img 
+                    src={client.logo} 
+                    alt={`${client.name} логотип`}
+                    className="w-full h-full object-contain filter group-hover:brightness-110 transition-all duration-300"
+                  />
                 </div>
               </div>
             ))}
