@@ -129,13 +129,13 @@ const Index = () => {
       <section className="py-16 bg-professional-darkChocolate">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">География присутствия</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <h2 className="text-3xl font-bold mb-4 text-slate-300">География присутствия</h2>
+            <p className="max-w-2xl mx-auto text-gray-300">
               Мы работаем во всех крупных городах России, обеспечивая быстрый и качественный сервис по утилизации ИТ-оборудования
             </p>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 max-w-6xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 max-w-6xl mx-auto bg-gray-200">
             {["Москва", "СПб", "Новосибирск", "Екатеринбург", "Казань", "Н.Новгород", 
               "Челябинск", "Самара", "Омск", "Ростов-на-Дону", "Уфа", "Красноярск",
               "Воронеж", "Пермь", "Волгоград", "Краснодар", "Саратов", "Тюмень"].map((city, index) => (
@@ -147,13 +147,13 @@ const Index = () => {
           </div>
           
           <div className="text-center mt-12">
-            <div className="bg-amber-50 rounded-lg p-6 max-w-4xl mx-auto">
+            <div className="rounded-lg p-6 max-w-4xl mx-auto bg-gray-200">
               <Icon name="Phone" size={24} className="text-primary mx-auto mb-4" />
               <h3 className="text-xl font-bold text-secondary mb-2">Единый федеральный номер</h3>
               <p className="text-gray-600 mb-4">
                 Один номер для всех регионов России. Мы автоматически переадресуем ваш звонок в ближайший офис.
               </p>
-              <div className="text-2xl font-bold text-primary">8 (800) 123-45-67</div>
+              <div className="text-2xl font-bold text-primary">8 (985) 550-06-73</div>
               <div className="text-sm text-gray-500 mt-1">Звонок бесплатный из любого региона</div>
             </div>
           </div>
