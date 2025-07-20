@@ -476,11 +476,11 @@ const Index = () => {
               
               <div className="grid grid-cols-2 gap-6">
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">500+</div>
+                  <div className="text-3xl font-bold text-primary mb-2">800+</div>
                   <div className="text-gray-600">Довольных клиентов</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">50 000+</div>
+                  <div className="text-3xl font-bold text-primary mb-2">1000 000+</div>
                   <div className="text-gray-600">Единиц утилизировано</div>
                 </div>
                 <div className="text-center">
