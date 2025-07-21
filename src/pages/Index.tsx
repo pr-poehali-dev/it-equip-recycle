@@ -894,9 +894,6 @@ const Index = () => {
                 Профессиональная утилизация ИТ-оборудования с полным соблюдением экологических требований.
               </p>
               <div className="flex space-x-4">
-                <Icon name="Facebook" size={20} className="text-gray-300 hover:text-primary cursor-pointer transition-colors" />
-                <Icon name="Twitter" size={20} className="text-gray-300 hover:text-primary cursor-pointer transition-colors" />
-                <Icon name="Linkedin" size={20} className="text-gray-300 hover:text-primary cursor-pointer transition-colors" />
               </div>
             </div>
             
