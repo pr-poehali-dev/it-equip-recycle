@@ -846,13 +846,21 @@ const Index = () => {
                     Спецификация оборудования
                     <span className="text-xs text-gray-500 ml-1">(Excel, Word, PDF)</span>
                   </label>
-                  <div className="border-2 border-dashed border-gray-300 rounded-md p-6 text-center hover:border-primary transition-colors cursor-pointer">
+                  <div 
+                    className="border-2 border-dashed border-gray-300 rounded-md p-6 text-center hover:border-primary transition-colors cursor-pointer"
+                    onClick={() => document.getElementById('file-upload')?.click()}
+                  >
                     <Icon name="Upload" size={24} className="text-gray-400 mx-auto mb-2" />
                     <p className="text-sm text-gray-600 mb-1">
                       <span className="text-primary font-medium">Нажмите для выбора файла</span> или перетащите сюда
                     </p>
                     <p className="text-xs text-gray-400">Поддерживаются: .xlsx, .xls, .docx, .doc, .pdf (макс. 10 МБ)</p>
-                    <input type="file" className="hidden" accept=".xlsx,.xls,.docx,.doc,.pdf" />
+                    <input 
+                      type="file" 
+                      id="file-upload"
+                      className="hidden" 
+                      accept=".xlsx,.xls,.docx,.doc,.pdf" 
+                    />
                   </div>
                 </div>
                 <div>
@@ -869,7 +877,24 @@ const Index = () => {
                     <a href="#" className="text-primary hover:underline ml-1">условиями обработки данных</a>
                   </label>
                 </div>
-                <Button className="w-full">
+                <Button 
+                  className="w-full"
+                  onClick={() => {
+                    const formData = {
+                      name: (document.querySelector('input[placeholder="Ваше имя"]') as HTMLInputElement)?.value,
+                      company: (document.querySelector('input[placeholder="Название компании"]') as HTMLInputElement)?.value,
+                      phone: (document.querySelector('input[placeholder="+7 (___) ___-__-__"]') as HTMLInputElement)?.value,
+                      email: (document.querySelector('input[placeholder="your@email.com"]') as HTMLInputElement)?.value,
+                      equipmentType: (document.querySelector('select') as HTMLSelectElement)?.value,
+                      quantity: (document.querySelector('input[placeholder="Количество единиц"]') as HTMLInputElement)?.value,
+                      comment: (document.querySelector('textarea') as HTMLTextAreaElement)?.value
+                    };
+                    
+                    const mailtoLink = `mailto:info@it-utilizaciya.ru?subject=Заявка на расчет стоимости утилизации&body=Имя: ${formData.name}%0AКомпания: ${formData.company}%0AТелефон: ${formData.phone}%0AEmail: ${formData.email}%0AТип оборудования: ${formData.equipmentType}%0AКоличество: ${formData.quantity}%0AКомментарий: ${formData.comment}`;
+                    
+                    window.location.href = mailtoLink;
+                  }}
+                >
                   <Icon name="Calculator" size={16} className="mr-2" />
                   Получить расчет стоимости
                 </Button>
