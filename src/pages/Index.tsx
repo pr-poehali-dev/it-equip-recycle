@@ -561,7 +561,7 @@ const Index = () => {
               { name: "Яндекс", logo: "https://cdn.poehali.dev/files/11b91071-ec0c-4501-876d-f1b81cd5bd5f.jpg", fill: false },
               { name: "Ростелеком", logo: "https://cdn.poehali.dev/files/0bf6ea4c-a844-4b7b-ac5c-bb51ec55590f.png", fill: false },
               { name: "Сегежа", logo: "https://cdn.poehali.dev/files/93f1e2a8-a309-457f-80d2-c0e06cd65f42.png", fill: false },
-              { name: "МВидео", logo: "https://cdn.poehali.dev/files/76337c37-9e76-4337-83f7-a9d1d8089ba9.jpg", fill: true },
+              { name: "Магнит", logo: "https://cdn.poehali.dev/files/3ec18fc8-fae5-4eba-856c-92dfb085956e.png", fill: true },
               { name: "Честный Знак", logo: "https://cdn.poehali.dev/files/e6884e2b-d4e1-41d6-8aab-b48e3aa19aca.jpg", fill: false },
               { name: "Лента", logo: "https://cdn.poehali.dev/files/1a7d4131-a8ad-4d1f-8090-9779e8f83bf7.jpg", fill: false },
               { name: "АК Барс Банк", logo: "https://cdn.poehali.dev/files/e3bb5c6c-40ed-4f43-9576-8b3d7c13e0dd.png", fill: false },
