@@ -3,8 +3,35 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import Icon from "@/components/ui/icon";
+import { useState } from "react";
 
 const Index = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    company: '',
+    phone: '',
+    email: '',
+    equipmentType: 'Компьютеры и ноутбуки',
+    quantity: '',
+    comment: '',
+    file: null as File | null
+  });
+
+  const handleSubmit = () => {
+    if (!formData.name || !formData.phone || !formData.email) {
+      alert('Пожалуйста, заполните обязательные поля: Имя, Телефон, Email');
+      return;
+    }
+    
+    const mailtoLink = `mailto:commerce@rusutil-1.ru?subject=Заявка на расчет стоимости утилизации&body=Имя: ${encodeURIComponent(formData.name)}%0AКомпания: ${encodeURIComponent(formData.company)}%0AТелефон: ${encodeURIComponent(formData.phone)}%0AEmail: ${encodeURIComponent(formData.email)}%0AТип оборудования: ${encodeURIComponent(formData.equipmentType)}%0AКоличество: ${encodeURIComponent(formData.quantity)}%0AКомментарий: ${encodeURIComponent(formData.comment)}${formData.file ? '%0AПриложен файл: ' + encodeURIComponent(formData.file.name) : ''}`;
+    
+    window.location.href = mailtoLink;
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
+    setFormData(prev => ({ ...prev, file }));
+  };
   const services = [
     {
       icon: "Monitor",
@@ -794,7 +821,8 @@ const Index = () => {
                     <label className="text-sm font-medium text-gray-700 mb-2 block">Имя</label>
                     <input 
                       type="text" 
-                      id="name"
+                      value={formData.name}
+                      onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" 
                       placeholder="Ваше имя"
                     />
@@ -803,7 +831,8 @@ const Index = () => {
                     <label className="text-sm font-medium text-gray-700 mb-2 block">Компания</label>
                     <input 
                       type="text" 
-                      id="company"
+                      value={formData.company}
+                      onChange={(e) => setFormData(prev => ({ ...prev, company: e.target.value }))}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" 
                       placeholder="Название компании"
                     />
@@ -813,7 +842,8 @@ const Index = () => {
                   <label className="text-sm font-medium text-gray-700 mb-2 block">Телефон</label>
                   <input 
                     type="tel" 
-                    id="phone"
+                    value={formData.phone}
+                    onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" 
                     placeholder="+7 (___) ___-__-__"
                   />
@@ -822,14 +852,19 @@ const Index = () => {
                   <label className="text-sm font-medium text-gray-700 mb-2 block">Email</label>
                   <input 
                     type="email" 
-                    id="email"
+                    value={formData.email}
+                    onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" 
                     placeholder="your@email.com"
                   />
                 </div>
                 <div>
                   <label className="text-sm font-medium text-gray-700 mb-2 block">Тип оборудования</label>
-                  <select id="equipment-type" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                  <select 
+                    value={formData.equipmentType}
+                    onChange={(e) => setFormData(prev => ({ ...prev, equipmentType: e.target.value }))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                  >
                     <option>Компьютеры и ноутбуки</option>
                     <option>Серверное оборудование</option>
                     <option>Офисная техника</option>
@@ -841,7 +876,8 @@ const Index = () => {
                   <label className="text-sm font-medium text-gray-700 mb-2 block">Примерное количество</label>
                   <input 
                     type="number" 
-                    id="quantity"
+                    value={formData.quantity}
+                    onChange={(e) => setFormData(prev => ({ ...prev, quantity: e.target.value }))}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" 
                     placeholder="Количество единиц"
                   />
@@ -856,13 +892,20 @@ const Index = () => {
                     onClick={() => document.getElementById('file-upload')?.click()}
                   >
                     <Icon name="Upload" size={24} className="text-gray-400 mx-auto mb-2" />
-                    <p className="text-sm text-gray-600 mb-1">
-                      <span className="text-primary font-medium">Нажмите для выбора файла</span> или перетащите сюда
-                    </p>
+                    {formData.file ? (
+                      <p className="text-sm text-green-600 mb-1">
+                        ✓ Выбран файл: {formData.file.name}
+                      </p>
+                    ) : (
+                      <p className="text-sm text-gray-600 mb-1">
+                        <span className="text-primary font-medium">Нажмите для выбора файла</span> или перетащите сюда
+                      </p>
+                    )}
                     <p className="text-xs text-gray-400">Поддерживаются: .xlsx, .xls, .docx, .doc, .pdf (макс. 10 МБ)</p>
                     <input 
                       type="file" 
                       id="file-upload"
+                      onChange={handleFileChange}
                       className="hidden" 
                       accept=".xlsx,.xls,.docx,.doc,.pdf" 
                     />
@@ -871,7 +914,8 @@ const Index = () => {
                 <div>
                   <label className="text-sm font-medium text-gray-700 mb-2 block">Комментарий</label>
                   <textarea 
-                    id="comment"
+                    value={formData.comment}
+                    onChange={(e) => setFormData(prev => ({ ...prev, comment: e.target.value }))}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary h-20 resize-none" 
                     placeholder="Дополнительная информация, особые требования к утилизации..."
                   />
@@ -885,26 +929,7 @@ const Index = () => {
                 </div>
                 <Button 
                   className="w-full"
-                  onClick={() => {
-                    const formData = {
-                      name: (document.getElementById('name') as HTMLInputElement)?.value || '',
-                      company: (document.getElementById('company') as HTMLInputElement)?.value || '',
-                      phone: (document.getElementById('phone') as HTMLInputElement)?.value || '',
-                      email: (document.getElementById('email') as HTMLInputElement)?.value || '',
-                      equipmentType: (document.getElementById('equipment-type') as HTMLSelectElement)?.value || '',
-                      quantity: (document.getElementById('quantity') as HTMLInputElement)?.value || '',
-                      comment: (document.getElementById('comment') as HTMLTextAreaElement)?.value || ''
-                    };
-                    
-                    if (!formData.name || !formData.phone || !formData.email) {
-                      alert('Пожалуйста, заполните обязательные поля: Имя, Телефон, Email');
-                      return;
-                    }
-                    
-                    const mailtoLink = `mailto:commerce@rusutil-1.ru?subject=Заявка на расчет стоимости утилизации&body=Имя: ${encodeURIComponent(formData.name)}%0AКомпания: ${encodeURIComponent(formData.company)}%0AТелефон: ${encodeURIComponent(formData.phone)}%0AEmail: ${encodeURIComponent(formData.email)}%0AТип оборудования: ${encodeURIComponent(formData.equipmentType)}%0AКоличество: ${encodeURIComponent(formData.quantity)}%0AКомментарий: ${encodeURIComponent(formData.comment)}`;
-                    
-                    window.location.href = mailtoLink;
-                  }}
+                  onClick={handleSubmit}
                 >
                   <Icon name="Calculator" size={16} className="mr-2" />
                   Получить расчет стоимости
