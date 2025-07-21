@@ -574,11 +574,11 @@ const Index = () => {
               { name: "ТБанк", logo: "https://cdn.poehali.dev/files/e547fe52-d2b5-4a93-a328-6bc767ac0455.jpg" }
             ].map((client, index) => (
               <div key={index} className="flex items-center justify-center p-6 bg-white border border-gray-200 rounded-lg hover:shadow-lg transition-all duration-300 hover:scale-105 group">
-                <div className="w-24 h-24 rounded-lg overflow-hidden bg-gray-50 flex items-center justify-center">
+                <div className="w-full h-20 rounded-lg overflow-hidden bg-gray-50 flex items-center justify-center">
                   <img 
                     src={client.logo} 
                     alt={`${client.name} логотип`}
-                    className="w-full h-full object-contain filter group-hover:brightness-110 transition-all duration-300"
+                    className="max-w-full max-h-full object-contain filter group-hover:brightness-110 transition-all duration-300"
                   />
                 </div>
               </div>
