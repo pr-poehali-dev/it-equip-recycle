@@ -553,7 +553,7 @@ const Index = () => {
               { name: "Газпром", logo: "https://cdn.poehali.dev/files/832f6188-3e36-4516-88d6-d6594dc539b7.jpg", fill: true },
               { name: "РЖД", logo: "https://cdn.poehali.dev/files/7bd20793-9a6b-4c17-bc33-0c2c085b25c4.jpg", fill: true },
               { name: "Роснефть", logo: "https://cdn.poehali.dev/files/db70b93b-a8f4-4094-94a5-e803774e3c95.png", fill: false },
-              { name: "СБЕР", logo: "https://cdn.poehali.dev/files/9d250503-5454-4120-9ac2-b95b40552a5a.jpg", fill: false },
+              { name: "СБЕР", logo: "https://cdn.poehali.dev/files/9d250503-5454-4120-9ac2-b95b40552a5a.jpg", fill: true },
               { name: "Сургутнефтегаз", logo: "https://cdn.poehali.dev/files/d4878f97-ab8e-4d50-a2cc-685ff5e98324.png", fill: false },
               { name: "Сетевая Компания", logo: "https://cdn.poehali.dev/files/05956c81-7d92-440c-95e5-1f23442dd970.jpg", fill: false },
               { name: "Аптечная Сеть 36.6", logo: "https://cdn.poehali.dev/files/70bf1c92-2e30-4b15-9e96-d58e3b135474.jpg", fill: false },
@@ -573,7 +573,7 @@ const Index = () => {
               { name: "Авито", logo: "https://cdn.poehali.dev/files/1aa2eeb2-6e1d-4810-b06a-bf4d1fce4e96.png", fill: false },
               { name: "ТБанк", logo: "https://cdn.poehali.dev/files/e547fe52-d2b5-4a93-a328-6bc767ac0455.jpg", fill: true }
             ].map((client, index) => (
-              <div key={index} className={`${client.fill ? 'p-0 overflow-hidden' : 'flex items-center justify-center p-4'} bg-white border border-gray-200 rounded-lg hover:shadow-lg transition-all duration-300 hover:scale-105 group aspect-square`}>
+              <div key={index} className={`${client.fill ? 'p-0 overflow-hidden' : 'flex items-center justify-center p-4'} ${(client.name === 'ООО СИБУР' || client.name === 'СБЕР') ? 'p-1' : client.fill ? 'p-0' : 'p-4'} bg-white border border-gray-200 rounded-lg hover:shadow-lg transition-all duration-300 hover:scale-105 group aspect-square`}>
                 <img 
                   src={client.logo} 
                   alt={`${client.name} логотип`}
