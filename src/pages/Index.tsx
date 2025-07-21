@@ -18,14 +18,31 @@ const Index = () => {
   });
 
   const handleSubmit = () => {
+    console.log('Кнопка нажата!', formData);
+    
     if (!formData.name || !formData.phone || !formData.email) {
       alert('Пожалуйста, заполните обязательные поля: Имя, Телефон, Email');
       return;
     }
     
-    const mailtoLink = `mailto:commerce@rusutil-1.ru?subject=Заявка на расчет стоимости утилизации&body=Имя: ${encodeURIComponent(formData.name)}%0AКомпания: ${encodeURIComponent(formData.company)}%0AТелефон: ${encodeURIComponent(formData.phone)}%0AEmail: ${encodeURIComponent(formData.email)}%0AТип оборудования: ${encodeURIComponent(formData.equipmentType)}%0AКоличество: ${encodeURIComponent(formData.quantity)}%0AКомментарий: ${encodeURIComponent(formData.comment)}${formData.file ? '%0AПриложен файл: ' + encodeURIComponent(formData.file.name) : ''}`;
-    
-    window.location.href = mailtoLink;
+    try {
+      const subject = 'Заявка на расчет стоимости утилизации';
+      const body = `Имя: ${formData.name}
+Компания: ${formData.company}
+Телефон: ${formData.phone}
+Email: ${formData.email}
+Тип оборудования: ${formData.equipmentType}
+Количество: ${formData.quantity}
+Комментарий: ${formData.comment}${formData.file ? '\nПриложен файл: ' + formData.file.name : ''}`;
+      
+      const mailtoLink = `mailto:commerce@rusutil-1.ru?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      
+      console.log('Открываю mailto:', mailtoLink);
+      window.open(mailtoLink, '_self');
+    } catch (error) {
+      console.error('Ошибка:', error);
+      alert('Произошла ошибка при отправке. Попробуйте еще раз.');
+    }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -928,8 +945,13 @@ const Index = () => {
                   </label>
                 </div>
                 <Button 
+                  type="button"
                   className="w-full"
-                  onClick={handleSubmit}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    console.log('Клик по кнопке');
+                    handleSubmit();
+                  }}
                 >
                   <Icon name="Calculator" size={16} className="mr-2" />
                   Получить расчет стоимости
