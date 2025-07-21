@@ -794,6 +794,7 @@ const Index = () => {
                     <label className="text-sm font-medium text-gray-700 mb-2 block">Имя</label>
                     <input 
                       type="text" 
+                      id="name"
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" 
                       placeholder="Ваше имя"
                     />
@@ -802,6 +803,7 @@ const Index = () => {
                     <label className="text-sm font-medium text-gray-700 mb-2 block">Компания</label>
                     <input 
                       type="text" 
+                      id="company"
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" 
                       placeholder="Название компании"
                     />
@@ -811,6 +813,7 @@ const Index = () => {
                   <label className="text-sm font-medium text-gray-700 mb-2 block">Телефон</label>
                   <input 
                     type="tel" 
+                    id="phone"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" 
                     placeholder="+7 (___) ___-__-__"
                   />
@@ -819,13 +822,14 @@ const Index = () => {
                   <label className="text-sm font-medium text-gray-700 mb-2 block">Email</label>
                   <input 
                     type="email" 
+                    id="email"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" 
                     placeholder="your@email.com"
                   />
                 </div>
                 <div>
                   <label className="text-sm font-medium text-gray-700 mb-2 block">Тип оборудования</label>
-                  <select className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                  <select id="equipment-type" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
                     <option>Компьютеры и ноутбуки</option>
                     <option>Серверное оборудование</option>
                     <option>Офисная техника</option>
@@ -837,6 +841,7 @@ const Index = () => {
                   <label className="text-sm font-medium text-gray-700 mb-2 block">Примерное количество</label>
                   <input 
                     type="number" 
+                    id="quantity"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" 
                     placeholder="Количество единиц"
                   />
@@ -866,6 +871,7 @@ const Index = () => {
                 <div>
                   <label className="text-sm font-medium text-gray-700 mb-2 block">Комментарий</label>
                   <textarea 
+                    id="comment"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary h-20 resize-none" 
                     placeholder="Дополнительная информация, особые требования к утилизации..."
                   />
@@ -881,16 +887,21 @@ const Index = () => {
                   className="w-full"
                   onClick={() => {
                     const formData = {
-                      name: (document.querySelector('input[placeholder="Ваше имя"]') as HTMLInputElement)?.value,
-                      company: (document.querySelector('input[placeholder="Название компании"]') as HTMLInputElement)?.value,
-                      phone: (document.querySelector('input[placeholder="+7 (___) ___-__-__"]') as HTMLInputElement)?.value,
-                      email: (document.querySelector('input[placeholder="your@email.com"]') as HTMLInputElement)?.value,
-                      equipmentType: (document.querySelector('select') as HTMLSelectElement)?.value,
-                      quantity: (document.querySelector('input[placeholder="Количество единиц"]') as HTMLInputElement)?.value,
-                      comment: (document.querySelector('textarea') as HTMLTextAreaElement)?.value
+                      name: (document.getElementById('name') as HTMLInputElement)?.value || '',
+                      company: (document.getElementById('company') as HTMLInputElement)?.value || '',
+                      phone: (document.getElementById('phone') as HTMLInputElement)?.value || '',
+                      email: (document.getElementById('email') as HTMLInputElement)?.value || '',
+                      equipmentType: (document.getElementById('equipment-type') as HTMLSelectElement)?.value || '',
+                      quantity: (document.getElementById('quantity') as HTMLInputElement)?.value || '',
+                      comment: (document.getElementById('comment') as HTMLTextAreaElement)?.value || ''
                     };
                     
-                    const mailtoLink = `mailto:commerce@rusutil-1.ru?subject=Заявка на расчет стоимости утилизации&body=Имя: ${formData.name}%0AКомпания: ${formData.company}%0AТелефон: ${formData.phone}%0AEmail: ${formData.email}%0AТип оборудования: ${formData.equipmentType}%0AКоличество: ${formData.quantity}%0AКомментарий: ${formData.comment}`;
+                    if (!formData.name || !formData.phone || !formData.email) {
+                      alert('Пожалуйста, заполните обязательные поля: Имя, Телефон, Email');
+                      return;
+                    }
+                    
+                    const mailtoLink = `mailto:commerce@rusutil-1.ru?subject=Заявка на расчет стоимости утилизации&body=Имя: ${encodeURIComponent(formData.name)}%0AКомпания: ${encodeURIComponent(formData.company)}%0AТелефон: ${encodeURIComponent(formData.phone)}%0AEmail: ${encodeURIComponent(formData.email)}%0AТип оборудования: ${encodeURIComponent(formData.equipmentType)}%0AКоличество: ${encodeURIComponent(formData.quantity)}%0AКомментарий: ${encodeURIComponent(formData.comment)}`;
                     
                     window.location.href = mailtoLink;
                   }}
