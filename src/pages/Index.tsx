@@ -3,9 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import Icon from "@/components/ui/icon";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 const Index = () => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  
   const [formData, setFormData] = useState({
     name: '',
     company: '',
@@ -906,7 +908,16 @@ Email: ${formData.email}
                   </label>
                   <div 
                     className="border-2 border-dashed border-gray-300 rounded-md p-6 text-center hover:border-primary transition-colors cursor-pointer"
-                    onClick={() => document.getElementById('file-upload')?.click()}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      console.log('Клик по области загрузки файла');
+                      if (fileInputRef.current) {
+                        console.log('Найден input файла через ref, вызываем click');
+                        fileInputRef.current.click();
+                      } else {
+                        console.error('Не найден элемент через fileInputRef');
+                      }
+                    }}
                   >
                     <Icon name="Upload" size={24} className="text-gray-400 mx-auto mb-2" />
                     {formData.file ? (
@@ -919,14 +930,17 @@ Email: ${formData.email}
                       </p>
                     )}
                     <p className="text-xs text-gray-400">Поддерживаются: .xlsx, .xls, .docx, .doc, .pdf (макс. 10 МБ)</p>
-                    <input 
-                      type="file" 
-                      id="file-upload"
-                      onChange={handleFileChange}
-                      className="hidden" 
-                      accept=".xlsx,.xls,.docx,.doc,.pdf" 
-                    />
                   </div>
+                  <input 
+                    type="file" 
+                    ref={fileInputRef}
+                    onChange={(e) => {
+                      console.log('Файл выбран:', e.target.files?.[0]);
+                      handleFileChange(e);
+                    }}
+                    className="hidden" 
+                    accept=".xlsx,.xls,.docx,.doc,.pdf" 
+                  />
                 </div>
                 <div>
                   <label className="text-sm font-medium text-gray-700 mb-2 block">Комментарий</label>
