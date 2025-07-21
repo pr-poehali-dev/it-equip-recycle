@@ -890,7 +890,7 @@ const Index = () => {
                       comment: (document.querySelector('textarea') as HTMLTextAreaElement)?.value
                     };
                     
-                    const mailtoLink = `mailto:info@it-utilizaciya.ru?subject=Заявка на расчет стоимости утилизации&body=Имя: ${formData.name}%0AКомпания: ${formData.company}%0AТелефон: ${formData.phone}%0AEmail: ${formData.email}%0AТип оборудования: ${formData.equipmentType}%0AКоличество: ${formData.quantity}%0AКомментарий: ${formData.comment}`;
+                    const mailtoLink = `mailto:commerce@rusutil-1.ru?subject=Заявка на расчет стоимости утилизации&body=Имя: ${formData.name}%0AКомпания: ${formData.company}%0AТелефон: ${formData.phone}%0AEmail: ${formData.email}%0AТип оборудования: ${formData.equipmentType}%0AКоличество: ${formData.quantity}%0AКомментарий: ${formData.comment}`;
                     
                     window.location.href = mailtoLink;
                   }}
