@@ -45,7 +45,7 @@ export default function CalculatorSection({
         
         <div className="max-w-4xl mx-auto">
           <Card className="shadow-xl">
-            <CardHeader className="bg-green-600 text-white text-center">
+            <CardHeader className="bg-emerald-800 text-white text-center">
               <CardTitle className="text-2xl flex items-center justify-center">
                 <Icon name="Calculator" size={72} className="mr-4 text-professional-rolexGold" />
                 <span className="text-white">Калькулятор стоимости утилизации</span>

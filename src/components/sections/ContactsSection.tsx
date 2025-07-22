@@ -41,21 +41,21 @@ export default function ContactsSection({
           <div>
             <h3 className="text-2xl font-bold mb-6 text-[#ffffff]">Контактная информация</h3>
             <div className="space-y-6">
-              <div className="flex items-center p-4 bg-slate-800 rounded-lg border border-slate-700">
+              <div className="flex items-center p-4 bg-emerald-800 rounded-lg border border-emerald-700">
                 <Icon name="Phone" size={20} className="text-professional-rolexGold mr-4" />
                 <div>
                   <div className="font-semibold text-slate-200">Телефон</div>
                   <div className="text-white font-medium">+7 (901) 862-81-81</div>
                 </div>
               </div>
-              <div className="flex items-center p-4 bg-slate-800 rounded-lg border border-slate-700">
+              <div className="flex items-center p-4 bg-emerald-800 rounded-lg border border-emerald-700">
                 <Icon name="Mail" size={20} className="text-professional-rolexGold mr-4" />
                 <div>
                   <div className="font-semibold text-slate-200">Email</div>
                   <div className="text-white font-medium">commerce@rusutil-1.ru</div>
                 </div>
               </div>
-              <div className="flex items-start p-4 bg-slate-800 rounded-lg border border-slate-700">
+              <div className="flex items-start p-4 bg-emerald-800 rounded-lg border border-emerald-700">
                 <Icon name="MapPin" size={20} className="text-professional-rolexGold mr-4 mt-1" />
                 <div>
                   <div className="font-semibold text-slate-200">Головной офис</div>
@@ -63,7 +63,7 @@ export default function ContactsSection({
                   <div className="text-sm text-teal-300 mt-1">Филиалы в 30+ городах России</div>
                 </div>
               </div>
-              <div className="flex items-center p-4 bg-slate-800 rounded-lg border border-slate-700">
+              <div className="flex items-center p-4 bg-emerald-800 rounded-lg border border-emerald-700">
                 <Icon name="Clock" size={20} className="text-professional-rolexGold mr-4" />
                 <div>
                   <div className="font-semibold text-slate-200">Режим работы</div>
