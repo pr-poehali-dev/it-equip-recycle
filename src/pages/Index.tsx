@@ -317,6 +317,8 @@ Email: ${formData.email}
                         <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Контактное лицо *</label>
                         <input 
                           type="text" 
+                          value={formData.name}
+                          onChange={(e) => setFormData({...formData, name: e.target.value})}
                           className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                           placeholder="Ваше имя"
                           required
@@ -326,6 +328,8 @@ Email: ${formData.email}
                         <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Компания</label>
                         <input 
                           type="text" 
+                          value={formData.company}
+                          onChange={(e) => setFormData({...formData, company: e.target.value})}
                           className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                           placeholder="Название компании"
                         />
@@ -337,6 +341,8 @@ Email: ${formData.email}
                         <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Телефон *</label>
                         <input 
                           type="tel" 
+                          value={formData.phone}
+                          onChange={(e) => setFormData({...formData, phone: e.target.value})}
                           className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                           placeholder="+7 (___) ___-__-__"
                           required
@@ -346,6 +352,8 @@ Email: ${formData.email}
                         <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Email *</label>
                         <input 
                           type="email" 
+                          value={formData.email}
+                          onChange={(e) => setFormData({...formData, email: e.target.value})}
                           className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                           placeholder="your@email.com"
                           required
@@ -374,21 +382,45 @@ Email: ${formData.email}
                         📎 Спецификация оборудования *
                         <span className="text-xs text-gray-600 block mt-1">Прикрепите файл с описанием оборудования</span>
                       </label>
-                      <div className="border-2 border-dashed border-primary/30 rounded-lg p-6 text-center hover:border-primary transition-all duration-300 cursor-pointer bg-blue-50/50">
+                      <div 
+                        className="border-2 border-dashed border-primary/30 rounded-lg p-6 text-center hover:border-primary transition-all duration-300 cursor-pointer bg-blue-50/50"
+                        onClick={() => fileInputRef.current?.click()}
+                      >
                         <Icon name="Upload" size={32} className="text-primary mx-auto mb-3" />
-                        <p className="text-sm premium-body text-gray-700 mb-2">
-                          <span className="text-primary font-semibold">Выберите файл</span> или перетащите сюда
-                        </p>
-                        <p className="text-xs text-gray-600">
-                          Excel (.xlsx, .xls), Word (.docx, .doc), PDF • до 10 МБ
-                        </p>
-                        <input type="file" className="hidden" accept=".xlsx,.xls,.docx,.doc,.pdf" />
+                        {formData.file ? (
+                          <div>
+                            <p className="text-sm premium-body text-green-700 mb-2 font-semibold">
+                              ✓ Файл загружен: {formData.file.name}
+                            </p>
+                            <p className="text-xs text-gray-600">
+                              Нажмите для выбора другого файла
+                            </p>
+                          </div>
+                        ) : (
+                          <div>
+                            <p className="text-sm premium-body text-gray-700 mb-2">
+                              <span className="text-primary font-semibold">Выберите файл</span> или перетащите сюда
+                            </p>
+                            <p className="text-xs text-gray-600">
+                              Excel (.xlsx, .xls), Word (.docx, .doc), PDF • до 10 МБ
+                            </p>
+                          </div>
+                        )}
+                        <input 
+                          type="file" 
+                          ref={fileInputRef}
+                          className="hidden" 
+                          accept=".xlsx,.xls,.docx,.doc,.pdf" 
+                          onChange={handleFileChange}
+                        />
                       </div>
                     </div>
                     
                     <div>
                       <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Дополнительная информация</label>
                       <textarea 
+                        value={formData.comment}
+                        onChange={(e) => setFormData({...formData, comment: e.target.value})}
                         className="w-full px-4 py-3 min-h-[88px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base resize-none" 
                         placeholder="Укажите срочность, особые требования, вопросы по утилизации..."
                       />
@@ -406,7 +438,11 @@ Email: ${formData.email}
                   </div>
                   
                   <div className="grid grid-cols-1 gap-4">
-                    <Button className="w-full min-h-[48px]" size="lg">
+                    <Button 
+                      onClick={handleSubmit}
+                      className="w-full min-h-[48px]" 
+                      size="lg"
+                    >
                       <Icon name="Calculator" size={20} className="mr-2" />
                       Получить расчет стоимости
                     </Button>
