@@ -45,12 +45,12 @@ export default function CalculatorSection({
         
         <div className="max-w-4xl mx-auto">
           <Card className="shadow-xl">
-            <CardHeader className="bg-black text-white text-center">
+            <CardHeader className="bg-green-600 text-white text-center">
               <CardTitle className="text-2xl flex items-center justify-center">
                 <Icon name="Calculator" size={72} className="mr-4 text-professional-rolexGold" />
-                <span className="text-professional-rolexGold">Калькулятор стоимости утилизации</span>
+                <span className="text-white">Калькулятор стоимости утилизации</span>
               </CardTitle>
-              <CardDescription className="text-professional-rolexGold/90">
+              <CardDescription className="text-white/90">
                 Заполните форму и прикрепите спецификацию оборудования для точного расчета
               </CardDescription>
             </CardHeader>
