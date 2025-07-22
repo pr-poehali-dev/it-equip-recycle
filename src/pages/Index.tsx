@@ -22,24 +22,26 @@ const Index = () => {
   
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const handleSubmit = () => {
-    console.log('Кнопка нажата!', formData);
+  const handleSubmit = (e?: React.MouseEvent) => {
+    e?.preventDefault();
+    console.log('🚀 Кнопка нажата!', { formData, agreed });
     
     // Проверяем обязательные поля
-    if (!formData.name || !formData.phone || !formData.email) {
-      alert('Пожалуйста, заполните обязательные поля: Имя, Телефон, Email');
+    if (!formData.name.trim() || !formData.phone.trim() || !formData.email.trim()) {
+      alert('❌ Пожалуйста, заполните обязательные поля: Имя, Телефон, Email');
       return;
     }
     
     // Проверяем согласие
     if (!agreed) {
-      alert('Пожалуйста, подтвердите согласие с политикой конфиденциальности');
+      alert('❌ Пожалуйста, подтвердите согласие с политикой конфиденциальности');
       return;
     }
     
-    try {
-      const subject = 'Заявка на расчет стоимости утилизации';
-      const body = `Заявка на расчет стоимости утилизации
+    console.log('✅ Все проверки пройдены, отправляю заявку...');
+    
+    const subject = 'Заявка на расчет стоимости утилизации';
+    const body = `Заявка на расчет стоимости утилизации
 
 Контактные данные:
 Имя: ${formData.name}
@@ -52,14 +54,21 @@ ${formData.file ? `Приложен файл спецификации: ${formDat
 
 ---
 Заявка отправлена с сайта utilizon.ru`;
-      
-      const mailtoLink = `mailto:commerce@rusutil-1.ru?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      
-      console.log('Открываю mailto:', mailtoLink);
-      window.open(mailtoLink, '_self');
+    
+    const mailtoLink = `mailto:commerce@rusutil-1.ru?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    
+    console.log('📧 Открываю почтовую программу:', mailtoLink);
+    
+    // Попробуем разные способы открытия
+    try {
+      window.location.href = mailtoLink;
+      alert('✅ Заявка готова к отправке! Откроется ваша почтовая программа.');
     } catch (error) {
-      console.error('Ошибка:', error);
-      alert('Произошла ошибка при отправке. Попробуйте еще раз.');
+      console.error('❌ Ошибка при открытии почтовой программы:', error);
+      // Запасной вариант - показать данные пользователю
+      alert(`Скопируйте данные и отправьте на commerce@rusutil-1.ru:
+
+${body}`);
     }
   };
 
@@ -459,7 +468,11 @@ ${formData.file ? `Приложен файл спецификации: ${formDat
                   
                   <div className="grid grid-cols-1 gap-4">
                     <Button 
-                      onClick={handleSubmit}
+                      onClick={() => {
+                        console.log('🔥 Прямое нажатие на кнопку');
+                        handleSubmit();
+                      }}
+                      type="button"
                       className="w-full min-h-[48px]" 
                       size="lg"
                     >
