@@ -14,49 +14,77 @@ export default function CustomLogo({ size = 32, className = "" }: CustomLogoProp
         height={size} 
         viewBox="0 0 100 100" 
         className="text-professional-rolexGold"
-        fill="currentColor"
+        fill="none"
       >
-        {/* Круг из стрелочек - 6 стрелок по кругу */}
-        {Array.from({ length: 6 }).map((_, i) => {
-          const angle = (i * 60) - 90; // Начинаем сверху
-          const radians = (angle * Math.PI) / 180;
-          const x = 50 + 35 * Math.cos(radians);
-          const y = 50 + 35 * Math.sin(radians);
-          
-          return (
-            <g key={i} transform={`translate(${x}, ${y}) rotate(${angle + 90})`}>
-              <path
-                d="M-3,0 L3,0 L3,-6 L8,0 L3,6 L3,0 Z"
-                fill="currentColor"
-                className="drop-shadow-sm"
-              />
-            </g>
-          );
-        })}
+        {/* Определение стрелки */}
+        <defs>
+          <marker
+            id="arrowhead"
+            markerWidth="8"
+            markerHeight="6"
+            refX="7"
+            refY="3"
+            orient="auto"
+          >
+            <polygon
+              points="0 0, 8 3, 0 6"
+              fill="currentColor"
+            />
+          </marker>
+        </defs>
         
-        {/* Внутренний круг фона для буквы */}
-        <circle
-          cx="50"
-          cy="50"
-          r="22"
-          fill="currentColor"
-          className="opacity-20"
+        {/* Изогнутые стрелочки вокруг буквы U - 4 стрелки как на рисунке */}
+        
+        {/* Верхняя левая стрелка */}
+        <path
+          d="M28 20 Q18 10, 35 18"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          fill="none"
+          markerEnd="url(#arrowhead)"
         />
         
-        {/* Буква "u" в центре */}
+        {/* Верхняя правая стрелка */}
+        <path
+          d="M72 20 Q82 10, 65 18"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          fill="none"
+          markerEnd="url(#arrowhead)"
+        />
+        
+        {/* Нижняя правая стрелка */}
+        <path
+          d="M72 80 Q82 90, 65 82"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          fill="none"
+          markerEnd="url(#arrowhead)"
+        />
+        
+        {/* Нижняя левая стрелка */}
+        <path
+          d="M28 80 Q18 90, 35 82"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          fill="none"
+          markerEnd="url(#arrowhead)"
+        />
+        
+        {/* Заглавная буква "U" в центре */}
         <text
           x="50"
-          y="58"
+          y="62"
           textAnchor="middle"
           className="font-bold"
           style={{ 
-            fontSize: '28px',
+            fontSize: '36px',
             fontFamily: 'ui-sans-serif, system-ui, sans-serif',
             fontWeight: '800'
           }}
           fill="currentColor"
         >
-          u
+          U
         </text>
       </svg>
     </div>
