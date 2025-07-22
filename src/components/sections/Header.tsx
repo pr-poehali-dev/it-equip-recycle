@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Icon from "@/components/ui/icon";
+import CustomLogo from "@/components/ui/custom-logo";
 
 interface HeaderProps {
   mobileMenuOpen: boolean;
@@ -13,8 +14,8 @@ export default function Header({ mobileMenuOpen, setMobileMenuOpen }: HeaderProp
       <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4">
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center space-x-2 sm:space-x-3 ml-4 sm:ml-8">
-            <Icon name="Recycle" size={24} className="text-professional-rolexGold sm:hidden" />
-            <Icon name="Recycle" size={32} className="text-professional-rolexGold hidden sm:block" />
+            <CustomLogo size={24} className="sm:hidden" />
+            <CustomLogo size={32} className="hidden sm:block" />
             <span className="text-white font-sans font-black text-xl sm:text-2xl md:text-3xl" style={{ letterSpacing: '0.1em', fontWeight: '1200' }}>utilizon</span>
           </div>
           
@@ -51,7 +52,7 @@ export default function Header({ mobileMenuOpen, setMobileMenuOpen }: HeaderProp
                 <SheetContent side="right" className="w-[300px] sm:w-[400px]">
                   <div className="flex flex-col h-full">
                     <div className="flex items-center mb-8">
-                      <Icon name="Recycle" size={24} className="text-professional-rolexGold mr-2" />
+                      <CustomLogo size={24} className="mr-2" />
                       <span className="font-black text-xl">utilizon</span>
                     </div>
                     
