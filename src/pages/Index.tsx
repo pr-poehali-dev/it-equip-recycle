@@ -1024,7 +1024,7 @@ Email: ${formData.email}
           </div>
           
           <div className="border-t border-gray-600 mt-8 pt-8 text-center text-sm text-gray-200">
-            <p>© 2025 СБОР-Утилизация. Все права защищены.</p>
+            <p>© 2025 UTILIZON.PRO. Все права защищены.</p>
           </div>
         </div>
       </footer>
