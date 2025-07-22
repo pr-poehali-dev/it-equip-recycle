@@ -812,7 +812,7 @@ Email: ${formData.email}
                   <Icon name="Clock" size={20} className="text-primary mr-4" />
                   <div>
                     <div className="font-semibold">Режим работы</div>
-                    <div className="text-white">Пн-Пт: 10:00-18:00, Сб-Вс: выезд по заявкам</div>
+                    <div className="text-white">Пн-Пт: 10:00-20:00</div>
                   </div>
                 </div>
               </div>
