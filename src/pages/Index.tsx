@@ -385,8 +385,8 @@ Email: ${formData.email}
       <section id="prices" className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="section-title text-gray-900 mb-4">Прозрачное ценообразование</h2>
-            <p className="text-gray-900">Стоимость зависит от типа и количества оборудования</p>
+            <h2 className="section-title mb-4 text-[#ffffff]">Прозрачное ценообразование</h2>
+            <p className="text-[#ffffff]">Стоимость зависит от типа и количества оборудования</p>
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
