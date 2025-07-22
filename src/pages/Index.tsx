@@ -14,31 +14,44 @@ const Index = () => {
     company: '',
     phone: '',
     email: '',
-    equipmentType: 'Компьютеры и ноутбуки',
-    quantity: '',
     comment: '',
     file: null as File | null
   });
+  
+  const [agreed, setAgreed] = useState(false);
   
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleSubmit = () => {
     console.log('Кнопка нажата!', formData);
     
+    // Проверяем обязательные поля
     if (!formData.name || !formData.phone || !formData.email) {
       alert('Пожалуйста, заполните обязательные поля: Имя, Телефон, Email');
       return;
     }
     
+    // Проверяем согласие
+    if (!agreed) {
+      alert('Пожалуйста, подтвердите согласие с политикой конфиденциальности');
+      return;
+    }
+    
     try {
       const subject = 'Заявка на расчет стоимости утилизации';
-      const body = `Имя: ${formData.name}
-Компания: ${formData.company}
+      const body = `Заявка на расчет стоимости утилизации
+
+Контактные данные:
+Имя: ${formData.name}
+Компания: ${formData.company || 'Не указана'}
 Телефон: ${formData.phone}
 Email: ${formData.email}
-Тип оборудования: ${formData.equipmentType}
-Количество: ${formData.quantity}
-Комментарий: ${formData.comment}${formData.file ? '\nПриложен файл: ' + formData.file.name : ''}`;
+
+Дополнительная информация: ${formData.comment || 'Не указана'}
+${formData.file ? `Приложен файл спецификации: ${formData.file.name}` : 'Файл спецификации не приложен'}
+
+---
+Заявка отправлена с сайта utilizon.ru`;
       
       const mailtoLink = `mailto:commerce@rusutil-1.ru?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       
@@ -430,7 +443,14 @@ Email: ${formData.email}
                 
                 <div className="mt-8 border-t pt-6">
                   <div className="flex items-start space-x-3 mb-6">
-                    <input type="checkbox" id="calc-agreement" className="mt-1 rounded border-gray-300 w-4 h-4" required />
+                    <input 
+                      type="checkbox" 
+                      id="calc-agreement" 
+                      checked={agreed}
+                      onChange={(e) => setAgreed(e.target.checked)}
+                      className="mt-1 rounded border-gray-300 w-4 h-4" 
+                      required 
+                    />
                     <label htmlFor="calc-agreement" className="text-sm premium-body text-gray-700">
                       Согласен с <a href="#" className="text-primary hover:underline">политикой конфиденциальности</a> и 
                       обработкой персональных данных. Подтверждаю, что указанная информация достоверна.
@@ -446,7 +466,12 @@ Email: ${formData.email}
                       <Icon name="Calculator" size={20} className="mr-2" />
                       Получить расчет стоимости
                     </Button>
-                    <Button variant="outline" className="w-full min-h-[48px]" size="lg">
+                    <Button 
+                      onClick={() => window.open('tel:+79018628181', '_self')}
+                      variant="outline" 
+                      className="w-full min-h-[48px]" 
+                      size="lg"
+                    >
                       <Icon name="Phone" size={20} className="mr-2" />
                       Обсудить по телефону
                     </Button>
