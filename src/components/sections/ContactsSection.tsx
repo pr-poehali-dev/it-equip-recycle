@@ -30,7 +30,7 @@ export default function ContactsSection({
   handleFileChange 
 }: ContactsSectionProps) {
   return (
-    <section id="contacts" className="py-20">
+    <section id="contacts" className="py-20 bg-slate-900">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="section-title text-white mb-4">Свяжитесь с нами</h2>
