@@ -12,7 +12,7 @@ interface HeaderProps {
 export default function Header({ mobileMenuOpen, setMobileMenuOpen }: HeaderProps) {
   return (
     <header className="bg-professional-darkChocolate border-b border-professional-chocolate sticky top-0 z-50">
-      <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4">
+      <div className="max-w-5xl mx-auto px-3 sm:px-4 py-3 sm:py-4">
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center space-x-2 sm:space-x-3 ml-4 sm:ml-8">
             <CustomLogo size={144} className="sm:hidden" />
