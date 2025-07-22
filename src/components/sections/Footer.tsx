@@ -8,7 +8,8 @@ export default function Footer() {
           <div>
             <div className="flex items-center space-x-2 mb-4">
               <Icon name="Recycle" size={24} className="text-primary" />
-              <span className="text-xl font-bold">ИТ-Утилизация</span>
+              <span className="font-black text-3xl">utilizon
+</span>
             </div>
             <p className="text-gray-200 text-sm mb-4">
               Профессиональная утилизация ИТ-оборудования с полным соблюдением экологических требований.
