@@ -12,6 +12,7 @@ interface FormData {
   customCity: string;
   comment: string;
   file: File | null;
+  selectedPlan: string;
 }
 
 interface CalculatorSectionProps {
@@ -51,6 +52,12 @@ export default function CalculatorSection({
                 <span className="text-white">Калькулятор стоимости утилизации</span>
               </CardTitle>
               <CardDescription className="text-white/90">
+                {formData.selectedPlan && (
+                  <div className="bg-professional-rolexGold text-black px-4 py-2 rounded-md mt-4 inline-block font-semibold">
+                    Выбранный план: {formData.selectedPlan}
+                  </div>
+                )}
+              </CardDescription>
                 Заполните форму и прикрепите спецификацию оборудования для точного расчета
               </CardDescription>
             </CardHeader>

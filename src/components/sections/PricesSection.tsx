@@ -3,7 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Icon from "@/components/ui/icon";
 
-export default function PricesSection() {
+interface PricesSectionProps {
+  onPlanSelect: (planName: string) => void;
+}
+
+export default function PricesSection({ onPlanSelect }: PricesSectionProps) {
   return (
     <section id="prices" className="py-20 bg-professional-darkChocolate">
       <div className="container mx-auto px-4">
@@ -41,7 +45,12 @@ export default function PricesSection() {
                   Справка об утилизации
                 </li>
               </ul>
-              <Button className="w-full mt-6 min-h-[44px]">Выбрать план</Button>
+              <Button 
+                className="w-full mt-6 min-h-[44px]"
+                onClick={() => onPlanSelect('Стандартный')}
+              >
+                Выбрать план
+              </Button>
             </CardContent>
           </Card>
 
@@ -80,7 +89,12 @@ export default function PricesSection() {
                   Консультации по утилизации
                 </li>
               </ul>
-              <Button className="w-full mt-6 min-h-[44px]">Выбрать план</Button>
+              <Button 
+                className="w-full mt-6 min-h-[44px]"
+                onClick={() => onPlanSelect('Корпоративный')}
+              >
+                Выбрать план
+              </Button>
             </CardContent>
           </Card>
 
@@ -116,7 +130,12 @@ export default function PricesSection() {
                   Аудит утилизации
                 </li>
               </ul>
-              <Button className="w-full mt-6 min-h-[44px]">Связаться с нами</Button>
+              <Button 
+                className="w-full mt-6 min-h-[44px]"
+                onClick={() => onPlanSelect('Премиум')}
+              >
+                Связаться с нами
+              </Button>
             </CardContent>
           </Card>
         </div>

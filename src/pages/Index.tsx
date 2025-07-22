@@ -27,11 +27,19 @@ const Index = () => {
     comment: '',
     file: null as File | null,
     equipmentType: 'Компьютеры и ноутбуки',
-    quantity: ''
+    quantity: '',
+    selectedPlan: ''
   });
   
   const [agreed, setAgreed] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const handlePlanSelect = (planName: string) => {
+    setFormData(prev => ({ ...prev, selectedPlan: planName }));
+    // Прокрутка к форме заявки
+    const calculatorSection = document.getElementById('calculator');
+    calculatorSection?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   const handleSubmit = (e?: React.MouseEvent) => {
     e?.preventDefault();
@@ -59,6 +67,7 @@ const Index = () => {
 Компания: ${formData.company || 'Не указана'}
 Телефон: ${formData.phone}
 Email: ${formData.email}
+${formData.selectedPlan ? `Выбранный план: ${formData.selectedPlan}` : ''}
 
 Дополнительная информация: ${formData.comment || 'Не указана'}
 ${formData.file ? `Приложен файл спецификации: ${formData.file.name}` : 'Файл спецификации не приложен'}
@@ -151,7 +160,7 @@ ${body}`);
           handleFileChange={handleFileChange}
         />
         <ServicesSection services={services} />
-        <PricesSection />
+        <PricesSection onPlanSelect={handlePlanSelect} />
         <AboutSection />
         <ClientsSection />
         <LicensesSection />
