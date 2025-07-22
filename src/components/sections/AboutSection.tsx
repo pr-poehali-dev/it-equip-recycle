@@ -37,29 +37,29 @@ export default function AboutSection() {
             </div>
           </div>
           
-          <div className="grid grid-cols-2 gap-6">
-            <Card className="text-center p-6">
-              <CardContent className="space-y-2">
-                <div className="text-3xl font-bold text-primary">12</div>
-                <div className="text-gray-600 text-sm">лет опыта</div>
+          <div className="grid grid-cols-2 gap-3 sm:gap-6">
+            <Card className="text-center p-3 sm:p-6">
+              <CardContent className="space-y-1 sm:space-y-2">
+                <div className="text-2xl sm:text-3xl font-bold text-primary">12</div>
+                <div className="text-gray-600 text-xs sm:text-sm leading-tight">лет опыта</div>
               </CardContent>
             </Card>
-            <Card className="text-center p-6">
-              <CardContent className="space-y-2">
-                <div className="text-3xl font-bold text-primary">1.8М+</div>
-                <div className="text-gray-600 text-sm">утилизированных единиц</div>
+            <Card className="text-center p-3 sm:p-6">
+              <CardContent className="space-y-1 sm:space-y-2">
+                <div className="text-2xl sm:text-3xl font-bold text-primary">1.8М+</div>
+                <div className="text-gray-600 text-xs sm:text-sm leading-tight">утилизированных единиц</div>
               </CardContent>
             </Card>
-            <Card className="text-center p-6">
-              <CardContent className="space-y-2">
-                <div className="text-3xl font-bold text-primary">18</div>
-                <div className="text-gray-600 text-sm">городов присутствия</div>
+            <Card className="text-center p-3 sm:p-6">
+              <CardContent className="space-y-1 sm:space-y-2">
+                <div className="text-2xl sm:text-3xl font-bold text-primary">18</div>
+                <div className="text-gray-600 text-xs sm:text-sm leading-tight">городов присутствия</div>
               </CardContent>
             </Card>
-            <Card className="text-center p-6">
-              <CardContent className="space-y-2">
-                <div className="text-3xl font-bold text-primary">700</div>
-                <div className="text-gray-600 text-sm">довольных клиентов</div>
+            <Card className="text-center p-3 sm:p-6">
+              <CardContent className="space-y-1 sm:space-y-2">
+                <div className="text-2xl sm:text-3xl font-bold text-primary">700</div>
+                <div className="text-gray-600 text-xs sm:text-sm leading-tight">довольных клиентов</div>
               </CardContent>
             </Card>
           </div>
