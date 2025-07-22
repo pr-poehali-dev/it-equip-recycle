@@ -101,7 +101,7 @@ Email: ${formData.email}
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-blue-50 to-slate-200">
+    <div className="min-h-screen bg-professional-deepChocolate">
       {/* Header */}
       <header className="bg-professional-darkChocolate border-b border-professional-chocolate sticky top-0 z-50">
         <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4">
