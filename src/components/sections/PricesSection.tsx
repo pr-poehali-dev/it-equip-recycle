@@ -44,6 +44,10 @@ export default function PricesSection({ onPlanSelect }: PricesSectionProps) {
                   <Icon name="Check" size={16} className="text-professional-rolexGold mr-2" />
                   Справка об утилизации
                 </li>
+                <li className="flex items-center opacity-50">
+                  <Icon name="X" size={16} className="text-red-500 mr-2" />
+                  <span className="line-through text-gray-500">Любое ИТ оборудование</span>
+                </li>
               </ul>
               <Button 
                 className="w-full mt-6 min-h-[44px]"
