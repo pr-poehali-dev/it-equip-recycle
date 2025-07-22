@@ -26,13 +26,16 @@ export default function AboutSection() {
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-4 mt-8">
-              <Button size="lg" className="min-h-[48px]">
+              <Button 
+                size="lg" 
+                className="min-h-[48px]"
+                onClick={() => {
+                  const licensesSection = document.getElementById('licenses');
+                  licensesSection?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
                 <Icon name="FileText" size={20} className="mr-2 text-professional-rolexGold" />
                 Скачать сертификаты
-              </Button>
-              <Button size="lg" variant="outline" className="min-h-[48px]">
-                <Icon name="Building" size={20} className="mr-2 text-professional-rolexGold" />
-                О компании подробнее
               </Button>
             </div>
           </div>
