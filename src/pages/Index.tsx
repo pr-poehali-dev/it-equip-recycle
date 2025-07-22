@@ -194,14 +194,14 @@ Email: ${formData.email}
           </div>
           
           <div className="text-center mt-12">
-            <div className="rounded-lg p-6 max-w-4xl mx-auto bg-gray-200">
-              <Icon name="Phone" size={24} className="text-primary mx-auto mb-4" />
-              <h3 className="text-xl font-bold text-secondary mb-2">Единый федеральный номер</h3>
-              <p className="text-gray-600 mb-4">
+            <div className="rounded-lg p-6 max-w-4xl mx-auto bg-slate-100 border border-slate-200">
+              <Icon name="Phone" size={24} className="text-teal-600 mx-auto mb-4" />
+              <h3 className="text-xl font-bold text-slate-800 mb-2">Единый федеральный номер</h3>
+              <p className="text-slate-700 mb-4">
                 Один номер для всех регионов России. Мы автоматически переадресуем ваш звонок в ближайший офис.
               </p>
-              <div className="text-2xl font-bold text-primary">8 (901) 862-81-81</div>
-              <div className="text-sm text-gray-600 mt-1">Звонок бесплатный из любого региона</div>
+              <div className="text-2xl font-bold text-teal-600">8 (901) 862-81-81</div>
+              <div className="text-sm text-slate-600 mt-1">Звонок бесплатный из любого региона</div>
             </div>
           </div>
         </div>
@@ -385,8 +385,8 @@ Email: ${formData.email}
       <section id="prices" className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">Прозрачное ценообразование</h2>
-            <p className="text-gray-600">Стоимость зависит от типа и количества оборудования</p>
+            <h2 className="text-4xl font-bold text-slate-800 mb-4">Прозрачное ценообразование</h2>
+            <p className="text-slate-600">Стоимость зависит от типа и количества оборудования</p>
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -786,33 +786,33 @@ Email: ${formData.email}
             <div>
               <h3 className="text-2xl font-bold mb-6 text-[#ffffff]">Контактная информация</h3>
               <div className="space-y-6">
-                <div className="flex items-center bg-gray-800">
-                  <Icon name="Phone" size={20} className="text-primary mr-4" />
+                <div className="flex items-center p-4 bg-slate-800 rounded-lg border border-slate-700">
+                  <Icon name="Phone" size={20} className="text-teal-400 mr-4" />
                   <div>
-                    <div className="font-semibold bg-gray-800">Телефон</div>
-                    <div className="text-white">+7 (901) 862-81-81</div>
+                    <div className="font-semibold text-slate-200">Телефон</div>
+                    <div className="text-white font-medium">+7 (901) 862-81-81</div>
                   </div>
                 </div>
-                <div className="flex items-center bg-slate-800">
-                  <Icon name="Mail" size={20} className="text-primary mr-4" />
+                <div className="flex items-center p-4 bg-slate-800 rounded-lg border border-slate-700">
+                  <Icon name="Mail" size={20} className="text-teal-400 mr-4" />
                   <div>
-                    <div className="font-semibold">Email</div>
-                    <div className="text-white">commerce@rusutil-1.ru</div>
+                    <div className="font-semibold text-slate-200">Email</div>
+                    <div className="text-white font-medium">commerce@rusutil-1.ru</div>
                   </div>
                 </div>
-                <div className="flex items-center bg-gray-800">
-                  <Icon name="MapPin" size={20} className="text-primary mr-4" />
+                <div className="flex items-start p-4 bg-slate-800 rounded-lg border border-slate-700">
+                  <Icon name="MapPin" size={20} className="text-teal-400 mr-4 mt-1" />
                   <div>
-                    <div className="font-semibold bg-slate-800">Головной офис</div>
-                    <div className="text-white bg-gray-800">г. Москва, ул. Лефортовский вал, дом 16А, этаж 1, помещение I, комната 21Б, офис 28</div>
-                    <div className="text-sm text-primary mt-1">Филиалы в 30+ городах России</div>
+                    <div className="font-semibold text-slate-200">Головной офис</div>
+                    <div className="text-white font-medium">г. Москва, ул. Лефортовский вал, дом 16А, этаж 1, помещение I, комната 21Б, офис 28</div>
+                    <div className="text-sm text-teal-300 mt-1">Филиалы в 30+ городах России</div>
                   </div>
                 </div>
-                <div className="flex items-center bg-gray-800">
-                  <Icon name="Clock" size={20} className="text-primary mr-4" />
+                <div className="flex items-center p-4 bg-slate-800 rounded-lg border border-slate-700">
+                  <Icon name="Clock" size={20} className="text-teal-400 mr-4" />
                   <div>
-                    <div className="font-semibold">Режим работы</div>
-                    <div className="text-white">Пн-Пт: 10:00-20:00</div>
+                    <div className="font-semibold text-slate-200">Режим работы</div>
+                    <div className="text-white font-medium">Пн-Пт: 10:00-20:00</div>
                   </div>
                 </div>
               </div>
