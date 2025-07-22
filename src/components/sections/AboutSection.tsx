@@ -12,7 +12,7 @@ export default function AboutSection() {
             <div className="space-y-4 premium-body text-gray-700">
               <p>
                 <strong>Utilizon</strong> — ведущая компания России в сфере экологически безопасной утилизации 
-                ИТ-оборудования с 2008 года. Мы обеспечиваем полное соответствие экологическим стандартам 
+                ИТ-оборудования с 2013 года. Мы обеспечиваем полное соответствие экологическим стандартам 
                 и требованиям законодательства РФ.
               </p>
               <p>
@@ -20,7 +20,7 @@ export default function AboutSection() {
                 экологически ответственным. Мы работаем как с крупными корпорациями, так и с малыми предприятиями.
               </p>
               <p>
-                За годы работы мы утилизировали более <strong>50 000 единиц</strong> различного 
+                За годы работы мы утилизировали более <strong>1 800 000 единиц</strong> различного 
                 ИТ-оборудования, выдали тысячи сертификатов об утилизации и помогли компаниям 
                 соблюдать экологические требования.
               </p>
@@ -40,13 +40,13 @@ export default function AboutSection() {
           <div className="grid grid-cols-2 gap-6">
             <Card className="text-center p-6">
               <CardContent className="space-y-2">
-                <div className="text-3xl font-bold text-primary">15+</div>
+                <div className="text-3xl font-bold text-primary">12</div>
                 <div className="text-gray-600 text-sm">лет опыта</div>
               </CardContent>
             </Card>
             <Card className="text-center p-6">
               <CardContent className="space-y-2">
-                <div className="text-3xl font-bold text-primary">50к+</div>
+                <div className="text-3xl font-bold text-primary">1.8М+</div>
                 <div className="text-gray-600 text-sm">утилизированных единиц</div>
               </CardContent>
             </Card>
@@ -58,7 +58,7 @@ export default function AboutSection() {
             </Card>
             <Card className="text-center p-6">
               <CardContent className="space-y-2">
-                <div className="text-3xl font-bold text-primary">1000+</div>
+                <div className="text-3xl font-bold text-primary">700</div>
                 <div className="text-gray-600 text-sm">довольных клиентов</div>
               </CardContent>
             </Card>
