@@ -15,11 +15,11 @@ export default function HeroSection() {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Button size="lg" className="bg-white text-primary hover:bg-gray-100 min-h-[48px] px-6" onClick={() => document.getElementById('calculator')?.scrollIntoView({behavior: 'smooth'})}>
-            <Icon name="Calculator" size={20} className="mr-2" />
+            <Icon name="Calculator" size={20} className="mr-2 text-professional-rolexGold" />
             Рассчитать стоимость
           </Button>
           <Button size="lg" variant="outline" className="border-white !text-white hover:bg-white hover:text-primary bg-transparent min-h-[48px] px-6">
-            <Icon name="FileText" size={20} className="mr-2" />
+            <Icon name="FileText" size={20} className="mr-2 text-professional-rolexGold" />
             Скачать прайс
           </Button>
         </div>
@@ -27,21 +27,21 @@ export default function HeroSection() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:p-6 lg:p-8 mt-16 max-w-4xl mx-auto">
           <div className="text-center">
             <div className="bg-white/10 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-              <Icon name="Shield" size={24} />
+              <Icon name="Shield" size={24} className="text-professional-rolexGold" />
             </div>
             <h3 className="font-semibold mb-2">Лицензии и сертификаты</h3>
             <p className="text-white/90 text-sm">Полное соответствие экологическим требованиям</p>
           </div>
           <div className="text-center">
             <div className="bg-white/10 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-              <Icon name="Truck" size={24} />
+              <Icon name="Truck" size={24} className="text-professional-rolexGold" />
             </div>
             <h3 className="font-semibold mb-2">Бесплатный вывоз</h3>
             <p className="text-white/90 text-sm">От 10 единиц техники по Москве и Московской области</p>
           </div>
           <div className="text-center">
             <div className="bg-white/10 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-              <Icon name="FileCheck" size={24} />
+              <Icon name="FileCheck" size={24} className="text-professional-rolexGold" />
             </div>
             <h3 className="font-semibold mb-2">Документооборот</h3>
             <p className="text-white/90 text-sm">Акты, справки и сертификаты об утилизации</p>

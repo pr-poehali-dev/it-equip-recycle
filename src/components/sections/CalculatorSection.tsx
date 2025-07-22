@@ -129,7 +129,7 @@ export default function CalculatorSection({
                       className="border-2 border-dashed border-primary/30 rounded-lg p-6 text-center hover:border-primary transition-all duration-300 cursor-pointer bg-blue-50/50"
                       onClick={() => fileInputRef.current?.click()}
                     >
-                      <Icon name="Upload" size={32} className="text-primary mx-auto mb-3" />
+                      <Icon name="Upload" size={32} className="text-professional-rolexGold mx-auto mb-3" />
                       {formData.file ? (
                         <div>
                           <p className="text-sm premium-body text-green-700 mb-2 font-semibold">

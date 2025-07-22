@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 sm:p-6 lg:p-8">
           <div>
             <div className="flex items-center space-x-2 mb-4">
-              <Icon name="Recycle" size={24} className="text-primary" />
+              <Icon name="Recycle" size={24} className="text-professional-rolexGold" />
               <span className="font-black text-3xl">utilizon
 </span>
             </div>
@@ -21,20 +21,20 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Услуги</h4>
             <ul className="space-y-2 text-sm text-gray-200">
-              <li><a href="#" className="hover:text-primary transition-colors">Утилизация компьютеров</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Серверное оборудование</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Офисная техника</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Мобильные устройства</a></li>
+              <li><a href="#" className="hover:text-professional-rolexGold transition-colors">Утилизация компьютеров</a></li>
+              <li><a href="#" className="hover:text-professional-rolexGold transition-colors">Серверное оборудование</a></li>
+              <li><a href="#" className="hover:text-professional-rolexGold transition-colors">Офисная техника</a></li>
+              <li><a href="#" className="hover:text-professional-rolexGold transition-colors">Мобильные устройства</a></li>
             </ul>
           </div>
           
           <div>
             <h4 className="font-semibold mb-4">Документы</h4>
             <ul className="space-y-2 text-sm text-gray-200">
-              <li><a href="#" className="hover:text-primary transition-colors">Лицензии</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Сертификаты</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Политика конфиденциальности</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Условия использования</a></li>
+              <li><a href="#" className="hover:text-professional-rolexGold transition-colors">Лицензии</a></li>
+              <li><a href="#" className="hover:text-professional-rolexGold transition-colors">Сертификаты</a></li>
+              <li><a href="#" className="hover:text-professional-rolexGold transition-colors">Политика конфиденциальности</a></li>
+              <li><a href="#" className="hover:text-professional-rolexGold transition-colors">Условия использования</a></li>
             </ul>
           </div>
           

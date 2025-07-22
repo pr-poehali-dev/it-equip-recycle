@@ -25,19 +25,19 @@ export default function PricesSection() {
             <CardContent>
               <ul className="space-y-3">
                 <li className="flex items-center">
-                  <Icon name="Check" size={16} className="text-green-500 mr-2" />
+                  <Icon name="Check" size={16} className="text-professional-rolexGold mr-2" />
                   Утилизация компьютеров
                 </li>
                 <li className="flex items-center">
-                  <Icon name="Check" size={16} className="text-green-500 mr-2" />
+                  <Icon name="Check" size={16} className="text-professional-rolexGold mr-2" />
                   Акт передачи
                 </li>
                 <li className="flex items-center">
-                  <Icon name="Check" size={16} className="text-green-500 mr-2" />
+                  <Icon name="Check" size={16} className="text-professional-rolexGold mr-2" />
                   Вывоз от 10 единиц
                 </li>
                 <li className="flex items-center">
-                  <Icon name="Check" size={16} className="text-green-500 mr-2" />
+                  <Icon name="Check" size={16} className="text-professional-rolexGold mr-2" />
                   Справка об утилизации
                 </li>
               </ul>
@@ -60,23 +60,23 @@ export default function PricesSection() {
             <CardContent>
               <ul className="space-y-3">
                 <li className="flex items-center">
-                  <Icon name="Check" size={16} className="text-green-500 mr-2" />
+                  <Icon name="Check" size={16} className="text-professional-rolexGold mr-2" />
                   Любое ИТ-оборудование
                 </li>
                 <li className="flex items-center">
-                  <Icon name="Check" size={16} className="text-green-500 mr-2" />
+                  <Icon name="Check" size={16} className="text-professional-rolexGold mr-2" />
                   Полный пакет документов
                 </li>
                 <li className="flex items-center">
-                  <Icon name="Check" size={16} className="text-green-500 mr-2" />
+                  <Icon name="Check" size={16} className="text-professional-rolexGold mr-2" />
                   Срочный вывоз 24/7
                 </li>
                 <li className="flex items-center">
-                  <Icon name="Check" size={16} className="text-green-500 mr-2" />
+                  <Icon name="Check" size={16} className="text-professional-rolexGold mr-2" />
                   Экологический сертификат
                 </li>
                 <li className="flex items-center">
-                  <Icon name="Check" size={16} className="text-green-500 mr-2" />
+                  <Icon name="Check" size={16} className="text-professional-rolexGold mr-2" />
                   Консультации по утилизации
                 </li>
               </ul>
@@ -96,23 +96,23 @@ export default function PricesSection() {
             <CardContent>
               <ul className="space-y-3">
                 <li className="flex items-center">
-                  <Icon name="Check" size={16} className="text-green-500 mr-2" />
+                  <Icon name="Check" size={16} className="text-professional-rolexGold mr-2" />
                   Все виды техники
                 </li>
                 <li className="flex items-center">
-                  <Icon name="Check" size={16} className="text-green-500 mr-2" />
+                  <Icon name="Check" size={16} className="text-professional-rolexGold mr-2" />
                   Персональный менеджер
                 </li>
                 <li className="flex items-center">
-                  <Icon name="Check" size={16} className="text-green-500 mr-2" />
+                  <Icon name="Check" size={16} className="text-professional-rolexGold mr-2" />
                   Договор на обслуживание
                 </li>
                 <li className="flex items-center">
-                  <Icon name="Check" size={16} className="text-green-500 mr-2" />
+                  <Icon name="Check" size={16} className="text-professional-rolexGold mr-2" />
                   Сертификат ISO 14001
                 </li>
                 <li className="flex items-center">
-                  <Icon name="Check" size={16} className="text-green-500 mr-2" />
+                  <Icon name="Check" size={16} className="text-professional-rolexGold mr-2" />
                   Аудит утилизации
                 </li>
               </ul>

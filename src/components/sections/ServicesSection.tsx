@@ -29,7 +29,7 @@ export default function ServicesSection({ services }: ServicesSectionProps) {
             <Card key={index} className="hover:shadow-lg transition-shadow duration-300 hover-scale">
               <CardHeader className="text-center">
                 <div className="bg-primary/10 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                  <Icon name={service.icon as any} size={24} className="text-primary" />
+                  <Icon name={service.icon as any} size={24} className="text-professional-rolexGold" />
                 </div>
                 <CardTitle className="text-lg">{service.title}</CardTitle>
               </CardHeader>

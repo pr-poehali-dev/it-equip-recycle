@@ -13,20 +13,20 @@ export default function Header({ mobileMenuOpen, setMobileMenuOpen }: HeaderProp
       <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4">
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center space-x-2 sm:space-x-3 ml-4 sm:ml-8">
-            <Icon name="Recycle" size={24} className="text-primary sm:hidden" />
-            <Icon name="Recycle" size={32} className="text-primary hidden sm:block" />
+            <Icon name="Recycle" size={24} className="text-professional-rolexGold sm:hidden" />
+            <Icon name="Recycle" size={32} className="text-professional-rolexGold hidden sm:block" />
             <span className="text-white font-sans font-black text-xl sm:text-2xl md:text-3xl" style={{ letterSpacing: '0.1em', fontWeight: '1200' }}>utilizon</span>
           </div>
           
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
-            <a href="#services" className="text-white hover:text-primary transition-colors">Услуги</a>
-            <a href="#prices" className="text-white hover:text-primary transition-colors">Цены</a>
-            <a href="#about" className="text-white hover:text-primary transition-colors">О нас</a>
-            <a href="#clients" className="text-white hover:text-primary transition-colors">Клиенты</a>
-            <a href="#licenses" className="text-white hover:text-primary transition-colors">Лицензии</a>
-            <a href="#faq" className="text-white hover:text-primary transition-colors">Вопросы</a>
-            <a href="#contacts" className="text-white hover:text-primary transition-colors">Контакты</a>
+            <a href="#services" className="text-white hover:text-professional-rolexGold transition-colors">Услуги</a>
+            <a href="#prices" className="text-white hover:text-professional-rolexGold transition-colors">Цены</a>
+            <a href="#about" className="text-white hover:text-professional-rolexGold transition-colors">О нас</a>
+            <a href="#clients" className="text-white hover:text-professional-rolexGold transition-colors">Клиенты</a>
+            <a href="#licenses" className="text-white hover:text-professional-rolexGold transition-colors">Лицензии</a>
+            <a href="#faq" className="text-white hover:text-professional-rolexGold transition-colors">Вопросы</a>
+            <a href="#contacts" className="text-white hover:text-professional-rolexGold transition-colors">Контакты</a>
           </nav>
 
           {/* Call Button & Mobile Menu */}
@@ -51,56 +51,56 @@ export default function Header({ mobileMenuOpen, setMobileMenuOpen }: HeaderProp
                 <SheetContent side="right" className="w-[300px] sm:w-[400px]">
                   <div className="flex flex-col h-full">
                     <div className="flex items-center mb-8">
-                      <Icon name="Recycle" size={24} className="text-primary mr-2" />
+                      <Icon name="Recycle" size={24} className="text-professional-rolexGold mr-2" />
                       <span className="font-black text-xl">utilizon</span>
                     </div>
                     
                     <nav className="flex flex-col space-y-4 flex-1">
                       <a 
                         href="#services" 
-                        className="text-gray-700 hover:text-primary py-3 px-4 rounded-lg hover:bg-gray-50 transition-all"
+                        className="text-gray-700 hover:text-professional-rolexGold py-3 px-4 rounded-lg hover:bg-gray-50 transition-all"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         Услуги
                       </a>
                       <a 
                         href="#prices" 
-                        className="text-gray-700 hover:text-primary py-3 px-4 rounded-lg hover:bg-gray-50 transition-all"
+                        className="text-gray-700 hover:text-professional-rolexGold py-3 px-4 rounded-lg hover:bg-gray-50 transition-all"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         Цены
                       </a>
                       <a 
                         href="#about" 
-                        className="text-gray-700 hover:text-primary py-3 px-4 rounded-lg hover:bg-gray-50 transition-all"
+                        className="text-gray-700 hover:text-professional-rolexGold py-3 px-4 rounded-lg hover:bg-gray-50 transition-all"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         О нас
                       </a>
                       <a 
                         href="#clients" 
-                        className="text-gray-700 hover:text-primary py-3 px-4 rounded-lg hover:bg-gray-50 transition-all"
+                        className="text-gray-700 hover:text-professional-rolexGold py-3 px-4 rounded-lg hover:bg-gray-50 transition-all"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         Клиенты
                       </a>
                       <a 
                         href="#licenses" 
-                        className="text-gray-700 hover:text-primary py-3 px-4 rounded-lg hover:bg-gray-50 transition-all"
+                        className="text-gray-700 hover:text-professional-rolexGold py-3 px-4 rounded-lg hover:bg-gray-50 transition-all"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         Лицензии
                       </a>
                       <a 
                         href="#faq" 
-                        className="text-gray-700 hover:text-primary py-3 px-4 rounded-lg hover:bg-gray-50 transition-all"
+                        className="text-gray-700 hover:text-professional-rolexGold py-3 px-4 rounded-lg hover:bg-gray-50 transition-all"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         Вопросы
                       </a>
                       <a 
                         href="#contacts" 
-                        className="text-gray-700 hover:text-primary py-3 px-4 rounded-lg hover:bg-gray-50 transition-all"
+                        className="text-gray-700 hover:text-professional-rolexGold py-3 px-4 rounded-lg hover:bg-gray-50 transition-all"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         Контакты

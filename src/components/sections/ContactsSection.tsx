@@ -42,21 +42,21 @@ export default function ContactsSection({
             <h3 className="text-2xl font-bold mb-6 text-[#ffffff]">Контактная информация</h3>
             <div className="space-y-6">
               <div className="flex items-center p-4 bg-slate-800 rounded-lg border border-slate-700">
-                <Icon name="Phone" size={20} className="text-teal-400 mr-4" />
+                <Icon name="Phone" size={20} className="text-professional-rolexGold mr-4" />
                 <div>
                   <div className="font-semibold text-slate-200">Телефон</div>
                   <div className="text-white font-medium">+7 (901) 862-81-81</div>
                 </div>
               </div>
               <div className="flex items-center p-4 bg-slate-800 rounded-lg border border-slate-700">
-                <Icon name="Mail" size={20} className="text-teal-400 mr-4" />
+                <Icon name="Mail" size={20} className="text-professional-rolexGold mr-4" />
                 <div>
                   <div className="font-semibold text-slate-200">Email</div>
                   <div className="text-white font-medium">commerce@rusutil-1.ru</div>
                 </div>
               </div>
               <div className="flex items-start p-4 bg-slate-800 rounded-lg border border-slate-700">
-                <Icon name="MapPin" size={20} className="text-teal-400 mr-4 mt-1" />
+                <Icon name="MapPin" size={20} className="text-professional-rolexGold mr-4 mt-1" />
                 <div>
                   <div className="font-semibold text-slate-200">Головной офис</div>
                   <div className="text-white font-medium">г. Москва, ул. Лефортовский вал, дом 16А, этаж 1, помещение I, комната 21Б, офис 28</div>
@@ -64,7 +64,7 @@ export default function ContactsSection({
                 </div>
               </div>
               <div className="flex items-center p-4 bg-slate-800 rounded-lg border border-slate-700">
-                <Icon name="Clock" size={20} className="text-teal-400 mr-4" />
+                <Icon name="Clock" size={20} className="text-professional-rolexGold mr-4" />
                 <div>
                   <div className="font-semibold text-slate-200">Режим работы</div>
                   <div className="text-white font-medium">Пн-Пт: 10:00-20:00</div>
@@ -174,7 +174,7 @@ export default function ContactsSection({
                     }
                   }}
                 >
-                  <Icon name="Upload" size={24} className="text-gray-400 mx-auto mb-2" />
+                  <Icon name="Upload" size={24} className="text-professional-rolexGold mx-auto mb-2" />
                   {formData.file ? (
                     <p className="text-sm text-green-600 mb-1">
                       ✓ Выбран файл: {formData.file.name}
