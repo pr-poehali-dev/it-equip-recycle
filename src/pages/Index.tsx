@@ -22,6 +22,8 @@ const Index = () => {
     company: '',
     phone: '',
     email: '',
+    city: '',
+    customCity: '',
     comment: '',
     file: null as File | null,
     equipmentType: 'Компьютеры и ноутбуки',

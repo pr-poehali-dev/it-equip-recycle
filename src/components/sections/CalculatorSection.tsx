@@ -8,6 +8,8 @@ interface FormData {
   company: string;
   phone: string;
   email: string;
+  city: string;
+  customCity: string;
   comment: string;
   file: File | null;
 }
@@ -106,16 +108,29 @@ export default function CalculatorSection({
 
                   <div>
                     <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Город</label>
-                    <select className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base">
+                    <select 
+                      value={formData.city}
+                      onChange={(e) => setFormData({...formData, city: e.target.value, customCity: e.target.value !== 'Другой город' ? '' : formData.customCity})}
+                      className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base"
+                    >
                       <option value="">Выберите город</option>
-                      <option>Москва и Московская область</option>
-                      <option>Санкт-Петербург и Ленинградская область</option>
-                      <option>Новосибирск</option>
-                      <option>Екатеринбург</option>
-                      <option>Казань</option>
-                      <option>Нижний Новгород</option>
-                      <option>Другой город</option>
+                      <option value="Москва и Московская область">Москва и Московская область</option>
+                      <option value="Санкт-Петербург и Ленинградская область">Санкт-Петербург и Ленинградская область</option>
+                      <option value="Новосибирск">Новосибирск</option>
+                      <option value="Екатеринбург">Екатеринбург</option>
+                      <option value="Казань">Казань</option>
+                      <option value="Нижний Новгород">Нижний Новгород</option>
+                      <option value="Другой город">Другой город</option>
                     </select>
+                    {formData.city === 'Другой город' && (
+                      <input 
+                        type="text" 
+                        value={formData.customCity}
+                        onChange={(e) => setFormData({...formData, customCity: e.target.value})}
+                        className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base mt-3" 
+                        placeholder="Укажите ваш город"
+                      />
+                    )}
                   </div>
                 </div>
                 
