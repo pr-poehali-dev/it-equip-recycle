@@ -106,10 +106,10 @@ Email: ${formData.email}
       <header className="bg-professional-darkChocolate border-b border-professional-chocolate sticky top-0 z-50">
         <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4">
           <div className="flex items-center justify-between w-full">
-            <div className="flex items-center space-x-2 sm:space-x-3">
+            <div className="flex items-center space-x-2 sm:space-x-3 ml-4 sm:ml-8">
               <Icon name="Recycle" size={24} className="text-primary sm:hidden" />
               <Icon name="Recycle" size={32} className="text-primary hidden sm:block" />
-              <span className="text-white font-sans font-black text-xl sm:text-2xl md:text-3xl" style={{ letterSpacing: '0.1em', fontWeight: '900' }}>utilizon</span>
+              <span className="text-white font-sans font-black text-xl sm:text-2xl md:text-3xl" style={{ letterSpacing: '0.1em', fontWeight: '950' }}>utilizon</span>
             </div>
             
             {/* Desktop Navigation */}
