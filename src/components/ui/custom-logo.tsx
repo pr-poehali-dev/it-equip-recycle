@@ -16,75 +16,52 @@ export default function CustomLogo({ size = 32, className = "" }: CustomLogoProp
         className="text-professional-rolexGold"
         fill="none"
       >
-        {/* Определение стрелки */}
-        <defs>
-          <marker
-            id="arrowhead"
-            markerWidth="8"
-            markerHeight="6"
-            refX="7"
-            refY="3"
-            orient="auto"
-          >
-            <polygon
-              points="0 0, 8 3, 0 6"
-              fill="currentColor"
-            />
-          </marker>
-        </defs>
+        {/* Векторы по кругу вокруг буквы u - 8 векторов */}
+        {Array.from({ length: 8 }).map((_, i) => {
+          const angle = (i * 45) - 90; // 8 векторов через каждые 45 градусов
+          const radians = (angle * Math.PI) / 180;
+          const x = 50 + 28 * Math.cos(radians);
+          const y = 50 + 28 * Math.sin(radians);
+          
+          // Направление вектора (по часовой стрелке)
+          const endX = 50 + 36 * Math.cos(radians);
+          const endY = 50 + 36 * Math.sin(radians);
+          
+          return (
+            <g key={i}>
+              <line
+                x1={x}
+                y1={y}
+                x2={endX}
+                y2={endY}
+                stroke="currentColor"
+                strokeWidth="2"
+              />
+              {/* Наконечник вектора */}
+              <circle
+                cx={endX}
+                cy={endY}
+                r="1.5"
+                fill="currentColor"
+              />
+            </g>
+          );
+        })}
         
-        {/* Изогнутые стрелочки вокруг буквы U - 4 стрелки как на рисунке */}
-        
-        {/* Верхняя левая стрелка */}
-        <path
-          d="M28 20 Q18 10, 35 18"
-          stroke="currentColor"
-          strokeWidth="2.5"
-          fill="none"
-          markerEnd="url(#arrowhead)"
-        />
-        
-        {/* Верхняя правая стрелка */}
-        <path
-          d="M72 20 Q82 10, 65 18"
-          stroke="currentColor"
-          strokeWidth="2.5"
-          fill="none"
-          markerEnd="url(#arrowhead)"
-        />
-        
-        {/* Нижняя правая стрелка */}
-        <path
-          d="M72 80 Q82 90, 65 82"
-          stroke="currentColor"
-          strokeWidth="2.5"
-          fill="none"
-          markerEnd="url(#arrowhead)"
-        />
-        
-        {/* Нижняя левая стрелка */}
-        <path
-          d="M28 80 Q18 90, 35 82"
-          stroke="currentColor"
-          strokeWidth="2.5"
-          fill="none"
-          markerEnd="url(#arrowhead)"
-        />
-        
-        {/* Заглавная буква "U" в центре */}
+        {/* Строчная буква "u" в центре */}
         <text
           x="50"
-          y="62"
+          y="58"
           textAnchor="middle"
           className="font-bold"
           style={{ 
-            fontSize: '36px',
+            fontSize: '32px',
             fontFamily: 'ui-sans-serif, system-ui, sans-serif',
             fontWeight: '800'
           }}
           fill="currentColor"
         >
-          U
+          u
         </text>
       </svg>
     </div>
