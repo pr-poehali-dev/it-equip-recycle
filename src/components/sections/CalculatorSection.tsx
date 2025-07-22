@@ -46,19 +46,24 @@ export default function CalculatorSection({
         
         <div className="max-w-4xl mx-auto">
           <Card className="shadow-xl">
-            <CardHeader className="bg-emerald-800 text-white text-center">
-              <CardTitle className="text-2xl flex items-center justify-center">
-                <Icon name="Calculator" size={72} className="mr-4 text-professional-rolexGold" />
-                <span className="text-white">Калькулятор стоимости утилизации</span>
-              </CardTitle>
-              <CardDescription className="text-white/90">
-                Заполните форму и прикрепите спецификацию оборудования для точного расчета
-                {formData.selectedPlan && (
-                  <div className="bg-professional-rolexGold text-black px-4 py-2 rounded-md mt-4 inline-block font-semibold">
+            <CardHeader className="bg-emerald-800 text-white p-6">
+              <div className="text-center mb-4">
+                <CardTitle className="text-2xl flex items-center justify-center mb-3">
+                  <Icon name="Calculator" size={72} className="mr-4 text-professional-rolexGold" />
+                  <span className="text-white">Калькулятор стоимости утилизации</span>
+                </CardTitle>
+                <CardDescription className="text-white/90 text-lg">
+                  Заполните форму и прикрепите спецификацию оборудования для точного расчета
+                </CardDescription>
+              </div>
+              
+              {formData.selectedPlan && (
+                <div className="flex justify-end">
+                  <div className="bg-professional-rolexGold text-black px-6 py-3 rounded-lg font-semibold shadow-lg">
                     Выбранный план: {formData.selectedPlan}
                   </div>
-                )}
-              </CardDescription>
+                </div>
+              )}
             </CardHeader>
             <CardContent className="p-4 sm:p-6 lg:p-4 sm:p-6 lg:p-8">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-4 sm:p-6 lg:p-8">
