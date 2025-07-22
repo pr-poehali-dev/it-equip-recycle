@@ -19,7 +19,7 @@ export default function GeographySection() {
           {cities.map((city, index) => (
             <div key={index} className="text-center p-4 bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 cursor-pointer group border border-professional-rolexGold/50">
               <Icon name="MapPin" size={20} className="mx-auto mb-2 text-professional-rolexGold group-hover:text-professional-rolexLightGold transition-colors" />
-              <div className="text-xs font-medium text-white/90 group-hover:text-white leading-tight">{city}</div>
+              <div className="text-sm font-medium text-white/90 group-hover:text-white leading-tight">{city}</div>
             </div>
           ))}
         </div>

@@ -14,7 +14,7 @@ export default function LicensesSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <Card className="text-center hover-scale">
             <CardHeader>
-              <Icon name="FileText" size={48} className="text-primary mx-auto mb-4" />
+              <Icon name="FileText" size={48} className="text-professional-rolexGold mx-auto mb-4" />
               <CardTitle>Лицензия на утилизацию</CardTitle>
             </CardHeader>
             <CardContent>
@@ -30,7 +30,7 @@ export default function LicensesSection() {
 
           <Card className="text-center hover-scale">
             <CardHeader>
-              <Icon name="Award" size={48} className="text-primary mx-auto mb-4" />
+              <Icon name="Award" size={48} className="text-professional-rolexGold mx-auto mb-4" />
               <CardTitle>ISO 14001</CardTitle>
             </CardHeader>
             <CardContent>
@@ -46,7 +46,7 @@ export default function LicensesSection() {
 
           <Card className="text-center hover-scale">
             <CardHeader>
-              <Icon name="Shield" size={48} className="text-primary mx-auto mb-4" />
+              <Icon name="Shield" size={48} className="text-professional-rolexGold mx-auto mb-4" />
               <CardTitle>Страховой полис</CardTitle>
             </CardHeader>
             <CardContent>
@@ -62,7 +62,7 @@ export default function LicensesSection() {
 
           <Card className="text-center hover-scale">
             <CardHeader>
-              <Icon name="Building" size={48} className="text-primary mx-auto mb-4" />
+              <Icon name="Building" size={48} className="text-professional-rolexGold mx-auto mb-4" />
               <CardTitle>Свидетельство СРО</CardTitle>
             </CardHeader>
             <CardContent>
@@ -79,7 +79,7 @@ export default function LicensesSection() {
 
         <div className="bg-blue-50 rounded-lg p-4 sm:p-6 lg:p-8 mt-12">
           <div className="text-center">
-            <Icon name="Info" size={24} className="text-primary mx-auto mb-4" />
+            <Icon name="Info" size={24} className="text-professional-rolexGold mx-auto mb-4" />
             <h3 className="text-xl font-bold text-secondary mb-4">Документы, которые вы получите</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left max-w-4xl mx-auto">
               <div>

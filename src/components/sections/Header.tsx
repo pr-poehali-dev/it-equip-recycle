@@ -36,8 +36,8 @@ export default function Header({ mobileMenuOpen, setMobileMenuOpen }: HeaderProp
               className="hidden sm:flex bg-primary hover:bg-primary/90 text-white min-h-[40px] px-4"
               onClick={() => window.open('tel:+79018628181', '_self')}
             >
-              <Icon name="Phone" size={16} className="mr-2" />
-              <span className="text-sm font-semibold">8 (901) 862-81-81</span>
+              <Icon name="Phone" size={16} className="mr-2 text-professional-rolexGold" />
+              <span className="text-sm font-semibold text-professional-rolexGold">8 (901) 862-81-81</span>
             </Button>
 
             {/* Mobile Menu Toggle */}

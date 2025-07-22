@@ -223,7 +223,7 @@ export default function ContactsSection({
                   handleSubmit();
                 }}
               >
-                <Icon name="Calculator" size={16} className="mr-2" />
+                <Icon name="Calculator" size={16} className="mr-2 text-professional-rolexGold" />
                 Получить расчет стоимости
               </Button>
             </CardContent>

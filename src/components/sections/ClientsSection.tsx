@@ -56,7 +56,7 @@ export default function ClientsSection() {
         
         <div className="text-center mt-12">
           <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-lg p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto">
-            <Icon name="Award" size={32} className="text-primary mx-auto mb-4" />
+            <Icon name="Award" size={32} className="text-professional-rolexGold mx-auto mb-4" />
             <h3 className="text-2xl font-bold text-gray-900 mb-4">Почему нас выбирают</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
               <div>

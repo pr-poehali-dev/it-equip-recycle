@@ -212,7 +212,7 @@ export default function CalculatorSection({
                     className="w-full min-h-[48px]" 
                     size="lg"
                   >
-                    <Icon name="Calculator" size={20} className="mr-2" />
+                    <Icon name="Calculator" size={20} className="mr-2 text-professional-rolexGold" />
                     Получить расчет стоимости
                   </Button>
                   <Button 
@@ -221,7 +221,7 @@ export default function CalculatorSection({
                     className="w-full min-h-[48px]" 
                     size="lg"
                   >
-                    <Icon name="Phone" size={20} className="mr-2" />
+                    <Icon name="Phone" size={20} className="mr-2 text-professional-rolexGold" />
                     Обсудить по телефону
                   </Button>
                 </div>
