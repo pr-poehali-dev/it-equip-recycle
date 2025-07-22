@@ -17,8 +17,8 @@ export default function GeographySection() {
         
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 max-w-7xl mx-auto">
           {cities.map((city, index) => (
-            <div key={index} className="text-center p-4 bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 cursor-pointer group">
-              <Icon name="MapPin" size={16} className="mx-auto mb-2 text-professional-rolexGold group-hover:text-professional-rolexLightGold transition-colors" />
+            <div key={index} className="text-center p-4 bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 cursor-pointer group border border-professional-rolexGold/50">
+              <Icon name="MapPin" size={20} className="mx-auto mb-2 text-professional-rolexGold group-hover:text-professional-rolexLightGold transition-colors" />
               <div className="text-xs font-medium text-white/90 group-hover:text-white leading-tight">{city}</div>
             </div>
           ))}
