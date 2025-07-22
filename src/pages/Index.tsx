@@ -103,9 +103,11 @@ Email: ${formData.email}
       <header className="bg-professional-darkChocolate border-b border-professional-chocolate sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <Icon name="Recycle" size={32} className="text-primary" />
-              <span className="text-3xl font-black text-white tracking-tight">UTILIZON</span>
+            <div className="flex items-center flex-1">
+              <div className="flex items-center space-x-3">
+                <Icon name="Recycle" size={32} className="text-primary" />
+                <span className="text-3xl font-black text-white tracking-widest uppercase font-sans">UTILIZON</span>
+              </div>
             </div>
             <nav className="hidden md:flex items-center space-x-8">
               <a href="#services" className="text-white hover:text-primary transition-colors">Услуги</a>
