@@ -102,14 +102,12 @@ Email: ${formData.email}
       {/* Header */}
       <header className="bg-professional-darkChocolate border-b border-professional-chocolate sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center flex-1">
-              <div className="flex items-center space-x-3">
-                <Icon name="Recycle" size={32} className="text-primary" />
-                <span className="text-white font-sans font-black text-5xl" style={{ letterSpacing: '0.15em', fontWeight: '900' }}>utilizon</span>
-              </div>
+          <div className="flex items-center justify-between w-full">
+            <div className="flex items-center space-x-3">
+              <Icon name="Recycle" size={32} className="text-primary" />
+              <span className="text-white font-sans font-black text-3xl" style={{ letterSpacing: '0.15em', fontWeight: '900' }}>utilizon</span>
             </div>
-            <nav className="hidden md:flex items-center space-x-8">
+            <nav className="hidden md:flex items-center space-x-6">
               <a href="#services" className="text-white hover:text-primary transition-colors">Услуги</a>
               <a href="#prices" className="text-white hover:text-primary transition-colors">Цены</a>
               <a href="#about" className="text-white hover:text-primary transition-colors">О нас</a>
