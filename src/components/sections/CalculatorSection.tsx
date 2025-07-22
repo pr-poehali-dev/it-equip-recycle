@@ -141,7 +141,7 @@ export default function CalculatorSection({
                       <span className="text-xs text-gray-600 block mt-1">Прикрепите файл с описанием оборудования</span>
                     </label>
                     <div 
-                      className="border-2 border-dashed border-primary/30 rounded-lg p-6 text-center hover:border-primary transition-all duration-300 cursor-pointer bg-blue-50/50"
+                      className="border-2 border-dashed border-primary/30 rounded-lg p-6 text-center hover:border-primary transition-all duration-300 cursor-pointer bg-black/5"
                       onClick={() => fileInputRef.current?.click()}
                     >
                       <Icon name="Upload" size={32} className="text-professional-rolexGold mx-auto mb-3" />

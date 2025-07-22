@@ -77,7 +77,7 @@ export default function LicensesSection() {
           </Card>
         </div>
 
-        <div className="bg-blue-50 rounded-lg p-4 sm:p-6 lg:p-8 mt-12">
+        <div className="bg-black/10 rounded-lg p-4 sm:p-6 lg:p-8 mt-12">
           <div className="text-center">
             <Icon name="Info" size={24} className="text-primary mx-auto mb-4" />
             <h3 className="text-xl font-bold text-secondary mb-4">Документы, которые вы получите</h3>
