@@ -199,14 +199,33 @@ export default function CalculatorSection({
               
               <div className="mt-8 border-t pt-6">
                 <div className="flex items-start space-x-3 mb-6">
-                  <input 
-                    type="checkbox" 
-                    id="calc-agreement" 
-                    checked={agreed}
-                    onChange={(e) => setAgreed(e.target.checked)}
-                    className="mt-1 rounded border-gray-300 w-4 h-4" 
-                    required 
-                  />
+                  <div className="relative">
+                    <input 
+                      type="checkbox" 
+                      id="calc-agreement" 
+                      checked={agreed}
+                      onChange={(e) => setAgreed(e.target.checked)}
+                      className="sr-only" 
+                      required 
+                    />
+                    <div 
+                      onClick={() => setAgreed(!agreed)}
+                      className={`w-5 h-5 rounded border-2 cursor-pointer flex items-center justify-center transition-all ${
+                        agreed 
+                          ? 'bg-emerald-600 border-emerald-600' 
+                          : 'bg-white border-gray-300 hover:border-emerald-400'
+                      }`}
+                    >
+                      {agreed && (
+                        <svg width="12" height="12" viewBox="0 0 12 12" className="text-professional-rolexGold">
+                          <path
+                            fill="currentColor"
+                            d="M10.28 2.28L9.72 1.72a.75.75 0 00-1.06 0L5 5.38 2.34 2.72a.75.75 0 00-1.06 0l-.56.56a.75.75 0 000 1.06L4.47 8.09a.75.75 0 001.06 0l6.75-6.75a.75.75 0 000-1.06z"
+                          />
+                        </svg>
+                      )}
+                    </div>
+                  </div>
                   <label htmlFor="calc-agreement" className="text-sm premium-body text-gray-700">
                     Согласен с <a href="#" className="text-primary hover:underline">политикой конфиденциальности</a> и 
                     обработкой персональных данных. Подтверждаю, что указанная информация достоверна.

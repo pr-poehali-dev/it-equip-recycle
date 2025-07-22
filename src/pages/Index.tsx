@@ -82,13 +82,64 @@ ${formData.file ? `Приложен файл спецификации: ${formDat
     // Попробуем разные способы открытия
     try {
       window.location.href = mailtoLink;
-      alert('✅ Заявка готова к отправке! Откроется ваша почтовая программа.');
+      
+      // Показываем стилизованное сообщение об успехе
+      const successDiv = document.createElement('div');
+      successDiv.innerHTML = `
+        <div style="
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: #059669;
+          color: white;
+          padding: 24px 32px;
+          border-radius: 12px;
+          box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+          z-index: 9999;
+          font-family: system-ui, -apple-system, sans-serif;
+          max-width: 400px;
+          text-align: center;
+        ">
+          <div style="
+            width: 24px;
+            height: 24px;
+            background: #D4AF37;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: white;
+            font-weight: bold;
+          ">✓</div>
+          <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Подтвердите действие на utilizon.pro</h3>
+          <p style="margin: 0; opacity: 0.9; font-size: 14px;">Заявка готова к отправке! Откроется ваша почтовая программа.</p>
+          <button onclick="this.parentElement.parentElement.remove()" style="
+            background: #D4AF37;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            margin-top: 16px;
+            cursor: pointer;
+            font-weight: 600;
+          ">OK</button>
+        </div>
+      `;
+      document.body.appendChild(successDiv);
+      
+      // Автоматически убираем через 5 секунд
+      setTimeout(() => {
+        if (successDiv.parentElement) {
+          successDiv.remove();
+        }
+      }, 5000);
+      
     } catch (error) {
       console.error('❌ Ошибка при открытии почтовой программы:', error);
-      // Запасной вариант - показать данные пользователю
-      alert(`Скопируйте данные и отправьте на commerce@rusutil-1.ru:
-
-${body}`);
+      alert(`Скопируйте данные и отправьте на commerce@rusutil-1.ru:\n\n${body}`);
     }
   };
 
