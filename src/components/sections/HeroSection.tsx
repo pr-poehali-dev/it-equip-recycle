@@ -13,14 +13,10 @@ export default function HeroSection() {
           Экологически безопасная утилизация компьютерной техники с полным пакетом документов. 
           Соответствие всем требованиям законодательства.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <div className="flex justify-center">
           <Button size="lg" className="bg-white text-primary hover:bg-gray-100 min-h-[48px] px-6" onClick={() => document.getElementById('calculator')?.scrollIntoView({behavior: 'smooth'})}>
             <Icon name="Calculator" size={60} className="mr-2 text-professional-rolexGold" />
             Рассчитать стоимость
-          </Button>
-          <Button size="lg" variant="outline" className="border-white !text-white hover:bg-white hover:text-primary bg-transparent min-h-[48px] px-6">
-            <Icon name="FileText" size={60} className="mr-2 text-professional-rolexGold" />
-            Скачать прайс
           </Button>
         </div>
         
