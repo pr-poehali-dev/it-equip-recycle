@@ -1,6 +1,13 @@
-@import "@fontsource/roboto/400.css";
-@import "@fontsource/roboto/500.css";
-@import "@fontsource/roboto/700.css";
+/* Премиальные шрифты в стиле Rolex */
+@import "@fontsource/playfair-display/400.css";
+@import "@fontsource/playfair-display/700.css";
+@import "@fontsource/playfair-display/900.css";
+@import "@fontsource/inter/300.css";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/crimson-text/400.css";
+@import "@fontsource/crimson-text/600.css";
 
 @tailwind base;
 @tailwind components;
@@ -100,6 +107,57 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-premium;
+  }
+
+  /* Роскошная типографика в стиле Rolex */
+  h1, .luxury-heading {
+    @apply font-luxury font-bold tracking-tight;
+    letter-spacing: -0.02em;
+  }
+
+  h2, h3, .premium-heading {
+    @apply font-luxury font-semibold;
+    letter-spacing: -0.01em;
+  }
+
+  h4, h5, h6, .sub-heading {
+    @apply font-premium font-semibold;
+  }
+
+  .elegant-text {
+    @apply font-elegant;
+    letter-spacing: 0.01em;
+  }
+
+  .body-text {
+    @apply font-premium;
+    letter-spacing: 0.002em;
+  }
+
+  /* Премиальные размеры и интерлиньяж */
+  .hero-title {
+    @apply font-luxury font-black text-5xl lg:text-7xl leading-[0.9];
+    letter-spacing: -0.03em;
+  }
+
+  .section-title {
+    @apply font-luxury font-bold text-4xl lg:text-5xl leading-tight;
+    letter-spacing: -0.02em;
+  }
+
+  .card-title {
+    @apply font-luxury font-semibold text-xl lg:text-2xl;
+    letter-spacing: -0.01em;
+  }
+
+  .premium-body {
+    @apply font-premium font-normal text-base leading-relaxed;
+    letter-spacing: 0.002em;
+  }
+
+  .elegant-accent {
+    @apply font-elegant font-medium;
+    letter-spacing: 0.01em;
   }
 }

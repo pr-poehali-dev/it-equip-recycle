@@ -127,7 +127,7 @@ Email: ${formData.email}
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-teal-600 to-cyan-500 text-white py-20">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-5xl font-bold mb-6">
+          <h1 className="hero-title mb-6">
             Профессиональная утилизация <br />
             ИТ-оборудования
           </h1>
@@ -176,7 +176,7 @@ Email: ${formData.email}
       <section className="py-16 bg-professional-darkChocolate">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4 text-white">География присутствия</h2>
+            <h2 className="section-title mb-4 text-white">География присутствия</h2>
             <p className="max-w-2xl mx-auto text-gray-200">
               Мы работаем во всех крупных городах России, обеспечивая быстрый и качественный сервис по утилизации ИТ-оборудования
             </p>
@@ -211,8 +211,8 @@ Email: ${formData.email}
       <section id="calculator" className="py-20 bg-gradient-to-br from-gray-50 to-gray-100">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Быстрая оценка стоимости</h2>
-            <p className="text-gray-700 max-w-2xl mx-auto">
+            <h2 className="section-title text-gray-900 mb-4">Быстрая оценка стоимости</h2>
+            <p className="premium-body text-gray-700 max-w-2xl mx-auto">
               Прикрепите спецификацию оборудования и получите предварительную стоимость утилизации в течение 30 минут
             </p>
           </div>
@@ -233,7 +233,7 @@ Email: ${formData.email}
                   <div className="space-y-6">
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label className="text-sm font-medium text-gray-700 mb-2 block">Контактное лицо *</label>
+                        <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Контактное лицо *</label>
                         <input 
                           type="text" 
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" 
@@ -242,7 +242,7 @@ Email: ${formData.email}
                         />
                       </div>
                       <div>
-                        <label className="text-sm font-medium text-gray-700 mb-2 block">Компания</label>
+                        <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Компания</label>
                         <input 
                           type="text" 
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" 
@@ -253,7 +253,7 @@ Email: ${formData.email}
                     
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label className="text-sm font-medium text-gray-700 mb-2 block">Телефон *</label>
+                        <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Телефон *</label>
                         <input 
                           type="tel" 
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" 
@@ -262,7 +262,7 @@ Email: ${formData.email}
                         />
                       </div>
                       <div>
-                        <label className="text-sm font-medium text-gray-700 mb-2 block">Email *</label>
+                        <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Email *</label>
                         <input 
                           type="email" 
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" 
@@ -273,7 +273,7 @@ Email: ${formData.email}
                     </div>
 
                     <div>
-                      <label className="text-sm font-medium text-gray-700 mb-2 block">Город</label>
+                      <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Город</label>
                       <select className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
                         <option value="">Выберите город</option>
                         <option>Москва и Московская область</option>
@@ -289,13 +289,13 @@ Email: ${formData.email}
                   
                   <div className="space-y-6">
                     <div>
-                      <label className="text-sm font-medium text-gray-700 mb-2 block">
+                      <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">
                         📎 Спецификация оборудования *
                         <span className="text-xs text-gray-600 block mt-1">Прикрепите файл с описанием оборудования</span>
                       </label>
                       <div className="border-2 border-dashed border-primary/30 rounded-lg p-6 text-center hover:border-primary transition-all duration-300 cursor-pointer bg-blue-50/50">
                         <Icon name="Upload" size={32} className="text-primary mx-auto mb-3" />
-                        <p className="text-sm text-gray-700 mb-2">
+                        <p className="text-sm premium-body text-gray-700 mb-2">
                           <span className="text-primary font-semibold">Выберите файл</span> или перетащите сюда
                         </p>
                         <p className="text-xs text-gray-600">
@@ -306,7 +306,7 @@ Email: ${formData.email}
                     </div>
                     
                     <div>
-                      <label className="text-sm font-medium text-gray-700 mb-2 block">Дополнительная информация</label>
+                      <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Дополнительная информация</label>
                       <textarea 
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary h-24 resize-none" 
                         placeholder="Укажите срочность, особые требования, вопросы по утилизации..."
@@ -318,7 +318,7 @@ Email: ${formData.email}
                 <div className="mt-8 border-t pt-6">
                   <div className="flex items-start space-x-3 mb-6">
                     <input type="checkbox" id="calc-agreement" className="mt-1 rounded border-gray-300" required />
-                    <label htmlFor="calc-agreement" className="text-sm text-gray-700">
+                    <label htmlFor="calc-agreement" className="text-sm premium-body text-gray-700">
                       Согласен с <a href="#" className="text-primary hover:underline">политикой конфиденциальности</a> и 
                       обработкой персональных данных. Подтверждаю, что указанная информация достоверна.
                     </label>
@@ -354,8 +354,8 @@ Email: ${formData.email}
       <section id="services" className="py-20 bg-gray-100">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Наши услуги</h2>
-            <p className="text-gray-700 max-w-2xl mx-auto">
+            <h2 className="section-title text-gray-900 mb-4">Наши услуги</h2>
+            <p className="premium-body text-gray-700 max-w-2xl mx-auto">
               Комплексное решение по утилизации любого ИТ-оборудования с соблюдением экологических норм
             </p>
           </div>
@@ -385,7 +385,7 @@ Email: ${formData.email}
       <section id="prices" className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Прозрачное ценообразование</h2>
+            <h2 className="section-title text-gray-900 mb-4">Прозрачное ценообразование</h2>
             <p className="text-gray-900">Стоимость зависит от типа и количества оборудования</p>
           </div>
           
@@ -395,7 +395,7 @@ Email: ${formData.email}
                 <CardTitle className="text-center">Стандартный</CardTitle>
                 <CardDescription className="text-center">Для малого бизнеса</CardDescription>
                 <div className="text-center">
-                  <span className="text-3xl font-bold text-primary">от 500₽</span>
+                  <span className="premium-heading text-primary">от 500₽</span>
                   <span className="text-gray-600">/единица</span>
                 </div>
               </CardHeader>
@@ -430,7 +430,7 @@ Email: ${formData.email}
                 <CardTitle className="text-center">Корпоративный</CardTitle>
                 <CardDescription className="text-center">Для среднего бизнеса</CardDescription>
                 <div className="text-center">
-                  <span className="text-3xl font-bold text-primary">от 300₽</span>
+                  <span className="premium-heading text-primary">от 300₽</span>
                   <span className="text-gray-600">/единица</span>
                 </div>
               </CardHeader>
@@ -466,7 +466,7 @@ Email: ${formData.email}
                 <CardTitle className="text-center">Премиум</CardTitle>
                 <CardDescription className="text-center">Для крупных компаний</CardDescription>
                 <div className="text-center">
-                  <span className="text-3xl font-bold text-primary">от 200₽</span>
+                  <span className="premium-heading text-primary">от 200₽</span>
                   <span className="text-gray-600">/единица</span>
                 </div>
               </CardHeader>
@@ -505,17 +505,17 @@ Email: ${formData.email}
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">О компании</h2>
-              <p className="text-gray-700 mb-6">
+              <h2 className="section-title text-gray-900 mb-6">О компании</h2>
+              <p className="premium-body text-gray-700 mb-6">
                 Мы специализируемся на профессиональной утилизации ИТ-оборудования с 2015 года. 
                 За это время мы помогли более чем 800 компаниям экологически безопасно утилизировать 
                 свое устаревшее оборудование.
               </p>
-              <p className="text-gray-700 mb-6">
+              <p className="premium-body text-gray-700 mb-6">
                 Наша команда сертифицированных специалистов обеспечивает полное соответствие 
                 процесса утилизации всем требованиям российского и международного законодательства.
               </p>
-              <p className="text-gray-700 mb-8">
+              <p className="premium-body text-gray-700 mb-8">
                 <strong>Мы работаем во всех крупных городах России:</strong> Москва и Московская область, Санкт-Петербург и Ленинградская область, 
                 Новосибирск, Екатеринбург, Казань, Нижний Новгород, Челябинск, Самара, Омск, Ростов-на-Дону, 
                 Уфа, Красноярск, Воронеж, Пермь, Волгоград и других региональных центрах.
@@ -523,20 +523,20 @@ Email: ${formData.email}
               
               <div className="grid grid-cols-2 gap-6">
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">800+</div>
-                  <div className="text-gray-700">Довольных клиентов</div>
+                  <div className="premium-heading text-primary mb-2">800+</div>
+                  <div className="premium-body text-gray-700">Довольных клиентов</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">1000 000+</div>
-                  <div className="text-gray-700">Единиц утилизировано</div>
+                  <div className="premium-heading text-primary mb-2">1000 000+</div>
+                  <div className="premium-body text-gray-700">Единиц утилизировано</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">30+</div>
-                  <div className="text-gray-700">Городов России</div>
+                  <div className="premium-heading text-primary mb-2">30+</div>
+                  <div className="premium-body text-gray-700">Городов России</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">24/7</div>
-                  <div className="text-gray-700">Поддержка клиентов</div>
+                  <div className="premium-heading text-primary mb-2">24/7</div>
+                  <div className="premium-body text-gray-700">Поддержка клиентов</div>
                 </div>
               </div>
             </div>
@@ -548,28 +548,28 @@ Email: ${formData.email}
                   <Icon name="Award" size={20} className="text-primary mr-3 mt-1" />
                   <div>
                     <h4 className="font-semibold mb-1">Сертифицированные процессы</h4>
-                    <p className="text-gray-700 text-sm">Соответствие ISO 14001 и российским стандартам</p>
+                    <p className="premium-body text-gray-700 text-sm">Соответствие ISO 14001 и российским стандартам</p>
                   </div>
                 </div>
                 <div className="flex items-start">
                   <Icon name="Clock" size={20} className="text-primary mr-3 mt-1" />
                   <div>
                     <h4 className="font-semibold mb-1">Быстрое реагирование</h4>
-                    <p className="text-gray-700 text-sm">Выезд в течение 24 часов после заявки</p>
+                    <p className="premium-body text-gray-700 text-sm">Выезд в течение 24 часов после заявки</p>
                   </div>
                 </div>
                 <div className="flex items-start">
                   <Icon name="Shield" size={20} className="text-primary mr-3 mt-1" />
                   <div>
                     <h4 className="font-semibold mb-1">Полная ответственность</h4>
-                    <p className="text-gray-700 text-sm">Страхование всех процессов утилизации</p>
+                    <p className="premium-body text-gray-700 text-sm">Страхование всех процессов утилизации</p>
                   </div>
                 </div>
                 <div className="flex items-start">
                   <Icon name="Leaf" size={20} className="text-primary mr-3 mt-1" />
                   <div>
                     <h4 className="font-semibold mb-1">Экологичность</h4>
-                    <p className="text-gray-700 text-sm">100% переработка материалов без вреда природе</p>
+                    <p className="premium-body text-gray-700 text-sm">100% переработка материалов без вреда природе</p>
                   </div>
                 </div>
               </div>
@@ -582,8 +582,8 @@ Email: ${formData.email}
       <section id="clients" className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Наши постоянные клиенты</h2>
-            <p className="text-gray-700 max-w-2xl mx-auto">
+            <h2 className="section-title text-gray-900 mb-4">Наши постоянные клиенты</h2>
+            <p className="premium-body text-gray-700 max-w-2xl mx-auto">
               Нам доверяют ведущие российские компании из различных отраслей экономики
             </p>
           </div>
@@ -636,15 +636,15 @@ Email: ${formData.email}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-2">🏆 Проверенное качество</h4>
-                  <p className="text-gray-700 text-sm">Работаем с крупнейшими компаниями России с 2015 года</p>
+                  <p className="premium-body text-gray-700 text-sm">Работаем с крупнейшими компаниями России с 2015 года</p>
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-2">📋 Полный комплаенс</h4>
-                  <p className="text-gray-700 text-sm">Соответствие всем требованиям корпоративного документооборота</p>
+                  <p className="premium-body text-gray-700 text-sm">Соответствие всем требованиям корпоративного документооборота</p>
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-2">🔒 Конфиденциальность</h4>
-                  <p className="text-gray-700 text-sm">Гарантированное уничтожение данных с носителей информации</p>
+                  <p className="premium-body text-gray-700 text-sm">Гарантированное уничтожение данных с носителей информации</p>
                 </div>
               </div>
             </div>
@@ -656,7 +656,7 @@ Email: ${formData.email}
       <section id="licenses" className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">Лицензии и документы</h2>
+            <h2 className="section-title text-white mb-4">Лицензии и документы</h2>
             <p className="text-gray-100">Полное соответствие требованиям законодательства</p>
           </div>
           
@@ -733,15 +733,15 @@ Email: ${formData.email}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left max-w-4xl mx-auto">
                 <div>
                   <h4 className="font-semibold mb-2">Акт приема-передачи</h4>
-                  <p className="text-gray-700 text-sm">Подтверждает факт передачи оборудования на утилизацию</p>
+                  <p className="premium-body text-gray-700 text-sm">Подтверждает факт передачи оборудования на утилизацию</p>
                 </div>
                 <div>
                   <h4 className="font-semibold mb-2">Справка об утилизации</h4>
-                  <p className="text-gray-700 text-sm">Документ для налогового учета и экологической отчетности</p>
+                  <p className="premium-body text-gray-700 text-sm">Документ для налогового учета и экологической отчетности</p>
                 </div>
                 <div>
                   <h4 className="font-semibold mb-2">Экологический паспорт</h4>
-                  <p className="text-gray-700 text-sm">Сертификат соответствия экологическим требованиям</p>
+                  <p className="premium-body text-gray-700 text-sm">Сертификат соответствия экологическим требованиям</p>
                 </div>
               </div>
             </div>
@@ -753,8 +753,8 @@ Email: ${formData.email}
       <section id="faq" className="py-20 bg-gray-100">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Часто задаваемые вопросы</h2>
-            <p className="text-gray-700">Ответы на популярные вопросы об утилизации ИТ-оборудования</p>
+            <h2 className="section-title text-gray-900 mb-4">Часто задаваемые вопросы</h2>
+            <p className="premium-body text-gray-700">Ответы на популярные вопросы об утилизации ИТ-оборудования</p>
           </div>
           
           <div className="max-w-3xl mx-auto">
@@ -764,7 +764,7 @@ Email: ${formData.email}
                   <AccordionTrigger className="text-left font-semibold text-gray-900 hover:text-primary">
                     {item.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-gray-700 pt-4">
+                  <AccordionContent className="premium-body text-gray-700 pt-4">
                     {item.answer}
                   </AccordionContent>
                 </AccordionItem>
@@ -778,7 +778,7 @@ Email: ${formData.email}
       <section id="contacts" className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">Свяжитесь с нами</h2>
+            <h2 className="section-title text-white mb-4">Свяжитесь с нами</h2>
             <p className="text-gray-200">Готовы ответить на ваши вопросы и принять заявку</p>
           </div>
           
@@ -837,7 +837,7 @@ Email: ${formData.email}
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="text-sm font-medium text-gray-700 mb-2 block">Имя</label>
+                    <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Имя</label>
                     <input 
                       type="text" 
                       value={formData.name}
@@ -847,7 +847,7 @@ Email: ${formData.email}
                     />
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-gray-700 mb-2 block">Компания</label>
+                    <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Компания</label>
                     <input 
                       type="text" 
                       value={formData.company}
@@ -858,7 +858,7 @@ Email: ${formData.email}
                   </div>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700 mb-2 block">Телефон</label>
+                  <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Телефон</label>
                   <input 
                     type="tel" 
                     value={formData.phone}
@@ -868,7 +868,7 @@ Email: ${formData.email}
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700 mb-2 block">Email</label>
+                  <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Email</label>
                   <input 
                     type="email" 
                     value={formData.email}
@@ -878,7 +878,7 @@ Email: ${formData.email}
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700 mb-2 block">Тип оборудования</label>
+                  <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Тип оборудования</label>
                   <select 
                     value={formData.equipmentType}
                     onChange={(e) => setFormData(prev => ({ ...prev, equipmentType: e.target.value }))}
@@ -892,7 +892,7 @@ Email: ${formData.email}
                   </select>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700 mb-2 block">Примерное количество</label>
+                  <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Примерное количество</label>
                   <input 
                     type="number" 
                     value={formData.quantity}
@@ -902,7 +902,7 @@ Email: ${formData.email}
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700 mb-2 block">
+                  <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">
                     Спецификация оборудования
                     <span className="text-xs text-gray-600 ml-1">(Excel, Word, PDF)</span>
                   </label>
@@ -925,7 +925,7 @@ Email: ${formData.email}
                         ✓ Выбран файл: {formData.file.name}
                       </p>
                     ) : (
-                      <p className="text-sm text-gray-700 mb-1">
+                      <p className="text-sm premium-body text-gray-700 mb-1">
                         <span className="text-primary font-medium">Нажмите для выбора файла</span> или перетащите сюда
                       </p>
                     )}
@@ -943,7 +943,7 @@ Email: ${formData.email}
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700 mb-2 block">Комментарий</label>
+                  <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Комментарий</label>
                   <textarea 
                     value={formData.comment}
                     onChange={(e) => setFormData(prev => ({ ...prev, comment: e.target.value }))}
@@ -951,7 +951,7 @@ Email: ${formData.email}
                     placeholder="Дополнительная информация, особые требования к утилизации..."
                   />
                 </div>
-                <div className="flex items-center space-x-2 text-sm text-gray-700">
+                <div className="flex items-center space-x-2 text-sm premium-body text-gray-700">
                   <input type="checkbox" id="agreement" className="rounded border-gray-300" />
                   <label htmlFor="agreement">
                     Согласен с <a href="#" className="text-primary hover:underline">политикой конфиденциальности</a> и 

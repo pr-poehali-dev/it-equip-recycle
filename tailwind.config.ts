@@ -19,7 +19,10 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['Roboto', 'ui-sans-serif', 'system-ui']
+				'luxury': ['Playfair Display', 'serif'], // Роскошные заголовки
+				'premium': ['Inter', 'sans-serif'],      // Премиальный основной текст  
+				'elegant': ['Crimson Text', 'serif'],    // Элегантный акцентный текст
+				'sans': ['Inter', 'ui-sans-serif', 'system-ui'] // Основной без-серифный
 			},
 			colors: {
 				border: 'hsl(var(--border))',
