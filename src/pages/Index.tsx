@@ -140,7 +140,7 @@ Email: ${formData.email}
               <Icon name="Calculator" size={20} className="mr-2" />
               Рассчитать стоимость
             </Button>
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary">
+            <Button size="lg" variant="outline" className="border-white !text-white hover:bg-white hover:text-primary bg-transparent">
               <Icon name="FileText" size={20} className="mr-2" />
               Скачать прайс
             </Button>
