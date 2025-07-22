@@ -131,7 +131,7 @@ Email: ${formData.email}
             Профессиональная утилизация <br />
             ИТ-оборудования
           </h1>
-          <p className="text-xl mb-8 max-w-2xl mx-auto text-amber-100">
+          <p className="text-xl mb-8 max-w-2xl mx-auto text-cyan-100">
             Экологически безопасная утилизация компьютерной техники с полным пакетом документов. 
             Соответствие всем требованиям законодательства.
           </p>
@@ -152,21 +152,21 @@ Email: ${formData.email}
                 <Icon name="Shield" size={24} />
               </div>
               <h3 className="font-semibold mb-2">Лицензии и сертификаты</h3>
-              <p className="text-amber-100 text-sm">Полное соответствие экологическим требованиям</p>
+              <p className="text-cyan-100 text-sm">Полное соответствие экологическим требованиям</p>
             </div>
             <div className="text-center">
               <div className="bg-white/10 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
                 <Icon name="Truck" size={24} />
               </div>
               <h3 className="font-semibold mb-2">Бесплатный вывоз</h3>
-              <p className="text-amber-100 text-sm">От 10 единиц техники по Москве и Московской области</p>
+              <p className="text-cyan-100 text-sm">От 10 единиц техники по Москве и Московской области</p>
             </div>
             <div className="text-center">
               <div className="bg-white/10 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
                 <Icon name="FileCheck" size={24} />
               </div>
               <h3 className="font-semibold mb-2">Документооборот</h3>
-              <p className="text-amber-100 text-sm">Акты, справки и сертификаты об утилизации</p>
+              <p className="text-cyan-100 text-sm">Акты, справки и сертификаты об утилизации</p>
             </div>
           </div>
         </div>
@@ -224,7 +224,7 @@ Email: ${formData.email}
                   <Icon name="Calculator" size={24} className="mr-2" />
                   Калькулятор стоимости утилизации
                 </CardTitle>
-                <CardDescription className="text-amber-100">
+                <CardDescription className="text-cyan-100">
                   Заполните форму и прикрепите спецификацию оборудования для точного расчета
                 </CardDescription>
               </CardHeader>
