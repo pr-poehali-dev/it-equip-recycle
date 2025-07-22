@@ -40,7 +40,14 @@ export default {
 					darkTeal: '#0F766E',
 					deepTeal: '#134E4A',
 					lightTeal: '#14B8A6',
-					cyan: '#F0FDFA'
+					cyan: '#F0FDFA',
+					// Legacy names for compatibility
+					chocolate: '#0D9488',
+					darkChocolate: '#0F766E',
+					deepChocolate: '#134E4A',
+					lightChocolate: '#14B8A6',
+					cream: '#F0FDFA',
+					lightGray: '#F1F5F9'
 				},
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',

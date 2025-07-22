@@ -131,7 +131,7 @@ Email: ${formData.email}
             Профессиональная утилизация <br />
             ИТ-оборудования
           </h1>
-          <p className="text-xl mb-8 max-w-2xl mx-auto text-cyan-100">
+          <p className="text-xl mb-8 max-w-2xl mx-auto text-white/90">
             Экологически безопасная утилизация компьютерной техники с полным пакетом документов. 
             Соответствие всем требованиям законодательства.
           </p>
@@ -152,21 +152,21 @@ Email: ${formData.email}
                 <Icon name="Shield" size={24} />
               </div>
               <h3 className="font-semibold mb-2">Лицензии и сертификаты</h3>
-              <p className="text-cyan-100 text-sm">Полное соответствие экологическим требованиям</p>
+              <p className="text-white/90 text-sm">Полное соответствие экологическим требованиям</p>
             </div>
             <div className="text-center">
               <div className="bg-white/10 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
                 <Icon name="Truck" size={24} />
               </div>
               <h3 className="font-semibold mb-2">Бесплатный вывоз</h3>
-              <p className="text-cyan-100 text-sm">От 10 единиц техники по Москве и Московской области</p>
+              <p className="text-white/90 text-sm">От 10 единиц техники по Москве и Московской области</p>
             </div>
             <div className="text-center">
               <div className="bg-white/10 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
                 <Icon name="FileCheck" size={24} />
               </div>
               <h3 className="font-semibold mb-2">Документооборот</h3>
-              <p className="text-cyan-100 text-sm">Акты, справки и сертификаты об утилизации</p>
+              <p className="text-white/90 text-sm">Акты, справки и сертификаты об утилизации</p>
             </div>
           </div>
         </div>
@@ -177,7 +177,7 @@ Email: ${formData.email}
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4 text-slate-300">География присутствия</h2>
-            <p className="max-w-2xl mx-auto text-gray-300">
+            <p className="max-w-2xl mx-auto text-gray-200">
               Мы работаем во всех крупных городах России, обеспечивая быстрый и качественный сервис по утилизации ИТ-оборудования
             </p>
           </div>
@@ -201,7 +201,7 @@ Email: ${formData.email}
                 Один номер для всех регионов России. Мы автоматически переадресуем ваш звонок в ближайший офис.
               </p>
               <div className="text-2xl font-bold text-primary">8 (901) 862-81-81</div>
-              <div className="text-sm text-gray-500 mt-1">Звонок бесплатный из любого региона</div>
+              <div className="text-sm text-gray-600 mt-1">Звонок бесплатный из любого региона</div>
             </div>
           </div>
         </div>
@@ -224,7 +224,7 @@ Email: ${formData.email}
                   <Icon name="Calculator" size={24} className="mr-2" />
                   Калькулятор стоимости утилизации
                 </CardTitle>
-                <CardDescription className="text-cyan-100">
+                <CardDescription className="text-white/90">
                   Заполните форму и прикрепите спецификацию оборудования для точного расчета
                 </CardDescription>
               </CardHeader>
@@ -657,7 +657,7 @@ Email: ${formData.email}
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-white mb-4">Лицензии и документы</h2>
-            <p className="text-gray-300">Полное соответствие требованиям законодательства</p>
+            <p className="text-gray-200">Полное соответствие требованиям законодательства</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -779,7 +779,7 @@ Email: ${formData.email}
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-white mb-4">Свяжитесь с нами</h2>
-            <p className="text-gray-300">Готовы ответить на ваши вопросы и принять заявку</p>
+            <p className="text-gray-200">Готовы ответить на ваши вопросы и принять заявку</p>
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
@@ -985,7 +985,7 @@ Email: ${formData.email}
                 <Icon name="Recycle" size={24} className="text-primary" />
                 <span className="text-xl font-bold">ИТ-Утилизация</span>
               </div>
-              <p className="text-gray-300 text-sm mb-4">
+              <p className="text-gray-200 text-sm mb-4">
                 Профессиональная утилизация ИТ-оборудования с полным соблюдением экологических требований.
               </p>
               <div className="flex space-x-4">
@@ -994,7 +994,7 @@ Email: ${formData.email}
             
             <div>
               <h4 className="font-semibold mb-4">Услуги</h4>
-              <ul className="space-y-2 text-sm text-gray-300">
+              <ul className="space-y-2 text-sm text-gray-200">
                 <li><a href="#" className="hover:text-primary transition-colors">Утилизация компьютеров</a></li>
                 <li><a href="#" className="hover:text-primary transition-colors">Серверное оборудование</a></li>
                 <li><a href="#" className="hover:text-primary transition-colors">Офисная техника</a></li>
@@ -1004,7 +1004,7 @@ Email: ${formData.email}
             
             <div>
               <h4 className="font-semibold mb-4">Документы</h4>
-              <ul className="space-y-2 text-sm text-gray-300">
+              <ul className="space-y-2 text-sm text-gray-200">
                 <li><a href="#" className="hover:text-primary transition-colors">Лицензии</a></li>
                 <li><a href="#" className="hover:text-primary transition-colors">Сертификаты</a></li>
                 <li><a href="#" className="hover:text-primary transition-colors">Политика конфиденциальности</a></li>
@@ -1014,7 +1014,7 @@ Email: ${formData.email}
             
             <div>
               <h4 className="font-semibold mb-4">Контакты</h4>
-              <ul className="space-y-2 text-sm text-gray-300">
+              <ul className="space-y-2 text-sm text-gray-200">
                 <li>+7 (901) 862-81-81</li>
                 <li>commerce@rusutil-1.ru</li>
                 <li>г. Москва, ул. Лефортовский вал, дом 16А, этаж 1, помещение I, комната 21Б, офис 28</li>
@@ -1023,7 +1023,7 @@ Email: ${formData.email}
             </div>
           </div>
           
-          <div className="border-t border-gray-600 mt-8 pt-8 text-center text-sm text-gray-300">
+          <div className="border-t border-gray-600 mt-8 pt-8 text-center text-sm text-gray-200">
             <p>© 2025 СБОР-Утилизация. Все права защищены.</p>
           </div>
         </div>
