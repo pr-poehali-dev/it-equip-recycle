@@ -105,7 +105,7 @@ Email: ${formData.email}
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <Icon name="Recycle" size={32} className="text-primary" />
-              <span className="text-2xl font-bold text-white">ИТ-Утилизация</span>
+              <span className="text-2xl font-bold text-white">UTILIZON</span>
             </div>
             <nav className="hidden md:flex items-center space-x-8">
               <a href="#services" className="text-white hover:text-primary transition-colors">Услуги</a>
