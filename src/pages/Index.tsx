@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Icon from "@/components/ui/icon";
 import { useState, useRef } from "react";
 
@@ -18,6 +19,8 @@ const Index = () => {
     comment: '',
     file: null as File | null
   });
+  
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleSubmit = () => {
     console.log('Кнопка нажата!', formData);
@@ -101,12 +104,15 @@ Email: ${formData.email}
     <div className="min-h-screen bg-professional-deepChocolate">
       {/* Header */}
       <header className="bg-professional-darkChocolate border-b border-professional-chocolate sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4">
           <div className="flex items-center justify-between w-full">
-            <div className="flex items-center space-x-3">
-              <Icon name="Recycle" size={32} className="text-primary" />
-              <span className="text-white font-sans font-black text-3xl" style={{ letterSpacing: '0.15em', fontWeight: '900' }}>utilizon</span>
+            <div className="flex items-center space-x-2 sm:space-x-3">
+              <Icon name="Recycle" size={24} className="text-primary sm:hidden" />
+              <Icon name="Recycle" size={32} className="text-primary hidden sm:block" />
+              <span className="text-white font-sans font-black text-xl sm:text-2xl md:text-3xl" style={{ letterSpacing: '0.1em', fontWeight: '900' }}>utilizon</span>
             </div>
+            
+            {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-6">
               <a href="#services" className="text-white hover:text-primary transition-colors">Услуги</a>
               <a href="#prices" className="text-white hover:text-primary transition-colors">Цены</a>
@@ -116,37 +122,112 @@ Email: ${formData.email}
               <a href="#faq" className="text-white hover:text-primary transition-colors">Вопросы</a>
               <a href="#contacts" className="text-white hover:text-primary transition-colors">Контакты</a>
             </nav>
-            <Button className="bg-primary hover:bg-primary/90">
+
+            {/* Desktop Call Button */}
+            <Button className="bg-primary hover:bg-primary/90 hidden sm:flex">
               <Icon name="Phone" size={16} className="mr-2" />
               Заказать звонок
             </Button>
+
+            {/* Mobile Menu */}
+            <div className="md:hidden">
+              <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+                <SheetTrigger asChild>
+                  <Button variant="ghost" size="sm" className="text-white p-2">
+                    <Icon name="Menu" size={24} />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="right" className="bg-professional-darkChocolate border-l border-teal-600">
+                  <div className="flex flex-col space-y-6 mt-8">
+                    <a 
+                      href="#services" 
+                      className="text-white hover:text-primary transition-colors text-lg font-medium"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      Услуги
+                    </a>
+                    <a 
+                      href="#prices" 
+                      className="text-white hover:text-primary transition-colors text-lg font-medium"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      Цены
+                    </a>
+                    <a 
+                      href="#about" 
+                      className="text-white hover:text-primary transition-colors text-lg font-medium"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      О нас
+                    </a>
+                    <a 
+                      href="#clients" 
+                      className="text-white hover:text-primary transition-colors text-lg font-medium"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      Клиенты
+                    </a>
+                    <a 
+                      href="#licenses" 
+                      className="text-white hover:text-primary transition-colors text-lg font-medium"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      Лицензии
+                    </a>
+                    <a 
+                      href="#faq" 
+                      className="text-white hover:text-primary transition-colors text-lg font-medium"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      Вопросы
+                    </a>
+                    <a 
+                      href="#contacts" 
+                      className="text-white hover:text-primary transition-colors text-lg font-medium"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      Контакты
+                    </a>
+                    <Button 
+                      className="bg-primary hover:bg-primary/90 w-full mt-4" 
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                      }}
+                    >
+                      <Icon name="Phone" size={16} className="mr-2" />
+                      Заказать звонок
+                    </Button>
+                  </div>
+                </SheetContent>
+              </Sheet>
+            </div>
           </div>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-teal-600 to-cyan-500 text-white py-20">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="hero-title mb-6">
-            Профессиональная утилизация <br />
-            ИТ-оборудования
+      <section className="bg-gradient-to-r from-teal-600 to-cyan-500 text-white py-12 sm:py-16 md:py-20">
+        <div className="container mx-auto px-3 sm:px-4 text-center">
+          <h1 className="hero-title mb-4 sm:mb-6">
+            Профессиональная утилизация <br className="hidden sm:block" />
+            <span className="sm:hidden"> </span>ИТ-оборудования
           </h1>
           <p className="text-xl mb-8 max-w-2xl mx-auto text-white/90">
             Экологически безопасная утилизация компьютерной техники с полным пакетом документов. 
             Соответствие всем требованиям законодательства.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button size="lg" className="bg-white text-primary hover:bg-gray-100" onClick={() => document.getElementById('calculator')?.scrollIntoView({behavior: 'smooth'})}>
+            <Button size="lg" className="bg-white text-primary hover:bg-gray-100 min-h-[48px] px-6" onClick={() => document.getElementById('calculator')?.scrollIntoView({behavior: 'smooth'})}>
               <Icon name="Calculator" size={20} className="mr-2" />
               Рассчитать стоимость
             </Button>
-            <Button size="lg" variant="outline" className="border-white !text-white hover:bg-white hover:text-primary bg-transparent">
+            <Button size="lg" variant="outline" className="border-white !text-white hover:bg-white hover:text-primary bg-transparent min-h-[48px] px-6">
               <Icon name="FileText" size={20} className="mr-2" />
               Скачать прайс
             </Button>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:p-6 lg:p-8 mt-16 max-w-4xl mx-auto">
             <div className="text-center">
               <div className="bg-white/10 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
                 <Icon name="Shield" size={24} />
@@ -228,15 +309,15 @@ Email: ${formData.email}
                   Заполните форму и прикрепите спецификацию оборудования для точного расчета
                 </CardDescription>
               </CardHeader>
-              <CardContent className="p-8">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <CardContent className="p-4 sm:p-6 lg:p-4 sm:p-6 lg:p-8">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-4 sm:p-6 lg:p-8">
                   <div className="space-y-6">
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Контактное лицо *</label>
                         <input 
                           type="text" 
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" 
+                          className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                           placeholder="Ваше имя"
                           required
                         />
@@ -245,18 +326,18 @@ Email: ${formData.email}
                         <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Компания</label>
                         <input 
                           type="text" 
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" 
+                          className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                           placeholder="Название компании"
                         />
                       </div>
                     </div>
                     
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Телефон *</label>
                         <input 
                           type="tel" 
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" 
+                          className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                           placeholder="+7 (___) ___-__-__"
                           required
                         />
@@ -265,7 +346,7 @@ Email: ${formData.email}
                         <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Email *</label>
                         <input 
                           type="email" 
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" 
+                          className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                           placeholder="your@email.com"
                           required
                         />
@@ -274,7 +355,7 @@ Email: ${formData.email}
 
                     <div>
                       <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Город</label>
-                      <select className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                      <select className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base">
                         <option value="">Выберите город</option>
                         <option>Москва и Московская область</option>
                         <option>Санкт-Петербург и Ленинградская область</option>
@@ -308,7 +389,7 @@ Email: ${formData.email}
                     <div>
                       <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Дополнительная информация</label>
                       <textarea 
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary h-24 resize-none" 
+                        className="w-full px-4 py-3 min-h-[88px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base resize-none" 
                         placeholder="Укажите срочность, особые требования, вопросы по утилизации..."
                       />
                     </div>
@@ -317,19 +398,19 @@ Email: ${formData.email}
                 
                 <div className="mt-8 border-t pt-6">
                   <div className="flex items-start space-x-3 mb-6">
-                    <input type="checkbox" id="calc-agreement" className="mt-1 rounded border-gray-300" required />
+                    <input type="checkbox" id="calc-agreement" className="mt-1 rounded border-gray-300 w-4 h-4" required />
                     <label htmlFor="calc-agreement" className="text-sm premium-body text-gray-700">
                       Согласен с <a href="#" className="text-primary hover:underline">политикой конфиденциальности</a> и 
                       обработкой персональных данных. Подтверждаю, что указанная информация достоверна.
                     </label>
                   </div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <Button className="w-full" size="lg">
+                  <div className="grid grid-cols-1 gap-4">
+                    <Button className="w-full min-h-[48px]" size="lg">
                       <Icon name="Calculator" size={20} className="mr-2" />
                       Получить расчет стоимости
                     </Button>
-                    <Button variant="outline" className="w-full" size="lg">
+                    <Button variant="outline" className="w-full min-h-[48px]" size="lg">
                       <Icon name="Phone" size={20} className="mr-2" />
                       Обсудить по телефону
                     </Button>
@@ -389,7 +470,7 @@ Email: ${formData.email}
             <p className="text-[#ffffff]">Стоимость зависит от типа и количества оборудования</p>
           </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:p-6 lg:p-8 max-w-6xl mx-auto">
             <Card className="relative">
               <CardHeader>
                 <CardTitle className="text-center">Стандартный</CardTitle>
@@ -418,7 +499,7 @@ Email: ${formData.email}
                     Справка об утилизации
                   </li>
                 </ul>
-                <Button className="w-full mt-6">Выбрать план</Button>
+                <Button className="w-full mt-6 min-h-[44px]">Выбрать план</Button>
               </CardContent>
             </Card>
 
@@ -457,7 +538,7 @@ Email: ${formData.email}
                     Консультации по утилизации
                   </li>
                 </ul>
-                <Button className="w-full mt-6">Выбрать план</Button>
+                <Button className="w-full mt-6 min-h-[44px]">Выбрать план</Button>
               </CardContent>
             </Card>
 
@@ -493,7 +574,7 @@ Email: ${formData.email}
                     Аудит утилизации
                   </li>
                 </ul>
-                <Button className="w-full mt-6">Связаться с нами</Button>
+                <Button className="w-full mt-6 min-h-[44px]">Связаться с нами</Button>
               </CardContent>
             </Card>
           </div>
@@ -541,7 +622,7 @@ Email: ${formData.email}
               </div>
             </div>
             
-            <div className="bg-white border border-gray-200 p-8 rounded-lg shadow-lg">
+            <div className="bg-white border border-gray-200 p-4 sm:p-6 lg:p-8 rounded-lg shadow-lg">
               <h3 className="text-2xl font-bold text-gray-900 mb-6">Наши преимущества</h3>
               <div className="space-y-4">
                 <div className="flex items-start">
@@ -630,7 +711,7 @@ Email: ${formData.email}
           </div>
           
           <div className="text-center mt-12">
-            <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-lg p-8 max-w-4xl mx-auto">
+            <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-lg p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto">
               <Icon name="Award" size={32} className="text-primary mx-auto mb-4" />
               <h3 className="text-2xl font-bold text-gray-900 mb-4">Почему нас выбирают</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
@@ -670,7 +751,7 @@ Email: ${formData.email}
                 <CardDescription>
                   Лицензия Росприроднадзора на деятельность по сбору, транспортированию и обезвреживанию отходов
                 </CardDescription>
-                <Button variant="outline" className="mt-4">
+                <Button variant="outline" className="mt-4 min-h-[44px]">
                   <Icon name="Download" size={16} className="mr-2" />
                   Скачать
                 </Button>
@@ -686,7 +767,7 @@ Email: ${formData.email}
                 <CardDescription>
                   Сертификат системы экологического менеджмента ISO 14001:2015
                 </CardDescription>
-                <Button variant="outline" className="mt-4">
+                <Button variant="outline" className="mt-4 min-h-[44px]">
                   <Icon name="Download" size={16} className="mr-2" />
                   Скачать
                 </Button>
@@ -702,7 +783,7 @@ Email: ${formData.email}
                 <CardDescription>
                   Полис страхования ответственности при обращении с отходами производства
                 </CardDescription>
-                <Button variant="outline" className="mt-4">
+                <Button variant="outline" className="mt-4 min-h-[44px]">
                   <Icon name="Download" size={16} className="mr-2" />
                   Скачать
                 </Button>
@@ -718,7 +799,7 @@ Email: ${formData.email}
                 <CardDescription>
                   Членство в саморегулируемой организации в области обращения с отходами
                 </CardDescription>
-                <Button variant="outline" className="mt-4">
+                <Button variant="outline" className="mt-4 min-h-[44px]">
                   <Icon name="Download" size={16} className="mr-2" />
                   Скачать
                 </Button>
@@ -726,7 +807,7 @@ Email: ${formData.email}
             </Card>
           </div>
 
-          <div className="bg-blue-50 rounded-lg p-8 mt-12">
+          <div className="bg-blue-50 rounded-lg p-4 sm:p-6 lg:p-8 mt-12">
             <div className="text-center">
               <Icon name="Info" size={24} className="text-primary mx-auto mb-4" />
               <h3 className="text-xl font-bold text-secondary mb-4">Документы, которые вы получите</h3>
@@ -822,7 +903,7 @@ Email: ${formData.email}
                 <p className="text-gray-100 mb-4">Для срочных случаев мы предоставляем услугу экстренной утилизации в любое время суток. 
 
 * Только Москва и Московская область, г. Казань.</p>
-                <Button className="bg-white text-red-600 hover:bg-gray-100">
+                <Button className="bg-white text-red-600 hover:bg-gray-100 min-h-[48px] px-4">
                   <Icon name="AlertCircle" size={16} className="mr-2" />
                   Экстренный вызов
                 </Button>
@@ -835,14 +916,14 @@ Email: ${formData.email}
                 <CardDescription>Мы свяжемся с вами в течение 30 минут</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Имя</label>
                     <input 
                       type="text" 
                       value={formData.name}
                       onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" 
+                      className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                       placeholder="Ваше имя"
                     />
                   </div>
@@ -852,7 +933,7 @@ Email: ${formData.email}
                       type="text" 
                       value={formData.company}
                       onChange={(e) => setFormData(prev => ({ ...prev, company: e.target.value }))}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" 
+                      className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                       placeholder="Название компании"
                     />
                   </div>
@@ -863,7 +944,7 @@ Email: ${formData.email}
                     type="tel" 
                     value={formData.phone}
                     onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" 
+                    className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                     placeholder="+7 (___) ___-__-__"
                   />
                 </div>
@@ -873,7 +954,7 @@ Email: ${formData.email}
                     type="email" 
                     value={formData.email}
                     onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" 
+                    className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                     placeholder="your@email.com"
                   />
                 </div>
@@ -882,7 +963,7 @@ Email: ${formData.email}
                   <select 
                     value={formData.equipmentType}
                     onChange={(e) => setFormData(prev => ({ ...prev, equipmentType: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base"
                   >
                     <option>Компьютеры и ноутбуки</option>
                     <option>Серверное оборудование</option>
@@ -897,7 +978,7 @@ Email: ${formData.email}
                     type="number" 
                     value={formData.quantity}
                     onChange={(e) => setFormData(prev => ({ ...prev, quantity: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" 
+                    className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                     placeholder="Количество единиц"
                   />
                 </div>
@@ -907,7 +988,7 @@ Email: ${formData.email}
                     <span className="text-xs text-gray-600 ml-1">(Excel, Word, PDF)</span>
                   </label>
                   <div 
-                    className="border-2 border-dashed border-gray-300 rounded-md p-6 text-center hover:border-primary transition-colors cursor-pointer"
+                    className="border-2 border-dashed border-gray-300 rounded-md p-4 sm:p-6 min-h-[80px] text-center hover:border-primary transition-colors cursor-pointer"
                     onClick={(e) => {
                       e.preventDefault();
                       console.log('Клик по области загрузки файла');
@@ -947,12 +1028,12 @@ Email: ${formData.email}
                   <textarea 
                     value={formData.comment}
                     onChange={(e) => setFormData(prev => ({ ...prev, comment: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary h-20 resize-none" 
+                    className="w-full px-4 py-3 min-h-[88px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base resize-none" 
                     placeholder="Дополнительная информация, особые требования к утилизации..."
                   />
                 </div>
                 <div className="flex items-center space-x-2 text-sm premium-body text-gray-700">
-                  <input type="checkbox" id="agreement" className="rounded border-gray-300" />
+                  <input type="checkbox" id="agreement" className="rounded border-gray-300 w-4 h-4" />
                   <label htmlFor="agreement">
                     Согласен с <a href="#" className="text-primary hover:underline">политикой конфиденциальности</a> и 
                     <a href="#" className="text-primary hover:underline ml-1">условиями обработки данных</a>
@@ -960,7 +1041,8 @@ Email: ${formData.email}
                 </div>
                 <Button 
                   type="button"
-                  className="w-full"
+                  className="w-full min-h-[48px]"
+                  size="lg"
                   onClick={(e) => {
                     e.preventDefault();
                     console.log('Клик по кнопке');
@@ -979,7 +1061,7 @@ Email: ${formData.email}
       {/* Footer */}
       <footer className="bg-secondary text-white py-12">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 sm:p-6 lg:p-8">
             <div>
               <div className="flex items-center space-x-2 mb-4">
                 <Icon name="Recycle" size={24} className="text-primary" />
