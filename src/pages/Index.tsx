@@ -106,7 +106,7 @@ Email: ${formData.email}
             <div className="flex items-center flex-1">
               <div className="flex items-center space-x-3">
                 <Icon name="Recycle" size={32} className="text-primary" />
-                <span className="text-3xl font-black text-white tracking-widest uppercase font-sans">UTILIZON</span>
+                <span className="font-black text-white tracking-widest uppercase font-sans text-6xl">utilizon</span>
               </div>
             </div>
             <nav className="hidden md:flex items-center space-x-8">
