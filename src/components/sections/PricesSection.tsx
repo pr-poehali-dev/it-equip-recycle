@@ -84,39 +84,39 @@ export default function PricesSection() {
             </CardContent>
           </Card>
 
-          <Card className="relative">
+          <Card className="relative bg-black text-white">
             <CardHeader>
-              <CardTitle className="text-center">Премиум</CardTitle>
-              <CardDescription className="text-center">Для крупных компаний</CardDescription>
+              <CardTitle className="text-center text-professional-rolexGold">Премиум</CardTitle>
+              <CardDescription className="text-center text-professional-rolexGold/80">Для крупных компаний</CardDescription>
               <div className="text-center">
-                <span className="premium-heading text-primary">от 200₽</span>
-                <span className="text-gray-600">/единица</span>
+                <span className="premium-heading text-professional-rolexGold">от 200₽</span>
+                <span className="text-professional-rolexGold/70">/единица</span>
               </div>
             </CardHeader>
             <CardContent>
               <ul className="space-y-3">
                 <li className="flex items-center">
                   <Icon name="Check" size={16} className="text-professional-rolexGold mr-2" />
-                  Все виды техники
+                  <span className="text-professional-rolexGold">Все виды техники</span>
                 </li>
                 <li className="flex items-center">
                   <Icon name="Check" size={16} className="text-professional-rolexGold mr-2" />
-                  Персональный менеджер
+                  <span className="text-professional-rolexGold">Персональный менеджер</span>
                 </li>
                 <li className="flex items-center">
                   <Icon name="Check" size={16} className="text-professional-rolexGold mr-2" />
-                  Договор на обслуживание
+                  <span className="text-professional-rolexGold">Договор на обслуживание</span>
                 </li>
                 <li className="flex items-center">
                   <Icon name="Check" size={16} className="text-professional-rolexGold mr-2" />
-                  Сертификат ISO 14001
+                  <span className="text-professional-rolexGold">Сертификат ISO 14001</span>
                 </li>
                 <li className="flex items-center">
                   <Icon name="Check" size={16} className="text-professional-rolexGold mr-2" />
-                  Аудит утилизации
+                  <span className="text-professional-rolexGold">Аудит утилизации</span>
                 </li>
               </ul>
-              <Button className="w-full mt-6 min-h-[44px]">Связаться с нами</Button>
+              <Button className="w-full mt-6 min-h-[44px] bg-professional-rolexGold text-black hover:bg-professional-rolexLightGold">Связаться с нами</Button>
             </CardContent>
           </Card>
         </div>
