@@ -10,10 +10,38 @@ interface Service {
 }
 
 interface ServicesSectionProps {
-  services: Service[];
+  services?: Service[];
 }
 
-export default function ServicesSection({ services }: ServicesSectionProps) {
+export default function ServicesSection({ services = [] }: ServicesSectionProps) {
+  const defaultServices: Service[] = [
+    {
+      icon: "Monitor",
+      title: "Компьютеры и ноутбуки",
+      description: "Утилизация настольных компьютеров, ноутбуков и планшетов",
+      price: "от 500₽"
+    },
+    {
+      icon: "Server",
+      title: "Серверное оборудование",
+      description: "Профессиональная утилизация серверов и сетевого оборудования",
+      price: "от 1000₽"
+    },
+    {
+      icon: "Printer",
+      title: "Офисная техника",
+      description: "Принтеры, сканеры, МФУ и другая офисная техника",
+      price: "от 300₽"
+    },
+    {
+      icon: "Smartphone",
+      title: "Мобильные устройства",
+      description: "Телефоны, планшеты и другие портативные устройства",
+      price: "от 200₽"
+    }
+  ];
+
+  const servicesToDisplay = services.length > 0 ? services : defaultServices;
   return (
     <section id="services" className="py-20 bg-professional-rolexCream">
       <div className="container mx-auto px-4">
@@ -25,7 +53,7 @@ export default function ServicesSection({ services }: ServicesSectionProps) {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {services.map((service, index) => (
+          {servicesToDisplay.map((service, index) => (
             <Card key={index} className="hover:shadow-lg transition-shadow duration-300 hover-scale">
               <CardHeader className="text-center">
                 <div className="bg-primary/10 rounded-full p-4 w-20 h-20 mx-auto mb-4 flex items-center justify-center">
