@@ -14,8 +14,8 @@ export default function Header({ mobileMenuOpen, setMobileMenuOpen }: HeaderProp
       <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4">
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center space-x-2 sm:space-x-3 ml-4 sm:ml-8">
-            <CustomLogo size={24} className="sm:hidden" />
-            <CustomLogo size={32} className="hidden sm:block" />
+            <CustomLogo size={96} className="sm:hidden" />
+            <CustomLogo size={128} className="hidden sm:block" />
             <span className="text-white font-sans font-black text-xl sm:text-2xl md:text-3xl" style={{ letterSpacing: '0.1em', fontWeight: '1200' }}>utilizon</span>
           </div>
           
