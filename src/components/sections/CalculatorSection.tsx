@@ -1,0 +1,229 @@
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import Icon from "@/components/ui/icon";
+import { RefObject } from "react";
+
+interface FormData {
+  name: string;
+  company: string;
+  phone: string;
+  email: string;
+  comment: string;
+  file: File | null;
+}
+
+interface CalculatorSectionProps {
+  formData: FormData;
+  setFormData: (data: FormData | ((prev: FormData) => FormData)) => void;
+  agreed: boolean;
+  setAgreed: (agreed: boolean) => void;
+  fileInputRef: RefObject<HTMLInputElement>;
+  handleSubmit: () => void;
+  handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+export default function CalculatorSection({ 
+  formData, 
+  setFormData, 
+  agreed, 
+  setAgreed, 
+  fileInputRef, 
+  handleSubmit, 
+  handleFileChange 
+}: CalculatorSectionProps) {
+  return (
+    <section id="calculator" className="py-20 bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <h2 className="section-title text-gray-900 mb-4">Быстрая оценка стоимости</h2>
+          <p className="premium-body text-gray-700 max-w-2xl mx-auto">
+            Прикрепите спецификацию оборудования и получите предварительную стоимость утилизации в течение 30 минут
+          </p>
+        </div>
+        
+        <div className="max-w-4xl mx-auto">
+          <Card className="shadow-xl">
+            <CardHeader className="bg-primary text-white text-center">
+              <CardTitle className="text-2xl flex items-center justify-center">
+                <Icon name="Calculator" size={24} className="mr-2" />
+                Калькулятор стоимости утилизации
+              </CardTitle>
+              <CardDescription className="text-white/90">
+                Заполните форму и прикрепите спецификацию оборудования для точного расчета
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-4 sm:p-6 lg:p-4 sm:p-6 lg:p-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-4 sm:p-6 lg:p-8">
+                <div className="space-y-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Контактное лицо *</label>
+                      <input 
+                        type="text" 
+                        value={formData.name}
+                        onChange={(e) => setFormData({...formData, name: e.target.value})}
+                        className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
+                        placeholder="Ваше имя"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Компания</label>
+                      <input 
+                        type="text" 
+                        value={formData.company}
+                        onChange={(e) => setFormData({...formData, company: e.target.value})}
+                        className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
+                        placeholder="Название компании"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 sm:grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Телефон *</label>
+                      <input 
+                        type="tel" 
+                        value={formData.phone}
+                        onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                        className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
+                        placeholder="+7 (___) ___-__-__"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Email *</label>
+                      <input 
+                        type="email" 
+                        value={formData.email}
+                        onChange={(e) => setFormData({...formData, email: e.target.value})}
+                        className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
+                        placeholder="your@email.com"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Город</label>
+                    <select className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base">
+                      <option value="">Выберите город</option>
+                      <option>Москва и Московская область</option>
+                      <option>Санкт-Петербург и Ленинградская область</option>
+                      <option>Новосибирск</option>
+                      <option>Екатеринбург</option>
+                      <option>Казань</option>
+                      <option>Нижний Новгород</option>
+                      <option>Другой город</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <div className="space-y-6">
+                  <div>
+                    <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">
+                      📎 Спецификация оборудования *
+                      <span className="text-xs text-gray-600 block mt-1">Прикрепите файл с описанием оборудования</span>
+                    </label>
+                    <div 
+                      className="border-2 border-dashed border-primary/30 rounded-lg p-6 text-center hover:border-primary transition-all duration-300 cursor-pointer bg-blue-50/50"
+                      onClick={() => fileInputRef.current?.click()}
+                    >
+                      <Icon name="Upload" size={32} className="text-primary mx-auto mb-3" />
+                      {formData.file ? (
+                        <div>
+                          <p className="text-sm premium-body text-green-700 mb-2 font-semibold">
+                            ✓ Файл загружен: {formData.file.name}
+                          </p>
+                          <p className="text-xs text-gray-600">
+                            Нажмите для выбора другого файла
+                          </p>
+                        </div>
+                      ) : (
+                        <div>
+                          <p className="text-sm premium-body text-gray-700 mb-2">
+                            <span className="text-primary font-semibold">Выберите файл</span> или перетащите сюда
+                          </p>
+                          <p className="text-xs text-gray-600">
+                            Excel (.xlsx, .xls), Word (.docx, .doc), PDF • до 10 МБ
+                          </p>
+                        </div>
+                      )}
+                      <input 
+                        type="file" 
+                        ref={fileInputRef}
+                        className="hidden" 
+                        accept=".xlsx,.xls,.docx,.doc,.pdf" 
+                        onChange={handleFileChange}
+                      />
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Дополнительная информация</label>
+                    <textarea 
+                      value={formData.comment}
+                      onChange={(e) => setFormData({...formData, comment: e.target.value})}
+                      className="w-full px-4 py-3 min-h-[88px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base resize-none" 
+                      placeholder="Укажите срочность, особые требования, вопросы по утилизации..."
+                    />
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-8 border-t pt-6">
+                <div className="flex items-start space-x-3 mb-6">
+                  <input 
+                    type="checkbox" 
+                    id="calc-agreement" 
+                    checked={agreed}
+                    onChange={(e) => setAgreed(e.target.checked)}
+                    className="mt-1 rounded border-gray-300 w-4 h-4" 
+                    required 
+                  />
+                  <label htmlFor="calc-agreement" className="text-sm premium-body text-gray-700">
+                    Согласен с <a href="#" className="text-primary hover:underline">политикой конфиденциальности</a> и 
+                    обработкой персональных данных. Подтверждаю, что указанная информация достоверна.
+                  </label>
+                </div>
+                
+                <div className="grid grid-cols-1 gap-4">
+                  <Button 
+                    onClick={() => {
+                      console.log('🔥 Прямое нажатие на кнопку');
+                      handleSubmit();
+                    }}
+                    type="button"
+                    className="w-full min-h-[48px]" 
+                    size="lg"
+                  >
+                    <Icon name="Calculator" size={20} className="mr-2" />
+                    Получить расчет стоимости
+                  </Button>
+                  <Button 
+                    onClick={() => window.open('tel:+79018628181', '_self')}
+                    variant="outline" 
+                    className="w-full min-h-[48px]" 
+                    size="lg"
+                  >
+                    <Icon name="Phone" size={20} className="mr-2" />
+                    Обсудить по телефону
+                  </Button>
+                </div>
+                
+                <div className="mt-4 text-center">
+                  <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+                    <div className="flex items-center justify-center text-green-700">
+                      <Icon name="Clock" size={16} className="mr-2" />
+                      <span className="text-sm font-medium">Ответим в течение 30 минут в рабочее время</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </section>
+  );
+}
