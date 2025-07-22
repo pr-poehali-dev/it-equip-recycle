@@ -3,7 +3,7 @@ import Icon from "@/components/ui/icon";
 
 export default function HeroSection() {
   return (
-    <section className="bg-gradient-to-r from-teal-600 to-cyan-500 text-white py-12 sm:py-16 md:py-20">
+    <section className="bg-gradient-to-r from-professional-rolexGreen to-professional-rolexDarkGreen text-white py-12 sm:py-16 md:py-20">
       <div className="container mx-auto px-3 sm:px-4 text-center">
         <h1 className="hero-title mb-4 sm:mb-6">
           Профессиональная утилизация <br className="hidden sm:block" />

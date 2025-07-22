@@ -26,12 +26,12 @@ export default function GeographySection() {
         
         <div className="text-center mt-12">
           <div className="rounded-lg p-6 max-w-4xl mx-auto bg-slate-100 border border-slate-200">
-            <Icon name="Phone" size={24} className="text-teal-600 mx-auto mb-4" />
+            <Icon name="Phone" size={24} className="text-primary mx-auto mb-4" />
             <h3 className="text-xl font-bold text-slate-800 mb-2">Единый федеральный номер</h3>
             <p className="text-slate-700 mb-4">
               Один номер для всех регионов России. Мы автоматически переадресуем ваш звонок в ближайший офис.
             </p>
-            <div className="text-2xl font-bold text-teal-600">8 (901) 862-81-81</div>
+            <div className="text-2xl font-bold text-primary">8 (901) 862-81-81</div>
             <div className="text-sm text-slate-600 mt-1">Звонок бесплатный из любого региона</div>
           </div>
         </div>

@@ -31,11 +31,11 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				primary: {
-					DEFAULT: '#0D9488',
+					DEFAULT: '#00514A',
 					foreground: '#FFFFFF'
 				},
 				secondary: {
-					DEFAULT: '#0F766E',
+					DEFAULT: '#003d36',
 					foreground: '#F0FDFA'
 				},
 				professional: {
@@ -44,10 +44,14 @@ export default {
 					deepTeal: '#134E4A',
 					lightTeal: '#14B8A6',
 					cyan: '#F0FDFA',
+					// Rolex-inspired colors
+					rolexGreen: '#00514A',
+					rolexDarkGreen: '#003d36',
+					rolexDeepGreen: '#002f2a',
 					// Legacy names for compatibility
-					chocolate: '#0D9488',
-					darkChocolate: '#0F766E',
-					deepChocolate: '#134E4A',
+					chocolate: '#00514A',
+					darkChocolate: '#003d36',
+					deepChocolate: '#002f2a',
 					lightChocolate: '#14B8A6',
 					cream: '#F0FDFA',
 					lightGray: '#F1F5F9'
