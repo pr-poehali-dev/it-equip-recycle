@@ -25,7 +25,7 @@ export default function GeographySection() {
         </div>
         
         <div className="text-center mt-12">
-          <div className="rounded-lg p-6 max-w-4xl mx-auto bg-slate-100 border border-slate-200">
+          <div className="rounded-lg p-6 max-w-4xl mx-auto bg-professional-rolexLightGray border border-gray-200">
             <Icon name="Phone" size={24} className="text-primary mx-auto mb-4" />
             <h3 className="text-xl font-bold text-slate-800 mb-2">Единый федеральный номер</h3>
             <p className="text-slate-700 mb-4">

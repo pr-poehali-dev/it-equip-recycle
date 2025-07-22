@@ -48,6 +48,8 @@ export default {
 					rolexGreen: '#00514A',
 					rolexDarkGreen: '#003d36',
 					rolexDeepGreen: '#002f2a',
+					rolexCream: '#F7F7F7',
+					rolexLightGray: '#FAFAFA',
 					// Legacy names for compatibility
 					chocolate: '#00514A',
 					darkChocolate: '#003d36',

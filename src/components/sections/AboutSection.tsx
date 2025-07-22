@@ -4,7 +4,7 @@ import Icon from "@/components/ui/icon";
 
 export default function AboutSection() {
   return (
-    <section id="about" className="py-20 bg-gradient-to-br from-blue-50 to-teal-50">
+    <section id="about" className="py-20 bg-professional-rolexLightGray">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
           <div>
