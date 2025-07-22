@@ -53,7 +53,7 @@ export default function Header({ mobileMenuOpen, setMobileMenuOpen }: HeaderProp
                 <SheetContent side="right" className="w-[300px] sm:w-[400px]">
                   <div className="flex flex-col h-full">
                     <div className="flex items-center mb-8">
-                      <CustomLogo size={24} className="mr-2" />
+                      <CustomLogo size={72} className="mr-2" />
                       <span className="font-black text-xl">utilizon</span>
                     </div>
                     
