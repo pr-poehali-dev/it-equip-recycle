@@ -17,6 +17,7 @@ export default function CalculatorSection() {
   });
 
   const [agreed, setAgreed] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,14 +27,13 @@ export default function CalculatorSection() {
     }
   };
 
-  const handleSubmit = (e?: React.MouseEvent) => {
+  const handleSubmit = async (e?: React.MouseEvent) => {
     if (e) {
       e.preventDefault();
       e.stopPropagation();
     }
     
-    console.log('🚀 Нажата кнопка "Получить расчет стоимости"');
-    console.log('📋 Данные формы:', formData);
+    console.log('🚀 ОТПРАВКА ФОРМЫ КАЛЬКУЛЯТОРА:', formData);
     console.log('✅ Согласие:', agreed);
     
     // Проверка обязательных полей
@@ -57,11 +57,62 @@ export default function CalculatorSection() {
       return;
     }
 
-    // Формируем письмо
-    const subject = 'Заявка на расчет стоимости утилизации';
-    const cityInfo = formData.city === 'Другой город' ? formData.customCity : formData.city;
-    
-    const emailBody = `Заявка на расчет стоимости утилизации
+    setIsSubmitting(true);
+
+    // Показываем индикатор загрузки
+    const loadingDiv = document.createElement('div');
+    loadingDiv.innerHTML = `
+      <div style="
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #059669;
+        color: white;
+        padding: 24px 32px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        z-index: 9999;
+        font-family: system-ui, -apple-system, sans-serif;
+        max-width: 400px;
+        text-align: center;
+      ">
+        <div style="
+          width: 24px;
+          height: 24px;
+          background: #D4AF37;
+          border-radius: 50%;
+          margin: 0 auto 16px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          animation: spin 1s linear infinite;
+        ">⟳</div>
+        <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Отправляем заявку...</h3>
+        <p style="margin: 0; opacity: 0.9; font-size: 14px;">Пожалуйста, подождите</p>
+      </div>
+      <style>
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+      </style>
+    `;
+    document.body.appendChild(loadingDiv);
+
+    try {
+      const cityInfo = formData.city === 'Другой город' ? formData.customCity : formData.city;
+      
+      // Отправляем через Formspree
+      const response = await fetch('https://formspree.io/f/xwpkgvwg', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: 'commerce@rusutil-1.ru',
+          subject: 'Заявка на расчет стоимости утилизации',
+          message: `Заявка на расчет стоимости утилизации
 
 Контактные данные:
 Имя: ${formData.name}
@@ -74,18 +125,121 @@ Email: ${formData.email}
 Прикрепленный файл: ${formData.file ? formData.file.name : 'Не прикреплен'}
 Выбранный план: ${formData.selectedPlan || 'Не выбран'}
 
-Заявка отправлена с калькулятора`;
-    
-    const mailtoLink = `mailto:commerce@rusutil-1.ru?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
-    
-    console.log('📧 Открываем почтовый клиент:', mailtoLink);
-    
-    try {
-      window.location.href = mailtoLink;
-      console.log('✅ Почтовый клиент открыт успешно');
+---
+Заявка отправлена с калькулятора`,
+          _replyto: formData.email
+        })
+      });
+      
+      // Убираем индикатор загрузки
+      loadingDiv.remove();
+      
+      if (response.ok) {
+        // Показываем успешное сообщение
+        const successDiv = document.createElement('div');
+        successDiv.innerHTML = `
+          <div style="
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #059669;
+            color: white;
+            padding: 24px 32px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            z-index: 9999;
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 400px;
+            text-align: center;
+          ">
+            <div style="
+              width: 48px;
+              height: 48px;
+              background: #D4AF37;
+              border-radius: 50%;
+              margin: 0 auto 16px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 24px;
+            ">✓</div>
+            <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Заявка отправлена!</h3>
+            <p style="margin: 0; opacity: 0.9; font-size: 14px;">Мы пришлем расчет в течение 30 минут</p>
+          </div>
+        `;
+        document.body.appendChild(successDiv);
+        
+        // Автоматически убираем сообщение через 4 секунды
+        setTimeout(() => {
+          successDiv.remove();
+        }, 4000);
+        
+        // Очищаем форму
+        setFormData({
+          name: '',
+          company: '',
+          phone: '',
+          email: '',
+          city: '',
+          customCity: '',
+          comment: '',
+          file: null,
+          selectedPlan: ''
+        });
+        setAgreed(false);
+        
+        console.log('✅ Заявка успешно отправлена!');
+      } else {
+        throw new Error('Ошибка сервера');
+      }
     } catch (error) {
-      console.error('❌ Ошибка при открытии почтового клиента:', error);
-      alert('Не удалось открыть почтовый клиент. Пожалуйста, отправьте заявку на email: commerce@rusutil-1.ru');
+      // Убираем индикатор загрузки в случае ошибки
+      loadingDiv.remove();
+      
+      console.error('❌ Ошибка при отправке:', error);
+      
+      // Показываем сообщение об ошибке
+      const errorDiv = document.createElement('div');
+      errorDiv.innerHTML = `
+        <div style="
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: #DC2626;
+          color: white;
+          padding: 24px 32px;
+          border-radius: 12px;
+          box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+          z-index: 9999;
+          font-family: system-ui, -apple-system, sans-serif;
+          max-width: 400px;
+          text-align: center;
+        ">
+          <div style="
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+          ">✗</div>
+          <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Ошибка отправки</h3>
+          <p style="margin: 0; opacity: 0.9; font-size: 14px;">Попробуйте позже или позвоните: +7 (901) 862-81-81</p>
+        </div>
+      `;
+      document.body.appendChild(errorDiv);
+      
+      // Автоматически убираем сообщение через 5 секунд
+      setTimeout(() => {
+        errorDiv.remove();
+      }, 5000);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -167,6 +321,7 @@ Email: ${formData.email}
                         className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                         placeholder="Ваше имя"
                         required
+                        disabled={isSubmitting}
                       />
                     </div>
                     <div>
@@ -177,6 +332,7 @@ Email: ${formData.email}
                         onChange={(e) => setFormData(prev => ({...prev, company: e.target.value}))}
                         className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                         placeholder="Название компании"
+                        disabled={isSubmitting}
                       />
                     </div>
                   </div>
@@ -191,6 +347,7 @@ Email: ${formData.email}
                         className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                         placeholder="+7 (___) ___-__-__"
                         required
+                        disabled={isSubmitting}
                       />
                     </div>
                     <div>
@@ -202,6 +359,7 @@ Email: ${formData.email}
                         className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                         placeholder="your@email.com"
                         required
+                        disabled={isSubmitting}
                       />
                     </div>
                   </div>
@@ -212,6 +370,7 @@ Email: ${formData.email}
                       value={formData.city}
                       onChange={(e) => setFormData(prev => ({...prev, city: e.target.value, customCity: e.target.value !== 'Другой город' ? '' : prev.customCity}))}
                       className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base"
+                      disabled={isSubmitting}
                     >
                       <option value="">Выберите город</option>
                       <option value="Москва и Московская область">Москва и Московская область</option>
@@ -229,6 +388,7 @@ Email: ${formData.email}
                         onChange={(e) => setFormData(prev => ({...prev, customCity: e.target.value}))}
                         className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base mt-3" 
                         placeholder="Укажите ваш город"
+                        disabled={isSubmitting}
                       />
                     )}
                   </div>
@@ -241,8 +401,10 @@ Email: ${formData.email}
                       <span className="text-xs text-gray-600 block mt-1">Прикрепите файл с описанием оборудования</span>
                     </label>
                     <div 
-                      className="border-2 border-dashed border-primary/30 rounded-lg p-6 text-center hover:border-primary transition-all duration-300 cursor-pointer bg-black/5"
-                      onClick={() => fileInputRef.current?.click()}
+                      className={`border-2 border-dashed border-primary/30 rounded-lg p-6 text-center hover:border-primary transition-all duration-300 bg-black/5 ${
+                        isSubmitting ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+                      }`}
+                      onClick={() => !isSubmitting && fileInputRef.current?.click()}
                     >
                       <Icon name="Upload" size={32} className="text-professional-rolexGold mx-auto mb-3" />
                       {formData.file ? (
@@ -251,7 +413,7 @@ Email: ${formData.email}
                             ✓ Файл загружен: {formData.file.name}
                           </p>
                           <p className="text-xs text-gray-600">
-                            Нажмите для выбора другого файла
+                            {!isSubmitting && 'Нажмите для выбора другого файла'}
                           </p>
                         </div>
                       ) : (
@@ -270,6 +432,7 @@ Email: ${formData.email}
                         className="hidden" 
                         accept=".xlsx,.xls,.docx,.doc,.pdf" 
                         onChange={handleFileChange}
+                        disabled={isSubmitting}
                       />
                     </div>
                   </div>
@@ -281,6 +444,7 @@ Email: ${formData.email}
                       onChange={(e) => setFormData(prev => ({...prev, comment: e.target.value}))}
                       className="w-full px-4 py-3 min-h-[88px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base resize-none" 
                       placeholder="Укажите срочность, особые требования, вопросы по утилизации..."
+                      disabled={isSubmitting}
                     />
                   </div>
                 </div>
@@ -296,10 +460,15 @@ Email: ${formData.email}
                       onChange={(e) => setAgreed(e.target.checked)}
                       className="sr-only" 
                       required 
+                      disabled={isSubmitting}
                     />
                     <div 
-                      onClick={() => setAgreed(!agreed)}
-                      className={`w-5 h-5 rounded border-2 cursor-pointer flex items-center justify-center transition-all ${
+                      onClick={() => !isSubmitting && setAgreed(!agreed)}
+                      className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
+                        isSubmitting 
+                          ? 'cursor-not-allowed opacity-50' 
+                          : 'cursor-pointer'
+                      } ${
                         agreed 
                           ? 'bg-emerald-600 border-emerald-600' 
                           : 'bg-white border-gray-300 hover:border-emerald-400'
@@ -330,9 +499,10 @@ Email: ${formData.email}
                     type="button"
                     className="w-full min-h-[48px] bg-primary hover:bg-primary/90" 
                     size="lg"
+                    disabled={isSubmitting}
                   >
                     <Icon name="Calculator" size={20} className="mr-2 text-professional-rolexGold" />
-                    Получить расчет стоимости
+                    {isSubmitting ? 'Отправляем заявку...' : 'Получить расчет стоимости'}
                   </Button>
                   <Button 
                     onClick={(e) => {
@@ -342,6 +512,7 @@ Email: ${formData.email}
                     variant="outline" 
                     className="w-full min-h-[48px] border-primary text-primary hover:bg-primary hover:text-white" 
                     size="lg"
+                    disabled={isSubmitting}
                   >
                     <Icon name="Phone" size={20} className="mr-2 text-professional-rolexGold" />
                     Обсудить по телефону

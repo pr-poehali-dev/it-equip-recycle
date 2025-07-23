@@ -9,32 +9,199 @@ export default function ContactsSection() {
     company: '',
     phone: '',
     email: '',
-    comment: '',
-    file: null as File | null,
-    equipmentType: '',
-    quantity: ''
+    comment: ''
   });
 
-  const handleSubmit = () => {
-    console.log('Отправка формы из контактов:', formData);
-    // Простая обработка формы
-    if (!formData.name.trim() || !formData.phone.trim()) {
-      alert('Пожалуйста, заполните имя и телефон');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async () => {
+    console.log('🚀 ОТПРАВКА ФОРМЫ ИЗ КОНТАКТОВ:', formData);
+    
+    // Валидация
+    if (!formData.name.trim()) {
+      alert('❌ Пожалуйста, укажите ваше имя');
       return;
     }
     
-    const subject = 'Заявка с раздела Контакты';
-    const mailtoLink = `mailto:commerce@rusutil-1.ru?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`
+    if (!formData.phone.trim()) {
+      alert('❌ Пожалуйста, укажите номер телефона');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    // Показываем индикатор загрузки
+    const loadingDiv = document.createElement('div');
+    loadingDiv.innerHTML = `
+      <div style="
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #059669;
+        color: white;
+        padding: 24px 32px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        z-index: 9999;
+        font-family: system-ui, -apple-system, sans-serif;
+        max-width: 400px;
+        text-align: center;
+      ">
+        <div style="
+          width: 24px;
+          height: 24px;
+          background: #D4AF37;
+          border-radius: 50%;
+          margin: 0 auto 16px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          animation: spin 1s linear infinite;
+        ">⟳</div>
+        <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Отправляем заявку...</h3>
+        <p style="margin: 0; opacity: 0.9; font-size: 14px;">Пожалуйста, подождите</p>
+      </div>
+      <style>
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+      </style>
+    `;
+    document.body.appendChild(loadingDiv);
+
+    try {
+      // Отправляем через Formspree
+      const response = await fetch('https://formspree.io/f/xwpkgvwg', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: 'commerce@rusutil-1.ru',
+          subject: 'Заявка с раздела Контакты',
+          message: `Заявка с раздела Контакты
+
+Контактные данные:
 Имя: ${formData.name}
 Компания: ${formData.company || 'Не указана'}
 Телефон: ${formData.phone}
 Email: ${formData.email || 'Не указан'}
-Комментарий: ${formData.comment || 'Нет'}
 
-Заявка отправлена с раздела "Контакты"
-    `)}`;
-    
-    window.location.href = mailtoLink;
+Комментарий: ${formData.comment || 'Нет комментария'}
+
+---
+Заявка отправлена с раздела "Контакты"`,
+          _replyto: formData.email || 'noreply@example.com'
+        })
+      });
+      
+      // Убираем индикатор загрузки
+      loadingDiv.remove();
+      
+      if (response.ok) {
+        // Показываем успешное сообщение
+        const successDiv = document.createElement('div');
+        successDiv.innerHTML = `
+          <div style="
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #059669;
+            color: white;
+            padding: 24px 32px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            z-index: 9999;
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 400px;
+            text-align: center;
+          ">
+            <div style="
+              width: 48px;
+              height: 48px;
+              background: #D4AF37;
+              border-radius: 50%;
+              margin: 0 auto 16px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 24px;
+            ">✓</div>
+            <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Заявка отправлена!</h3>
+            <p style="margin: 0; opacity: 0.9; font-size: 14px;">Мы свяжемся с вами в течение 30 минут</p>
+          </div>
+        `;
+        document.body.appendChild(successDiv);
+        
+        // Автоматически убираем сообщение через 4 секунды
+        setTimeout(() => {
+          successDiv.remove();
+        }, 4000);
+        
+        // Очищаем форму
+        setFormData({
+          name: '',
+          company: '',
+          phone: '',
+          email: '',
+          comment: ''
+        });
+        
+        console.log('✅ Заявка успешно отправлена!');
+      } else {
+        throw new Error('Ошибка сервера');
+      }
+    } catch (error) {
+      // Убираем индикатор загрузки в случае ошибки
+      loadingDiv.remove();
+      
+      console.error('❌ Ошибка при отправке:', error);
+      
+      // Показываем сообщение об ошибке
+      const errorDiv = document.createElement('div');
+      errorDiv.innerHTML = `
+        <div style="
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: #DC2626;
+          color: white;
+          padding: 24px 32px;
+          border-radius: 12px;
+          box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+          z-index: 9999;
+          font-family: system-ui, -apple-system, sans-serif;
+          max-width: 400px;
+          text-align: center;
+        ">
+          <div style="
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+          ">✗</div>
+          <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Ошибка отправки</h3>
+          <p style="margin: 0; opacity: 0.9; font-size: 14px;">Попробуйте позже или позвоните: +7 (901) 862-81-81</p>
+        </div>
+      `;
+      document.body.appendChild(errorDiv);
+      
+      // Автоматически убираем сообщение через 5 секунд
+      setTimeout(() => {
+        errorDiv.remove();
+      }, 5000);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -95,6 +262,7 @@ Email: ${formData.email || 'Не указан'}
                     onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                     className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                     placeholder="Ваше имя"
+                    disabled={isSubmitting}
                   />
                 </div>
                 <div>
@@ -105,6 +273,7 @@ Email: ${formData.email || 'Не указан'}
                     onChange={(e) => setFormData(prev => ({ ...prev, company: e.target.value }))}
                     className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                     placeholder="Название компании"
+                    disabled={isSubmitting}
                   />
                 </div>
               </div>
@@ -116,6 +285,7 @@ Email: ${formData.email || 'Не указан'}
                   onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
                   className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                   placeholder="+7 (___) ___-__-__"
+                  disabled={isSubmitting}
                 />
               </div>
               <div>
@@ -126,6 +296,7 @@ Email: ${formData.email || 'Не указан'}
                   onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
                   className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                   placeholder="your@email.com"
+                  disabled={isSubmitting}
                 />
               </div>
               <div>
@@ -135,14 +306,16 @@ Email: ${formData.email || 'Не указан'}
                   onChange={(e) => setFormData(prev => ({ ...prev, comment: e.target.value }))}
                   className="w-full px-4 py-3 min-h-[88px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base resize-none" 
                   placeholder="Опишите ваш вопрос или заявку..."
+                  disabled={isSubmitting}
                 />
               </div>
               <Button 
                 onClick={handleSubmit}
                 className="w-full min-h-[48px]"
+                disabled={isSubmitting}
               >
                 <Icon name="Send" size={20} className="mr-2 text-professional-rolexGold" />
-                Отправить заявку
+                {isSubmitting ? 'Отправляем...' : 'Отправить заявку'}
               </Button>
             </CardContent>
           </Card>
