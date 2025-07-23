@@ -16,15 +16,30 @@ export async function sendFormWithoutFiles(formData: AppFormData, cityInfo: stri
   formDataToSend.append('_next', 'https://utilizon.pro/success');
   formDataToSend.append('_error', 'https://utilizon.pro/error');
   
-  const response = await fetch('https://formsubmit.co/ajax/commerce@rusutil-1.ru', {
-    method: 'POST',
-    body: formDataToSend,
-    headers: {
-      'Accept': 'application/json'
-    }
-  });
+  // Создаем AbortController для тайм-аута
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 секунд тайм-аут
   
-  console.log('✅ FormSubmit результат:', response.status, response.statusText);
+  let response;
+  try {
+    response = await fetch('https://formsubmit.co/ajax/commerce@rusutil-1.ru', {
+      method: 'POST',
+      body: formDataToSend,
+      headers: {
+        'Accept': 'application/json'
+      },
+      signal: controller.signal
+    });
+    
+    clearTimeout(timeoutId); // Отменяем тайм-аут если запрос успешен
+    console.log('✅ FormSubmit результат:', response.status, response.statusText);
+  } catch (fetchError) {
+    clearTimeout(timeoutId);
+    if (fetchError.name === 'AbortError') {
+      throw new Error('Тайм-аут запроса (15 секунд). Попробуйте еще раз.');
+    }
+    throw fetchError;
+  }
   
   // Проверяем успешность отправки
   let success = false;

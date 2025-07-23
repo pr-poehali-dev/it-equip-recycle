@@ -124,10 +124,25 @@ export async function sendLargeFiles(formData: AppFormData, cityInfo: string, to
     const fileFormData = new FormData();
     fileFormData.append('file', file);
     
-    const uploadResponse = await fetch('https://file.io', {
-      method: 'POST',
-      body: fileFormData
-    });
+    // Добавляем тайм-аут для загрузки файлов
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 секунд для файлов
+    
+    let uploadResponse;
+    try {
+      uploadResponse = await fetch('https://file.io', {
+        method: 'POST',
+        body: fileFormData,
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+    } catch (uploadError) {
+      clearTimeout(timeoutId);
+      if (uploadError.name === 'AbortError') {
+        throw new Error(`Тайм-аут загрузки файла ${file.name} (30 секунд)`);
+      }
+      throw uploadError;
+    }
     
     if (!uploadResponse.ok) {
       throw new Error(`Ошибка загрузки файла ${file.name}: ${uploadResponse.status}`);

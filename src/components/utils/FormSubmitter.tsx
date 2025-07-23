@@ -50,22 +50,12 @@ export const useFormSubmitter = ({ formData, agreed, onSuccess }: FormSubmitterP
         
         const totalSize = formData.files.reduce((sum, file) => sum + file.size, 0);
         
-        // Если файлы маленькие (до 4МБ общий размер) - используем множественные Ajax запросы
+        // Если файлы маленькие (до 4МБ общий размер) - используем HTML-форму напрямую
         if (areFilesSmall(formData.files)) {
-          try {
-            await sendSmallFilesMultiple(formData, cityInfo);
-            
-            // Показываем сообщение об успехе
-            loadingDiv.remove();
-            createFileSuccessModal();
-            onSuccess();
-            return;
-          } catch (ajaxError) {
-            console.warn('⚠️ Ajax метод не сработал, пробуем HTML-форму:', ajaxError);
-            // Fallback на HTML-форму
-            sendSmallFiles(formData, cityInfo);
-            return;
-          }
+          console.log('🔄 Используем HTML-форму для малых файлов (более надежно)');
+          loadingDiv.remove(); // Убираем индикатор, так как HTML-форма перенаправит
+          sendSmallFiles(formData, cityInfo);
+          return;
         }
         
         // Для больших файлов - используем file.io + email уведомление
@@ -89,7 +79,9 @@ export const useFormSubmitter = ({ formData, agreed, onSuccess }: FormSubmitterP
       }
       
       // Если файлов нет, используем Ajax
+      console.log('📝 Отправляем форму без файлов через Ajax...');
       await sendFormWithoutFiles(formData, cityInfo);
+      console.log('✅ Форма без файлов отправлена успешно');
       
       // Убираем индикатор загрузки
       loadingDiv.remove();
