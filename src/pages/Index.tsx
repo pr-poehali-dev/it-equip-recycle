@@ -100,33 +100,34 @@ export default function Index() {
     document.body.appendChild(loadingDiv);
     
     try {
-      // Формируем тело письма
-      const emailBody = `Заявка на расчет стоимости утилизации
-
-Контактные данные:
-Имя: ${formData.name}
-Компания: ${formData.company || 'Не указана'}
-Телефон: ${formData.phone}
-Email: ${formData.email}
-Город: ${formData.city || 'Не указан'}
-${formData.selectedPlan ? `Выбранный план: ${formData.selectedPlan}` : ''}
-
-Дополнительная информация: ${formData.comment || 'Не указана'}
-${formData.file ? `Файл спецификации: ${formData.file.name}` : 'Файл спецификации не приложен'}
-
----
-Заявка отправлена с сайта`;
-
-      // Создаем mailto ссылку
-      const mailtoLink = `mailto:commerce@rusutil-1.ru?subject=${encodeURIComponent('Заявка на расчет стоимости утилизации')}&body=${encodeURIComponent(emailBody)}`;
+      // Создаем FormData для отправки с файлом
+      const formDataToSend = new FormData();
+      formDataToSend.append('name', formData.name);
+      formDataToSend.append('company', formData.company || 'Не указана');
+      formDataToSend.append('phone', formData.phone);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('city', formData.city === 'Другой город' ? formData.customCity : formData.city || 'Не указан');
+      formDataToSend.append('comment', formData.comment || 'Не указана');
+      formDataToSend.append('selected_plan', formData.selectedPlan || '');
+      formDataToSend.append('subject', 'Заявка на расчет стоимости утилизации');
       
-      // Пытаемся открыть почтовый клиент
-      window.location.href = mailtoLink;
+      // Добавляем файл если есть
+      if (formData.file) {
+        formDataToSend.append('file', formData.file);
+      }
       
-      // Убираем индикатор загрузки через 2 секунды и показываем успех
-      setTimeout(() => {
-        loadingDiv.remove();
-        
+      // Отправляем через PHP
+      const response = await fetch('/send-email.php', {
+        method: 'POST',
+        body: formDataToSend
+      });
+      
+      const result = await response.json();
+      
+      // Убираем индикатор загрузки
+      loadingDiv.remove();
+      
+      if (response.ok && result.success) {
         // Показываем успешное сообщение
         const successDiv = document.createElement('div');
         successDiv.innerHTML = `
@@ -157,10 +158,10 @@ ${formData.file ? `Файл спецификации: ${formData.file.name}` : '
               font-size: 24px;
               color: black;
               font-weight: bold;
-            ">✓</div>
-            <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Почтовый клиент открыт!</h3>
-            <p style="margin: 0 0 8px 0; opacity: 0.9; font-size: 14px;">Письмо подготовлено для отправки на commerce@rusutil-1.ru</p>
-            <p style="margin: 0; opacity: 0.7; font-size: 12px;">Нажмите "Отправить" в вашем почтовом клиенте</p>
+            ">✅</div>
+            <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Заявка отправлена!</h3>
+            <p style="margin: 0 0 8px 0; opacity: 0.9; font-size: 14px;">Письмо успешно отправлено на commerce@rusutil-1.ru</p>
+            <p style="margin: 0; opacity: 0.7; font-size: 12px;">Мы свяжемся с вами в ближайшее время</p>
             <button onclick="this.parentElement.parentElement.remove()" style="
               background: #D4AF37;
               color: black;
@@ -188,7 +189,11 @@ ${formData.file ? `Файл спецификации: ${formData.file.name}` : '
           selectedPlan: ''
         });
         setAgreed(false);
-      }, 2000);
+        
+        console.log('✅ Заявка успешно отправлена!');
+      } else {
+        throw new Error(result.error || 'Ошибка отправки');
+      }
       
     } catch (error) {
       // Убираем индикатор загрузки
