@@ -34,7 +34,7 @@ export default function Footer() {
               <li><a href="#" className="hover:text-professional-rolexGold transition-colors">Лицензии</a></li>
               <li><a href="#" className="hover:text-professional-rolexGold transition-colors">Сертификаты</a></li>
               <li><a href="/privacy" className="hover:text-professional-rolexGold transition-colors">Политика конфиденциальности</a></li>
-              <li><a href="#" className="hover:text-professional-rolexGold transition-colors">Условия использования</a></li>
+              <li><a href="/terms" className="hover:text-professional-rolexGold transition-colors">Условия использования</a></li>
             </ul>
           </div>
           
