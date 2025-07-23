@@ -19,13 +19,13 @@ export default function ServicesSection({ services = [] }: ServicesSectionProps)
       icon: "Monitor",
       title: "Компьютеры и ноутбуки",
       description: "Утилизация настольных компьютеров, ноутбуков и планшетов",
-      price: "от 500₽"
+      price: "от 400₽"
     },
     {
       icon: "Server",
       title: "Серверное оборудование",
       description: "Профессиональная утилизация серверов и сетевого оборудования",
-      price: "от 1000₽"
+      price: "от 250₽"
     },
     {
       icon: "Printer",
@@ -56,14 +56,14 @@ export default function ServicesSection({ services = [] }: ServicesSectionProps)
           {servicesToDisplay.map((service, index) => (
             <Card key={index} className="hover:shadow-lg transition-shadow duration-300 hover-scale">
               <CardHeader className="text-center">
-                <div className="bg-primary/10 rounded-full p-4 w-20 h-20 mx-auto mb-4 flex items-center justify-center">
-                  <Icon name={service.icon as any} size={32} className="text-professional-rolexGold" />
+                <div className="bg-primary/10 rounded-full p-6 w-28 h-28 mx-auto mb-4 flex items-center justify-center">
+                  <Icon name={service.icon as any} size={40} className="text-professional-rolexGold" />
                 </div>
                 <CardTitle className="text-lg">{service.title}</CardTitle>
               </CardHeader>
               <CardContent className="text-center">
                 <CardDescription className="mb-4">{service.description}</CardDescription>
-                <Badge variant="outline" className="text-primary border-primary">
+                <Badge variant="outline" className="text-primary border-primary text-lg px-4 py-2">
                   {service.price}
                 </Badge>
               </CardContent>
