@@ -395,7 +395,7 @@ export default function CalculatorSection({
             {/* Логотип компании */}
             <div className="mb-6">
               <img 
-                src="/img/7f951581-8eae-4d49-805c-b6e344302020.jpg" 
+                src="https://cdn.poehali.dev/files/3f8628d1-3cdf-4ed9-af8d-bc6c760aba18.PNG" 
                 alt="Utilizon логотип" 
                 className="w-20 h-20 mx-auto rounded-full object-cover border-2 border-professional-rolexGold/30"
               />
@@ -403,8 +403,8 @@ export default function CalculatorSection({
             
             {/* Иконка успеха */}
             <div className="mb-6">
-              <div className="w-16 h-16 mx-auto bg-green-100 rounded-full flex items-center justify-center">
-                <Icon name="CheckCircle" size={40} className="text-green-600" />
+              <div className="w-16 h-16 mx-auto bg-professional-rolexGold/10 rounded-full flex items-center justify-center">
+                <Icon name="CheckCircle" size={40} className="text-professional-rolexGold" />
               </div>
             </div>
             
