@@ -83,34 +83,73 @@ export default function Index() {
         });
       }
 
-      // Отправляем через fetch
-      const response = await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
-        method: 'POST',
-        body: formDataToSend
+      // Создаем скрытую HTML форму для прямой отправки
+      const htmlForm = document.createElement('form');
+      htmlForm.method = 'POST';
+      htmlForm.action = 'https://formsubmit.co/commerce@rusutil-1.ru';
+      htmlForm.enctype = 'multipart/form-data';
+      htmlForm.style.display = 'none';
+      htmlForm.target = '_blank';
+
+      // Добавляем текстовые поля
+      const textFields = [
+        { name: 'name', value: formData.name },
+        { name: 'email', value: formData.email },
+        { name: 'phone', value: formData.phone },
+        { name: 'company', value: formData.company || 'Не указана' },
+        { name: 'city', value: cityInfo || 'Не указан' },
+        { name: 'plan', value: formData.selectedPlan || 'Не выбран' },
+        { name: 'message', value: formData.comment || 'Нет комментариев' },
+        { name: '_subject', value: 'Заявка на утилизацию IT оборудования с сайта utilizon.pro' },
+        { name: '_captcha', value: 'false' },
+        { name: '_template', value: 'table' }
+      ];
+
+      textFields.forEach(field => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = field.name;
+        input.value = field.value;
+        htmlForm.appendChild(input);
       });
 
-      if (response.ok) {
-        // Показываем модальное окно успеха
-        setShowSuccessModal(true);
-        
-        // Очищаем форму
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          company: '',
-          city: '',
-          customCity: '',
-          selectedPlan: '',
-          comment: '',
-          files: []
-        });
-        setAgreed(false);
-        
-        console.log('✅ Заявка успешно отправлена!');
-      } else {
-        throw new Error('Ошибка отправки');
+      // Добавляем файлы
+      if (formData.files && formData.files.length > 0) {
+        for (let i = 0; i < formData.files.length; i++) {
+          const file = formData.files[i];
+          const fileInput = document.createElement('input');
+          fileInput.type = 'file';
+          fileInput.name = i === 0 ? 'attachment' : `attachment${i + 1}`;
+          fileInput.style.display = 'none';
+          
+          const dataTransfer = new DataTransfer();
+          dataTransfer.items.add(file);
+          fileInput.files = dataTransfer.files;
+          
+          htmlForm.appendChild(fileInput);
+        }
       }
+
+      document.body.appendChild(htmlForm);
+      htmlForm.submit();
+      document.body.removeChild(htmlForm);
+
+      // Показываем модальное окно успеха
+      setShowSuccessModal(true);
+      
+      // Очищаем форму
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        company: '',
+        city: '',
+        customCity: '',
+        selectedPlan: '',
+        comment: '',
+        files: []
+      });
+      setAgreed(false);
 
     } catch (error) {
       console.error('❌ Ошибка при отправке заявки:', error);
