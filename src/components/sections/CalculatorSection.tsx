@@ -214,13 +214,13 @@ export default function CalculatorSection({
                   <div>
                     <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">
                       📎 Спецификация оборудования *
-                      <span className="text-xs text-gray-600 block mt-1">Прикрепите файлы с описанием оборудования (до 10 файлов)</span>
+                      <span className="text-xs text-gray-600 block mt-1">Прикрепите файлы с описанием оборудования (до 5 файлов, максимум 3МБ каждый)</span>
                     </label>
                     
                     {/* Показываем загруженные файлы */}
                     {formData.files && formData.files.length > 0 && (
                       <div className="mb-4 space-y-2">
-                        <p className="text-sm font-medium text-gray-700">Загруженные файлы ({formData.files.length} из 10):</p>
+                        <p className="text-sm font-medium text-gray-700">Загруженные файлы ({formData.files.length} из 5):</p>
                         {formData.files.map((file, index) => (
                           <div key={index} className="flex items-center justify-between bg-green-50 border border-green-200 rounded-lg p-3">
                             <div className="flex items-center space-x-3">
@@ -255,7 +255,7 @@ export default function CalculatorSection({
                             ✓ Загружено файлов: {formData.files.length}
                           </p>
                           <p className="text-xs text-gray-600">
-                            {formData.files.length < 10 ? 'Нажмите для добавления еще файлов' : 'Достигнут лимит в 10 файлов'}
+                            {formData.files.length < 5 ? 'Нажмите для добавления еще файлов' : 'Достигнут лимит в 5 файлов'}
                           </p>
                         </div>
                       ) : (
@@ -264,7 +264,7 @@ export default function CalculatorSection({
                             <span className="text-primary font-semibold">Выберите файлы</span> или перетащите сюда
                           </p>
                           <p className="text-xs text-gray-600">
-                            Excel (.xlsx, .xls), Word (.docx, .doc), PDF • до 10 МБ каждый • до 10 файлов
+                            Excel (.xlsx, .xls), Word (.docx, .doc), PDF • до 3 МБ каждый • до 5 файлов
                           </p>
                         </div>
                       )}
@@ -275,7 +275,7 @@ export default function CalculatorSection({
                         accept=".xlsx,.xls,.docx,.doc,.pdf" 
                         multiple
                         onChange={handleFileChange}
-                        disabled={formData.files && formData.files.length >= 10}
+                        disabled={formData.files && formData.files.length >= 5}
                       />
                     </div>
                   </div>

@@ -117,20 +117,67 @@ export default function Index() {
       formDataToSend.append('_next', 'https://utilizon.pro/success');
       formDataToSend.append('_error', 'https://utilizon.pro/error');
       
-      // Добавляем файлы если есть (до 10 файлов)
+      // ⚠️ FormSubmit Ajax НЕ поддерживает файлы надёжно, поэтому используем HTML-форму
       if (formData.files && formData.files.length > 0) {
-        formData.files.forEach((file, index) => {
-          formDataToSend.append(`attachment_${index + 1}`, file);
+        console.log('📎 Отправляем файлы через HTML-форму для надёжности...');
+        
+        // Создаём HTML-форму для отправки с файлами
+        const htmlForm = document.createElement('form');
+        htmlForm.method = 'POST';
+        htmlForm.action = 'https://formsubmit.co/commerce@rusutil-1.ru';
+        htmlForm.enctype = 'multipart/form-data';
+        htmlForm.style.display = 'none';
+        
+        const cityInfo = formData.city === 'Другой город' ? formData.customCity : formData.city;
+        
+        // Добавляем все текстовые поля
+        const fields = [
+          { name: 'name', value: formData.name },
+          { name: 'email', value: formData.email },
+          { name: 'phone', value: formData.phone },
+          { name: 'company', value: formData.company || 'Не указана' },
+          { name: 'city', value: cityInfo || 'Не указан' },
+          { name: 'plan', value: formData.selectedPlan || 'Не выбран' },
+          { name: 'message', value: formData.comment || 'Нет комментариев' },
+          { name: '_subject', value: 'Заявка на расчет стоимости утилизации IT оборудования с сайта utilizon.pro' },
+          { name: '_captcha', value: 'false' },
+          { name: '_template', value: 'table' },
+          { name: '_next', value: 'https://utilizon.pro/success' },
+          { name: '_error', value: 'https://utilizon.pro/error' }
+        ];
+        
+        fields.forEach(field => {
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = field.name;
+          input.value = field.value;
+          htmlForm.appendChild(input);
         });
         
-        // Добавляем информацию о количестве файлов
-        formDataToSend.append('files_count', formData.files.length.toString());
+        // Добавляем файлы через file input
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.name = 'attachment';
+        fileInput.multiple = true;
+        fileInput.style.display = 'none';
         
-        // Добавляем список имен файлов
-        const fileNames = formData.files.map(file => file.name).join(', ');
-        formDataToSend.append('file_names', fileNames);
+        // Создаём новый FileList для передачи файлов
+        const dataTransfer = new DataTransfer();
+        formData.files.forEach(file => {
+          dataTransfer.items.add(file);
+        });
+        fileInput.files = dataTransfer.files;
+        
+        htmlForm.appendChild(fileInput);
+        document.body.appendChild(htmlForm);
+        
+        // Отправляем форму
+        htmlForm.submit();
+        
+        return; // Выходим, так как HTML-форма перенаправит страницу
       }
-
+      
+      // Если файлов нет, используем Ajax
       // Отправляем через FormSubmit API
       const response = await fetch('https://formsubmit.co/ajax/commerce@rusutil-1.ru', {
         method: 'POST',
@@ -347,32 +394,121 @@ export default function Index() {
     }
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Антивирусная проверка файлов
+  const scanFileForVirus = async (file: File): Promise<boolean> => {
+    try {
+      // Базовая проверка расширения
+      const allowedExtensions = ['.xlsx', '.xls', '.docx', '.doc', '.pdf'];
+      const fileExtension = file.name.toLowerCase().substring(file.name.lastIndexOf('.'));
+      
+      if (!allowedExtensions.includes(fileExtension)) {
+        throw new Error(`Недопустимый формат файла: ${fileExtension}`);
+      }
+      
+      // Проверка MIME-типа
+      const allowedMimeTypes = [
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // .xlsx
+        'application/vnd.ms-excel', // .xls
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // .docx
+        'application/msword', // .doc
+        'application/pdf' // .pdf
+      ];
+      
+      if (!allowedMimeTypes.includes(file.type)) {
+        throw new Error(`Подозрительный MIME-тип: ${file.type}`);
+      }
+      
+      // Проверка на подозрительные последовательности байтов
+      const arrayBuffer = await file.arrayBuffer();
+      const bytes = new Uint8Array(arrayBuffer);
+      
+      // Проверяем первые байты на соответствие формату
+      const pdfSignature = [0x25, 0x50, 0x44, 0x46]; // %PDF
+      const zipSignature = [0x50, 0x4B, 0x03, 0x04]; // PK (для .docx, .xlsx)
+      const docSignature = [0xD0, 0xCF, 0x11, 0xE0]; // для старых .doc, .xls
+      
+      const startsWithSignature = (
+        bytes.slice(0, 4).every((byte, i) => byte === pdfSignature[i]) ||
+        bytes.slice(0, 4).every((byte, i) => byte === zipSignature[i]) ||
+        bytes.slice(0, 4).every((byte, i) => byte === docSignature[i])
+      );
+      
+      if (!startsWithSignature) {
+        throw new Error('Файл не соответствует заявленному формату');
+      }
+      
+      // Проверка на подозрительные строки в начале файла
+      const fileStart = new TextDecoder('utf-8', { fatal: false }).decode(bytes.slice(0, 1024));
+      const suspiciousPatterns = [
+        'javascript:', 'vbscript:', '<script', 'eval(', 'document.write',
+        'shell.application', 'wscript.shell', '.exe', '.bat', '.cmd'
+      ];
+      
+      for (const pattern of suspiciousPatterns) {
+        if (fileStart.toLowerCase().includes(pattern)) {
+          throw new Error(`Обнаружена подозрительная последовательность: ${pattern}`);
+        }
+      }
+      
+      console.log(`✅ Файл ${file.name} прошёл антивирусную проверку`);
+      return true;
+      
+    } catch (error) {
+      console.error(`❌ Антивирусная проверка файла ${file.name}:`, error);
+      alert(`⚠️ Файл "${file.name}" не прошёл проверку безопасности: ${error.message}`);
+      return false;
+    }
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = Array.from(e.target.files || []);
     
-    // Ограничиваем до 10 файлов
-    const filesToAdd = selectedFiles.slice(0, 10);
+    // Ограничиваем до 5 файлов (лимит FormSubmit)
+    const filesToAdd = selectedFiles.slice(0, 5);
     
-    // Проверяем размер каждого файла (до 10 МБ)
-    const validFiles = filesToAdd.filter(file => {
-      const maxSize = 10 * 1024 * 1024; // 10 МБ
+    // Проверяем размер каждого файла (до 3 МБ для надёжности)
+    const sizeValidFiles = filesToAdd.filter(file => {
+      const maxSize = 3 * 1024 * 1024; // 3 МБ (безопасный размер для FormSubmit)
       if (file.size > maxSize) {
-        alert(`Файл "${file.name}" слишком большой. Максимальный размер: 10 МБ`);
+        alert(`Файл "${file.name}" слишком большой. Максимум: 3 МБ (лимит почтового сервиса)`);
         return false;
       }
       return true;
     });
     
-    // Объединяем с уже загруженными файлами, но не больше 10 всего
+    // Проводим антивирусную проверку для каждого файла
+    const validFiles = [];
+    for (const file of sizeValidFiles) {
+      const isClean = await scanFileForVirus(file);
+      if (isClean) {
+        validFiles.push(file);
+      }
+    }
+    
+    // Проверяем общий размер всех файлов (лимит FormSubmit - 5МБ всего)
     const currentFiles = formData.files || [];
-    const totalFiles = [...currentFiles, ...validFiles].slice(0, 10);
+    const allFiles = [...currentFiles, ...validFiles];
+    const totalSize = allFiles.reduce((sum, file) => sum + file.size, 0);
+    const maxTotalSize = 4 * 1024 * 1024; // 4 МБ общий лимит
+    
+    if (totalSize > maxTotalSize) {
+      alert(`Общий размер файлов превышает 4 МБ. Текущий размер: ${(totalSize / 1024 / 1024).toFixed(2)} МБ`);
+      return;
+    }
+    
+    // Ограничиваем до 5 файлов всего
+    const totalFiles = allFiles.slice(0, 5);
     
     if (totalFiles.length > currentFiles.length) {
       setFormData(prev => ({ ...prev, files: totalFiles }));
     }
     
-    if (selectedFiles.length > 10) {
-      alert('Можно загрузить максимум 10 файлов. Первые 10 файлов были добавлены.');
+    if (selectedFiles.length > 5) {
+      alert('Лимит почтового сервиса: максимум 5 файлов. Первые 5 файлов были добавлены.');
+    }
+    
+    if (validFiles.length < sizeValidFiles.length) {
+      alert('Некоторые файлы не прошли проверку безопасности и были исключены.');
     }
   };
   
