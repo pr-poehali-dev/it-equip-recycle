@@ -35,7 +35,7 @@ export default function Header({ mobileMenuOpen, setMobileMenuOpen }: HeaderProp
           <div className="flex items-center space-x-2 sm:space-x-3">
             <Button 
               size="sm" 
-              className="hidden sm:flex bg-primary hover:bg-primary/90 text-white min-h-[40px] px-4"
+              className="hidden sm:flex bg-black hover:bg-black/90 text-white min-h-[40px] px-4"
               onClick={() => window.open('tel:+79018628181', '_self')}
             >
               <Icon name="Phone" size={16} className="mr-2 text-professional-rolexGold" />
