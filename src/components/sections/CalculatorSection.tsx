@@ -214,7 +214,7 @@ export default function CalculatorSection({
                   <div>
                     <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">
                       📎 Спецификация оборудования *
-                      <span className="text-xs text-gray-600 block mt-1">Прикрепите файлы с описанием оборудования (до 5 файлов, максимум 3МБ каждый)</span>
+                      <span className="text-xs text-gray-600 block mt-1">Прикрепите файлы с описанием оборудования (до 5 файлов, максимум 20МБ каждый)</span>
                     </label>
                     
                     {/* Показываем загруженные файлы */}
@@ -264,7 +264,7 @@ export default function CalculatorSection({
                             <span className="text-primary font-semibold">Выберите файлы</span> или перетащите сюда
                           </p>
                           <p className="text-xs text-gray-600">
-                            Excel (.xlsx, .xls), Word (.docx, .doc), PDF • до 3 МБ каждый • до 5 файлов
+                            Excel (.xlsx, .xls), Word (.docx, .doc), PDF • до 20 МБ каждый • до 5 файлов • до 100 МБ всего
                           </p>
                         </div>
                       )}
