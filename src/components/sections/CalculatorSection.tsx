@@ -88,8 +88,8 @@ export default function CalculatorSection() {
           justify-content: center;
           animation: spin 1s linear infinite;
         ">⟳</div>
-        <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Отправляем заявку...</h3>
-        <p style="margin: 0; opacity: 0.9; font-size: 14px;">Пожалуйста, подождите</p>
+        <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Подготавливаем заявку...</h3>
+        <p style="margin: 0; opacity: 0.9; font-size: 14px;">Открываем почтовый клиент</p>
       </div>
       <style>
         @keyframes spin {
@@ -100,19 +100,16 @@ export default function CalculatorSection() {
     `;
     document.body.appendChild(loadingDiv);
 
-    try {
-      const cityInfo = formData.city === 'Другой город' ? formData.customCity : formData.city;
+    // Короткая задержка для показа загрузки
+    setTimeout(() => {
+      loadingDiv.remove();
       
-      // Отправляем через Formspree
-      const response = await fetch('https://formspree.io/f/xwpkgvwg', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: 'commerce@rusutil-1.ru',
-          subject: 'Заявка на расчет стоимости утилизации',
-          message: `Заявка на расчет стоимости утилизации
+      try {
+        const cityInfo = formData.city === 'Другой город' ? formData.customCity : formData.city;
+        
+        // Формируем данные для письма
+        const subject = 'Заявка на расчет стоимости утилизации';
+        const emailBody = `Заявка на расчет стоимости утилизации
 
 Контактные данные:
 Имя: ${formData.name}
@@ -126,15 +123,15 @@ Email: ${formData.email}
 Выбранный план: ${formData.selectedPlan || 'Не выбран'}
 
 ---
-Заявка отправлена с калькулятора`,
-          _replyto: formData.email
-        })
-      });
-      
-      // Убираем индикатор загрузки
-      loadingDiv.remove();
-      
-      if (response.ok) {
+Заявка отправлена с калькулятора`;
+
+        const mailtoLink = `mailto:commerce@rusutil-1.ru?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+        
+        console.log('📧 Открываем почтовый клиент:', mailtoLink);
+        
+        // Пробуем открыть почтовый клиент
+        window.location.href = mailtoLink;
+        
         // Показываем успешное сообщение
         const successDiv = document.createElement('div');
         successDiv.innerHTML = `
@@ -150,7 +147,7 @@ Email: ${formData.email}
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
             z-index: 9999;
             font-family: system-ui, -apple-system, sans-serif;
-            max-width: 400px;
+            max-width: 450px;
             text-align: center;
           ">
             <div style="
@@ -163,17 +160,18 @@ Email: ${formData.email}
               align-items: center;
               justify-content: center;
               font-size: 24px;
-            ">✓</div>
-            <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Заявка отправлена!</h3>
-            <p style="margin: 0; opacity: 0.9; font-size: 14px;">Мы пришлем расчет в течение 30 минут</p>
+            ">📧</div>
+            <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Почтовый клиент открыт!</h3>
+            <p style="margin: 0; opacity: 0.9; font-size: 14px;">Проверьте ваш почтовый клиент и отправьте письмо с расчетом.</p>
+            <p style="margin: 8px 0 0 0; opacity: 0.7; font-size: 12px;">Если письмо не открылось автоматически, скопируйте: commerce@rusutil-1.ru</p>
           </div>
         `;
         document.body.appendChild(successDiv);
         
-        // Автоматически убираем сообщение через 4 секунды
+        // Автоматически убираем сообщение через 6 секунд
         setTimeout(() => {
           successDiv.remove();
-        }, 4000);
+        }, 6000);
         
         // Очищаем форму
         setFormData({
@@ -189,58 +187,74 @@ Email: ${formData.email}
         });
         setAgreed(false);
         
-        console.log('✅ Заявка успешно отправлена!');
-      } else {
-        throw new Error('Ошибка сервера');
-      }
-    } catch (error) {
-      // Убираем индикатор загрузки в случае ошибки
-      loadingDiv.remove();
-      
-      console.error('❌ Ошибка при отправке:', error);
-      
-      // Показываем сообщение об ошибке
-      const errorDiv = document.createElement('div');
-      errorDiv.innerHTML = `
-        <div style="
-          position: fixed;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          background: #DC2626;
-          color: white;
-          padding: 24px 32px;
-          border-radius: 12px;
-          box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-          z-index: 9999;
-          font-family: system-ui, -apple-system, sans-serif;
-          max-width: 400px;
-          text-align: center;
-        ">
+        console.log('✅ Заявка подготовлена к отправке!');
+      } catch (error) {
+        console.error('❌ Ошибка при открытии почтового клиента:', error);
+        
+        // Показываем инструкции для ручной отправки
+        const cityInfo = formData.city === 'Другой город' ? formData.customCity : formData.city;
+        const instructionDiv = document.createElement('div');
+        instructionDiv.innerHTML = `
           <div style="
-            width: 48px;
-            height: 48px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 50%;
-            margin: 0 auto 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-          ">✗</div>
-          <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Ошибка отправки</h3>
-          <p style="margin: 0; opacity: 0.9; font-size: 14px;">Попробуйте позже или позвоните: +7 (901) 862-81-81</p>
-        </div>
-      `;
-      document.body.appendChild(errorDiv);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #1F2937;
+            color: white;
+            padding: 24px 32px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            z-index: 9999;
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 550px;
+            text-align: left;
+            max-height: 80vh;
+            overflow-y: auto;
+          ">
+            <div style="
+              width: 48px;
+              height: 48px;
+              background: #D4AF37;
+              border-radius: 50%;
+              margin: 0 auto 16px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 24px;
+            ">📝</div>
+            <h3 style="margin: 0 0 16px 0; font-size: 18px; font-weight: 600; text-align: center;">Отправьте заявку вручную</h3>
+            <div style="background: rgba(255,255,255,0.1); padding: 16px; border-radius: 8px; margin-bottom: 16px;">
+              <p style="margin: 0 0 8px 0; font-weight: 600;">Email:</p>
+              <p style="margin: 0 0 12px 0; color: #D4AF37;">commerce@rusutil-1.ru</p>
+              <p style="margin: 0 0 8px 0; font-weight: 600;">Тема:</p>
+              <p style="margin: 0 0 12px 0;">Заявка на расчет стоимости утилизации</p>
+              <p style="margin: 0 0 8px 0; font-weight: 600;">Ваши данные:</p>
+              <p style="margin: 0; font-size: 14px; line-height: 1.4;">
+                Имя: ${formData.name}<br>
+                Компания: ${formData.company || 'Не указана'}<br>
+                Телефон: ${formData.phone}<br>
+                Email: ${formData.email}<br>
+                Город: ${cityInfo || 'Не указан'}<br>
+                Файл: ${formData.file ? formData.file.name : 'Не прикреплен'}<br>
+                Комментарий: ${formData.comment || 'Нет'}
+              </p>
+            </div>
+            <div style="text-align: center;">
+              <p style="margin: 0; font-size: 14px; opacity: 0.8;">Или позвоните: +7 (901) 862-81-81</p>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(instructionDiv);
+        
+        // Убираем инструкции через 15 секунд или по клику
+        const removeInstruction = () => instructionDiv.remove();
+        setTimeout(removeInstruction, 15000);
+        instructionDiv.addEventListener('click', removeInstruction);
+      }
       
-      // Автоматически убираем сообщение через 5 секунд
-      setTimeout(() => {
-        errorDiv.remove();
-      }, 5000);
-    } finally {
       setIsSubmitting(false);
-    }
+    }, 1500); // 1.5 секунды задержка для реалистичности
   };
 
   const handlePhoneCall = (e?: React.MouseEvent) => {
