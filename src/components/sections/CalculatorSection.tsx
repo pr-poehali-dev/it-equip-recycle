@@ -388,24 +388,58 @@ export default function CalculatorSection({
         </div>
       </div>
 
-      {/* Модальное окно успешной отправки */}
+      {/* Премиальное модальное окно успешной отправки */}
       {showSuccessModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-md mx-4 text-center">
-            <div className="mb-4">
-              <Icon name="CheckCircle" size={64} className="mx-auto text-green-500" />
+        <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl p-8 max-w-lg mx-4 text-center shadow-2xl border border-professional-rolexGold/20">
+            {/* Логотип компании */}
+            <div className="mb-6">
+              <img 
+                src="/img/7f951581-8eae-4d49-805c-b6e344302020.jpg" 
+                alt="Utilizon логотип" 
+                className="w-20 h-20 mx-auto rounded-full object-cover border-2 border-professional-rolexGold/30"
+              />
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              Заявка отправлена!
+            
+            {/* Иконка успеха */}
+            <div className="mb-6">
+              <div className="w-16 h-16 mx-auto bg-green-100 rounded-full flex items-center justify-center">
+                <Icon name="CheckCircle" size={40} className="text-green-600" />
+              </div>
+            </div>
+            
+            {/* Заголовок */}
+            <h3 className="text-2xl font-bold text-gray-900 mb-3 premium-heading">
+              Заявка успешно отправлена!
             </h3>
-            <p className="text-gray-600 mb-6">
-              Спасибо за обращение! Мы свяжемся с вами в течение 30 минут в рабочее время.
-            </p>
+            
+            {/* Описание */}
+            <div className="mb-8">
+              <p className="text-gray-600 premium-body mb-4 leading-relaxed">
+                Благодарим за обращение к нашей компании! 
+              </p>
+              <div className="bg-gradient-to-r from-professional-rolexGold/10 to-primary/10 rounded-lg p-4 mb-4">
+                <div className="flex items-center justify-center text-primary mb-2">
+                  <Icon name="Clock" size={20} className="mr-2 text-professional-rolexGold" />
+                  <span className="font-semibold">Время ответа</span>
+                </div>
+                <p className="text-sm text-gray-700">
+                  Наш специалист свяжется с вами в <strong>самое ближайшее время</strong> для обсуждения деталей утилизации
+                </p>
+              </div>
+              <div className="flex items-center justify-center text-sm text-gray-500">
+                <Icon name="Shield" size={16} className="mr-2 text-professional-rolexGold" />
+                Ваши данные защищены и не передаются третьим лицам
+              </div>
+            </div>
+            
+            {/* Кнопка */}
             <Button
               onClick={() => setShowSuccessModal(false)}
-              className="w-full bg-primary hover:bg-primary/90"
+              className="w-full bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
             >
-              Понятно
+              <Icon name="ThumbsUp" size={20} className="mr-2 text-professional-rolexGold" />
+              Отлично, жду звонка
             </Button>
           </div>
         </div>

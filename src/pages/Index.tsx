@@ -89,7 +89,7 @@ export default function Index() {
       htmlForm.action = 'https://formsubmit.co/commerce@rusutil-1.ru';
       htmlForm.enctype = 'multipart/form-data';
       htmlForm.style.display = 'none';
-      htmlForm.target = '_blank';
+      htmlForm.target = 'hidden_iframe';
 
       // Добавляем текстовые поля
       const textFields = [
@@ -130,9 +130,20 @@ export default function Index() {
         }
       }
 
+      // Создаем скрытый iframe для отправки без перенаправления
+      const hiddenIframe = document.createElement('iframe');
+      hiddenIframe.name = 'hidden_iframe';
+      hiddenIframe.style.display = 'none';
+      document.body.appendChild(hiddenIframe);
+
       document.body.appendChild(htmlForm);
       htmlForm.submit();
-      document.body.removeChild(htmlForm);
+      
+      // Убираем элементы через небольшую задержку
+      setTimeout(() => {
+        document.body.removeChild(htmlForm);
+        document.body.removeChild(hiddenIframe);
+      }, 1000);
 
       // Показываем модальное окно успеха
       setShowSuccessModal(true);
