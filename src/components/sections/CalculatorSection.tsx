@@ -101,40 +101,39 @@ export default function CalculatorSection() {
     `;
     document.body.appendChild(loadingDiv);
 
-    // Отправляем реальное письмо через Formspree
+    // Отправляем реальное письмо через PHP скрипт
     const sendEmail = async () => {
       try {
         const cityInfo = formData.city === 'Другой город' ? formData.customCity : formData.city;
         
-        // Формируем данные для отправки
-        const formDataToSend = new FormData();
-        formDataToSend.append('_to', 'commerce@rusutil-1.ru');
-        formDataToSend.append('_subject', 'Заявка на расчет стоимости утилизации');
-        formDataToSend.append('name', formData.name);
-        formDataToSend.append('company', formData.company || 'Не указана');
-        formDataToSend.append('phone', formData.phone);
-        formDataToSend.append('email', formData.email);
-        formDataToSend.append('city', cityInfo || 'Не указан');
-        formDataToSend.append('comment', formData.comment || 'Нет');
-        formDataToSend.append('selected_plan', formData.selectedPlan || 'Не выбран');
-        
-        if (formData.file) {
-          formDataToSend.append('file', formData.file);
-        }
-        
-        // Отправляем через Formspree
-        const response = await fetch('https://formspree.io/f/xaygkgje', {
+        // Подготавливаем данные для отправки
+        const emailData = {
+          subject: 'Заявка на расчет стоимости утилизации',
+          name: formData.name,
+          company: formData.company || 'Не указана',
+          phone: formData.phone,
+          email: formData.email,
+          city: cityInfo || 'Не указан',
+          comment: formData.comment || 'Нет комментария',
+          selected_plan: formData.selectedPlan || 'Не выбран',
+          file_name: formData.file ? formData.file.name : ''
+        };
+
+        // Отправляем через PHP скрипт
+        const response = await fetch('/send-email.php', {
           method: 'POST',
-          body: formDataToSend,
           headers: {
-            'Accept': 'application/json'
-          }
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(emailData)
         });
 
         // Убираем индикатор загрузки
         loadingDiv.remove();
 
-        if (response.ok) {
+        const result = await response.json();
+        
+        if (response.ok && result.success) {
           console.log('✅ Письмо успешно отправлено на commerce@rusutil-1.ru');
           
           // Показываем успешное сообщение

@@ -75,29 +75,31 @@ export default function ContactsSection() {
     // Отправляем реальное письмо через Formspree
     const sendEmail = async () => {
       try {
-        // Формируем данные для отправки
-        const formDataToSend = new FormData();
-        formDataToSend.append('_to', 'commerce@rusutil-1.ru');
-        formDataToSend.append('_subject', 'Заявка с раздела Контакты');
-        formDataToSend.append('name', formData.name);
-        formDataToSend.append('company', formData.company || 'Не указана');
-        formDataToSend.append('phone', formData.phone);
-        formDataToSend.append('email', formData.email || 'Не указан');
-        formDataToSend.append('comment', formData.comment || 'Нет комментария');
+        // Подготавливаем данные для отправки
+        const emailData = {
+          subject: 'Заявка с раздела Контакты',
+          name: formData.name,
+          company: formData.company || 'Не указана',
+          phone: formData.phone,
+          email: formData.email,
+          comment: formData.comment || 'Нет комментария'
+        };
         
-        // Отправляем через Formspree
-        const response = await fetch('https://formspree.io/f/xaygkgje', {
+        // Отправляем через PHP скрипт
+        const response = await fetch('/send-email.php', {
           method: 'POST',
-          body: formDataToSend,
           headers: {
-            'Accept': 'application/json'
-          }
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(emailData)
         });
 
         // Убираем индикатор загрузки
         loadingDiv.remove();
 
-        if (response.ok) {
+        const result = await response.json();
+        
+        if (response.ok && result.success) {
           console.log('✅ Письмо успешно отправлено на commerce@rusutil-1.ru');
           
           // Показываем успешное сообщение
