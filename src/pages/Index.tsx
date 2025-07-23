@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import emailjs from '@emailjs/browser';
 import Header from '@/components/sections/Header';
 import HeroSection from '@/components/sections/HeroSection';
 import ServicesSection from '@/components/sections/ServicesSection';
@@ -115,20 +114,33 @@ export default function Index() {
         file_info: formData.file ? `${formData.file.name} (${Math.round(formData.file.size / 1024)} KB)` : 'Файл не прикреплен'
       };
 
-      // Отправляем через EmailJS
-      const result = await emailjs.send(
-        'service_poehali', // Service ID
-        'template_rusutil', // Template ID  
-        templateParams,
-        'XQKYdCyInowC7nT8H' // Public Key
-      );
+      // Отправляем на корпоративную почту
+      const response = await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          company: formData.company || 'Не указана',
+          city: cityInfo || 'Не указан',
+          plan: formData.selectedPlan || 'Не выбран',
+          message: formData.comment || 'Нет комментариев',
+          file_info: formData.file ? `${formData.file.name} (${Math.round(formData.file.size / 1024)} KB)` : 'Файл не прикреплен',
+          subject: 'Заявка на расчет стоимости утилизации IT оборудования',
+          _captcha: false
+        })
+      });
       
       // Убираем индикатор загрузки
       loadingDiv.remove();
       
-      console.log('✅ EmailJS результат:', result.status, result.text);
+      console.log('✅ FormSubmit результат:', response.status);
       
-      if (result.status === 200) {
+      if (response.ok) {
         // Показываем успешное сообщение
         const successDiv = document.createElement('div');
         successDiv.innerHTML = `
@@ -191,7 +203,7 @@ export default function Index() {
         });
         setAgreed(false);
         
-        console.log('✅ Заявка успешно отправлена через EmailJS!');
+        console.log('✅ Заявка успешно отправлена через FormSubmit!');
       } else {
         throw new Error('Ошибка отправки письма');
       }
