@@ -293,7 +293,7 @@ export default function CalculatorSection({
                     </div>
                   </div>
                   <label htmlFor="calc-agreement" className="text-sm premium-body text-gray-700">
-                    Согласен с <a href="#" className="text-primary hover:underline">политикой конфиденциальности</a> и 
+                    Согласен с <a href="/privacy" className="text-primary hover:underline">политикой конфиденциальности</a> и 
                     обработкой персональных данных. Подтверждаю, что указанная информация достоверна.
                   </label>
                 </div>
