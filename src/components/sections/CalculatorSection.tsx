@@ -1,39 +1,67 @@
+import { useState, useRef } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
-import { RefObject } from "react";
 
-interface FormData {
-  name: string;
-  company: string;
-  phone: string;
-  email: string;
-  city: string;
-  customCity: string;
-  comment: string;
-  file: File | null;
-  selectedPlan: string;
-}
+export default function CalculatorSection() {
+  const [formData, setFormData] = useState({
+    name: '',
+    company: '',
+    phone: '',
+    email: '',
+    city: '',
+    customCity: '',
+    comment: '',
+    file: null as File | null,
+    selectedPlan: ''
+  });
 
-interface CalculatorSectionProps {
-  formData: FormData;
-  setFormData: (data: FormData | ((prev: FormData) => FormData)) => void;
-  agreed: boolean;
-  setAgreed: (agreed: boolean) => void;
-  fileInputRef: RefObject<HTMLInputElement>;
-  handleSubmit: () => void;
-  handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
+  const [agreed, setAgreed] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-export default function CalculatorSection({ 
-  formData, 
-  setFormData, 
-  agreed, 
-  setAgreed, 
-  fileInputRef, 
-  handleSubmit, 
-  handleFileChange 
-}: CalculatorSectionProps) {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setFormData(prev => ({ ...prev, file }));
+    }
+  };
+
+  const handleSubmit = () => {
+    console.log('Отправка формы калькулятора:', formData);
+    
+    if (!formData.name.trim() || !formData.phone.trim() || !formData.email.trim()) {
+      alert('Пожалуйста, заполните обязательные поля: имя, телефон и email');
+      return;
+    }
+
+    if (!agreed) {
+      alert('Необходимо согласиться с политикой конфиденциальности');
+      return;
+    }
+
+    const subject = 'Заявка на расчет стоимости утилизации';
+    const cityInfo = formData.city === 'Другой город' ? formData.customCity : formData.city;
+    
+    const mailtoLink = `mailto:commerce@rusutil-1.ru?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`
+Заявка на расчет стоимости утилизации
+
+Контактные данные:
+Имя: ${formData.name}
+Компания: ${formData.company || 'Не указана'}
+Телефон: ${formData.phone}
+Email: ${formData.email}
+Город: ${cityInfo || 'Не указан'}
+
+Дополнительная информация: ${formData.comment || 'Нет'}
+Прикрепленный файл: ${formData.file ? formData.file.name : 'Не прикреплен'}
+Выбранный план: ${formData.selectedPlan || 'Не выбран'}
+
+Заявка отправлена с калькулятора сайта utilizon.pro
+    `)}`;
+    
+    window.location.href = mailtoLink;
+  };
+
   return (
     <section id="calculator" className="py-20 bg-gradient-to-br from-gray-50 to-gray-100">
       <div className="container mx-auto px-4">
@@ -65,16 +93,16 @@ export default function CalculatorSection({
                 </div>
               )}
             </CardHeader>
-            <CardContent className="p-4 sm:p-6 lg:p-4 sm:p-6 lg:p-8">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-4 sm:p-6 lg:p-8">
+            <CardContent className="p-4 sm:p-6 lg:p-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div className="space-y-6">
-                  <div className="grid grid-cols-1 sm:grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Контактное лицо *</label>
                       <input 
                         type="text" 
                         value={formData.name}
-                        onChange={(e) => setFormData({...formData, name: e.target.value})}
+                        onChange={(e) => setFormData(prev => ({...prev, name: e.target.value}))}
                         className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                         placeholder="Ваше имя"
                         required
@@ -85,20 +113,20 @@ export default function CalculatorSection({
                       <input 
                         type="text" 
                         value={formData.company}
-                        onChange={(e) => setFormData({...formData, company: e.target.value})}
+                        onChange={(e) => setFormData(prev => ({...prev, company: e.target.value}))}
                         className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                         placeholder="Название компании"
                       />
                     </div>
                   </div>
                   
-                  <div className="grid grid-cols-1 sm:grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Телефон *</label>
                       <input 
                         type="tel" 
                         value={formData.phone}
-                        onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                        onChange={(e) => setFormData(prev => ({...prev, phone: e.target.value}))}
                         className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                         placeholder="+7 (___) ___-__-__"
                         required
@@ -109,7 +137,7 @@ export default function CalculatorSection({
                       <input 
                         type="email" 
                         value={formData.email}
-                        onChange={(e) => setFormData({...formData, email: e.target.value})}
+                        onChange={(e) => setFormData(prev => ({...prev, email: e.target.value}))}
                         className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                         placeholder="your@email.com"
                         required
@@ -121,7 +149,7 @@ export default function CalculatorSection({
                     <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Город</label>
                     <select 
                       value={formData.city}
-                      onChange={(e) => setFormData({...formData, city: e.target.value, customCity: e.target.value !== 'Другой город' ? '' : formData.customCity})}
+                      onChange={(e) => setFormData(prev => ({...prev, city: e.target.value, customCity: e.target.value !== 'Другой город' ? '' : prev.customCity}))}
                       className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base"
                     >
                       <option value="">Выберите город</option>
@@ -137,7 +165,7 @@ export default function CalculatorSection({
                       <input 
                         type="text" 
                         value={formData.customCity}
-                        onChange={(e) => setFormData({...formData, customCity: e.target.value})}
+                        onChange={(e) => setFormData(prev => ({...prev, customCity: e.target.value}))}
                         className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base mt-3" 
                         placeholder="Укажите ваш город"
                       />
@@ -189,7 +217,7 @@ export default function CalculatorSection({
                     <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Дополнительная информация</label>
                     <textarea 
                       value={formData.comment}
-                      onChange={(e) => setFormData({...formData, comment: e.target.value})}
+                      onChange={(e) => setFormData(prev => ({...prev, comment: e.target.value}))}
                       className="w-full px-4 py-3 min-h-[88px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base resize-none" 
                       placeholder="Укажите срочность, особые требования, вопросы по утилизации..."
                     />
@@ -234,10 +262,7 @@ export default function CalculatorSection({
                 
                 <div className="grid grid-cols-1 gap-4">
                   <Button 
-                    onClick={() => {
-                      console.log('🔥 Прямое нажатие на кнопку');
-                      handleSubmit();
-                    }}
+                    onClick={handleSubmit}
                     type="button"
                     className="w-full min-h-[48px]" 
                     size="lg"
