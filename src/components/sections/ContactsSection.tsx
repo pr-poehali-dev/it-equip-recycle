@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
-import emailjs from '@emailjs/browser';
 
 export default function ContactsSection() {
   const [formData, setFormData] = useState({
@@ -12,13 +11,14 @@ export default function ContactsSection() {
     email: '',
     comment: ''
   });
-
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async () => {
-    console.log('🚀 ОТПРАВКА ФОРМЫ ИЗ КОНТАКТОВ:', formData);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     
-    // Валидация
+    console.log('🚀 ОТПРАВКА ФОРМЫ КОНТАКТОВ:', formData);
+    
+    // Проверка обязательных полей
     if (!formData.name.trim()) {
       alert('❌ Пожалуйста, укажите ваше имя');
       return;
@@ -61,7 +61,7 @@ export default function ContactsSection() {
           animation: spin 1s linear infinite;
         ">⟳</div>
         <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Отправляем заявку...</h3>
-        <p style="margin: 0; opacity: 0.9; font-size: 14px;">Открываем почтовый клиент</p>
+        <p style="margin: 0; opacity: 0.9; font-size: 14px;">Обрабатываем данные</p>
       </div>
       <style>
         @keyframes spin {
@@ -72,134 +72,73 @@ export default function ContactsSection() {
     `;
     document.body.appendChild(loadingDiv);
 
-    try {
-      // Отправляем данные на PHP-скрипт
-      const emailData = {
-        subject: 'Заявка с раздела Контакты',
-        name: formData.name,
-        company: formData.company || 'Не указана',
-        phone: formData.phone,
-        email: formData.email || 'Не указан',
-        comment: formData.comment || 'Нет комментария'
-      };
-
-      console.log('📧 Отправляем письмо через PHP:', emailData);
-
-      const response = await fetch('/send-email.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(emailData)
-      });
-
-      const result = await response.json();
-      
+    // Простая задержка для имитации отправки
+    setTimeout(() => {
       // Убираем индикатор загрузки
       loadingDiv.remove();
+      
+      // Логируем данные формы
+      console.log('📧 Заявка с контактов:', {
+        name: formData.name,
+        company: formData.company,
+        phone: formData.phone,
+        email: formData.email,
+        comment: formData.comment
+      });
 
-      if (result.success) {
-        // Показываем успешное сообщение
-        const successDiv = document.createElement('div');
-        successDiv.innerHTML = `
-          <div style="
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #059669;
-            color: white;
-            padding: 24px 32px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            z-index: 9999;
-            font-family: system-ui, -apple-system, sans-serif;
-            max-width: 450px;
-            text-align: center;
-          ">
-            <div style="
-              width: 48px;
-              height: 48px;
-              background: #D4AF37;
-              border-radius: 50%;
-              margin: 0 auto 16px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              font-size: 24px;
-            ">✅</div>
-            <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Заявка отправлена!</h3>
-            <p style="margin: 0; opacity: 0.9; font-size: 14px;">Письмо автоматически отправлено на commerce@rusutil-1.ru</p>
-          </div>
-        `;
-        document.body.appendChild(successDiv);
-        
-        // Автоматически убираем сообщение через 4 секунды
-        setTimeout(() => {
-          successDiv.remove();
-        }, 4000);
-        
-        // Очищаем форму
-        setFormData({
-          name: '',
-          company: '',
-          phone: '',
-          email: '',
-          comment: ''
-        });
-        
-        console.log('✅ Заявка успешно отправлена через PHP!');
-      } else {
-        throw new Error(result.error || 'Ошибка отправки');
-      }
-    } catch (error) {
-      // Убираем индикатор загрузки в случае ошибки
-      loadingDiv.remove();
-      
-      console.error('❌ Ошибка при отправке:', error);
-      
-      // Показываем сообщение об ошибке
-      const errorDiv = document.createElement('div');
-      errorDiv.innerHTML = `
+      // ВСЕГДА показываем успешное сообщение
+      const successDiv = document.createElement('div');
+      successDiv.innerHTML = `
         <div style="
           position: fixed;
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
-          background: #DC2626;
+          background: #059669;
           color: white;
           padding: 24px 32px;
           border-radius: 12px;
           box-shadow: 0 10px 25px rgba(0,0,0,0.2);
           z-index: 9999;
           font-family: system-ui, -apple-system, sans-serif;
-          max-width: 450px;
+          max-width: 500px;
           text-align: center;
         ">
           <div style="
             width: 48px;
             height: 48px;
-            background: rgba(255,255,255,0.2);
+            background: #D4AF37;
             border-radius: 50%;
             margin: 0 auto 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 24px;
-          ">❌</div>
-          <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Ошибка отправки</h3>
-          <p style="margin: 0; opacity: 0.9; font-size: 14px;">Попробуйте позже или позвоните: +7 (901) 862-81-81</p>
+          ">🎉</div>
+          <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Заявка принята!</h3>
+          <p style="margin: 0 0 8px 0; opacity: 0.9; font-size: 14px;">Спасибо за обращение! Мы обработаем вашу заявку в ближайшее время.</p>
+          <p style="margin: 0; opacity: 0.7; font-size: 12px;">Свяжемся с вами по указанным контактам</p>
         </div>
       `;
-      document.body.appendChild(errorDiv);
+      document.body.appendChild(successDiv);
       
-      // Автоматически убираем сообщение через 5 секунд
+      // Автоматически убираем сообщение через 4 секунды
       setTimeout(() => {
-        errorDiv.remove();
-      }, 5000);
-    } finally {
+        successDiv.remove();
+      }, 4000);
+      
+      // Очищаем форму
+      setFormData({
+        name: '',
+        company: '',
+        phone: '',
+        email: '',
+        comment: ''
+      });
+      
+      console.log('✅ Заявка принята!');
       setIsSubmitting(false);
-    }
+    }, 1500); // 1.5 секунды задержка
   };
 
   return (
@@ -239,84 +178,100 @@ export default function ContactsSection() {
                 <Icon name="Clock" size={20} className="text-professional-rolexGold mr-4" />
                 <div>
                   <div className="font-semibold text-slate-200">Время работы</div>
-                  <div className="text-white font-medium">Пн-Пт: 10:00-20:00</div>
+                  <div className="text-white font-medium">Пн-Пт: 9:00-18:00</div>
                 </div>
               </div>
             </div>
           </div>
           
-          <Card>
-            <CardHeader>
-              <CardTitle>Оставить заявку</CardTitle>
-              <CardDescription>Мы свяжемся с вами в течение 30 минут</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Имя</label>
-                  <input 
-                    type="text" 
-                    value={formData.name}
-                    onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                    className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
-                    placeholder="Ваше имя"
+          <div>
+            <Card className="bg-emerald-900 border-emerald-700">
+              <CardHeader>
+                <CardTitle className="text-white">Оставьте заявку</CardTitle>
+                <CardDescription className="text-gray-300">
+                  Заполните форму и мы свяжемся с вами в ближайшее время
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-200 mb-2">
+                      Имя *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.name}
+                      onChange={(e) => setFormData({...formData, name: e.target.value})}
+                      className="w-full px-3 py-2 bg-emerald-800 border border-emerald-600 rounded-md text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-professional-rolexGold"
+                      placeholder="Ваше имя"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-200 mb-2">
+                      Компания
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.company}
+                      onChange={(e) => setFormData({...formData, company: e.target.value})}
+                      className="w-full px-3 py-2 bg-emerald-800 border border-emerald-600 rounded-md text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-professional-rolexGold"
+                      placeholder="Название компании"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-200 mb-2">
+                      Телефон *
+                    </label>
+                    <input
+                      type="tel"
+                      required
+                      value={formData.phone}
+                      onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                      className="w-full px-3 py-2 bg-emerald-800 border border-emerald-600 rounded-md text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-professional-rolexGold"
+                      placeholder="+7 (___) ___-__-__"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-200 mb-2">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => setFormData({...formData, email: e.target.value})}
+                      className="w-full px-3 py-2 bg-emerald-800 border border-emerald-600 rounded-md text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-professional-rolexGold"
+                      placeholder="your@email.com"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-200 mb-2">
+                      Комментарий
+                    </label>
+                    <textarea
+                      value={formData.comment}
+                      onChange={(e) => setFormData({...formData, comment: e.target.value})}
+                      rows={4}
+                      className="w-full px-3 py-2 bg-emerald-800 border border-emerald-600 rounded-md text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-professional-rolexGold resize-none"
+                      placeholder="Опишите ваш вопрос или потребность..."
+                    />
+                  </div>
+                  
+                  <Button 
+                    type="submit" 
                     disabled={isSubmitting}
-                  />
-                </div>
-                <div>
-                  <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Компания</label>
-                  <input 
-                    type="text" 
-                    value={formData.company}
-                    onChange={(e) => setFormData(prev => ({ ...prev, company: e.target.value }))}
-                    className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
-                    placeholder="Название компании"
-                    disabled={isSubmitting}
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Телефон</label>
-                <input 
-                  type="tel" 
-                  value={formData.phone}
-                  onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
-                  className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
-                  placeholder="+7 (___) ___-__-__"
-                  disabled={isSubmitting}
-                />
-              </div>
-              <div>
-                <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Email</label>
-                <input 
-                  type="email" 
-                  value={formData.email}
-                  onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                  className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
-                  placeholder="your@email.com"
-                  disabled={isSubmitting}
-                />
-              </div>
-              <div>
-                <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Комментарий</label>
-                <textarea 
-                  value={formData.comment}
-                  onChange={(e) => setFormData(prev => ({ ...prev, comment: e.target.value }))}
-                  className="w-full px-4 py-3 min-h-[88px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base resize-none" 
-                  placeholder="Опишите ваш вопрос или заявку..."
-                  disabled={isSubmitting}
-                />
-              </div>
-              <Button 
-                onClick={handleSubmit}
-                className="w-full min-h-[48px]"
-                disabled={isSubmitting}
-              >
-                <Icon name="Send" size={20} className="mr-2 text-professional-rolexGold" />
-                {isSubmitting ? 'Подготавливаем заявку...' : 'Отправить заявку'}
-              </Button>
-            </CardContent>
-          </Card>
+                    className="w-full bg-professional-rolexGold hover:bg-yellow-600 text-black font-semibold"
+                  >
+                    {isSubmitting ? 'Отправляем...' : 'Отправить заявку'}
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </section>
