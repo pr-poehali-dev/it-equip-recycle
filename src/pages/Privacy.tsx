@@ -85,8 +85,8 @@ export default function Privacy() {
                     пользователей сайта <strong>utilizon.pro</strong> (далее — «Сайт»).
                   </p>
                   <p className="text-gray-700 leading-relaxed">
-                    Оператором персональных данных является <strong>ООО «РусУтиль-1»</strong> 
-                    (ОГРН: 1137746064420, ИНН: 7720695918).
+                    Оператором персональных данных является <strong>ООО «СБОРУТИЛИЗАЦИЯ»</strong> 
+                    (ОГРН: 1217700073678, ИНН: 7720695918).
                   </p>
                   <p className="text-gray-700 leading-relaxed">
                     Обработка персональных данных осуществляется в соответствии с Федеральным законом 
@@ -283,8 +283,8 @@ export default function Privacy() {
                       <div className="flex items-center">
                         <Icon name="Building" size={20} className="text-professional-rolexGold mr-3" />
                         <div>
-                          <div className="font-semibold">ООО «РусУтиль-1»</div>
-                          <div className="text-sm text-gray-600">ОГРН: 1137746064420</div>
+                          <div className="font-semibold">ООО «СБОРУТИЛИЗАЦИЯ»</div>
+                          <div className="text-sm text-gray-600">ОГРН: 1217700073678</div>
                         </div>
                       </div>
                       <div className="flex items-center">
