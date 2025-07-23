@@ -397,6 +397,25 @@ export default function CalculatorSection() {
                       />
                     )}
                   </div>
+                  
+                  {/* Окошко выбранного плана */}
+                  {formData.selectedPlan && (
+                    <div className="mt-4 p-4 bg-gradient-to-r from-professional-rolexGold/20 to-professional-rolexGold/10 border-l-4 border-professional-rolexGold rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 bg-professional-rolexGold rounded-full flex items-center justify-center flex-shrink-0">
+                          <Icon name="CheckCircle" size={18} className="text-black" />
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-semibold premium-body text-black mb-1">
+                            Выбранный план утилизации:
+                          </h4>
+                          <p className="text-sm premium-body text-black/80 font-medium">
+                            {formData.selectedPlan}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
                 
                 <div className="space-y-6">
