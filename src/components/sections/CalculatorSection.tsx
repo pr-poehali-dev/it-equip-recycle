@@ -26,24 +26,42 @@ export default function CalculatorSection() {
     }
   };
 
-  const handleSubmit = () => {
-    console.log('Отправка формы калькулятора:', formData);
+  const handleSubmit = (e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     
-    if (!formData.name.trim() || !formData.phone.trim() || !formData.email.trim()) {
-      alert('Пожалуйста, заполните обязательные поля: имя, телефон и email');
+    console.log('🚀 Нажата кнопка "Получить расчет стоимости"');
+    console.log('📋 Данные формы:', formData);
+    console.log('✅ Согласие:', agreed);
+    
+    // Проверка обязательных полей
+    if (!formData.name.trim()) {
+      alert('❌ Пожалуйста, укажите ваше имя');
+      return;
+    }
+    
+    if (!formData.phone.trim()) {
+      alert('❌ Пожалуйста, укажите номер телефона');
+      return;
+    }
+    
+    if (!formData.email.trim()) {
+      alert('❌ Пожалуйста, укажите email адрес');
       return;
     }
 
     if (!agreed) {
-      alert('Необходимо согласиться с политикой конфиденциальности');
+      alert('❌ Необходимо согласиться с политикой конфиденциальности');
       return;
     }
 
+    // Формируем письмо
     const subject = 'Заявка на расчет стоимости утилизации';
     const cityInfo = formData.city === 'Другой город' ? formData.customCity : formData.city;
     
-    const mailtoLink = `mailto:commerce@rusutil-1.ru?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`
-Заявка на расчет стоимости утилизации
+    const emailBody = `Заявка на расчет стоимости утилизации
 
 Контактные данные:
 Имя: ${formData.name}
@@ -56,10 +74,53 @@ Email: ${formData.email}
 Прикрепленный файл: ${formData.file ? formData.file.name : 'Не прикреплен'}
 Выбранный план: ${formData.selectedPlan || 'Не выбран'}
 
-Заявка отправлена с калькулятора сайта utilizon.pro
-    `)}`;
+Заявка отправлена с калькулятора сайта utilizon.pro`;
     
-    window.location.href = mailtoLink;
+    const mailtoLink = `mailto:commerce@rusutil-1.ru?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+    
+    console.log('📧 Открываем почтовый клиент:', mailtoLink);
+    
+    try {
+      window.location.href = mailtoLink;
+      console.log('✅ Почтовый клиент открыт успешно');
+    } catch (error) {
+      console.error('❌ Ошибка при открытии почтового клиента:', error);
+      alert('Не удалось открыть почтовый клиент. Пожалуйста, отправьте заявку на email: commerce@rusutil-1.ru');
+    }
+  };
+
+  const handlePhoneCall = (e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    
+    console.log('📞 Нажата кнопка "Обсудить по телефону"');
+    
+    const phoneNumber = '+79018628181';
+    
+    try {
+      // Пробуем разные способы открытия звонка
+      if (navigator.userAgent.match(/Android|iPhone|iPad|iPod|BlackBerry|Windows Phone/i)) {
+        // Мобильные устройства
+        window.location.href = `tel:${phoneNumber}`;
+      } else {
+        // Десктоп - копируем номер в буфер обмена и показываем уведомление
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(phoneNumber).then(() => {
+            alert(`📞 Номер телефона скопирован в буфер обмена: ${phoneNumber}`);
+          }).catch(() => {
+            alert(`📞 Позвоните нам: ${phoneNumber}`);
+          });
+        } else {
+          alert(`📞 Позвоните нам: ${phoneNumber}`);
+        }
+      }
+      console.log('✅ Обработка звонка выполнена успешно');
+    } catch (error) {
+      console.error('❌ Ошибка при обработке звонка:', error);
+      alert(`📞 Позвоните нам: ${phoneNumber}`);
+    }
   };
 
   return (
@@ -262,18 +323,24 @@ Email: ${formData.email}
                 
                 <div className="grid grid-cols-1 gap-4">
                   <Button 
-                    onClick={handleSubmit}
+                    onClick={(e) => {
+                      console.log('🔥 Клик по кнопке "Получить расчет стоимости"');
+                      handleSubmit(e);
+                    }}
                     type="button"
-                    className="w-full min-h-[48px]" 
+                    className="w-full min-h-[48px] bg-primary hover:bg-primary/90" 
                     size="lg"
                   >
                     <Icon name="Calculator" size={20} className="mr-2 text-professional-rolexGold" />
                     Получить расчет стоимости
                   </Button>
                   <Button 
-                    onClick={() => window.open('tel:+79018628181', '_self')}
+                    onClick={(e) => {
+                      console.log('🔥 Клик по кнопке "Обсудить по телефону"');
+                      handlePhoneCall(e);
+                    }}
                     variant="outline" 
-                    className="w-full min-h-[48px]" 
+                    className="w-full min-h-[48px] border-primary text-primary hover:bg-primary hover:text-white" 
                     size="lg"
                   >
                     <Icon name="Phone" size={20} className="mr-2 text-professional-rolexGold" />
