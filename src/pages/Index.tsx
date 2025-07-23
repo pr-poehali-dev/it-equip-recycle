@@ -25,6 +25,8 @@ export default function Index() {
     selectedPlan: ''
   });
   const [agreed, setAgreed] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const scrollToCalculator = () => {
     const calculatorSection = document.getElementById('calculator');
@@ -38,7 +40,6 @@ export default function Index() {
 
   const handleSubmit = async (e?: React.MouseEvent) => {
     e?.preventDefault();
-    console.log('🚀 Кнопка нажата!', { formData, agreed });
     
     // Проверяем обязательные поля
     if (!formData.name.trim() || !formData.phone.trim() || !formData.email.trim()) {
@@ -51,77 +52,72 @@ export default function Index() {
       alert('❌ Пожалуйста, подтвердите согласие с политикой конфиденциальности');
       return;
     }
-    
-    console.log('✅ Все проверки пройдены, отправляю заявку...');
-    
-    // ПРОСТОЕ РЕШЕНИЕ: HTML форма без заморочек
-    const cityInfo = formData.city === 'Другой город' ? formData.customCity : formData.city;
-    
-    const htmlForm = document.createElement('form');
-    htmlForm.method = 'POST';
-    htmlForm.action = 'https://formsubmit.co/commerce@rusutil-1.ru';
-    htmlForm.enctype = 'multipart/form-data';
-    htmlForm.style.display = 'none';
-    
-    // Добавляем все поля
-    const fields = [
-      { name: 'name', value: formData.name },
-      { name: 'email', value: formData.email },
-      { name: 'phone', value: formData.phone },
-      { name: 'company', value: formData.company || 'Не указана' },
-      { name: 'city', value: cityInfo || 'Не указан' },
-      { name: 'plan', value: formData.selectedPlan || 'Не выбран' },
-      { name: 'message', value: formData.comment || 'Нет комментариев' },
-      { name: '_subject', value: 'Заявка на утилизацию IT оборудования с сайта utilizon.pro' },
-      { name: '_captcha', value: 'false' },
-      { name: '_template', value: 'table' },
-      { name: '_next', value: 'https://utilizon.pro/success' },
-      { name: '_error', value: 'https://utilizon.pro/error' }
-    ];
-    
-    fields.forEach(field => {
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = field.name;
-      input.value = field.value;
-      htmlForm.appendChild(input);
-    });
-    
-    // Добавляем файлы если есть
-    if (formData.files && formData.files.length > 0) {
-      formData.files.forEach((file, index) => {
-        const fileInput = document.createElement('input');
-        fileInput.type = 'file';
-        fileInput.name = index === 0 ? 'attachment' : `attachment${index + 1}`;
-        fileInput.style.display = 'none';
-        
-        const dataTransfer = new DataTransfer();
-        dataTransfer.items.add(file);
-        fileInput.files = dataTransfer.files;
-        
-        htmlForm.appendChild(fileInput);
-        console.log(`📎 Добавлен файл: ${file.name}`);
+
+    setIsSubmitting(true);
+
+    try {
+      // Формируем данные для отправки
+      const cityInfo = formData.city === 'Другой город' ? formData.customCity : formData.city;
+      
+      const formDataToSend = new FormData();
+      
+      // Добавляем текстовые поля
+      formDataToSend.append('name', formData.name);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('phone', formData.phone);
+      formDataToSend.append('company', formData.company || 'Не указана');
+      formDataToSend.append('city', cityInfo || 'Не указан');
+      formDataToSend.append('plan', formData.selectedPlan || 'Не выбран');
+      formDataToSend.append('message', formData.comment || 'Нет комментариев');
+      formDataToSend.append('_subject', 'Заявка на утилизацию IT оборудования с сайта utilizon.pro');
+      formDataToSend.append('_captcha', 'false');
+      formDataToSend.append('_template', 'table');
+
+      // Добавляем ВСЕ файлы с правильными именами для FormSubmit
+      if (formData.files && formData.files.length > 0) {
+        formData.files.forEach((file, index) => {
+          // FormSubmit принимает до 5 файлов с именами: attachment, attachment2, attachment3, attachment4, attachment5
+          const fieldName = index === 0 ? 'attachment' : `attachment${index + 1}`;
+          formDataToSend.append(fieldName, file);
+          console.log(`📎 Добавлен файл: ${file.name} как ${fieldName}`);
+        });
+      }
+
+      // Отправляем через fetch
+      const response = await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
+        method: 'POST',
+        body: formDataToSend
       });
+
+      if (response.ok) {
+        // Показываем модальное окно успеха
+        setShowSuccessModal(true);
+        
+        // Очищаем форму
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          company: '',
+          city: '',
+          customCity: '',
+          selectedPlan: '',
+          comment: '',
+          files: []
+        });
+        setAgreed(false);
+        
+        console.log('✅ Заявка успешно отправлена!');
+      } else {
+        throw new Error('Ошибка отправки');
+      }
+
+    } catch (error) {
+      console.error('❌ Ошибка при отправке заявки:', error);
+      alert('❌ Произошла ошибка при отправке заявки. Попробуйте еще раз.');
+    } finally {
+      setIsSubmitting(false);
     }
-    
-    document.body.appendChild(htmlForm);
-    
-    console.log('🚀 Отправляем HTML-форму...');
-    htmlForm.submit();
-    
-    // Очищаем форму
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      company: '',
-      city: '',
-      customCity: '',
-      selectedPlan: '',
-      comment: '',
-      files: []
-    });
-    setAgreed(false);
   };
 
   // Антивирусная проверка файлов
@@ -265,6 +261,9 @@ export default function Index() {
           handleSubmit={handleSubmit}
           handleFileChange={handleFileChange}
           removeFile={removeFile}
+          isSubmitting={isSubmitting}
+          showSuccessModal={showSuccessModal}
+          setShowSuccessModal={setShowSuccessModal}
         />
         <AboutSection />
         <ClientsSection />

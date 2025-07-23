@@ -31,6 +31,9 @@ interface CalculatorSectionProps {
   handleSubmit: (e?: React.MouseEvent) => Promise<void>;
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   removeFile: (index: number) => void;
+  isSubmitting: boolean;
+  showSuccessModal: boolean;
+  setShowSuccessModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function CalculatorSection({ 
@@ -40,7 +43,10 @@ export default function CalculatorSection({
   setAgreed, 
   handleSubmit, 
   handleFileChange,
-  removeFile
+  removeFile,
+  isSubmitting,
+  showSuccessModal,
+  setShowSuccessModal
 }: CalculatorSectionProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -339,10 +345,19 @@ export default function CalculatorSection({
                     type="button"
                     className="w-full min-h-[48px] bg-primary hover:bg-primary/90" 
                     size="lg"
-
+                    disabled={isSubmitting}
                   >
-                    <Icon name="Calculator" size={20} className="mr-2 text-professional-rolexGold" />
-                    Получить расчет стоимости
+                    {isSubmitting ? (
+                      <>
+                        <Icon name="Loader2" size={20} className="mr-2 text-professional-rolexGold animate-spin" />
+                        Отправляем запрос...
+                      </>
+                    ) : (
+                      <>
+                        <Icon name="Calculator" size={20} className="mr-2 text-professional-rolexGold" />
+                        Получить расчет стоимости
+                      </>
+                    )}
                   </Button>
                   <Button 
                     onClick={(e) => {
@@ -372,6 +387,29 @@ export default function CalculatorSection({
           </Card>
         </div>
       </div>
+
+      {/* Модальное окно успешной отправки */}
+      {showSuccessModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md mx-4 text-center">
+            <div className="mb-4">
+              <Icon name="CheckCircle" size={64} className="mx-auto text-green-500" />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              Заявка отправлена!
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Спасибо за обращение! Мы свяжемся с вами в течение 30 минут в рабочее время.
+            </p>
+            <Button
+              onClick={() => setShowSuccessModal(false)}
+              className="w-full bg-primary hover:bg-primary/90"
+            >
+              Понятно
+            </Button>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
