@@ -113,7 +113,6 @@ export default function Index() {
       formDataToSend.append('message', formData.comment || 'Нет комментариев');
       formDataToSend.append('subject', 'Заявка на расчет стоимости утилизации IT оборудования с сайта utilizon.pro');
       formDataToSend.append('_captcha', 'false');
-      formDataToSend.append('_next', 'https://utilizon.pro/thank-you');
       
       // Добавляем файл если есть
       if (formData.file) {
@@ -123,15 +122,19 @@ export default function Index() {
       // Отправляем через FormSubmit
       const response = await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
         method: 'POST',
-        body: formDataToSend
+        body: formDataToSend,
+        headers: {
+          'Accept': 'application/json'
+        }
       });
       
       // Убираем индикатор загрузки
       loadingDiv.remove();
       
-      console.log('✅ FormSubmit результат:', response.status);
+      console.log('✅ FormSubmit результат:', response.status, response.statusText);
       
-      if (response.ok) {
+      // FormSubmit может возвращать разные статусы при успехе
+      if (response.ok || response.status === 200 || response.status === 302) {
         // Показываем успешное сообщение
         const successDiv = document.createElement('div');
         successDiv.innerHTML = `
@@ -196,7 +199,10 @@ export default function Index() {
         
         console.log('✅ Заявка успешно отправлена через FormSubmit!');
       } else {
-        throw new Error('Ошибка отправки через FormSubmit');
+        console.error('❌ FormSubmit ошибка:', response.status, response.statusText);
+        const errorText = await response.text();
+        console.error('❌ Детали ошибки:', errorText);
+        throw new Error(`Ошибка отправки через FormSubmit: ${response.status} ${response.statusText}`);
       }
       
     } catch (error) {
