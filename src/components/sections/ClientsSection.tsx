@@ -64,7 +64,7 @@ export default function ClientsSection() {
                   <span className="text-xl mr-3 mt-1">🏆</span>
                   <h4 className="font-semibold text-gray-900 text-base leading-tight">Проверенное качество</h4>
                 </div>
-                <p className="premium-body text-gray-700 text-base leading-relaxed flex-grow">Работаем с крупнейшими компаниями России с 2015 года</p>
+                <p className="premium-body text-gray-700 text-base leading-relaxed flex-grow">Работаем с крупнейшими компаниями России с 2013 года</p>
               </div>
               <div className="flex flex-col h-full">
                 <div className="flex items-start mb-3">
