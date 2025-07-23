@@ -1,5 +1,86 @@
 import { AppFormData } from '@/types/form';
 
+// Отправка всех файлов в одном письме через Ajax
+export async function sendSmallFilesSingle(formData: AppFormData, cityInfo: string): Promise<void> {
+  console.log('📧 Отправляем все файлы одним письмом через Ajax...');
+  
+  // Создаём FormData для одного письма со всеми файлами
+  const singleFormData = new FormData();
+  
+  // Добавляем основные поля
+  singleFormData.append('name', formData.name);
+  singleFormData.append('email', formData.email);
+  singleFormData.append('phone', formData.phone);
+  singleFormData.append('company', formData.company || 'Не указана');
+  singleFormData.append('city', cityInfo || 'Не указан');
+  singleFormData.append('plan', formData.selectedPlan || 'Не выбран');
+  singleFormData.append('message', formData.comment || 'Нет комментариев');
+  singleFormData.append('_subject', `Заявка на утилизацию IT оборудования (${formData.files.length} файлов)`);
+  singleFormData.append('_captcha', 'false');
+  singleFormData.append('_template', 'table');
+  singleFormData.append('_next', 'https://utilizon.pro/success');
+  singleFormData.append('_error', 'https://utilizon.pro/error');
+  
+  // Добавляем ВСЕ файлы к одному письму используя разные имена полей
+  formData.files.forEach((file, index) => {
+    const fieldName = index === 0 ? 'attachment' : `attachment${index + 1}`;
+    console.log(`📎 Добавляем файл ${index + 1}/${formData.files.length}: ${file.name} как поле "${fieldName}" (${(file.size / 1024 / 1024).toFixed(2)} МБ)`);
+    singleFormData.append(fieldName, file);
+  });
+  
+  // Отправляем одним запросом
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 секунд общий тайм-аут
+  
+  let response;
+  try {
+    console.log('🚀 Отправляем Ajax запрос с всеми файлами...');
+    response = await fetch('https://formsubmit.co/ajax/commerce@rusutil-1.ru', {
+      method: 'POST',
+      body: singleFormData,
+      headers: {
+        'Accept': 'application/json'
+      },
+      signal: controller.signal
+    });
+    clearTimeout(timeoutId);
+  } catch (fetchError) {
+    clearTimeout(timeoutId);
+    if (fetchError.name === 'AbortError') {
+      throw new Error(`Тайм-аут отправки письма (30 секунд)`);
+    }
+    throw fetchError;
+  }
+  
+  // Проверяем ответ
+  let success = false;
+  
+  try {
+    if (response.ok) {
+      const responseData = await response.json();
+      console.log('📧 FormSubmit ответ:', responseData);
+      success = responseData.success !== false;
+    }
+  } catch (jsonError) {
+    // Если не JSON, проверяем по статусу
+    success = response.ok || response.status === 200 || response.status === 302;
+  }
+  
+  if (!success) {
+    let errorMessage = `Ошибка отправки письма: ${response.status}`;
+    try {
+      const errorText = await response.text();
+      console.error('❌ Детали ошибки:', errorText);
+      errorMessage += ` - ${errorText}`;
+    } catch (readError) {
+      console.warn('Не удалось прочитать детали ошибки');
+    }
+    throw new Error(errorMessage);
+  }
+  
+  console.log(`✅ Письмо с ${formData.files.length} файлами отправлено успешно!`);
+}
+
 // Отправка малых файлов через несколько отдельных Ajax запросов
 export async function sendSmallFilesMultiple(formData: AppFormData, cityInfo: string): Promise<void> {
   console.log('📧 Отправляем каждый файл отдельным письмом для надёжности');

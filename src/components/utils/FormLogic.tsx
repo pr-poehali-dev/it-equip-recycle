@@ -11,6 +11,7 @@ export {
 
 // Импортируем функции отправки файлов
 export {
+  sendSmallFilesSingle,
   sendSmallFilesMultiple,
   sendSmallFiles,
   sendLargeFiles

@@ -7,6 +7,7 @@ import {
   createErrorModal,
   createFileSizeErrorModal,
   sendSmallFiles,
+  sendSmallFilesSingle,
   sendSmallFilesMultiple,
   sendLargeFiles,
   sendFormWithoutFiles,
@@ -50,11 +51,11 @@ export const useFormSubmitter = ({ formData, agreed, onSuccess }: FormSubmitterP
         
         const totalSize = formData.files.reduce((sum, file) => sum + file.size, 0);
         
-        // Если файлы маленькие (до 4МБ общий размер) - используем множественные Ajax запросы
+        // Если файлы маленькие (до 4МБ общий размер) - используем одно письмо со всеми файлами
         if (areFilesSmall(formData.files)) {
           try {
-            console.log('📧 Отправляем файлы через множественные Ajax запросы...');
-            await sendSmallFilesMultiple(formData, cityInfo);
+            console.log('📧 Отправляем все файлы одним письмом...');
+            await sendSmallFilesSingle(formData, cityInfo);
             
             // Показываем сообщение об успехе
             loadingDiv.remove();
