@@ -59,56 +59,37 @@ export default function Index() {
       // Формируем данные для отправки
       const cityInfo = formData.city === 'Другой город' ? formData.customCity : formData.city;
       
-      // Создаем HTML форму для прямой отправки
-      const htmlForm = document.createElement('form');
-      htmlForm.method = 'POST';
-      htmlForm.action = 'https://formsubmit.co/commerce@rusutil-1.ru';
-      htmlForm.enctype = 'multipart/form-data';
-      htmlForm.style.display = 'none';
-
+      const formDataToSend = new FormData();
+      
       // Добавляем текстовые поля
-      const textFields = [
-        { name: 'name', value: formData.name },
-        { name: 'email', value: formData.email },
-        { name: 'phone', value: formData.phone },
-        { name: 'company', value: formData.company || 'Не указана' },
-        { name: 'city', value: cityInfo || 'Не указан' },
-        { name: 'plan', value: formData.selectedPlan || 'Не выбран' },
-        { name: 'message', value: formData.comment || 'Нет комментариев' },
-        { name: '_subject', value: 'Заявка на утилизацию IT оборудования с сайта utilizon.pro' },
-        { name: '_captcha', value: 'false' },
-        { name: '_template', value: 'table' }
-      ];
-
-      textFields.forEach(field => {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = field.name;
-        input.value = field.value;
-        htmlForm.appendChild(input);
-      });
+      formDataToSend.append('name', formData.name);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('phone', formData.phone);
+      formDataToSend.append('company', formData.company || 'Не указана');
+      formDataToSend.append('city', cityInfo || 'Не указан');
+      formDataToSend.append('plan', formData.selectedPlan || 'Не выбран');
+      formDataToSend.append('message', formData.comment || 'Нет комментариев');
+      formDataToSend.append('_subject', 'Заявка на утилизацию IT оборудования с сайта utilizon.pro');
+      formDataToSend.append('_captcha', 'false');
+      formDataToSend.append('_template', 'table');
 
       // Добавляем файлы
       if (formData.files && formData.files.length > 0) {
-        for (let i = 0; i < formData.files.length; i++) {
-          const file = formData.files[i];
-          const fileInput = document.createElement('input');
-          fileInput.type = 'file';
-          fileInput.name = i === 0 ? 'attachment' : `attachment${i + 1}`;
-          fileInput.style.display = 'none';
-          
-          const dataTransfer = new DataTransfer();
-          dataTransfer.items.add(file);
-          fileInput.files = dataTransfer.files;
-          
-          htmlForm.appendChild(fileInput);
-        }
+        formData.files.forEach((file, index) => {
+          const fieldName = index === 0 ? 'attachment' : `attachment${index + 1}`;
+          formDataToSend.append(fieldName, file);
+          console.log(`📎 Добавлен файл: ${file.name} как ${fieldName}`);
+        });
       }
 
-      document.body.appendChild(htmlForm);
-      htmlForm.submit();
-      document.body.removeChild(htmlForm);
+      // Отправляем через fetch с правильными настройками
+      const response = await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
+        method: 'POST',
+        body: formDataToSend
+      });
 
+      console.log('✅ Заявка отправлена успешно');
+      
       // Показываем модальное окно успеха
       setShowSuccessModal(true);
       
