@@ -1,252 +1,48 @@
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
-import emailjs from '@emailjs/browser';
 
-export default function CalculatorSection() {
-  const [formData, setFormData] = useState({
-    name: '',
-    company: '',
-    phone: '',
-    email: '',
-    city: '',
-    customCity: '',
-    comment: '',
-    file: null as File | null,
-    selectedPlan: ''
-  });
+interface CalculatorSectionProps {
+  formData: {
+    name: string;
+    company: string;
+    phone: string;
+    email: string;
+    city: string;
+    customCity: string;
+    comment: string;
+    file: File | null;
+    selectedPlan: string;
+  };
+  setFormData: React.Dispatch<React.SetStateAction<{
+    name: string;
+    company: string;
+    phone: string;
+    email: string;
+    city: string;
+    customCity: string;
+    comment: string;
+    file: File | null;
+    selectedPlan: string;
+  }>>;
+  agreed: boolean;
+  setAgreed: React.Dispatch<React.SetStateAction<boolean>>;
+  handleSubmit: (e?: React.MouseEvent) => Promise<void>;
+  handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
-  const [agreed, setAgreed] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+export default function CalculatorSection({ 
+  formData, 
+  setFormData, 
+  agreed, 
+  setAgreed, 
+  handleSubmit, 
+  handleFileChange 
+}: CalculatorSectionProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setFormData(prev => ({ ...prev, file }));
-    }
-  };
 
-  const handleSubmit = async (e?: React.MouseEvent) => {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    
-    console.log('🚀 ОТПРАВКА ФОРМЫ КАЛЬКУЛЯТОРА:', formData);
-    console.log('✅ Согласие:', agreed);
-    
-    // Проверка обязательных полей
-    if (!formData.name.trim()) {
-      alert('❌ Пожалуйста, укажите ваше имя');
-      return;
-    }
-    
-    if (!formData.phone.trim()) {
-      alert('❌ Пожалуйста, укажите номер телефона');
-      return;
-    }
-    
-    if (!formData.email.trim()) {
-      alert('❌ Пожалуйста, укажите email адрес');
-      return;
-    }
-
-    if (!agreed) {
-      alert('❌ Необходимо согласиться с политикой конфиденциальности');
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    // Показываем индикатор загрузки
-    const loadingDiv = document.createElement('div');
-    loadingDiv.innerHTML = `
-      <div style="
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: #059669;
-        color: white;
-        padding: 24px 32px;
-        border-radius: 12px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        z-index: 9999;
-        font-family: system-ui, -apple-system, sans-serif;
-        max-width: 400px;
-        text-align: center;
-      ">
-        <div style="
-          width: 24px;
-          height: 24px;
-          background: #D4AF37;
-          border-radius: 50%;
-          margin: 0 auto 16px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          animation: spin 1s linear infinite;
-        ">⟳</div>
-        <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Подготавливаем заявку...</h3>
-        <p style="margin: 0; opacity: 0.9; font-size: 14px;">Открываем почтовый клиент</p>
-      </div>
-      <style>
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-      </style>
-    `;
-    document.body.appendChild(loadingDiv);
-
-    // Отправляем реальное письмо через PHP скрипт
-    const sendEmail = async () => {
-      try {
-        const cityInfo = formData.city === 'Другой город' ? formData.customCity : formData.city;
-        
-        // Подготавливаем данные для отправки
-        const emailData = {
-          subject: 'Заявка на расчет стоимости утилизации',
-          name: formData.name,
-          company: formData.company || 'Не указана',
-          phone: formData.phone,
-          email: formData.email,
-          city: cityInfo || 'Не указан',
-          comment: formData.comment || 'Нет комментария',
-          selected_plan: formData.selectedPlan || 'Не выбран',
-          file_name: formData.file ? formData.file.name : ''
-        };
-
-        // Отправляем через PHP скрипт
-        const response = await fetch('/send-email.php', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(emailData)
-        });
-
-        // Убираем индикатор загрузки
-        loadingDiv.remove();
-
-        const result = await response.json();
-        
-        if (response.ok && result.success) {
-          console.log('✅ Письмо успешно отправлено на commerce@rusutil-1.ru');
-          
-          // Показываем успешное сообщение
-          const successDiv = document.createElement('div');
-          successDiv.innerHTML = `
-            <div style="
-              position: fixed;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              background: #059669;
-              color: white;
-              padding: 24px 32px;
-              border-radius: 12px;
-              box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-              z-index: 9999;
-              font-family: system-ui, -apple-system, sans-serif;
-              max-width: 500px;
-              text-align: center;
-            ">
-              <div style="
-                width: 48px;
-                height: 48px;
-                background: #D4AF37;
-                border-radius: 50%;
-                margin: 0 auto 16px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 24px;
-              ">✅</div>
-              <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Заявка отправлена!</h3>
-              <p style="margin: 0 0 8px 0; opacity: 0.9; font-size: 14px;">Письмо успешно отправлено на commerce@rusutil-1.ru</p>
-              <p style="margin: 0; opacity: 0.7; font-size: 12px;">Мы свяжемся с вами в ближайшее время</p>
-            </div>
-          `;
-          document.body.appendChild(successDiv);
-          
-          // Автоматически убираем сообщение через 5 секунд
-          setTimeout(() => {
-            successDiv.remove();
-          }, 5000);
-          
-          // Очищаем форму
-          setFormData({
-            name: '',
-            company: '',
-            phone: '',
-            email: '',
-            city: '',
-            customCity: '',
-            comment: '',
-            file: null,
-            selectedPlan: ''
-          });
-          setAgreed(false);
-          
-        } else {
-          throw new Error('Ошибка отправки');
-        }
-      } catch (error) {
-        // Убираем индикатор загрузки в случае ошибки
-        loadingDiv.remove();
-        
-        console.error('❌ Ошибка при отправке:', error);
-        
-        // Показываем сообщение об ошибке
-        const errorDiv = document.createElement('div');
-        errorDiv.innerHTML = `
-          <div style="
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #DC2626;
-            color: white;
-            padding: 24px 32px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            z-index: 9999;
-            font-family: system-ui, -apple-system, sans-serif;
-            max-width: 450px;
-            text-align: center;
-          ">
-            <div style="
-              width: 48px;
-              height: 48px;
-              background: rgba(255,255,255,0.2);
-              border-radius: 50%;
-              margin: 0 auto 16px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              font-size: 24px;
-            ">❌</div>
-            <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Ошибка отправки</h3>
-            <p style="margin: 0; opacity: 0.9; font-size: 14px;">Попробуйте позже или позвоните: +7 (901) 862-81-81</p>
-          </div>
-        `;
-        document.body.appendChild(errorDiv);
-        
-        // Автоматически убираем сообщение через 5 секунд
-        setTimeout(() => {
-          errorDiv.remove();
-        }, 5000);
-      } finally {
-        setIsSubmitting(false);
-      }
-    };
-
-    // Запускаем отправку
-    sendEmail();
-  };
 
   const handlePhoneCall = (e?: React.MouseEvent) => {
     if (e) {
@@ -320,7 +116,7 @@ export default function CalculatorSection() {
                         className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                         placeholder="Ваше имя"
                         required
-                        disabled={isSubmitting}
+
                       />
                     </div>
                     <div>
@@ -331,7 +127,7 @@ export default function CalculatorSection() {
                         onChange={(e) => setFormData(prev => ({...prev, company: e.target.value}))}
                         className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                         placeholder="Название компании"
-                        disabled={isSubmitting}
+
                       />
                     </div>
                   </div>
@@ -346,7 +142,7 @@ export default function CalculatorSection() {
                         className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                         placeholder="+7 (___) ___-__-__"
                         required
-                        disabled={isSubmitting}
+
                       />
                     </div>
                     <div>
@@ -358,7 +154,7 @@ export default function CalculatorSection() {
                         className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                         placeholder="your@email.com"
                         required
-                        disabled={isSubmitting}
+
                       />
                     </div>
                   </div>
@@ -387,10 +183,29 @@ export default function CalculatorSection() {
                         onChange={(e) => setFormData(prev => ({...prev, customCity: e.target.value}))}
                         className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base mt-3" 
                         placeholder="Укажите ваш город"
-                        disabled={isSubmitting}
+
                       />
                     )}
                   </div>
+                  
+                  {/* Окошко выбранного плана */}
+                  {formData.selectedPlan && (
+                    <div className="mt-4 p-4 bg-black border border-professional-rolexGold rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 bg-professional-rolexGold rounded-full flex items-center justify-center flex-shrink-0">
+                          <Icon name="Check" size={18} className="text-black font-bold" />
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-semibold premium-body text-professional-rolexGold mb-1">
+                            Выбранный план утилизации:
+                          </h4>
+                          <p className="text-sm premium-body text-white font-medium">
+                            {formData.selectedPlan}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
                 
                 <div className="space-y-6">
@@ -400,10 +215,8 @@ export default function CalculatorSection() {
                       <span className="text-xs text-gray-600 block mt-1">Прикрепите файл с описанием оборудования</span>
                     </label>
                     <div 
-                      className={`border-2 border-dashed border-primary/30 rounded-lg p-6 text-center hover:border-primary transition-all duration-300 bg-black/5 ${
-                        isSubmitting ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
-                      }`}
-                      onClick={() => !isSubmitting && fileInputRef.current?.click()}
+                      className="border-2 border-dashed border-primary/30 rounded-lg p-6 text-center hover:border-primary transition-all duration-300 bg-black/5 cursor-pointer"
+                      onClick={() => fileInputRef.current?.click()}
                     >
                       <Icon name="Upload" size={32} className="text-professional-rolexGold mx-auto mb-3" />
                       {formData.file ? (
@@ -412,7 +225,7 @@ export default function CalculatorSection() {
                             ✓ Файл загружен: {formData.file.name}
                           </p>
                           <p className="text-xs text-gray-600">
-                            {!isSubmitting && 'Нажмите для выбора другого файла'}
+                            Нажмите для выбора другого файла
                           </p>
                         </div>
                       ) : (
@@ -431,7 +244,7 @@ export default function CalculatorSection() {
                         className="hidden" 
                         accept=".xlsx,.xls,.docx,.doc,.pdf" 
                         onChange={handleFileChange}
-                        disabled={isSubmitting}
+
                       />
                     </div>
                   </div>

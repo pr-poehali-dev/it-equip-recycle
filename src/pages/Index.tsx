@@ -18,6 +18,8 @@ export default function Index() {
     company: '',
     phone: '',
     email: '',
+    city: '',
+    customCity: '',
     comment: '',
     file: null as File | null,
     selectedPlan: ''
