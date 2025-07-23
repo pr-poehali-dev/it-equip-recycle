@@ -5,6 +5,7 @@ import Icon from "@/components/ui/icon";
 import emailjs from '@emailjs/browser';
 
 export default function CalculatorSection() {
+  const [activeTab, setActiveTab] = useState(0);
   const [formData, setFormData] = useState({
     name: '',
     company: '',
@@ -20,6 +21,41 @@ export default function CalculatorSection() {
   const [agreed, setAgreed] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Планы утилизации
+  const plans = [
+    {
+      id: 'standard',
+      title: 'Стандартный план',
+      price: 'от 250₽/кг',
+      description: 'Базовый пакет утилизации с сертификатом уничтожения',
+      features: ['Сертификат утилизации', 'Вывоз оборудования', 'Экологичная утилизация']
+    },
+    {
+      id: 'premium',
+      title: 'Премиум план',
+      price: 'от 200₽/кг',
+      description: 'Расширенный пакет с извлечением драгметаллов',
+      features: ['Все из стандартного', 'Извлечение драгметаллов', 'Возврат стоимости металлов', 'Приоритетный сервис']
+    },
+    {
+      id: 'enterprise',
+      title: 'Корпоративный план',
+      price: 'Индивидуально',
+      description: 'Комплексное решение для крупных объемов',
+      features: ['Все из премиум', 'Персональный менеджер', 'Гибкие условия оплаты', 'Регулярные отчеты']
+    }
+  ];
+
+  // Города работы
+  const cities = [
+    { name: 'Москва', description: 'Москва и Московская область' },
+    { name: 'СПб', description: 'Санкт-Петербург и Ленинградская область' },
+    { name: 'Новосибирск', description: 'Новосибирск и область' },
+    { name: 'Екатеринбург', description: 'Екатеринбург и Свердловская область' },
+    { name: 'Казань', description: 'Казань и Республика Татарстан' },
+    { name: 'Другие', description: 'Работаем по всей России' }
+  ];
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -293,6 +329,64 @@ export default function CalculatorSection() {
         </div>
         
         <div className="max-w-4xl mx-auto">
+          {/* Вкладки городов */}
+          <div className="mb-8">
+            <div className="bg-white rounded-lg shadow-lg p-6">
+              <h3 className="text-lg font-semibold premium-body text-gray-900 mb-4 text-center">
+                🏙️ Города, в которых мы работаем
+              </h3>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+                {cities.map((city, index) => (
+                  <div
+                    key={index}
+                    onClick={() => setActiveTab(index)}
+                    className={`p-3 rounded-lg cursor-pointer transition-all duration-300 text-center ${
+                      activeTab === index
+                        ? 'bg-professional-rolexGold text-black font-semibold shadow-md'
+                        : 'bg-gray-50 hover:bg-gray-100 text-gray-700'
+                    }`}
+                  >
+                    <div className="text-sm font-medium">{city.name}</div>
+                    <div className="text-xs opacity-75 mt-1">{city.description}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Вкладки планов */}
+          <div className="mb-8">
+            <div className="bg-white rounded-lg shadow-lg p-6">
+              <h3 className="text-lg font-semibold premium-body text-gray-900 mb-4 text-center">
+                📋 Выберите план утилизации
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {plans.map((plan) => (
+                  <div
+                    key={plan.id}
+                    onClick={() => setFormData(prev => ({...prev, selectedPlan: plan.title}))}
+                    className={`p-4 rounded-lg cursor-pointer transition-all duration-300 border-2 ${
+                      formData.selectedPlan === plan.title
+                        ? 'border-professional-rolexGold bg-professional-rolexGold/10'
+                        : 'border-gray-200 hover:border-gray-300 bg-white'
+                    }`}
+                  >
+                    <div className="text-center">
+                      <h4 className="font-semibold text-gray-900 mb-2">{plan.title}</h4>
+                      <div className="text-professional-rolexGold font-bold text-lg mb-2">{plan.price}</div>
+                      <p className="text-sm text-gray-600 mb-3">{plan.description}</p>
+                      <ul className="text-xs text-gray-500 space-y-1">
+                        {plan.features.map((feature, idx) => (
+                          <li key={idx}>✓ {feature}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
           <Card className="shadow-xl">
             <CardHeader className="bg-emerald-800 text-white p-6">
               <div className="text-center mb-4">
@@ -397,25 +491,6 @@ export default function CalculatorSection() {
                       />
                     )}
                   </div>
-                  
-                  {/* Окошко выбранного плана */}
-                  {formData.selectedPlan && (
-                    <div className="mt-4 p-4 bg-gradient-to-r from-professional-rolexGold/20 to-professional-rolexGold/10 border-l-4 border-professional-rolexGold rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-professional-rolexGold rounded-full flex items-center justify-center flex-shrink-0">
-                          <Icon name="CheckCircle" size={18} className="text-black" />
-                        </div>
-                        <div>
-                          <h4 className="text-sm font-semibold premium-body text-black mb-1">
-                            Выбранный план утилизации:
-                          </h4>
-                          <p className="text-sm premium-body text-black/80 font-medium">
-                            {formData.selectedPlan}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
                 </div>
                 
                 <div className="space-y-6">
