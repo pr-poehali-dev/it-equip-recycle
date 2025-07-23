@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FormSubmit Setup - Utilizon.pro</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 600px; 
+            margin: 50px auto; 
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { color: #D4AF37; }
+        form { margin: 20px 0; }
+        input, textarea { 
+            width: 100%; 
+            padding: 10px; 
+            margin: 10px 0; 
+            border: 1px solid #ddd; 
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button { 
+            background: #D4AF37; 
+            color: white; 
+            padding: 12px 24px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover { background: #b8941f; }
+        .note { 
+            background: #e8f4fd; 
+            padding: 15px; 
+            border-radius: 5px; 
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 FormSubmit Setup для Utilizon.pro</h1>
+        
+        <div class="note">
+            <strong>Внимание!</strong> Эта страница предназначена для первоначальной настройки FormSubmit. 
+            После первой отправки формы, сервис будет активирован для Ajax-запросов с сайта.         
+        </div>
+
+        <h2>Тестовая форма активации</h2>
+        <form action="https://formsubmit.co/commerce@rusutil-1.ru" method="POST">
+            <input type="hidden" name="_subject" value="FormSubmit активация для utilizon.pro">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_next" value="https://utilizon.pro/success">
+            <input type="hidden" name="_error" value="https://utilizon.pro/error">
+            
+            <input type="text" name="name" placeholder="Тестовое имя" value="Test Setup" required>
+            <input type="email" name="email" placeholder="Email (не обязательно)" value="test@utilizon.pro">
+            <input type="tel" name="phone" placeholder="Телефон" value="+7 (901) 862-81-81" required>
+            <input type="text" name="company" placeholder="Компания" value="Test Company">
+            <textarea name="message" placeholder="Сообщение" rows="4">Тестовое сообщение для активации FormSubmit на utilizon.pro. Это сообщение отправлено для настройки Ajax-отправки форм.</textarea>
+            
+            <button type="submit">🔧 Активировать FormSubmit</button>
+        </form>
+
+        <div class="note">
+            <p><strong>Что произойдет после отправки:</strong></p>
+            <ul>
+                <li>✅ FormSubmit будет активирован для домена utilizon.pro</li>
+                <li>✅ Ajax-запросы через формы на сайте начнут работать</li>
+                <li>✅ Вы получите подтверждение на почту commerce@rusutil-1.ru</li>
+                <li>✅ Формы "Контакты" и "Калькулятор стоимости" заработают</li>
+            </ul>
+        </div>
+
+        <p style="text-align: center; margin-top: 30px; color: #666;">
+            <small>ООО «СБОРУТИЛИЗАЦИЯ» • Профессиональная утилизация IT-оборудования</small>
+        </p>
+    </div>
+</body>
+</html>

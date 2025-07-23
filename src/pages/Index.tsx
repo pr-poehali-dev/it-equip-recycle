@@ -113,14 +113,17 @@ export default function Index() {
       formDataToSend.append('message', formData.comment || 'Нет комментариев');
       formDataToSend.append('subject', 'Заявка на расчет стоимости утилизации IT оборудования с сайта utilizon.pro');
       formDataToSend.append('_captcha', 'false');
+      formDataToSend.append('_template', 'table');
+      formDataToSend.append('_next', 'https://utilizon.pro/success');
+      formDataToSend.append('_error', 'https://utilizon.pro/error');
       
       // Добавляем файл если есть
       if (formData.file) {
         formDataToSend.append('attachment', formData.file);
       }
 
-      // Отправляем через FormSubmit
-      const response = await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
+      // Отправляем через FormSubmit API
+      const response = await fetch('https://formsubmit.co/ajax/commerce@rusutil-1.ru', {
         method: 'POST',
         body: formDataToSend,
         headers: {
@@ -133,8 +136,18 @@ export default function Index() {
       
       console.log('✅ FormSubmit результат:', response.status, response.statusText);
       
-      // FormSubmit может возвращать разные статусы при успехе
-      if (response.ok || response.status === 200 || response.status === 302) {
+      // Проверяем успешность отправки
+      let success = false;
+      
+      try {
+        const responseData = await response.json();
+        console.log('📧 FormSubmit ответ:', responseData);
+        success = response.ok && (responseData.success !== false);
+      } catch (jsonError) {
+        // Если не JSON, проверяем по статусу
+        success = response.ok || response.status === 200 || response.status === 302;
+      }
+      if (success) {
         // Показываем успешное сообщение
         const successDiv = document.createElement('div');
         successDiv.innerHTML = `
@@ -199,6 +212,13 @@ export default function Index() {
         
         console.log('✅ Заявка успешно отправлена через FormSubmit!');
       } else {
+        // Логируем ошибку для отладки
+        try {
+          const errorText = await response.text();
+          console.error('❌ FormSubmit error details:', errorText);
+        } catch (readError) {
+          console.error('❌ Could not read FormSubmit error response');
+        }
         console.error('❌ FormSubmit ошибка:', response.status, response.statusText);
         const errorText = await response.text();
         console.error('❌ Детали ошибки:', errorText);
@@ -209,9 +229,57 @@ export default function Index() {
       // Убираем индикатор загрузки
       loadingDiv.remove();
       
-      console.error('❌ Ошибка отправки:', error);
+      console.error('❌ Ошибка при отправке Ajax:', error);
+      console.log('🔄 Пробуем резервный метод отправки через HTML-форму...');
       
-      // Показываем ошибку
+      // Резервный метод: создаем и отправляем скрытую HTML-форму
+      try {
+        const fallbackForm = document.createElement('form');
+        fallbackForm.method = 'POST';
+        fallbackForm.action = 'https://formsubmit.co/commerce@rusutil-1.ru';
+        fallbackForm.style.display = 'none';
+        
+        const cityInfo = formData.city === 'Другой город' ? formData.customCity : formData.city;
+        
+        // Добавляем все поля
+        const fields = [
+          { name: 'name', value: formData.name },
+          { name: 'email', value: formData.email },
+          { name: 'phone', value: formData.phone },
+          { name: 'company', value: formData.company || 'Не указана' },
+          { name: 'city', value: cityInfo || 'Не указан' },
+          { name: 'plan', value: formData.selectedPlan || 'Не выбран' },
+          { name: 'message', value: formData.comment || 'Нет комментариев' },
+          { name: '_subject', value: 'Заявка на расчет стоимости утилизации IT оборудования с сайта utilizon.pro' },
+          { name: '_captcha', value: 'false' },
+          { name: '_template', value: 'table' },
+          { name: '_next', value: 'https://utilizon.pro/success' },
+          { name: '_error', value: 'https://utilizon.pro/error' }
+        ];
+        
+        fields.forEach(field => {
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = field.name;
+          input.value = field.value;
+          fallbackForm.appendChild(input);
+        });
+        
+        // Добавляем файл если есть (для FormSubmit файлы нужно добавлять по-особому)
+        if (formData.file) {
+          console.log('⚠️ Файл не может быть отправлен через резервный HTML-метод. Используйте Ajax.');
+        }
+        
+        document.body.appendChild(fallbackForm);
+        fallbackForm.submit();
+        
+        // Не показываем ошибку, так как пробуем резервный метод
+        return;
+      } catch (fallbackError) {
+        console.error('❌ Резервный метод тоже не сработал:', fallbackError);
+      }
+      
+      // Показываем ошибку только если все методы не сработали
       const errorDiv = document.createElement('div');
       errorDiv.innerHTML = `
         <div style="

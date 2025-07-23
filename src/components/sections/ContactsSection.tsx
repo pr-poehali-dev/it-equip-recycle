@@ -84,9 +84,12 @@ export default function ContactsSection() {
         formDataToSend.append('message', formData.comment || 'Нет комментария');
         formDataToSend.append('subject', 'Заявка с раздела Контакты - utilizon.pro');
         formDataToSend.append('_captcha', 'false');
+        formDataToSend.append('_template', 'table');
+        formDataToSend.append('_next', 'https://utilizon.pro/success');
+        formDataToSend.append('_error', 'https://utilizon.pro/error');
         
-        // Отправляем через FormSubmit
-        const response = await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
+        // Отправляем через FormSubmit API
+        const response = await fetch('https://formsubmit.co/ajax/commerce@rusutil-1.ru', {
           method: 'POST',
           body: formDataToSend,
           headers: {
@@ -99,9 +102,41 @@ export default function ContactsSection() {
 
         console.log('✅ FormSubmit результат (контакты):', response.status, response.statusText);
         
-        // FormSubmit может возвращать разные статусы при успехе
-        if (response.ok || response.status === 200 || response.status === 302) {
+        // Проверяем успешность отправки
+        let success = false;
+        
+        try {
+          const responseData = await response.json();
+          console.log('📧 FormSubmit ответ:', responseData);
+          success = response.ok && (responseData.success !== false);
+        } catch (jsonError) {
+          // Если не JSON, проверяем по статусу
+          success = response.ok || response.status === 200 || response.status === 302;
+        }
+        
+        if (success) {
           console.log('✅ Заявка контактов успешно отправлена через FormSubmit!');
+          
+          // Альтернативная отправка через другой сервис как резерв
+          try {
+            await fetch('https://api.web3forms.com/submit', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                access_key: 'YOUR_ACCESS_KEY_HERE',
+                name: formData.name,
+                email: formData.email || 'no-email@utilizon.pro',
+                phone: formData.phone,
+                company: formData.company || 'Не указана',
+                message: formData.comment || 'Нет комментария',
+                subject: 'Резервная отправка - Заявка с раздела Контакты - utilizon.pro'
+              })
+            });
+          } catch (backupError) {
+            console.log('⚠️ Резервная отправка не удалась, но основная прошла успешно');
+          }
           
           // Показываем успешное сообщение
           const successDiv = document.createElement('div');
@@ -162,9 +197,48 @@ export default function ContactsSection() {
         // Убираем индикатор загрузки в случае ошибки
         loadingDiv.remove();
         
-        console.error('❌ Ошибка при отправке:', error);
+        console.error('❌ Ошибка при отправке Ajax:', error);
+        console.log('🔄 Пробуем резервный метод отправки через HTML-форму...');
         
-        // Показываем сообщение об ошибке
+        // Резервный метод: создаем и отправляем скрытую HTML-форму
+        try {
+          const fallbackForm = document.createElement('form');
+          fallbackForm.method = 'POST';
+          fallbackForm.action = 'https://formsubmit.co/commerce@rusutil-1.ru';
+          fallbackForm.style.display = 'none';
+          
+          // Добавляем все поля
+          const fields = [
+            { name: 'name', value: formData.name },
+            { name: 'company', value: formData.company || 'Не указана' },
+            { name: 'phone', value: formData.phone },
+            { name: 'email', value: formData.email || 'Не указан' },
+            { name: 'message', value: formData.comment || 'Нет комментария' },
+            { name: '_subject', value: 'Заявка с раздела Контакты - utilizon.pro' },
+            { name: '_captcha', value: 'false' },
+            { name: '_template', value: 'table' },
+            { name: '_next', value: 'https://utilizon.pro/success' },
+            { name: '_error', value: 'https://utilizon.pro/error' }
+          ];
+          
+          fields.forEach(field => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = field.name;
+            input.value = field.value;
+            fallbackForm.appendChild(input);
+          });
+          
+          document.body.appendChild(fallbackForm);
+          fallbackForm.submit();
+          
+          // Не показываем ошибку, так как пробуем резервный метод
+          return;
+        } catch (fallbackError) {
+          console.error('❌ Резервный метод тоже не сработал:', fallbackError);
+        }
+        
+        // Показываем сообщение об ошибке только если все методы не сработали
         const errorDiv = document.createElement('div');
         errorDiv.innerHTML = `
           <div style="
