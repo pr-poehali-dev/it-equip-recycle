@@ -111,8 +111,9 @@ export default function Index() {
       formDataToSend.append('city', cityInfo || 'Не указан');
       formDataToSend.append('plan', formData.selectedPlan || 'Не выбран');
       formDataToSend.append('message', formData.comment || 'Нет комментариев');
-      formDataToSend.append('subject', 'Заявка на расчет стоимости утилизации IT оборудования');
+      formDataToSend.append('subject', 'Заявка на расчет стоимости утилизации IT оборудования с сайта utilizon.pro');
       formDataToSend.append('_captcha', 'false');
+      formDataToSend.append('_next', 'https://utilizon.pro/thank-you');
       
       // Добавляем файл если есть
       if (formData.file) {
