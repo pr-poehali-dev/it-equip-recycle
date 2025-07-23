@@ -100,48 +100,42 @@ export default function Index() {
     document.body.appendChild(loadingDiv);
     
     try {
-      // Подготавливаем данные для EmailJS
+      // Подготавливаем данные
       const cityInfo = formData.city === 'Другой город' ? formData.customCity : formData.city;
       
-      const templateParams = {
-        user_name: formData.name,
-        user_email: formData.email,
-        user_phone: formData.phone,
-        user_company: formData.company || 'Не указана',
-        user_city: cityInfo || 'Не указан',
-        selected_plan: formData.selectedPlan || 'Не выбран',
-        message: formData.comment || 'Нет дополнительной информации',
-        file_info: formData.file ? `${formData.file.name} (${Math.round(formData.file.size / 1024)} KB)` : 'Файл не прикреплен'
-      };
+      // Формируем письмо для отправки через mailto
+      const emailSubject = encodeURIComponent('Заявка на расчет стоимости утилизации IT оборудования');
+      const emailBody = encodeURIComponent(`
+ЗАЯВКА НА РАСЧЕТ СТОИМОСТИ УТИЛИЗАЦИИ
 
-      // Отправляем на корпоративную почту
-      const response = await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          company: formData.company || 'Не указана',
-          city: cityInfo || 'Не указан',
-          plan: formData.selectedPlan || 'Не выбран',
-          message: formData.comment || 'Нет комментариев',
-          file_info: formData.file ? `${formData.file.name} (${Math.round(formData.file.size / 1024)} KB)` : 'Файл не прикреплен',
-          subject: 'Заявка на расчет стоимости утилизации IT оборудования',
-          _captcha: false
-        })
-      });
+Контактные данные:
+• Имя: ${formData.name}
+• Компания: ${formData.company || 'Не указана'}
+• Телефон: ${formData.phone}
+• Email: ${formData.email}
+• Город: ${cityInfo || 'Не указан'}
+
+${formData.selectedPlan ? `Выбранный план: ${formData.selectedPlan}` : ''}
+
+Дополнительная информация:
+${formData.comment || 'Нет дополнительной информации'}
+
+${formData.file ? `Прикрепленный файл: ${formData.file.name} (${Math.round(formData.file.size / 1024)} KB)` : 'Файл не прикреплен'}
+
+---
+Заявка отправлена с сайта ${new Date().toLocaleString('ru-RU')}
+      `);
+      
+      // Открываем почтовый клиент
+      const mailtoLink = `mailto:commerce@rusutil-1.ru?subject=${emailSubject}&body=${emailBody}`;
+      window.location.href = mailtoLink;
       
       // Убираем индикатор загрузки
       loadingDiv.remove();
       
-      console.log('✅ FormSubmit результат:', response.status);
+      console.log('✅ Почтовый клиент открыт');
       
-      if (response.ok) {
-        // Показываем успешное сообщение
+      // Показываем успешное сообщение
         const successDiv = document.createElement('div');
         successDiv.innerHTML = `
           <div style="
@@ -203,10 +197,7 @@ export default function Index() {
         });
         setAgreed(false);
         
-        console.log('✅ Заявка успешно отправлена через FormSubmit!');
-      } else {
-        throw new Error('Ошибка отправки письма');
-      }
+        console.log('✅ Почтовый клиент открыт для отправки!');
       
     } catch (error) {
       // Убираем индикатор загрузки
