@@ -104,28 +104,41 @@ export default function CalculatorSection() {
     try {
       const cityInfo = formData.city === 'Другой город' ? formData.customCity : formData.city;
       
-      // Отправляем письмо через EmailJS
-      const templateParams = {
-        to_email: 'commerce@rusutil-1.ru',
-        from_name: formData.name,
-        from_email: formData.email,
-        company: formData.company || 'Не указана',
-        phone: formData.phone,
-        city: cityInfo || 'Не указан',
-        comment: formData.comment || 'Не указан',
-        file_name: formData.file ? formData.file.name : 'Не прикреплен',
-        selected_plan: formData.selectedPlan || 'Не выбран',
-        subject: 'Заявка на расчет стоимости утилизации'
-      };
+      // Отправляем через Web3Forms
+      const formDataToSend = new FormData();
+      formDataToSend.append('access_key', 'b8f87b44-2c4e-4f9c-9a1d-e3f6d8b9c2a1');
+      formDataToSend.append('subject', 'Заявка на расчет стоимости утилизации');
+      formDataToSend.append('from_name', formData.name);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('message', `
+Заявка на расчет стоимости утилизации
 
-      console.log('📧 Отправляем письмо через EmailJS:', templateParams);
+Контактные данные:
+Имя: ${formData.name}
+Компания: ${formData.company || 'Не указана'}
+Телефон: ${formData.phone}
+Email: ${formData.email}
+Город: ${cityInfo || 'Не указан'}
 
-      await emailjs.send(
-        'service_5kqxpwt',
-        'template_7wdhh3d',
-        templateParams,
-        'Gvml9Ig1yP8rjVS8T'
-      );
+Дополнительная информация: ${formData.comment || 'Нет'}
+Прикрепленный файл: ${formData.file ? formData.file.name : 'Не прикреплен'}
+Выбранный план: ${formData.selectedPlan || 'Не выбран'}
+
+---
+Заявка отправлена с калькулятора`);
+
+      console.log('📧 Отправляем письмо через Web3Forms');
+
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formDataToSend
+      });
+
+      const result = await response.json();
+      
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || 'Ошибка отправки');
+      }
 
       // Убираем индикатор загрузки
       loadingDiv.remove();

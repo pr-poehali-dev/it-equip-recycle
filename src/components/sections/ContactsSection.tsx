@@ -73,25 +73,38 @@ export default function ContactsSection() {
     document.body.appendChild(loadingDiv);
 
     try {
-      // Отправляем письмо через EmailJS
-      const templateParams = {
-        to_email: 'commerce@rusutil-1.ru',
-        from_name: formData.name,
-        from_email: formData.email || 'Не указан',
-        company: formData.company || 'Не указана',
-        phone: formData.phone,
-        comment: formData.comment || 'Нет комментария',
-        subject: 'Заявка с раздела Контакты'
-      };
+      // Отправляем через Web3Forms
+      const formDataToSend = new FormData();
+      formDataToSend.append('access_key', 'b8f87b44-2c4e-4f9c-9a1d-e3f6d8b9c2a1');
+      formDataToSend.append('subject', 'Заявка с раздела Контакты');
+      formDataToSend.append('from_name', formData.name);
+      formDataToSend.append('email', formData.email || 'commerce@rusutil-1.ru');
+      formDataToSend.append('message', `
+Заявка с раздела Контакты
 
-      console.log('📧 Отправляем письмо через EmailJS:', templateParams);
+Контактные данные:
+Имя: ${formData.name}
+Компания: ${formData.company || 'Не указана'}
+Телефон: ${formData.phone}
+Email: ${formData.email || 'Не указан'}
 
-      await emailjs.send(
-        'service_5kqxpwt',
-        'template_contacts',
-        templateParams,
-        'Gvml9Ig1yP8rjVS8T'
-      );
+Комментарий: ${formData.comment || 'Нет комментария'}
+
+---
+Заявка отправлена с раздела "Контакты"`);
+
+      console.log('📧 Отправляем письмо через Web3Forms');
+
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formDataToSend
+      });
+
+      const result = await response.json();
+      
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || 'Ошибка отправки');
+      }
 
       // Убираем индикатор загрузки
       loadingDiv.remove();
