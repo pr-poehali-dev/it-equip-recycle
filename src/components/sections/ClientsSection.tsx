@@ -55,28 +55,37 @@ export default function ClientsSection() {
         </div>
         
         <div className="text-center mt-12">
-          <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-lg p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto">
-            <Icon name="Award" size={32} className="text-professional-rolexGold mx-auto mb-4" />
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Почему нас выбирают</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
-              <div>
-                <h4 className="font-semibold text-gray-900 mb-2">🏆 Проверенное качество</h4>
-                <p className="premium-body text-gray-700 text-sm">Работаем с крупнейшими компаниями России с 2015 года</p>
-              </div>
-              <div>
-                <h4 className="font-semibold text-gray-900 mb-2">📋 Полный комплаенс</h4>
-                <p className="premium-body text-gray-700 text-sm">Соответствие всем требованиям корпоративного документооборота</p>
-              </div>
-              <div>
-                <h4 className="font-semibold text-gray-900 mb-2">🔒 Конфиденциальность</h4>
-                <p className="premium-body text-gray-700 text-sm">Гарантированное уничтожение данных с носителей информации</p>
-              </div>
-              <div>
-                <div className="flex items-center mb-2">
-                  <Icon name="Clock" size={16} className="text-professional-rolexGold mr-2" />
-                  <h4 className="font-semibold text-gray-900">Экономия времени</h4>
+          <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-lg p-6 sm:p-8 lg:p-10 max-w-6xl mx-auto">
+            <Icon name="Award" size={32} className="text-professional-rolexGold mx-auto mb-6" />
+            <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Почему нас выбирают</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div className="flex flex-col h-full">
+                <div className="flex items-start mb-3">
+                  <span className="text-xl mr-3 mt-1">🏆</span>
+                  <h4 className="font-semibold text-gray-900 text-base leading-tight">Проверенное качество</h4>
                 </div>
-                <p className="premium-body text-gray-700 text-sm">Время — самый ценный ресурс. Мы берём на себя все заботы по утилизации, чтобы вы могли сосредоточиться на своём бизнесе.</p>
+                <p className="premium-body text-gray-700 text-base leading-relaxed flex-grow">Работаем с крупнейшими компаниями России с 2015 года</p>
+              </div>
+              <div className="flex flex-col h-full">
+                <div className="flex items-start mb-3">
+                  <span className="text-xl mr-3 mt-1">📋</span>
+                  <h4 className="font-semibold text-gray-900 text-base leading-tight">Полный комплаенс</h4>
+                </div>
+                <p className="premium-body text-gray-700 text-base leading-relaxed flex-grow">Соответствие всем требованиям корпоративного документооборота</p>
+              </div>
+              <div className="flex flex-col h-full">
+                <div className="flex items-start mb-3">
+                  <span className="text-xl mr-3 mt-1">🔒</span>
+                  <h4 className="font-semibold text-gray-900 text-base leading-tight">Конфиденциальность</h4>
+                </div>
+                <p className="premium-body text-gray-700 text-base leading-relaxed flex-grow">Гарантированное уничтожение данных с носителей информации</p>
+              </div>
+              <div className="flex flex-col h-full">
+                <div className="flex items-start mb-3">
+                  <Icon name="Clock" size={20} className="text-professional-rolexGold mr-3 mt-1 flex-shrink-0" />
+                  <h4 className="font-semibold text-gray-900 text-base leading-tight">Экономия времени</h4>
+                </div>
+                <p className="premium-body text-gray-700 text-base leading-relaxed flex-grow">Время — самый ценный ресурс. Мы берём на себя все заботы по утилизации, чтобы вы могли сосредоточиться на своём бизнесе.</p>
               </div>
             </div>
           </div>
