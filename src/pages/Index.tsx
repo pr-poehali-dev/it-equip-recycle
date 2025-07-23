@@ -83,31 +83,6 @@ export default function Index() {
         });
       }
 
-      // Отправляем через fetch API с правильными заголовками
-      const formDataToSend = new FormData();
-      
-      // Добавляем текстовые поля
-      formDataToSend.append('name', formData.name);
-      formDataToSend.append('email', formData.email);  
-      formDataToSend.append('phone', formData.phone);
-      formDataToSend.append('company', formData.company || 'Не указана');
-      formDataToSend.append('city', cityInfo || 'Не указан');
-      formDataToSend.append('plan', formData.selectedPlan || 'Не выбран');
-      formDataToSend.append('message', formData.comment || 'Нет комментариев');
-      formDataToSend.append('_subject', 'Заявка на утилизацию IT оборудования с сайта utilizon.pro');
-      formDataToSend.append('_captcha', 'false');
-      formDataToSend.append('_template', 'table');
-
-      // Добавляем файлы
-      if (formData.files && formData.files.length > 0) {
-        for (let i = 0; i < formData.files.length; i++) {
-          const file = formData.files[i];
-          const fieldName = i === 0 ? 'attachment' : `attachment${i + 1}`;
-          formDataToSend.append(fieldName, file);
-          console.log(`📎 Добавлен файл: ${file.name} как ${fieldName}`);
-        }
-      }
-
       // Отправляем через fetch
       try {
         const response = await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
