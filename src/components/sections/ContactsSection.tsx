@@ -72,123 +72,134 @@ export default function ContactsSection() {
     `;
     document.body.appendChild(loadingDiv);
 
-    // Короткая задержка для показа загрузки
-    setTimeout(() => {
+    try {
+      // Отправляем данные на PHP-скрипт
+      const emailData = {
+        subject: 'Заявка с раздела Контакты',
+        name: formData.name,
+        company: formData.company || 'Не указана',
+        phone: formData.phone,
+        email: formData.email || 'Не указан',
+        comment: formData.comment || 'Нет комментария'
+      };
+
+      console.log('📧 Отправляем письмо через PHP:', emailData);
+
+      const response = await fetch('/send-email.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(emailData)
+      });
+
+      const result = await response.json();
+      
+      // Убираем индикатор загрузки
+      loadingDiv.remove();
+
+      if (result.success) {
+        // Показываем успешное сообщение
+        const successDiv = document.createElement('div');
+        successDiv.innerHTML = `
+          <div style="
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #059669;
+            color: white;
+            padding: 24px 32px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            z-index: 9999;
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 450px;
+            text-align: center;
+          ">
+            <div style="
+              width: 48px;
+              height: 48px;
+              background: #D4AF37;
+              border-radius: 50%;
+              margin: 0 auto 16px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 24px;
+            ">✅</div>
+            <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Заявка отправлена!</h3>
+            <p style="margin: 0; opacity: 0.9; font-size: 14px;">Письмо автоматически отправлено на commerce@rusutil-1.ru</p>
+          </div>
+        `;
+        document.body.appendChild(successDiv);
+        
+        // Автоматически убираем сообщение через 4 секунды
+        setTimeout(() => {
+          successDiv.remove();
+        }, 4000);
+        
+        // Очищаем форму
+        setFormData({
+          name: '',
+          company: '',
+          phone: '',
+          email: '',
+          comment: ''
+        });
+        
+        console.log('✅ Заявка успешно отправлена через PHP!');
+      } else {
+        throw new Error(result.error || 'Ошибка отправки');
+      }
+    } catch (error) {
+      // Убираем индикатор загрузки в случае ошибки
       loadingDiv.remove();
       
-      console.log('📧 Заявка сформирована:', {
-        name: formData.name,
-        company: formData.company,
-        phone: formData.phone,
-        email: formData.email,
-        comment: formData.comment
-      });
-      // Показываем данные для отправки
-      const emailData = `Заявка с раздела Контакты
-
-Контактные данные:
-Имя: ${formData.name}
-Компания: ${formData.company || 'Не указана'}
-Телефон: ${formData.phone}
-Email: ${formData.email || 'Не указан'}
-
-Комментарий: ${formData.comment || 'Нет комментария'}
-
----
-Заявка отправлена с раздела "Контакты"`;
-
-      const successDiv = document.createElement('div');
-      successDiv.innerHTML = `
+      console.error('❌ Ошибка при отправке:', error);
+      
+      // Показываем сообщение об ошибке
+      const errorDiv = document.createElement('div');
+      errorDiv.innerHTML = `
         <div style="
           position: fixed;
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
-          background: #059669;
+          background: #DC2626;
           color: white;
           padding: 24px 32px;
           border-radius: 12px;
           box-shadow: 0 10px 25px rgba(0,0,0,0.2);
           z-index: 9999;
           font-family: system-ui, -apple-system, sans-serif;
-          max-width: 550px;
+          max-width: 450px;
           text-align: center;
-          max-height: 80vh;
-          overflow-y: auto;
         ">
           <div style="
             width: 48px;
             height: 48px;
-            background: #D4AF37;
+            background: rgba(255,255,255,0.2);
             border-radius: 50%;
             margin: 0 auto 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 24px;
-          ">📧</div>
-          <h3 style="margin: 0 0 16px 0; font-size: 18px; font-weight: 600;">Заявка готова к отправке!</h3>
-          
-          <div style="background: rgba(255,255,255,0.15); padding: 16px; border-radius: 8px; margin-bottom: 16px; text-align: left;">
-            <div style="margin-bottom: 12px;">
-              <strong>Email:</strong> 
-              <span style="color: #D4AF37; cursor: pointer;" onclick="navigator.clipboard.writeText('commerce@rusutil-1.ru')">
-                commerce@rusutil-1.ru
-              </span>
-              <small style="display: block; opacity: 0.8; margin-top: 4px;">👆 Нажмите, чтобы скопировать</small>
-            </div>
-            
-            <div style="margin-bottom: 12px;">
-              <strong>Тема:</strong> Заявка с раздела Контакты
-            </div>
-            
-            <div>
-              <strong>Содержание письма:</strong>
-              <textarea readonly style="
-                width: 100%; 
-                height: 100px; 
-                margin-top: 8px; 
-                padding: 8px; 
-                background: rgba(255,255,255,0.1); 
-                border: 1px solid rgba(255,255,255,0.2); 
-                border-radius: 4px; 
-                color: white; 
-                resize: none;
-                font-size: 12px;
-                line-height: 1.4;
-              " onclick="this.select()">${emailData}</textarea>
-              <small style="display: block; opacity: 0.8; margin-top: 4px;">👆 Нажмите, чтобы выделить текст</small>
-            </div>
-          </div>
-          
-          <p style="margin: 0; font-size: 14px; opacity: 0.9;">
-            Скопируйте email и содержание, затем отправьте письмо<br>
-            <strong>или позвоните: +7 (901) 862-81-81</strong>
-          </p>
+          ">❌</div>
+          <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Ошибка отправки</h3>
+          <p style="margin: 0; opacity: 0.9; font-size: 14px;">Попробуйте позже или позвоните: +7 (901) 862-81-81</p>
         </div>
       `;
-      document.body.appendChild(successDiv);
+      document.body.appendChild(errorDiv);
       
-      // Убираем окно через 20 секунд или по клику
-      const removeSuccess = () => successDiv.remove();
-      setTimeout(removeSuccess, 20000);
-      successDiv.addEventListener('click', (e) => {
-        if (e.target === successDiv) removeSuccess();
-      });
-      
-      // Очищаем форму
-      setFormData({
-        name: '',
-        company: '',
-        phone: '',
-        email: '',
-        comment: ''
-      });
-      
-      console.log('📧 Заявка подготовлена для отправки!');
-      
+      // Автоматически убираем сообщение через 5 секунд
+      setTimeout(() => {
+        errorDiv.remove();
+      }, 5000);
+    } finally {
       setIsSubmitting(false);
-    }, 1000); // 1 секунда задержка
+    }
   };
 
   return (
