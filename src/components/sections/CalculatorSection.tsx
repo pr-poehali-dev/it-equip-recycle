@@ -101,83 +101,152 @@ export default function CalculatorSection() {
     `;
     document.body.appendChild(loadingDiv);
 
-    // Простая задержка для имитации отправки
-    setTimeout(() => {
-      // Убираем индикатор загрузки
-      loadingDiv.remove();
-      
-      const cityInfo = formData.city === 'Другой город' ? formData.customCity : formData.city;
-      
-      // Логируем данные формы
-      console.log('📧 Заявка на расчет:', {
-        name: formData.name,
-        company: formData.company,
-        phone: formData.phone,
-        email: formData.email,
-        city: cityInfo,
-        comment: formData.comment,
-        file: formData.file?.name,
-        plan: formData.selectedPlan
-      });
+    // Отправляем реальное письмо через Formspree
+    const sendEmail = async () => {
+      try {
+        const cityInfo = formData.city === 'Другой город' ? formData.customCity : formData.city;
+        
+        // Формируем данные для отправки
+        const formDataToSend = new FormData();
+        formDataToSend.append('_to', 'commerce@rusutil-1.ru');
+        formDataToSend.append('_subject', 'Заявка на расчет стоимости утилизации');
+        formDataToSend.append('name', formData.name);
+        formDataToSend.append('company', formData.company || 'Не указана');
+        formDataToSend.append('phone', formData.phone);
+        formDataToSend.append('email', formData.email);
+        formDataToSend.append('city', cityInfo || 'Не указан');
+        formDataToSend.append('comment', formData.comment || 'Нет');
+        formDataToSend.append('selected_plan', formData.selectedPlan || 'Не выбран');
+        
+        if (formData.file) {
+          formDataToSend.append('file', formData.file);
+        }
+        
+        // Отправляем через Formspree
+        const response = await fetch('https://formspree.io/f/xaygkgje', {
+          method: 'POST',
+          body: formDataToSend,
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
 
-      // ВСЕГДА показываем успешное сообщение
-      const successDiv = document.createElement('div');
-      successDiv.innerHTML = `
-        <div style="
-          position: fixed;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          background: #059669;
-          color: white;
-          padding: 24px 32px;
-          border-radius: 12px;
-          box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-          z-index: 9999;
-          font-family: system-ui, -apple-system, sans-serif;
-          max-width: 500px;
-          text-align: center;
-        ">
+        // Убираем индикатор загрузки
+        loadingDiv.remove();
+
+        if (response.ok) {
+          console.log('✅ Письмо успешно отправлено на commerce@rusutil-1.ru');
+          
+          // Показываем успешное сообщение
+          const successDiv = document.createElement('div');
+          successDiv.innerHTML = `
+            <div style="
+              position: fixed;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              background: #059669;
+              color: white;
+              padding: 24px 32px;
+              border-radius: 12px;
+              box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+              z-index: 9999;
+              font-family: system-ui, -apple-system, sans-serif;
+              max-width: 500px;
+              text-align: center;
+            ">
+              <div style="
+                width: 48px;
+                height: 48px;
+                background: #D4AF37;
+                border-radius: 50%;
+                margin: 0 auto 16px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 24px;
+              ">✅</div>
+              <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Заявка отправлена!</h3>
+              <p style="margin: 0 0 8px 0; opacity: 0.9; font-size: 14px;">Письмо успешно отправлено на commerce@rusutil-1.ru</p>
+              <p style="margin: 0; opacity: 0.7; font-size: 12px;">Мы свяжемся с вами в ближайшее время</p>
+            </div>
+          `;
+          document.body.appendChild(successDiv);
+          
+          // Автоматически убираем сообщение через 5 секунд
+          setTimeout(() => {
+            successDiv.remove();
+          }, 5000);
+          
+          // Очищаем форму
+          setFormData({
+            name: '',
+            company: '',
+            phone: '',
+            email: '',
+            city: '',
+            customCity: '',
+            comment: '',
+            file: null,
+            selectedPlan: ''
+          });
+          setAgreed(false);
+          
+        } else {
+          throw new Error('Ошибка отправки');
+        }
+      } catch (error) {
+        // Убираем индикатор загрузки в случае ошибки
+        loadingDiv.remove();
+        
+        console.error('❌ Ошибка при отправке:', error);
+        
+        // Показываем сообщение об ошибке
+        const errorDiv = document.createElement('div');
+        errorDiv.innerHTML = `
           <div style="
-            width: 48px;
-            height: 48px;
-            background: #D4AF37;
-            border-radius: 50%;
-            margin: 0 auto 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-          ">🎉</div>
-          <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Заявка принята!</h3>
-          <p style="margin: 0 0 8px 0; opacity: 0.9; font-size: 14px;">Спасибо за обращение! Мы обработаем вашу заявку в ближайшее время.</p>
-          <p style="margin: 0; opacity: 0.7; font-size: 12px;">Свяжемся с вами по указанным контактам</p>
-        </div>
-      `;
-      document.body.appendChild(successDiv);
-      
-      // Автоматически убираем сообщение через 4 секунды
-      setTimeout(() => {
-        successDiv.remove();
-      }, 4000);
-      
-      // Очищаем форму
-      setFormData({
-        name: '',
-        company: '',
-        phone: '',
-        email: '',
-        city: '',
-        customCity: '',
-        comment: '',
-        file: null,
-        selectedPlan: ''
-      });
-      setAgreed(false);
-      
-      console.log('✅ Заявка принята!');
-      setIsSubmitting(false);
-    }, 1500); // 1.5 секунды задержка
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #DC2626;
+            color: white;
+            padding: 24px 32px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            z-index: 9999;
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 450px;
+            text-align: center;
+          ">
+            <div style="
+              width: 48px;
+              height: 48px;
+              background: rgba(255,255,255,0.2);
+              border-radius: 50%;
+              margin: 0 auto 16px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 24px;
+            ">❌</div>
+            <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Ошибка отправки</h3>
+            <p style="margin: 0; opacity: 0.9; font-size: 14px;">Попробуйте позже или позвоните: +7 (901) 862-81-81</p>
+          </div>
+        `;
+        document.body.appendChild(errorDiv);
+        
+        // Автоматически убираем сообщение через 5 секунд
+        setTimeout(() => {
+          errorDiv.remove();
+        }, 5000);
+      } finally {
+        setIsSubmitting(false);
+      }
+    };
+
+    // Запускаем отправку
+    sendEmail();
   };
 
   const handlePhoneCall = (e?: React.MouseEvent) => {
