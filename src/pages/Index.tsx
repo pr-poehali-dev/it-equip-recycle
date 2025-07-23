@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import emailjs from '@emailjs/browser';
 import Header from '@/components/sections/Header';
 import HeroSection from '@/components/sections/HeroSection';
 import ServicesSection from '@/components/sections/ServicesSection';
@@ -100,47 +101,34 @@ export default function Index() {
     document.body.appendChild(loadingDiv);
     
     try {
-      // Подготавливаем данные для Netlify Forms
+      // Подготавливаем данные для EmailJS
       const cityInfo = formData.city === 'Другой город' ? formData.customCity : formData.city;
       
-      const formDataToSend = new FormData();
-      formDataToSend.append('form-name', 'calculator-form');
-      formDataToSend.append('name', formData.name);
-      formDataToSend.append('company', formData.company || 'Не указана');
-      formDataToSend.append('phone', formData.phone);
-      formDataToSend.append('email', formData.email);
-      formDataToSend.append('city', cityInfo || 'Не указан');
-      formDataToSend.append('selected_plan', formData.selectedPlan || 'Не выбран');
-      formDataToSend.append('comment', formData.comment || 'Нет дополнительной информации');
-      
-      // Добавляем файл если есть
-      if (formData.file) {
-        formDataToSend.append('file', formData.file);
-      }
+      const templateParams = {
+        user_name: formData.name,
+        user_email: formData.email,
+        user_phone: formData.phone,
+        user_company: formData.company || 'Не указана',
+        user_city: cityInfo || 'Не указан',
+        selected_plan: formData.selectedPlan || 'Не выбран',
+        message: formData.comment || 'Нет дополнительной информации',
+        file_info: formData.file ? `${formData.file.name} (${Math.round(formData.file.size / 1024)} KB)` : 'Файл не прикреплен'
+      };
 
-      // Отправляем через Netlify Forms
-      const result = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({
-          'form-name': 'calculator-form',
-          'name': formData.name,
-          'company': formData.company || 'Не указана',
-          'phone': formData.phone,
-          'email': formData.email,
-          'city': cityInfo || 'Не указан',
-          'selected_plan': formData.selectedPlan || 'Не выбран',
-          'comment': formData.comment || 'Нет дополнительной информации',
-          'file_name': formData.file ? formData.file.name : 'Файл не прикреплен'
-        }).toString()
-      });
+      // Отправляем через EmailJS
+      const result = await emailjs.send(
+        'service_poehali', // Service ID
+        'template_rusutil', // Template ID  
+        templateParams,
+        'XQKYdCyInowC7nT8H' // Public Key
+      );
       
       // Убираем индикатор загрузки
       loadingDiv.remove();
       
-      console.log('✅ Netlify Forms результат:', result.status);
+      console.log('✅ EmailJS результат:', result.status, result.text);
       
-      if (result.ok) {
+      if (result.status === 200) {
         // Показываем успешное сообщение
         const successDiv = document.createElement('div');
         successDiv.innerHTML = `
@@ -203,7 +191,7 @@ export default function Index() {
         });
         setAgreed(false);
         
-        console.log('✅ Заявка успешно отправлена через Netlify Forms!');
+        console.log('✅ Заявка успешно отправлена через EmailJS!');
       } else {
         throw new Error('Ошибка отправки письма');
       }
