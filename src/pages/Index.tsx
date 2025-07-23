@@ -100,37 +100,33 @@ export default function Index() {
     document.body.appendChild(loadingDiv);
     
     try {
-      // Отправляем через Formspree
-      const response = await fetch('https://formspree.io/f/xwpkgvwg', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: 'commerce@rusutil-1.ru',
-          subject: 'Заявка на расчет стоимости утилизации',
-          message: `Заявка на расчет стоимости утилизации
+      // Формируем тело письма
+      const emailBody = `Заявка на расчет стоимости утилизации
 
 Контактные данные:
 Имя: ${formData.name}
 Компания: ${formData.company || 'Не указана'}
 Телефон: ${formData.phone}
 Email: ${formData.email}
+Город: ${formData.city || 'Не указан'}
 ${formData.selectedPlan ? `Выбранный план: ${formData.selectedPlan}` : ''}
 
 Дополнительная информация: ${formData.comment || 'Не указана'}
-${formData.file ? `Приложен файл спецификации: ${formData.file.name}` : 'Файл спецификации не приложен'}
+${formData.file ? `Файл спецификации: ${formData.file.name}` : 'Файл спецификации не приложен'}
 
 ---
-Заявка отправлена`,
-          _replyto: formData.email
-        })
-      });
+Заявка отправлена с сайта`;
+
+      // Создаем mailto ссылку
+      const mailtoLink = `mailto:commerce@rusutil-1.ru?subject=${encodeURIComponent('Заявка на расчет стоимости утилизации')}&body=${encodeURIComponent(emailBody)}`;
       
-      // Убираем индикатор загрузки
-      loadingDiv.remove();
+      // Пытаемся открыть почтовый клиент
+      window.location.href = mailtoLink;
       
-      if (response.ok) {
+      // Убираем индикатор загрузки через 2 секунды и показываем успех
+      setTimeout(() => {
+        loadingDiv.remove();
+        
         // Показываем успешное сообщение
         const successDiv = document.createElement('div');
         successDiv.innerHTML = `
@@ -146,31 +142,32 @@ ${formData.file ? `Приложен файл спецификации: ${formDat
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
             z-index: 9999;
             font-family: system-ui, -apple-system, sans-serif;
-            max-width: 400px;
+            max-width: 500px;
             text-align: center;
           ">
             <div style="
-              width: 24px;
-              height: 24px;
+              width: 48px;
+              height: 48px;
               background: #D4AF37;
               border-radius: 50%;
               margin: 0 auto 16px;
               display: flex;
               align-items: center;
               justify-content: center;
-              font-size: 16px;
-              color: white;
+              font-size: 24px;
+              color: black;
               font-weight: bold;
             ">✓</div>
-            <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Заявка успешно отправлена!</h3>
-            <p style="margin: 0; opacity: 0.9; font-size: 14px;">Мы свяжемся с вами в ближайшее время</p>
+            <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Почтовый клиент открыт!</h3>
+            <p style="margin: 0 0 8px 0; opacity: 0.9; font-size: 14px;">Письмо подготовлено для отправки на commerce@rusutil-1.ru</p>
+            <p style="margin: 0; opacity: 0.7; font-size: 12px;">Нажмите "Отправить" в вашем почтовом клиенте</p>
             <button onclick="this.parentElement.parentElement.remove()" style="
               background: #D4AF37;
-              color: white;
+              color: black;
               border: none;
               padding: 8px 20px;
               border-radius: 6px;
-              margin-top: 16px;
+              margin-top: 12px;
               cursor: pointer;
               font-weight: 600;
             ">OK</button>
@@ -184,22 +181,14 @@ ${formData.file ? `Приложен файл спецификации: ${formDat
           company: '',
           phone: '',
           email: '',
+          city: '',
+          customCity: '',
           comment: '',
           file: null,
           selectedPlan: ''
         });
         setAgreed(false);
-        
-        // Убираем через 5 секунд
-        setTimeout(() => {
-          if (successDiv.parentElement) {
-            successDiv.remove();
-          }
-        }, 5000);
-        
-      } else {
-        throw new Error('Ошибка отправки');
-      }
+      }, 2000);
       
     } catch (error) {
       // Убираем индикатор загрузки
