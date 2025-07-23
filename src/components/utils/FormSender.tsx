@@ -44,13 +44,21 @@ export async function sendFormWithoutFiles(formData: AppFormData, cityInfo: stri
     });
     
     clearTimeout(timeoutId); // Отменяем тайм-аут если запрос успешен
-    console.log('✅ FormSubmit результат:', response.status, response.statusText);
+    console.log('✅ FormSubmit ответил:', response.status, response.statusText);
+    console.log('📊 Response headers:', Object.fromEntries(response.headers.entries()));
   } catch (fetchError) {
     clearTimeout(timeoutId);
+    console.error('❌ Ошибка fetch:', fetchError);
+    console.error('❌ Тип ошибки:', fetchError.name);
+    console.error('❌ Сообщение ошибки:', fetchError.message);
+    
     if (fetchError.name === 'AbortError') {
       throw new Error('Тайм-аут запроса (15 секунд). Попробуйте еще раз.');
     }
-    throw fetchError;
+    if (fetchError.name === 'TypeError' && fetchError.message.includes('Failed to fetch')) {
+      throw new Error('Ошибка соединения. Проверьте интернет-соединение и попробуйте еще раз.');
+    }
+    throw new Error(`Ошибка сети: ${fetchError.message}`);
   }
   
   // Проверяем успешность отправки
