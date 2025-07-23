@@ -100,34 +100,47 @@ export default function Index() {
     document.body.appendChild(loadingDiv);
     
     try {
-      // Создаем FormData для отправки с файлом
+      // Подготавливаем данные для Netlify Forms
+      const cityInfo = formData.city === 'Другой город' ? formData.customCity : formData.city;
+      
       const formDataToSend = new FormData();
+      formDataToSend.append('form-name', 'calculator-form');
       formDataToSend.append('name', formData.name);
       formDataToSend.append('company', formData.company || 'Не указана');
       formDataToSend.append('phone', formData.phone);
       formDataToSend.append('email', formData.email);
-      formDataToSend.append('city', formData.city === 'Другой город' ? formData.customCity : formData.city || 'Не указан');
-      formDataToSend.append('comment', formData.comment || 'Не указана');
-      formDataToSend.append('selected_plan', formData.selectedPlan || '');
-      formDataToSend.append('subject', 'Заявка на расчет стоимости утилизации');
+      formDataToSend.append('city', cityInfo || 'Не указан');
+      formDataToSend.append('selected_plan', formData.selectedPlan || 'Не выбран');
+      formDataToSend.append('comment', formData.comment || 'Нет дополнительной информации');
       
       // Добавляем файл если есть
       if (formData.file) {
         formDataToSend.append('file', formData.file);
       }
-      
-      // Отправляем через PHP
-      const response = await fetch('/send-email.php', {
+
+      // Отправляем через Netlify Forms
+      const result = await fetch('/', {
         method: 'POST',
-        body: formDataToSend
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+          'form-name': 'calculator-form',
+          'name': formData.name,
+          'company': formData.company || 'Не указана',
+          'phone': formData.phone,
+          'email': formData.email,
+          'city': cityInfo || 'Не указан',
+          'selected_plan': formData.selectedPlan || 'Не выбран',
+          'comment': formData.comment || 'Нет дополнительной информации',
+          'file_name': formData.file ? formData.file.name : 'Файл не прикреплен'
+        }).toString()
       });
-      
-      const result = await response.json();
       
       // Убираем индикатор загрузки
       loadingDiv.remove();
       
-      if (response.ok && result.success) {
+      console.log('✅ Netlify Forms результат:', result.status);
+      
+      if (result.ok) {
         // Показываем успешное сообщение
         const successDiv = document.createElement('div');
         successDiv.innerHTML = `
@@ -190,9 +203,9 @@ export default function Index() {
         });
         setAgreed(false);
         
-        console.log('✅ Заявка успешно отправлена!');
+        console.log('✅ Заявка успешно отправлена через Netlify Forms!');
       } else {
-        throw new Error(result.error || 'Ошибка отправки');
+        throw new Error('Ошибка отправки письма');
       }
       
     } catch (error) {
