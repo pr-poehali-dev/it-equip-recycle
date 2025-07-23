@@ -72,35 +72,36 @@ export default function ContactsSection() {
     `;
     document.body.appendChild(loadingDiv);
 
-    // Отправляем реальное письмо через Formspree
+    // Отправляем через FormSubmit
     const sendEmail = async () => {
       try {
-        // Подготавливаем данные для отправки
-        const emailData = {
-          subject: 'Заявка с раздела Контакты',
-          name: formData.name,
-          company: formData.company || 'Не указана',
-          phone: formData.phone,
-          email: formData.email,
-          comment: formData.comment || 'Нет комментария'
-        };
+        // Подготавливаем данные для FormSubmit
+        const formDataToSend = new FormData();
+        formDataToSend.append('name', formData.name);
+        formDataToSend.append('company', formData.company || 'Не указана');
+        formDataToSend.append('phone', formData.phone);
+        formDataToSend.append('email', formData.email || 'Не указан');
+        formDataToSend.append('message', formData.comment || 'Нет комментария');
+        formDataToSend.append('subject', 'Заявка с раздела Контакты - utilizon.pro');
+        formDataToSend.append('_captcha', 'false');
         
-        // Отправляем через PHP скрипт
-        const response = await fetch('/send-email.php', {
+        // Отправляем через FormSubmit
+        const response = await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
           method: 'POST',
+          body: formDataToSend,
           headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(emailData)
+            'Accept': 'application/json'
+          }
         });
 
         // Убираем индикатор загрузки
         loadingDiv.remove();
 
-        const result = await response.json();
+        console.log('✅ FormSubmit результат (контакты):', response.status, response.statusText);
         
-        if (response.ok && result.success) {
-          console.log('✅ Письмо успешно отправлено на commerce@rusutil-1.ru');
+        // FormSubmit может возвращать разные статусы при успехе
+        if (response.ok || response.status === 200 || response.status === 302) {
+          console.log('✅ Заявка контактов успешно отправлена через FormSubmit!');
           
           // Показываем успешное сообщение
           const successDiv = document.createElement('div');
@@ -152,7 +153,10 @@ export default function ContactsSection() {
         comment: ''
       });
         } else {
-          throw new Error('Ошибка отправки');
+          console.error('❌ FormSubmit ошибка (контакты):', response.status, response.statusText);
+          const errorText = await response.text();
+          console.error('❌ Детали ошибки:', errorText);
+          throw new Error(`Ошибка отправки через FormSubmit: ${response.status} ${response.statusText}`);
         }
       } catch (error) {
         // Убираем индикатор загрузки в случае ошибки
