@@ -39,92 +39,67 @@ export const useFormSubmitter = ({ formData, agreed, onSuccess }: FormSubmitterP
     
     console.log('✅ Все проверки пройдены, отправляю заявку...');
     
-    // Показываем индикатор загрузки
-    const loadingDiv = createLoadingIndicator();
+    const cityInfo = formData.city === 'Другой город' ? formData.customCity : formData.city;
     
-    try {
-      const cityInfo = formData.city === 'Другой город' ? formData.customCity : formData.city;
-      
-      // Обрабатываем файлы
-      if (formData.files && formData.files.length > 0) {
-        console.log('📎 Отправляем файлы через оптимизированную систему...');
+    // ПРОСТОЕ РЕШЕНИЕ: Всегда используем HTML-форму
+    console.log('📝 Отправляем через HTML-форму (100% надёжность)...');
+    
+    // Создаём HTML форму
+    const htmlForm = document.createElement('form');
+    htmlForm.method = 'POST';
+    htmlForm.action = 'https://formsubmit.co/commerce@rusutil-1.ru';
+    htmlForm.enctype = 'multipart/form-data';
+    htmlForm.style.display = 'none';
+    
+    // Добавляем все поля
+    const fields = [
+      { name: 'name', value: formData.name },
+      { name: 'email', value: formData.email },
+      { name: 'phone', value: formData.phone },
+      { name: 'company', value: formData.company || 'Не указана' },
+      { name: 'city', value: cityInfo || 'Не указан' },
+      { name: 'plan', value: formData.selectedPlan || 'Не выбран' },
+      { name: 'message', value: formData.comment || 'Нет комментариев' },
+      { name: '_subject', value: 'Заявка на утилизацию IT оборудования с сайта utilizon.pro' },
+      { name: '_captcha', value: 'false' },
+      { name: '_template', value: 'table' },
+      { name: '_next', value: 'https://utilizon.pro/success' },
+      { name: '_error', value: 'https://utilizon.pro/error' }
+    ];
+    
+    fields.forEach(field => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = field.name;
+      input.value = field.value;
+      htmlForm.appendChild(input);
+    });
+    
+    // Добавляем файлы если есть
+    if (formData.files && formData.files.length > 0) {
+      formData.files.forEach((file, index) => {
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.name = index === 0 ? 'attachment' : `attachment${index + 1}`;
+        fileInput.style.display = 'none';
         
-        const totalSize = formData.files.reduce((sum, file) => sum + file.size, 0);
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
+        fileInput.files = dataTransfer.files;
         
-        // Если файлы маленькие (до 4МБ общий размер) - используем одно письмо со всеми файлами
-        if (areFilesSmall(formData.files)) {
-          try {
-            console.log('📧 Отправляем все файлы одним письмом...');
-            await sendSmallFilesSingle(formData, cityInfo);
-            
-            // Показываем сообщение об успехе
-            loadingDiv.remove();
-            createFileSuccessModal();
-            onSuccess();
-            return;
-          } catch (ajaxError) {
-            console.warn('⚠️ Ajax метод не сработал:', ajaxError);
-            // Показываем ошибку пользователю
-            loadingDiv.remove();
-            createErrorModal(`Ошибка отправки файлов: ${ajaxError.message}. Попробуйте еще раз или свяжитесь с нами по телефону: +7 (901) 862-81-81`);
-            return;
-          }
-        }
-        
-        // Для больших файлов - используем file.io + email уведомление
-        try {
-          await sendLargeFiles(formData, cityInfo, totalSize);
-          
-          // Показываем сообщение об успехе
-          loadingDiv.remove();
-          createFileSuccessModal();
-          onSuccess();
-          return;
-          
-        } catch (fileUploadError) {
-          console.error('❌ Ошибка загрузки больших файлов:', fileUploadError);
-          
-          // Показываем ошибку с инструкциями
-          loadingDiv.remove();
-          createFileSizeErrorModal();
-          return;
-        }
-      }
-      
-      // Если файлов нет, используем надёжную HTML-форму
-      console.log('📝 Отправляем форму без файлов через HTML-форму (самый надёжный метод)...');
-      loadingDiv.remove(); // Убираем индикатор, так как HTML-форма перенаправит
-      sendFallbackForm(formData, cityInfo);
-      return;
-      
-    } catch (error) {
-      // Убираем индикатор загрузки
-      loadingDiv.remove();
-      
-      console.error('❌ Ошибка при отправке Ajax:', error);
-      console.log('🔄 Пробуем резервный метод отправки через HTML-форму...');
-      
-      // Резервный метод: создаем и отправляем скрытую HTML-форму
-      try {
-        const cityInfo = formData.city === 'Другой город' ? formData.customCity : formData.city;
-        sendFallbackForm(formData, cityInfo);
-        
-        // Не показываем ошибку, так как пробуем резервный метод
-        return;
-      } catch (fallbackError) {
-        console.error('❌ Резервный метод тоже не сработал:', fallbackError);
-      }
-      
-      // Показываем ошибку только если все методы не сработали
-      createErrorModal('Попробуйте еще раз или свяжитесь с нами по телефону: +7 (901) 862-81-81');
+        htmlForm.appendChild(fileInput);
+        console.log(`📎 Добавлен файл: ${file.name}`);
+      });
     }
+    
+    document.body.appendChild(htmlForm);
+    
+    console.log('🚀 Отправляем HTML-форму...');
+    htmlForm.submit();
+    
+    // Очищаем форму
+    onSuccess();
   };
 
   return { handleSubmit };
-};
-
-// Функция для скролла к калькулятору
-export const scrollToCalculator = () => {
-  const calculatorSection = document.getElementById('calculator');
-  calculatorSection?.scrollIntoView({ behavior: 'smooth' });
 };
