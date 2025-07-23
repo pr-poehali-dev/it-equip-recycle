@@ -78,12 +78,6 @@ Email: ${formData.email || 'Не указан'}
                 </div>
               </div>
             </div>
-            <div className="mt-8">
-              <Button className="bg-white text-red-600 hover:bg-gray-100 min-h-[48px] px-4">
-                <Icon name="AlertCircle" size={16} className="mr-2" />
-                Экстренный вызов
-              </Button>
-            </div>
           </div>
           
           <Card>
