@@ -23,23 +23,61 @@ export async function sendSmallFilesMultiple(formData: AppFormData, cityInfo: st
     singleFileFormData.append('_error', 'https://utilizon.pro/error');
     singleFileFormData.append('attachment', file);
     
-    const response = await fetch('https://formsubmit.co/ajax/commerce@rusutil-1.ru', {
-      method: 'POST',
-      body: singleFileFormData,
-      headers: {
-        'Accept': 'application/json'
-      }
-    });
+    // Добавляем тайм-аут для каждого файла
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 секунд на файл
     
-    if (!response.ok) {
-      throw new Error(`Ошибка отправки файла ${file.name}: ${response.status}`);
+    let response;
+    try {
+      response = await fetch('https://formsubmit.co/ajax/commerce@rusutil-1.ru', {
+        method: 'POST',
+        body: singleFileFormData,
+        headers: {
+          'Accept': 'application/json'
+        },
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+    } catch (fetchError) {
+      clearTimeout(timeoutId);
+      if (fetchError.name === 'AbortError') {
+        throw new Error(`Тайм-аут отправки файла ${file.name} (10 секунд)`);
+      }
+      throw fetchError;
+    }
+    
+    // Проверяем ответ более тщательно
+    let success = false;
+    
+    try {
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log(`📧 FormSubmit ответ для ${file.name}:`, responseData);
+        success = responseData.success !== false;
+      }
+    } catch (jsonError) {
+      // Если не JSON, проверяем по статусу
+      success = response.ok || response.status === 200 || response.status === 302;
+    }
+    
+    if (!success) {
+      let errorMessage = `Ошибка отправки файла ${file.name}: ${response.status}`;
+      try {
+        const errorText = await response.text();
+        console.error(`❌ Детали ошибки для ${file.name}:`, errorText);
+        errorMessage += ` - ${errorText}`;
+      } catch (readError) {
+        console.warn('Не удалось прочитать детали ошибки');
+      }
+      throw new Error(errorMessage);
     }
     
     console.log(`✅ Файл ${file.name} отправлен успешно`);
     
-    // Небольшая задержка между отправками, чтобы не нагружать сервер
+    // Увеличиваем задержку между отправками для надёжности
     if (i < formData.files.length - 1) {
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      console.log(`⏳ Ожидание 3 секунды перед отправкой следующего файла...`);
+      await new Promise(resolve => setTimeout(resolve, 3000));
     }
   }
   

@@ -50,12 +50,24 @@ export const useFormSubmitter = ({ formData, agreed, onSuccess }: FormSubmitterP
         
         const totalSize = formData.files.reduce((sum, file) => sum + file.size, 0);
         
-        // Если файлы маленькие (до 4МБ общий размер) - используем HTML-форму напрямую
+        // Если файлы маленькие (до 4МБ общий размер) - используем множественные Ajax запросы
         if (areFilesSmall(formData.files)) {
-          console.log('🔄 Используем HTML-форму для малых файлов (более надежно)');
-          loadingDiv.remove(); // Убираем индикатор, так как HTML-форма перенаправит
-          sendSmallFiles(formData, cityInfo);
-          return;
+          try {
+            console.log('📧 Отправляем файлы через множественные Ajax запросы...');
+            await sendSmallFilesMultiple(formData, cityInfo);
+            
+            // Показываем сообщение об успехе
+            loadingDiv.remove();
+            createFileSuccessModal();
+            onSuccess();
+            return;
+          } catch (ajaxError) {
+            console.warn('⚠️ Ajax метод не сработал:', ajaxError);
+            // Показываем ошибку пользователю
+            loadingDiv.remove();
+            createErrorModal(`Ошибка отправки файлов: ${ajaxError.message}. Попробуйте еще раз или свяжитесь с нами по телефону: +7 (901) 862-81-81`);
+            return;
+          }
         }
         
         // Для больших файлов - используем file.io + email уведомление
