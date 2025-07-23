@@ -165,7 +165,7 @@ export default function CalculatorSection({
                       value={formData.city}
                       onChange={(e) => setFormData(prev => ({...prev, city: e.target.value, customCity: e.target.value !== 'Другой город' ? '' : prev.customCity}))}
                       className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base"
-                      disabled={isSubmitting}
+
                     >
                       <option value="">Выберите город</option>
                       <option value="Москва и Московская область">Москва и Московская область</option>
@@ -256,7 +256,7 @@ export default function CalculatorSection({
                       onChange={(e) => setFormData(prev => ({...prev, comment: e.target.value}))}
                       className="w-full px-4 py-3 min-h-[88px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base resize-none" 
                       placeholder="Укажите срочность, особые требования, вопросы по утилизации..."
-                      disabled={isSubmitting}
+
                     />
                   </div>
                 </div>
@@ -272,15 +272,11 @@ export default function CalculatorSection({
                       onChange={(e) => setAgreed(e.target.checked)}
                       className="sr-only" 
                       required 
-                      disabled={isSubmitting}
+
                     />
                     <div 
-                      onClick={() => !isSubmitting && setAgreed(!agreed)}
-                      className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
-                        isSubmitting 
-                          ? 'cursor-not-allowed opacity-50' 
-                          : 'cursor-pointer'
-                      } ${
+                      onClick={() => setAgreed(!agreed)}
+                      className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all cursor-pointer ${
                         agreed 
                           ? 'bg-emerald-600 border-emerald-600' 
                           : 'bg-white border-gray-300 hover:border-emerald-400'
@@ -311,10 +307,10 @@ export default function CalculatorSection({
                     type="button"
                     className="w-full min-h-[48px] bg-primary hover:bg-primary/90" 
                     size="lg"
-                    disabled={isSubmitting}
+
                   >
                     <Icon name="Calculator" size={20} className="mr-2 text-professional-rolexGold" />
-                    {isSubmitting ? 'Отправляем заявку...' : 'Получить расчет стоимости'}
+                    Получить расчет стоимости
                   </Button>
                   <Button 
                     onClick={(e) => {
@@ -324,7 +320,7 @@ export default function CalculatorSection({
                     variant="outline" 
                     className="w-full min-h-[48px] border-primary text-primary hover:bg-primary hover:text-white" 
                     size="lg"
-                    disabled={isSubmitting}
+
                   >
                     <Icon name="Phone" size={20} className="mr-2 text-professional-rolexGold" />
                     Обсудить по телефону
