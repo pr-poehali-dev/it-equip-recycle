@@ -21,7 +21,7 @@ export default function Index() {
     city: '',
     customCity: '',
     comment: '',
-    file: null as File | null,
+    files: [] as File[],
     selectedPlan: ''
   });
   const [agreed, setAgreed] = useState(false);
@@ -117,9 +117,18 @@ export default function Index() {
       formDataToSend.append('_next', 'https://utilizon.pro/success');
       formDataToSend.append('_error', 'https://utilizon.pro/error');
       
-      // Добавляем файл если есть
-      if (formData.file) {
-        formDataToSend.append('attachment', formData.file);
+      // Добавляем файлы если есть (до 10 файлов)
+      if (formData.files && formData.files.length > 0) {
+        formData.files.forEach((file, index) => {
+          formDataToSend.append(`attachment_${index + 1}`, file);
+        });
+        
+        // Добавляем информацию о количестве файлов
+        formDataToSend.append('files_count', formData.files.length.toString());
+        
+        // Добавляем список имен файлов
+        const fileNames = formData.files.map(file => file.name).join(', ');
+        formDataToSend.append('file_names', fileNames);
       }
 
       // Отправляем через FormSubmit API
@@ -265,9 +274,20 @@ export default function Index() {
           fallbackForm.appendChild(input);
         });
         
-        // Добавляем файл если есть (для FormSubmit файлы нужно добавлять по-особому)
-        if (formData.file) {
-          console.log('⚠️ Файл не может быть отправлен через резервный HTML-метод. Используйте Ajax.');
+        // Добавляем информацию о файлах (сами файлы не могут быть отправлены через HTML-форму)
+        if (formData.files && formData.files.length > 0) {
+          console.log(`⚠️ ${formData.files.length} файл(ов) не могут быть отправлены через резервный HTML-метод. Используйте Ajax.`);
+          
+          // Добавляем информацию о файлах в текстовом виде
+          const fileInfo = formData.files.map((file, index) => 
+            `${index + 1}. ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} МБ)`
+          ).join('\n');
+          
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = 'files_info';
+          input.value = `Загружены файлы (${formData.files.length} шт.):\n${fileInfo}`;
+          fallbackForm.appendChild(input);
         }
         
         document.body.appendChild(fallbackForm);
@@ -328,8 +348,39 @@ export default function Index() {
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0] || null;
-    setFormData(prev => ({ ...prev, file }));
+    const selectedFiles = Array.from(e.target.files || []);
+    
+    // Ограничиваем до 10 файлов
+    const filesToAdd = selectedFiles.slice(0, 10);
+    
+    // Проверяем размер каждого файла (до 10 МБ)
+    const validFiles = filesToAdd.filter(file => {
+      const maxSize = 10 * 1024 * 1024; // 10 МБ
+      if (file.size > maxSize) {
+        alert(`Файл "${file.name}" слишком большой. Максимальный размер: 10 МБ`);
+        return false;
+      }
+      return true;
+    });
+    
+    // Объединяем с уже загруженными файлами, но не больше 10 всего
+    const currentFiles = formData.files || [];
+    const totalFiles = [...currentFiles, ...validFiles].slice(0, 10);
+    
+    if (totalFiles.length > currentFiles.length) {
+      setFormData(prev => ({ ...prev, files: totalFiles }));
+    }
+    
+    if (selectedFiles.length > 10) {
+      alert('Можно загрузить максимум 10 файлов. Первые 10 файлов были добавлены.');
+    }
+  };
+  
+  const removeFile = (indexToRemove: number) => {
+    setFormData(prev => ({
+      ...prev,
+      files: prev.files.filter((_, index) => index !== indexToRemove)
+    }));
   };
 
   return (
@@ -346,6 +397,7 @@ export default function Index() {
           setAgreed={setAgreed}
           handleSubmit={handleSubmit}
           handleFileChange={handleFileChange}
+          removeFile={removeFile}
         />
         <AboutSection />
         <ClientsSection />

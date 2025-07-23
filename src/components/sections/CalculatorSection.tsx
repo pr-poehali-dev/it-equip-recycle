@@ -12,7 +12,7 @@ interface CalculatorSectionProps {
     city: string;
     customCity: string;
     comment: string;
-    file: File | null;
+    files: File[];
     selectedPlan: string;
   };
   setFormData: React.Dispatch<React.SetStateAction<{
@@ -23,13 +23,14 @@ interface CalculatorSectionProps {
     city: string;
     customCity: string;
     comment: string;
-    file: File | null;
+    files: File[];
     selectedPlan: string;
   }>>;
   agreed: boolean;
   setAgreed: React.Dispatch<React.SetStateAction<boolean>>;
   handleSubmit: (e?: React.MouseEvent) => Promise<void>;
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  removeFile: (index: number) => void;
 }
 
 export default function CalculatorSection({ 
@@ -38,7 +39,8 @@ export default function CalculatorSection({
   agreed, 
   setAgreed, 
   handleSubmit, 
-  handleFileChange 
+  handleFileChange,
+  removeFile
 }: CalculatorSectionProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -212,29 +214,57 @@ export default function CalculatorSection({
                   <div>
                     <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">
                       📎 Спецификация оборудования *
-                      <span className="text-xs text-gray-600 block mt-1">Прикрепите файл с описанием оборудования</span>
+                      <span className="text-xs text-gray-600 block mt-1">Прикрепите файлы с описанием оборудования (до 10 файлов)</span>
                     </label>
+                    
+                    {/* Показываем загруженные файлы */}
+                    {formData.files && formData.files.length > 0 && (
+                      <div className="mb-4 space-y-2">
+                        <p className="text-sm font-medium text-gray-700">Загруженные файлы ({formData.files.length} из 10):</p>
+                        {formData.files.map((file, index) => (
+                          <div key={index} className="flex items-center justify-between bg-green-50 border border-green-200 rounded-lg p-3">
+                            <div className="flex items-center space-x-3">
+                              <div className="flex-shrink-0">
+                                <Icon name="FileText" size={16} className="text-green-600" />
+                              </div>
+                              <div>
+                                <p className="text-sm font-medium text-green-800">{file.name}</p>
+                                <p className="text-xs text-green-600">{(file.size / 1024 / 1024).toFixed(2)} МБ</p>
+                              </div>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => removeFile(index)}
+                              className="text-red-600 hover:text-red-800 transition-colors p-1"
+                            >
+                              <Icon name="X" size={16} />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    
                     <div 
                       className="border-2 border-dashed border-primary/30 rounded-lg p-6 text-center hover:border-primary transition-all duration-300 bg-black/5 cursor-pointer"
                       onClick={() => fileInputRef.current?.click()}
                     >
                       <Icon name="Upload" size={32} className="text-professional-rolexGold mx-auto mb-3" />
-                      {formData.file ? (
+                      {formData.files && formData.files.length > 0 ? (
                         <div>
                           <p className="text-sm premium-body text-green-700 mb-2 font-semibold">
-                            ✓ Файл загружен: {formData.file.name}
+                            ✓ Загружено файлов: {formData.files.length}
                           </p>
                           <p className="text-xs text-gray-600">
-                            Нажмите для выбора другого файла
+                            {formData.files.length < 10 ? 'Нажмите для добавления еще файлов' : 'Достигнут лимит в 10 файлов'}
                           </p>
                         </div>
                       ) : (
                         <div>
                           <p className="text-sm premium-body text-gray-700 mb-2">
-                            <span className="text-primary font-semibold">Выберите файл</span> или перетащите сюда
+                            <span className="text-primary font-semibold">Выберите файлы</span> или перетащите сюда
                           </p>
                           <p className="text-xs text-gray-600">
-                            Excel (.xlsx, .xls), Word (.docx, .doc), PDF • до 10 МБ
+                            Excel (.xlsx, .xls), Word (.docx, .doc), PDF • до 10 МБ каждый • до 10 файлов
                           </p>
                         </div>
                       )}
@@ -243,8 +273,9 @@ export default function CalculatorSection({
                         ref={fileInputRef}
                         className="hidden" 
                         accept=".xlsx,.xls,.docx,.doc,.pdf" 
+                        multiple
                         onChange={handleFileChange}
-
+                        disabled={formData.files && formData.files.length >= 10}
                       />
                     </div>
                   </div>
