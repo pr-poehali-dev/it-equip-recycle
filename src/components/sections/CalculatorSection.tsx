@@ -74,7 +74,7 @@ Email: ${formData.email}
 Прикрепленный файл: ${formData.file ? formData.file.name : 'Не прикреплен'}
 Выбранный план: ${formData.selectedPlan || 'Не выбран'}
 
-Заявка отправлена с калькулятора сайта utilizon.pro`;
+Заявка отправлена с калькулятора`;
     
     const mailtoLink = `mailto:commerce@rusutil-1.ru?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
     

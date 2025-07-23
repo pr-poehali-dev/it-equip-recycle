@@ -120,7 +120,7 @@ ${formData.selectedPlan ? `Выбранный план: ${formData.selectedPlan}
 ${formData.file ? `Приложен файл спецификации: ${formData.file.name}` : 'Файл спецификации не приложен'}
 
 ---
-Заявка отправлена с сайта utilizon.pro`,
+Заявка отправлена`,
           _replyto: formData.email
         })
       });

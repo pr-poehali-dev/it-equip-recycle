@@ -31,7 +31,7 @@ export default function ContactsSection() {
 Email: ${formData.email || 'Не указан'}
 Комментарий: ${formData.comment || 'Нет'}
 
-Заявка отправлена с раздела "Контакты" сайта utilizon.pro
+Заявка отправлена с раздела "Контакты"
     `)}`;
     
     window.location.href = mailtoLink;
