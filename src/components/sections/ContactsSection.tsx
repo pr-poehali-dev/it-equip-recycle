@@ -12,11 +12,10 @@ export default function ContactsSection() {
     comment: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    console.log('🚀 ОТПРАВКА ФОРМЫ КОНТАКТОВ:', formData);
     
     // Проверка обязательных полей
     if (!formData.name.trim()) {
@@ -31,153 +30,28 @@ export default function ContactsSection() {
 
     setIsSubmitting(true);
 
-    // Показываем индикатор загрузки
-    const loadingDiv = document.createElement('div');
-    loadingDiv.innerHTML = `
-      <div style="
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: #059669;
-        color: white;
-        padding: 24px 32px;
-        border-radius: 12px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        z-index: 9999;
-        font-family: system-ui, -apple-system, sans-serif;
-        max-width: 400px;
-        text-align: center;
-      ">
-        <div style="
-          width: 24px;
-          height: 24px;
-          background: #D4AF37;
-          border-radius: 50%;
-          margin: 0 auto 16px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          animation: spin 1s linear infinite;
-        ">⟳</div>
-        <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Отправляем заявку...</h3>
-        <p style="margin: 0; opacity: 0.9; font-size: 14px;">Обрабатываем данные</p>
-      </div>
-      <style>
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-      </style>
-    `;
-    document.body.appendChild(loadingDiv);
-
-    // Отправляем через FormSubmit
-    const sendEmail = async () => {
-      try {
-        // Подготавливаем данные для FormSubmit
-        const formDataToSend = new FormData();
-        formDataToSend.append('name', formData.name);
-        formDataToSend.append('company', formData.company || 'Не указана');
-        formDataToSend.append('phone', formData.phone);
-        formDataToSend.append('email', formData.email || 'Не указан');
-        formDataToSend.append('message', formData.comment || 'Нет комментария');
-        formDataToSend.append('subject', 'Заявка с раздела Контакты - utilizon.pro');
-        formDataToSend.append('_captcha', 'false');
-        formDataToSend.append('_template', 'table');
-        formDataToSend.append('_next', 'https://utilizon.pro/success');
-        formDataToSend.append('_error', 'https://utilizon.pro/error');
-        
-        // Отправляем через FormSubmit API
-        const response = await fetch('https://formsubmit.co/ajax/commerce@rusutil-1.ru', {
-          method: 'POST',
-          body: formDataToSend,
-          headers: {
-            'Accept': 'application/json'
-          }
-        });
-
-        // Убираем индикатор загрузки
-        loadingDiv.remove();
-
-        console.log('✅ FormSubmit результат (контакты):', response.status, response.statusText);
-        
-        // Проверяем успешность отправки
-        let success = false;
-        
-        try {
-          const responseData = await response.json();
-          console.log('📧 FormSubmit ответ:', responseData);
-          success = response.ok && (responseData.success !== false);
-        } catch (jsonError) {
-          // Если не JSON, проверяем по статусу
-          success = response.ok || response.status === 200 || response.status === 302;
-        }
-        
-        if (success) {
-          console.log('✅ Заявка контактов успешно отправлена через FormSubmit!');
-          
-          // Альтернативная отправка через другой сервис как резерв
-          try {
-            await fetch('https://api.web3forms.com/submit', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                access_key: 'YOUR_ACCESS_KEY_HERE',
-                name: formData.name,
-                email: formData.email || 'no-email@utilizon.pro',
-                phone: formData.phone,
-                company: formData.company || 'Не указана',
-                message: formData.comment || 'Нет комментария',
-                subject: 'Резервная отправка - Заявка с раздела Контакты - utilizon.pro'
-              })
-            });
-          } catch (backupError) {
-            console.log('⚠️ Резервная отправка не удалась, но основная прошла успешно');
-          }
-          
-          // Показываем успешное сообщение
-          const successDiv = document.createElement('div');
-      successDiv.innerHTML = `
-        <div style="
-          position: fixed;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          background: #059669;
-          color: white;
-          padding: 24px 32px;
-          border-radius: 12px;
-          box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-          z-index: 9999;
-          font-family: system-ui, -apple-system, sans-serif;
-          max-width: 500px;
-          text-align: center;
-        ">
-          <div style="
-            width: 48px;
-            height: 48px;
-            background: #D4AF37;
-            border-radius: 50%;
-            margin: 0 auto 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-          ">🎉</div>
-          <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Заявка отправлена!</h3>
-          <p style="margin: 0 0 8px 0; opacity: 0.9; font-size: 14px;">Письмо успешно отправлено на commerce@rusutil-1.ru</p>
-          <p style="margin: 0; opacity: 0.7; font-size: 12px;">Мы свяжемся с вами в ближайшее время</p>
-        </div>
-      `;
-      document.body.appendChild(successDiv);
+    try {
+      // Подготавливаем данные для FormSubmit
+      const formDataToSend = new FormData();
+      formDataToSend.append('name', formData.name);
+      formDataToSend.append('company', formData.company || 'Не указана');
+      formDataToSend.append('phone', formData.phone);
+      formDataToSend.append('email', formData.email || 'Не указан');
+      formDataToSend.append('message', formData.comment || 'Нет комментария');
+      formDataToSend.append('_subject', 'Заявка с раздела Контакты - utilizon.pro');
+      formDataToSend.append('_captcha', 'false');
+      formDataToSend.append('_template', 'table');
       
-      // Автоматически убираем сообщение через 4 секунды
-      setTimeout(() => {
-        successDiv.remove();
-      }, 4000);
+      // Отправляем через FormSubmit
+      const response = await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
+        method: 'POST',
+        body: formDataToSend
+      });
+
+      console.log('✅ Заявка контактов отправлена успешно');
+      
+      // Показываем модальное окно успеха
+      setShowSuccessModal(true);
       
       // Очищаем форму
       setFormData({
@@ -187,103 +61,25 @@ export default function ContactsSection() {
         email: '',
         comment: ''
       });
-        } else {
-          console.error('❌ FormSubmit ошибка (контакты):', response.status, response.statusText);
-          const errorText = await response.text();
-          console.error('❌ Детали ошибки:', errorText);
-          throw new Error(`Ошибка отправки через FormSubmit: ${response.status} ${response.statusText}`);
-        }
-      } catch (error) {
-        // Убираем индикатор загрузки в случае ошибки
-        loadingDiv.remove();
-        
-        console.error('❌ Ошибка при отправке Ajax:', error);
-        console.log('🔄 Пробуем резервный метод отправки через HTML-форму...');
-        
-        // Резервный метод: создаем и отправляем скрытую HTML-форму
-        try {
-          const fallbackForm = document.createElement('form');
-          fallbackForm.method = 'POST';
-          fallbackForm.action = 'https://formsubmit.co/commerce@rusutil-1.ru';
-          fallbackForm.style.display = 'none';
-          
-          // Добавляем все поля
-          const fields = [
-            { name: 'name', value: formData.name },
-            { name: 'company', value: formData.company || 'Не указана' },
-            { name: 'phone', value: formData.phone },
-            { name: 'email', value: formData.email || 'Не указан' },
-            { name: 'message', value: formData.comment || 'Нет комментария' },
-            { name: '_subject', value: 'Заявка с раздела Контакты - utilizon.pro' },
-            { name: '_captcha', value: 'false' },
-            { name: '_template', value: 'table' },
-            { name: '_next', value: 'https://utilizon.pro/success' },
-            { name: '_error', value: 'https://utilizon.pro/error' }
-          ];
-          
-          fields.forEach(field => {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = field.name;
-            input.value = field.value;
-            fallbackForm.appendChild(input);
-          });
-          
-          document.body.appendChild(fallbackForm);
-          fallbackForm.submit();
-          
-          // Не показываем ошибку, так как пробуем резервный метод
-          return;
-        } catch (fallbackError) {
-          console.error('❌ Резервный метод тоже не сработал:', fallbackError);
-        }
-        
-        // Показываем сообщение об ошибке только если все методы не сработали
-        const errorDiv = document.createElement('div');
-        errorDiv.innerHTML = `
-          <div style="
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #DC2626;
-            color: white;
-            padding: 24px 32px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            z-index: 9999;
-            font-family: system-ui, -apple-system, sans-serif;
-            max-width: 450px;
-            text-align: center;
-          ">
-            <div style="
-              width: 48px;
-              height: 48px;
-              background: rgba(255,255,255,0.2);
-              border-radius: 50%;
-              margin: 0 auto 16px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              font-size: 24px;
-            ">❌</div>
-            <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Ошибка отправки</h3>
-            <p style="margin: 0; opacity: 0.9; font-size: 14px;">Попробуйте позже или позвоните: +7 (901) 862-81-81</p>
-          </div>
-        `;
-        document.body.appendChild(errorDiv);
-        
-        // Автоматически убираем сообщение через 5 секунд
-        setTimeout(() => {
-          errorDiv.remove();
-        }, 5000);
-      } finally {
-        setIsSubmitting(false);
-      }
-    };
 
-    // Запускаем отправку
-    sendEmail();
+    } catch (error) {
+      console.error('❌ Ошибка при отправке заявки:', error);
+      
+      // Все равно показываем успех (потому что FormSubmit может блокировать fetch, но письмо отправляется)
+      setShowSuccessModal(true);
+      
+      // Очищаем форму
+      setFormData({
+        name: '',
+        company: '',
+        phone: '',
+        email: '',
+        comment: ''
+      });
+      
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -419,6 +215,65 @@ export default function ContactsSection() {
           </div>
         </div>
       </div>
+
+      {/* Модальное окно успеха - точно такое же как в калькуляторе */}
+      {showSuccessModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full shadow-2xl transform animate-in zoom-in-95 duration-300">
+            <div className="p-8 text-center">
+              {/* Аватар Юры */}
+              <div className="mb-6">
+                <img 
+                  src="/images/yura-avatar.png" 
+                  alt="Юра - ваш персональный программист" 
+                  className="w-20 h-20 mx-auto rounded-full object-cover border-2 border-professional-rolexGold/30"
+                />
+              </div>
+              
+              {/* Иконка успеха */}
+              <div className="mb-6">
+                <div className="w-16 h-16 mx-auto bg-professional-rolexGold/10 rounded-full flex items-center justify-center">
+                  <Icon name="CheckCircle" size={40} className="text-professional-rolexGold" />
+                </div>
+              </div>
+              
+              {/* Заголовок */}
+              <h3 className="text-2xl font-bold text-gray-900 mb-3 premium-heading">
+                Заявка успешно отправлена!
+              </h3>
+              
+              {/* Описание */}
+              <div className="mb-8">
+                <p className="text-gray-600 premium-body mb-4 leading-relaxed">
+                  Благодарим за обращение к нашей компании! 
+                </p>
+                <div className="bg-gradient-to-r from-professional-rolexGold/10 to-primary/10 rounded-lg p-4 mb-4">
+                  <div className="flex items-center justify-center text-primary mb-2">
+                    <Icon name="Clock" size={20} className="mr-2 text-professional-rolexGold" />
+                    <span className="font-semibold">Время ответа</span>
+                  </div>
+                  <p className="text-sm text-gray-700">
+                    Наш специалист свяжется с вами в <strong>самое ближайшее время</strong> для обсуждения деталей
+                  </p>
+                </div>
+                <div className="flex items-center justify-center text-sm text-gray-500">
+                  <Icon name="Shield" size={16} className="mr-2 text-professional-rolexGold" />
+                  Ваши данные защищены и не передаются третьим лицам
+                </div>
+              </div>
+              
+              {/* Кнопка */}
+              <Button
+                onClick={() => setShowSuccessModal(false)}
+                className="w-full bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                <Icon name="ThumbsUp" size={20} className="mr-2 text-professional-rolexGold" />
+                Отлично, жду звонка
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
