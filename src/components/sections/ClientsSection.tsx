@@ -9,7 +9,7 @@ export default function ClientsSection() {
     { name: "ВТБ Банк", logo: "https://cdn.poehali.dev/files/f3a9c512-5723-4b33-a278-b45f121a1e60.jpg", fill: true },
     { name: "М.Видео", logo: "https://cdn.poehali.dev/files/42b06d37-3966-468e-baaf-90f4d70c9d5a.png", fill: true },
     { name: "Газпром", logo: "https://cdn.poehali.dev/files/c66ee417-ab8b-4333-b048-8994b7313188.jpg", fill: true },
-    { name: "РЖД", logo: "/img/74d99e67-4781-447c-ae75-c512dbc104b9.jpg", fill: true },
+    { name: "РЖД", logo: "https://cdn.poehali.dev/files/5b0e49ca-3dce-4292-baa5-2c64da7f7a26.jpg", fill: true },
     { name: "Роснефть", logo: "https://cdn.poehali.dev/files/4b5d2072-4a42-4e3e-a601-20ff40040705.png", fill: false },
     { name: "СБЕР", logo: "https://cdn.poehali.dev/files/561db6f5-d3b4-4c50-9a4d-60dbf11a88c8.jpg", fill: true },
     { name: "Сургутнефтегаз", logo: "/img/29ff1d88-fa34-49e9-af56-b82ca73d35ab.jpg", fill: true },
