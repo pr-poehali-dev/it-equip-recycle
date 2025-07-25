@@ -2,7 +2,7 @@ import Icon from "@/components/ui/icon";
 
 export default function ClientsSection() {
   const clients = [
-    { name: "METRO Cash & Carry", logo: "https://cdn.poehali.dev/files/1380a463-e264-416d-8336-84cf16e9a5af.jpg", fill: true },
+    { name: "X5 Retail Group", logo: "https://cdn.poehali.dev/files/15ef1e62-8956-4d45-a225-5ffeaabe3489.jpg", fill: false },
     { name: "МТС", logo: "https://cdn.poehali.dev/files/7e87d785-0676-47bf-8b6d-25044885c801.png", fill: true },
     { name: "Альфа-Банк", logo: "https://cdn.poehali.dev/files/b030b317-38ff-4188-919d-aaa9c160c124.jpg", fill: true },
     { name: "Мегафон", logo: "https://cdn.poehali.dev/files/475b462c-e9e3-431d-806d-a5396a7861de.jpg", fill: true },
@@ -23,7 +23,7 @@ export default function ClientsSection() {
     { name: "Честный Знак", logo: "https://cdn.poehali.dev/files/8eef8483-c102-4e4c-b510-c356ae190c02.png", fill: false },
     { name: "Лента", logo: "https://cdn.poehali.dev/files/50cc011e-6b94-4c96-b7a5-317b7f307e8f.jpg", fill: false },
     { name: "АК Барс Банк", logo: "https://cdn.poehali.dev/files/68cf0440-63f8-400c-ab1e-7d12483ac3f5.png", fill: false },
-    { name: "METRO Cash & Carry", logo: "https://cdn.poehali.dev/files/3987e998-6050-4b1b-a753-05fcc15a712b.jpg", fill: true },
+    { name: "METRO Cash & Carry", logo: "https://cdn.poehali.dev/files/a71337b8-04e1-4d7b-aba1-91c14cadca73.jpg", fill: true },
     { name: "ООО СИБУР", logo: "https://cdn.poehali.dev/files/9bbdfe7f-cb6b-4f10-84ae-e38963fa5ebc.jpg", fill: true },
     { name: "ООО \"МАРС\"", logo: "https://cdn.poehali.dev/files/3162cc44-7d7e-4f3d-80a4-8e58c4a194a2.png", fill: false },
     { name: "Красное-Белое", logo: "https://cdn.poehali.dev/files/6a500e79-e412-442d-94fa-d956df09a10c.jpg", fill: false },
