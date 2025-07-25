@@ -2,13 +2,13 @@ import Icon from "@/components/ui/icon";
 
 export default function ClientsSection() {
   const clients = [
-    { name: "X5 Retail Group", logo: "/img/cae4c762-f1e5-47e8-b8dd-1ff9ed2395ff.jpg", fill: false },
+    { name: "X5 Retail Group", logo: "https://cdn.poehali.dev/files/3fa50e0f-d966-4c3c-917a-5c52837ef259.jpg", fill: false },
     { name: "МТС", logo: "/img/d4d9d6c8-780d-496e-be22-dfe88524f182.jpg", fill: true },
-    { name: "Альфа-Банк", logo: "/img/6e22fd74-ccfe-4e23-aa58-678ccd255d0d.jpg", fill: true },
-    { name: "Мегафон", logo: "/img/1da472b5-1a45-46d8-9229-8a31cd5b2252.jpg", fill: true },
+    { name: "Альфа-Банк", logo: "https://cdn.poehali.dev/files/b030b317-38ff-4188-919d-aaa9c160c124.jpg", fill: true },
+    { name: "Мегафон", logo: "https://cdn.poehali.dev/files/475b462c-e9e3-431d-806d-a5396a7861de.jpg", fill: true },
     { name: "ВТБ Банк", logo: "/img/28ed6ebe-98aa-4960-9d34-f5dbf9687684.jpg", fill: true },
     { name: "М.Видео", logo: "/img/a947b5ea-c14e-4480-8b71-e8eb273be63a.jpg", fill: true },
-    { name: "Газпром", logo: "/img/c1f8a0d6-c3fd-4c0e-8eb0-c272f06572ae.jpg", fill: true },
+    { name: "Газпром", logo: "https://cdn.poehali.dev/files/c66ee417-ab8b-4333-b048-8994b7313188.jpg", fill: true },
     { name: "РЖД", logo: "/img/74d99e67-4781-447c-ae75-c512dbc104b9.jpg", fill: true },
     { name: "Роснефть", logo: "/img/57af31d3-80fd-4eec-b4fc-89a835571352.jpg", fill: false },
     { name: "СБЕР", logo: "/img/d2e3bd20-d955-4e82-a076-fb704bcfb0b6.jpg", fill: true },
@@ -22,7 +22,7 @@ export default function ClientsSection() {
     { name: "Магнит", logo: "https://cdn.poehali.dev/files/c3007743-6875-4065-af7d-a01ed6f504e9.png", fill: true },
     { name: "Честный Знак", logo: "/img/efb14d64-4018-4d62-b1e7-031313b3195e.jpg", fill: false },
     { name: "Лента", logo: "/img/fe2dfebb-a4f5-456e-89b9-5a1241440ce8.jpg", fill: false },
-    { name: "АК Барс Банк", logo: "/img/6a29d558-25b0-4469-bcfa-5d045646a8c3.jpg", fill: false },
+    { name: "АК Барс Банк", logo: "https://cdn.poehali.dev/files/68cf0440-63f8-400c-ab1e-7d12483ac3f5.png", fill: false },
     { name: "АО «СТРОЙГАЗМОНТАЖ»", logo: "/img/29969040-3f66-4cac-a2f1-df9371de261d.jpg", fill: false },
     { name: "ООО СИБУР", logo: "/img/75aeb6c8-8f72-4a12-a521-8ea91b6632f4.jpg", fill: true },
     { name: "ООО \"МАРС\"", logo: "/img/57356876-c66a-4a43-b0d3-7263ca66804a.jpg", fill: false },
