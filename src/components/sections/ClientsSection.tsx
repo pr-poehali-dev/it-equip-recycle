@@ -16,7 +16,7 @@ export default function ClientsSection() {
     { name: "Сетевая Компания", logo: "https://cdn.poehali.dev/files/139541ec-4f9c-4fe3-b1b8-92a2b8b5e05e.jpg", fill: false },
     { name: "Аптечная Сеть 36.6", logo: "https://cdn.poehali.dev/files/3e1828df-90a4-4930-a9e9-dc0d1139ba94.jpg", fill: false },
     { name: "Ozon", logo: "https://cdn.poehali.dev/files/b230caee-c868-4a38-871c-485a60773225.jpg", fill: true },
-    { name: "Яндекс", logo: "/img/73d8f33e-cfd5-4029-8065-e2bd29a515d4.jpg", fill: false },
+    { name: "Яндекс", logo: "https://cdn.poehali.dev/files/d72a2713-c66a-4f07-b755-7407352a6102.jpg", fill: false },
     { name: "Ростелеком", logo: "https://cdn.poehali.dev/files/0c5b3d87-0b5f-4511-a8dd-eda9b9d22e5a.png", fill: false },
     { name: "Сегежа", logo: "https://cdn.poehali.dev/files/d2fd8035-d238-4911-ba61-965013067ab3.png", fill: false },
     { name: "Магнит", logo: "https://cdn.poehali.dev/files/c3007743-6875-4065-af7d-a01ed6f504e9.png", fill: true },
