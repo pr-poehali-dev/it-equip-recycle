@@ -12,7 +12,7 @@ export default function ClientsSection() {
     { name: "РЖД", logo: "https://cdn.poehali.dev/files/5b0e49ca-3dce-4292-baa5-2c64da7f7a26.jpg", fill: true },
     { name: "Роснефть", logo: "https://cdn.poehali.dev/files/4b5d2072-4a42-4e3e-a601-20ff40040705.png", fill: false },
     { name: "СБЕР", logo: "https://cdn.poehali.dev/files/561db6f5-d3b4-4c50-9a4d-60dbf11a88c8.jpg", fill: true },
-    { name: "Сургутнефтегаз", logo: "/img/29ff1d88-fa34-49e9-af56-b82ca73d35ab.jpg", fill: true },
+    { name: "Сургутнефтегаз", logo: "https://cdn.poehali.dev/files/0e5f4bfb-f0f7-4196-981f-1fdf611d2e77.png", fill: true },
     { name: "Сетевая Компания", logo: "https://cdn.poehali.dev/files/139541ec-4f9c-4fe3-b1b8-92a2b8b5e05e.jpg", fill: false },
     { name: "Аптечная Сеть 36.6", logo: "https://cdn.poehali.dev/files/3e1828df-90a4-4930-a9e9-dc0d1139ba94.jpg", fill: false },
     { name: "Ozon", logo: "/img/aad46aa5-a602-4e7f-bd14-ec2be18f7a7d.jpg", fill: true },
@@ -24,10 +24,10 @@ export default function ClientsSection() {
     { name: "Лента", logo: "https://cdn.poehali.dev/files/50cc011e-6b94-4c96-b7a5-317b7f307e8f.jpg", fill: false },
     { name: "АК Барс Банк", logo: "https://cdn.poehali.dev/files/68cf0440-63f8-400c-ab1e-7d12483ac3f5.png", fill: false },
     { name: "АО «СТРОЙГАЗМОНТАЖ»", logo: "/img/29969040-3f66-4cac-a2f1-df9371de261d.jpg", fill: false },
-    { name: "ООО СИБУР", logo: "/img/75aeb6c8-8f72-4a12-a521-8ea91b6632f4.jpg", fill: true },
+    { name: "ООО СИБУР", logo: "https://cdn.poehali.dev/files/9bbdfe7f-cb6b-4f10-84ae-e38963fa5ebc.jpg", fill: true },
     { name: "ООО \"МАРС\"", logo: "https://cdn.poehali.dev/files/3162cc44-7d7e-4f3d-80a4-8e58c4a194a2.png", fill: false },
     { name: "Красное-Белое", logo: "https://cdn.poehali.dev/files/6a500e79-e412-442d-94fa-d956df09a10c.jpg", fill: false },
-    { name: "АО Селектел", logo: "/img/a9efe399-0ad8-4a4f-95f2-db4c19cbc9dc.jpg", fill: false },
+    { name: "АО Селектел", logo: "https://cdn.poehali.dev/files/eacda7fd-e1ea-4eea-a865-6a5e3c5e311e.jpg", fill: false },
     { name: "Авито", logo: "https://cdn.poehali.dev/files/e6396333-07ae-4fa2-bf67-1e803cd08b9c.png", fill: false },
     { name: "ТБанк", logo: "https://cdn.poehali.dev/files/211d09a5-509c-4f60-bd1b-7840a7db6ac8.jpg", fill: true }
   ];
