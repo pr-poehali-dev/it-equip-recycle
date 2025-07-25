@@ -11,7 +11,7 @@ export default function ClientsSection() {
     { name: "Газпром", logo: "https://cdn.poehali.dev/files/c66ee417-ab8b-4333-b048-8994b7313188.jpg", fill: true },
     { name: "РЖД", logo: "/img/74d99e67-4781-447c-ae75-c512dbc104b9.jpg", fill: true },
     { name: "Роснефть", logo: "https://cdn.poehali.dev/files/4b5d2072-4a42-4e3e-a601-20ff40040705.png", fill: false },
-    { name: "СБЕР", logo: "/img/d2e3bd20-d955-4e82-a076-fb704bcfb0b6.jpg", fill: true },
+    { name: "СБЕР", logo: "https://cdn.poehali.dev/files/561db6f5-d3b4-4c50-9a4d-60dbf11a88c8.jpg", fill: true },
     { name: "Сургутнефтегаз", logo: "/img/29ff1d88-fa34-49e9-af56-b82ca73d35ab.jpg", fill: true },
     { name: "Сетевая Компания", logo: "https://cdn.poehali.dev/files/139541ec-4f9c-4fe3-b1b8-92a2b8b5e05e.jpg", fill: false },
     { name: "Аптечная Сеть 36.6", logo: "https://cdn.poehali.dev/files/3e1828df-90a4-4930-a9e9-dc0d1139ba94.jpg", fill: false },
