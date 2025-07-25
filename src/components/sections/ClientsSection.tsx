@@ -2,7 +2,7 @@ import Icon from "@/components/ui/icon";
 
 export default function ClientsSection() {
   const clients = [
-    { name: "X5 Retail Group", logo: "https://cdn.poehali.dev/files/3fa50e0f-d966-4c3c-917a-5c52837ef259.jpg", fill: false },
+    { name: "METRO Cash & Carry", logo: "https://cdn.poehali.dev/files/1380a463-e264-416d-8336-84cf16e9a5af.jpg", fill: true },
     { name: "МТС", logo: "https://cdn.poehali.dev/files/7e87d785-0676-47bf-8b6d-25044885c801.png", fill: true },
     { name: "Альфа-Банк", logo: "https://cdn.poehali.dev/files/b030b317-38ff-4188-919d-aaa9c160c124.jpg", fill: true },
     { name: "Мегафон", logo: "https://cdn.poehali.dev/files/475b462c-e9e3-431d-806d-a5396a7861de.jpg", fill: true },
