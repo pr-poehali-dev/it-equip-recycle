@@ -1,385 +1,404 @@
-import { useRef } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Icon from "@/components/ui/icon";
-import SuccessModal from "@/components/ui/success-modal";
+import { sendFormData, FormData } from "@/lib/mail-sender";
 
-interface CalculatorSectionProps {
-  formData: {
-    name: string;
-    company: string;
-    phone: string;
-    email: string;
-    city: string;
-    customCity: string;
-    comment: string;
-    files: File[];
-    selectedPlan: string;
-  };
-  setFormData: React.Dispatch<React.SetStateAction<{
-    name: string;
-    company: string;
-    phone: string;
-    email: string;
-    city: string;
-    customCity: string;
-    comment: string;
-    files: File[];
-    selectedPlan: string;
-  }>>;
-  agreed: boolean;
-  setAgreed: React.Dispatch<React.SetStateAction<boolean>>;
-  handleSubmit: (e?: React.MouseEvent) => Promise<void>;
-  handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  removeFile: (index: number) => void;
-  isSubmitting: boolean;
-  showSuccessModal: boolean;
-  setShowSuccessModal: React.Dispatch<React.SetStateAction<boolean>>;
+interface CalculatorData {
+  serviceType: string;
+  complexity: string;
+  customCity: string;
+  files: File[];
 }
 
-export default function CalculatorSection({ 
-  formData, 
-  setFormData, 
-  agreed, 
-  setAgreed, 
-  handleSubmit, 
-  handleFileChange,
-  removeFile,
-  isSubmitting,
-  showSuccessModal,
-  setShowSuccessModal
-}: CalculatorSectionProps) {
-  const fileInputRef = useRef<HTMLInputElement>(null);
+const SERVICES = [
+  { id: 'disposal', name: 'Утилизация', basePrice: 50000 },
+  { id: 'transport', name: 'Транспортировка', basePrice: 30000 },
+  { id: 'processing', name: 'Переработка', basePrice: 75000 },
+  { id: 'consulting', name: 'Консультации', basePrice: 25000 },
+];
 
-  const handlePhoneCall = (e?: React.MouseEvent) => {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
+const COMPLEXITY_MULTIPLIERS = {
+  simple: { name: 'Простая', multiplier: 1 },
+  medium: { name: 'Средняя', multiplier: 1.5 },
+  complex: { name: 'Сложная', multiplier: 2.2 },
+};
+
+export default function CalculatorSection() {
+  const [data, setData] = useState<CalculatorData>({
+    serviceType: '',
+    complexity: '',
+    customCity: '',
+    files: [],
+  });
+
+  const [formData, setFormData] = useState<FormData>({
+    name: '',
+    email: '',
+    phone: '',
+    company: '',
+    city: '',
+    plan: '',
+    comment: '',
+  });
+
+  const [step, setStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showResult, setShowResult] = useState(false);
+
+  const calculatePrice = () => {
+    const service = SERVICES.find(s => s.id === data.serviceType);
+    const complexity = COMPLEXITY_MULTIPLIERS[data.complexity as keyof typeof COMPLEXITY_MULTIPLIERS];
     
-    console.log('📞 Нажата кнопка "Обсудить по телефону"');
+    if (!service || !complexity) return 0;
     
-    const phoneNumber = '+79018628181';
-    
-    try {
-      if (navigator.userAgent.match(/Android|iPhone|iPad|iPod|BlackBerry|Windows Phone/i)) {
-        window.location.href = `tel:${phoneNumber}`;
-      } else {
-        if (navigator.clipboard) {
-          navigator.clipboard.writeText(phoneNumber).then(() => {
-            alert(`📞 Номер телефона скопирован в буфер обмена: ${phoneNumber}`);
-          }).catch(() => {
-            alert(`📞 Позвоните нам: ${phoneNumber}`);
-          });
-        } else {
-          alert(`📞 Позвоните нам: ${phoneNumber}`);
-        }
-      }
-      console.log('✅ Обработка звонка выполнена успешно');
-    } catch (error) {
-      console.error('❌ Ошибка при обработке звонка:', error);
-      alert(`📞 Позвоните нам: ${phoneNumber}`);
+    return Math.round(service.basePrice * complexity.multiplier);
+  };
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const newFiles = Array.from(e.target.files).slice(0, 5);
+      setData({ ...data, files: newFiles });
     }
   };
 
+  const removeFile = (index: number) => {
+    const newFiles = data.files.filter((_, i) => i !== index);
+    setData({ ...data, files: newFiles });
+  };
+
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+    
+    try {
+      const service = SERVICES.find(s => s.id === data.serviceType);
+      const complexity = COMPLEXITY_MULTIPLIERS[data.complexity as keyof typeof COMPLEXITY_MULTIPLIERS];
+      
+      const submissionData: FormData = {
+        ...formData,
+        plan: `${service?.name} - ${complexity?.name} (${calculatePrice().toLocaleString()} руб.)`,
+        city: data.customCity,
+      };
+
+      const success = await sendFormData(submissionData, data.files);
+      
+      if (success) {
+        setShowResult(true);
+      } else {
+        alert('Ошибка отправки. Попробуйте снова.');
+      }
+    } catch (error) {
+      alert('Ошибка отправки. Попробуйте снова.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  if (showResult) {
+    return (
+      <section className="py-20 bg-gradient-to-b from-emerald-900 to-black">
+        <div className="container mx-auto px-4 text-center">
+          <Card className="max-w-md mx-auto bg-emerald-800 border-emerald-600">
+            <CardContent className="p-8">
+              <Icon name="CheckCircle" size={64} className="text-green-400 mx-auto mb-4" />
+              <h3 className="text-2xl font-bold text-white mb-2">Заявка отправлена!</h3>
+              <p className="text-emerald-200 mb-4">
+                Мы свяжемся с вами в ближайшее время
+              </p>
+              <Button 
+                onClick={() => window.location.reload()} 
+                className="bg-professional-rolexGold hover:bg-yellow-600 text-black"
+              >
+                Рассчитать снова
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+    );
+  }
+
   return (
-    <section id="calculator" className="py-20 bg-gradient-to-br from-gray-50 to-gray-100">
+    <section id="calculator" className="py-20 bg-gradient-to-b from-emerald-900 to-black">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="section-title text-gray-900 mb-4">Быстрая оценка стоимости</h2>
-          <p className="premium-body text-gray-700 max-w-2xl mx-auto">
-            Прикрепите спецификацию оборудования и получите предварительную стоимость утилизации в течение 30 минут
-          </p>
+          <h2 className="text-4xl font-bold text-white mb-4">Калькулятор стоимости</h2>
+          <p className="text-emerald-200">Рассчитайте стоимость наших услуг</p>
         </div>
-        
+
         <div className="max-w-4xl mx-auto">
-          <Card className="shadow-xl">
-            <CardHeader className="bg-emerald-800 text-white p-6">
-              <div className="text-center mb-4">
-                <CardTitle className="text-2xl flex items-center justify-center mb-3">
-                  <Icon name="Calculator" size={72} className="mr-4 text-professional-rolexGold" />
-                  <span className="text-white">Калькулятор стоимости утилизации</span>
-                </CardTitle>
-                <CardDescription className="text-white/90 text-lg">
-                  Заполните форму и прикрепите спецификацию оборудования для точного расчета
-                </CardDescription>
+          {/* Прогресс */}
+          <div className="flex justify-center mb-8">
+            {[1, 2, 3, 4].map((num) => (
+              <div
+                key={num}
+                className={`w-10 h-10 rounded-full flex items-center justify-center mx-2 font-bold ${
+                  step >= num 
+                    ? 'bg-professional-rolexGold text-black' 
+                    : 'bg-emerald-700 text-emerald-200'
+                }`}
+              >
+                {num}
               </div>
+            ))}
+          </div>
+
+          <Card className="bg-emerald-800 border-emerald-600">
+            <CardHeader>
+              <CardTitle className="text-white text-center">
+                {step === 1 && 'Выберите тип услуги'}
+                {step === 2 && 'Укажите сложность'}
+                {step === 3 && 'Прикрепите файлы'}
+                {step === 4 && 'Контактная информация'}
+              </CardTitle>
             </CardHeader>
-            <CardContent className="p-4 sm:p-6 lg:p-8">
-              {formData.selectedPlan && (
-                <div className="mb-6 p-4 bg-professional-rolexGold/10 border border-professional-rolexGold/30 rounded-lg">
-                  <div className="flex items-center">
-                    <Icon name="Check" size={20} className="text-professional-rolexGold mr-3" />
-                    <div>
-                      <span className="text-professional-rolexGold font-semibold text-lg">
-                        Выбранный план: {formData.selectedPlan}
-                      </span>
-                      <p className="text-sm text-gray-600 mt-1">
-                        Заполните форму ниже для получения точной стоимости утилизации
-                      </p>
+            <CardContent className="p-6">
+              
+              {/* Шаг 1: Тип услуги */}
+              {step === 1 && (
+                <div className="space-y-4">
+                  {SERVICES.map((service) => (
+                    <div
+                      key={service.id}
+                      onClick={() => setData({ ...data, serviceType: service.id })}
+                      className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
+                        data.serviceType === service.id
+                          ? 'border-professional-rolexGold bg-emerald-700'
+                          : 'border-emerald-600 bg-emerald-900 hover:border-emerald-500'
+                      }`}
+                    >
+                      <div className="flex justify-between items-center">
+                        <span className="text-white font-medium">{service.name}</span>
+                        <span className="text-emerald-200">от {service.basePrice.toLocaleString()} ₽</span>
+                      </div>
                     </div>
+                  ))}
+                  
+                  <Button
+                    onClick={() => setStep(2)}
+                    disabled={!data.serviceType}
+                    className="w-full bg-professional-rolexGold hover:bg-yellow-600 text-black font-semibold"
+                  >
+                    Далее
+                  </Button>
+                </div>
+              )}
+
+              {/* Шаг 2: Сложность */}
+              {step === 2 && (
+                <div className="space-y-4">
+                  {Object.entries(COMPLEXITY_MULTIPLIERS).map(([key, complexity]) => (
+                    <div
+                      key={key}
+                      onClick={() => setData({ ...data, complexity: key })}
+                      className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
+                        data.complexity === key
+                          ? 'border-professional-rolexGold bg-emerald-700'
+                          : 'border-emerald-600 bg-emerald-900 hover:border-emerald-500'
+                      }`}
+                    >
+                      <div className="flex justify-between items-center">
+                        <span className="text-white font-medium">{complexity.name}</span>
+                        <span className="text-emerald-200">×{complexity.multiplier}</span>
+                      </div>
+                    </div>
+                  ))}
+                  
+                  <div className="flex gap-4">
+                    <Button
+                      onClick={() => setStep(1)}
+                      variant="outline"
+                      className="flex-1 border-emerald-600 text-emerald-200 hover:bg-emerald-700"
+                    >
+                      Назад
+                    </Button>
+                    <Button
+                      onClick={() => setStep(3)}
+                      disabled={!data.complexity}
+                      className="flex-1 bg-professional-rolexGold hover:bg-yellow-600 text-black font-semibold"
+                    >
+                      Далее
+                    </Button>
                   </div>
                 </div>
               )}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="space-y-6">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+              {/* Шаг 3: Файлы */}
+              {step === 3 && (
+                <div className="space-y-4">
+                  <div className="border-2 border-dashed border-emerald-600 rounded-lg p-8 text-center">
+                    <Icon name="Upload" size={48} className="text-emerald-400 mx-auto mb-4" />
+                    <input
+                      type="file"
+                      id="files"
+                      multiple
+                      accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                      onChange={handleFileUpload}
+                      className="hidden"
+                    />
+                    <label
+                      htmlFor="files"
+                      className="cursor-pointer text-white font-medium hover:text-emerald-200"
+                    >
+                      Нажмите для загрузки файлов
+                    </label>
+                    <p className="text-emerald-300 text-sm mt-2">
+                      До 5 файлов (PDF, DOC, DOCX, JPG, PNG)
+                    </p>
+                  </div>
+
+                  {data.files.length > 0 && (
+                    <div className="space-y-2">
+                      <h4 className="text-white font-medium">Загруженные файлы:</h4>
+                      {data.files.map((file, index) => (
+                        <div key={index} className="flex items-center justify-between bg-emerald-700 p-3 rounded">
+                          <span className="text-white text-sm">{file.name}</span>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => removeFile(index)}
+                            className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
+                          >
+                            <Icon name="X" size={16} />
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="flex gap-4">
+                    <Button
+                      onClick={() => setStep(2)}
+                      variant="outline"
+                      className="flex-1 border-emerald-600 text-emerald-200 hover:bg-emerald-700"
+                    >
+                      Назад
+                    </Button>
+                    <Button
+                      onClick={() => setStep(4)}
+                      className="flex-1 bg-professional-rolexGold hover:bg-yellow-600 text-black font-semibold"
+                    >
+                      Далее
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {/* Шаг 4: Контакты */}
+              {step === 4 && (
+                <div className="space-y-4">
+                  <div className="bg-emerald-700 p-4 rounded-lg mb-6">
+                    <h3 className="text-white font-bold text-xl mb-2">Итоговая стоимость:</h3>
+                    <p className="text-professional-rolexGold text-3xl font-bold">
+                      {calculatePrice().toLocaleString()} ₽
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Контактное лицо *</label>
-                      <input 
-                        type="text" 
-                        value={formData.name}
-                        onChange={(e) => setFormData(prev => ({...prev, name: e.target.value}))}
-                        className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
-                        placeholder="Ваше имя"
+                      <label className="block text-emerald-200 text-sm font-medium mb-2">
+                        Имя *
+                      </label>
+                      <input
+                        type="text"
                         required
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        className="w-full px-3 py-2 bg-emerald-900 border border-emerald-600 rounded text-white"
+                        placeholder="Ваше имя"
                       />
                     </div>
+
                     <div>
-                      <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Компания</label>
-                      <input 
-                        type="text" 
+                      <label className="block text-emerald-200 text-sm font-medium mb-2">
+                        Телефон *
+                      </label>
+                      <input
+                        type="tel"
+                        required
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        className="w-full px-3 py-2 bg-emerald-900 border border-emerald-600 rounded text-white"
+                        placeholder="+7 (___) ___-__-__"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-emerald-200 text-sm font-medium mb-2">
+                        Email
+                      </label>
+                      <input
+                        type="email"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        className="w-full px-3 py-2 bg-emerald-900 border border-emerald-600 rounded text-white"
+                        placeholder="your@email.com"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-emerald-200 text-sm font-medium mb-2">
+                        Компания
+                      </label>
+                      <input
+                        type="text"
                         value={formData.company}
-                        onChange={(e) => setFormData(prev => ({...prev, company: e.target.value}))}
-                        className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
+                        onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                        className="w-full px-3 py-2 bg-emerald-900 border border-emerald-600 rounded text-white"
                         placeholder="Название компании"
                       />
                     </div>
-                  </div>
-                  
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Телефон *</label>
-                      <input 
-                        type="tel" 
-                        value={formData.phone}
-                        onChange={(e) => setFormData(prev => ({...prev, phone: e.target.value}))}
-                        className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
-                        placeholder="+7 (000) 000-00-00"
-                        required
+
+                    <div className="md:col-span-2">
+                      <label className="block text-emerald-200 text-sm font-medium mb-2">
+                        Город
+                      </label>
+                      <input
+                        type="text"
+                        value={data.customCity}
+                        onChange={(e) => setData({ ...data, customCity: e.target.value })}
+                        className="w-full px-3 py-2 bg-emerald-900 border border-emerald-600 rounded text-white"
+                        placeholder="Ваш город"
                       />
                     </div>
-                    <div>
-                      <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Email *</label>
-                      <input 
-                        type="email" 
-                        value={formData.email}
-                        onChange={(e) => setFormData(prev => ({...prev, email: e.target.value}))}
-                        className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
-                        placeholder="example@company.ru"
-                        required
+
+                    <div className="md:col-span-2">
+                      <label className="block text-emerald-200 text-sm font-medium mb-2">
+                        Комментарий
+                      </label>
+                      <textarea
+                        value={formData.comment}
+                        onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
+                        rows={3}
+                        className="w-full px-3 py-2 bg-emerald-900 border border-emerald-600 rounded text-white resize-none"
+                        placeholder="Дополнительная информация..."
                       />
                     </div>
                   </div>
-                  
-                  <div>
-                    <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Город</label>
-                    <select 
-                      value={formData.city}
-                      onChange={(e) => setFormData(prev => ({...prev, city: e.target.value, customCity: ''}))}
-                      className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base"
+
+                  <div className="flex gap-4">
+                    <Button
+                      onClick={() => setStep(3)}
+                      variant="outline"
+                      className="flex-1 border-emerald-600 text-emerald-200 hover:bg-emerald-700"
                     >
-                      <option value="">Выберите город</option>
-                      <option value="Москва">Москва</option>
-                      <option value="Санкт-Петербург">Санкт-Петербург</option>
-                      <option value="Екатеринбург">Екатеринбург</option>
-                      <option value="Новосибирск">Новосибирск</option>
-                      <option value="Казань">Казань</option>
-                      <option value="Нижний Новгород">Нижний Новгород</option>
-                      <option value="Другой город">Другой город</option>
-                    </select>
-                  </div>
-                  
-                  {formData.city === 'Другой город' && (
-                    <div>
-                      <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Укажите ваш город</label>
-                      <input 
-                        type="text" 
-                        value={formData.customCity}
-                        onChange={(e) => setFormData(prev => ({...prev, customCity: e.target.value}))}
-                        className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
-                        placeholder="Название города"
-                      />
-                    </div>
-                  )}
-                </div>
-                
-                <div className="space-y-6">
-                  <div>
-                    <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">
-                      📎 Спецификация оборудования *
-                      <span className="text-xs text-gray-600 block mt-1">Прикрепите файлы с описанием оборудования (до 5 файлов, максимум 20МБ каждый)</span>
-                    </label>
-                    
-                    {formData.files && formData.files.length > 0 && (
-                      <div className="mb-4 space-y-2">
-                        <p className="text-sm font-medium text-gray-700">Загруженные файлы ({formData.files.length} из 5):</p>
-                        <div className="space-y-2">
-                          {formData.files.map((file, index) => (
-                            <div key={index} className="flex items-center justify-between bg-green-50 border border-green-200 rounded-lg p-3">
-                              <div className="flex items-center space-x-3">
-                                <div className="flex-shrink-0">
-                                  <Icon name="File" size={16} className="text-green-600" />
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                  <p className="text-sm font-medium text-green-800 truncate">{file.name}</p>
-                                  <p className="text-xs text-green-600">{(file.size / 1024 / 1024).toFixed(2)} МБ</p>
-                                </div>
-                              </div>
-                              <button
-                                type="button"
-                                onClick={() => removeFile(index)}
-                                className="text-red-600 hover:text-red-800 transition-colors p-1"
-                              >
-                                <Icon name="X" size={16} />
-                              </button>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    
-                    <div 
-                      className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-primary transition-all duration-300 bg-gray-50/50 cursor-pointer"
-                      onClick={() => fileInputRef.current?.click()}
+                      Назад
+                    </Button>
+                    <Button
+                      onClick={handleSubmit}
+                      disabled={!formData.name || !formData.phone || isSubmitting}
+                      className="flex-1 bg-professional-rolexGold hover:bg-yellow-600 text-black font-semibold"
                     >
-                      <Icon name="Upload" size={32} className="text-professional-rolexGold mx-auto mb-3" />
-                      {formData.files && formData.files.length > 0 ? (
-                        <div>
-                          <p className="text-sm premium-body text-green-700 mb-2 font-semibold">
-                            ✓ Загружено файлов: {formData.files.length}
-                          </p>
-                          <p className="text-xs text-gray-600">
-                            {formData.files.length < 5 ? 'Нажмите для добавления еще файлов' : 'Достигнут лимит в 5 файлов'}
-                          </p>
-                        </div>
-                      ) : (
-                        <div>
-                          <p className="text-sm premium-body text-gray-700 mb-2">
-                            <span className="text-gray-600 font-semibold">Добавить файлы</span> или перетащите сюда
-                          </p>
-                          <p className="text-xs text-gray-600">
-                            Excel, Word, PDF • до 20 МБ каждый • до 5 файлов
-                          </p>
-                        </div>
-                      )}
-                      <input 
-                        type="file" 
-                        ref={fileInputRef}
-                        className="hidden" 
-                        accept=".xlsx,.xls,.docx,.doc,.pdf" 
-                        multiple
-                        onChange={handleFileChange}
-                        disabled={formData.files && formData.files.length >= 5}
-                      />
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Дополнительная информация</label>
-                    <textarea 
-                      value={formData.comment}
-                      onChange={(e) => setFormData(prev => ({...prev, comment: e.target.value}))}
-                      className="w-full px-4 py-3 min-h-[120px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base resize-none" 
-                      placeholder="Опишите ваше оборудование, количество, особые требования к утилизации..."
-                    />
+                      {isSubmitting ? 'Отправляем...' : 'Отправить заявку'}
+                    </Button>
                   </div>
                 </div>
-              </div>
-              
-              <div className="mt-8 border-t pt-6">
-                <div className="flex items-start space-x-3 mb-6">
-                  <div className="relative">
-                    <input 
-                      type="checkbox" 
-                      id="calc-agreement" 
-                      checked={agreed}
-                      onChange={(e) => setAgreed(e.target.checked)}
-                      className="sr-only" 
-                      required 
-                    />
-                    <div 
-                      onClick={() => setAgreed(!agreed)}
-                      className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all cursor-pointer ${
-                        agreed 
-                          ? 'bg-emerald-600 border-emerald-600' 
-                          : 'bg-white border-gray-300 hover:border-emerald-400'
-                      }`}
-                    >
-                      {agreed && (
-                        <svg width="12" height="12" viewBox="0 0 12 12" className="text-professional-rolexGold">
-                          <path
-                            fill="currentColor"
-                            d="M10.28 2.28L9.72 1.72a.75.75 0 00-1.06 0L5 5.38 2.34 2.72a.75.75 0 00-1.06 0l-.56.56a.75.75 0 000 1.06L4.47 8.09a.75.75 0 001.06 0l6.75-6.75a.75.75 0 000-1.06z"
-                          />
-                        </svg>
-                      )}
-                    </div>
-                  </div>
-                  <label htmlFor="calc-agreement" className="text-sm premium-body text-gray-700">
-                    Согласен с <a href="/privacy" className="text-primary hover:underline">политикой конфиденциальности</a>, 
-                    <a href="/terms" className="text-primary hover:underline"> условиями использования</a> и 
-                    обработкой персональных данных. Подтверждаю, что указанная информация достоверна.
-                  </label>
-                </div>
-                
-                <div className="grid grid-cols-1 gap-4">
-                  <Button 
-                    onClick={(e) => {
-                      console.log('🔥 Клик по кнопке "Получить расчет стоимости"');
-                      handleSubmit(e);
-                    }}
-                    type="button"
-                    className="w-full min-h-[48px] bg-primary hover:bg-primary/90" 
-                    size="lg"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <Icon name="Loader2" size={20} className="mr-2 text-professional-rolexGold animate-spin" />
-                        Отправляем запрос...
-                      </>
-                    ) : (
-                      <>
-                        <Icon name="Calculator" size={20} className="mr-2 text-professional-rolexGold" />
-                        Получить расчет стоимости
-                      </>
-                    )}
-                  </Button>
-                  <Button 
-                    onClick={(e) => {
-                      console.log('🔥 Клик по кнопке "Обсудить по телефону"');
-                      handlePhoneCall(e);
-                    }}
-                    variant="outline" 
-                    className="w-full min-h-[48px] border-primary text-primary hover:bg-primary hover:text-white" 
-                    size="lg"
-                  >
-                    <Icon name="Phone" size={20} className="mr-2 text-professional-rolexGold" />
-                    Обсудить по телефону
-                  </Button>
-                </div>
-                
-                <div className="mt-4 text-center">
-                  <div className="bg-green-50 border border-green-200 rounded-lg p-3">
-                    <div className="flex items-center justify-center text-green-700">
-                      <Icon name="Clock" size={16} className="mr-2" />
-                      <span className="text-sm font-medium">Ответим в течение 30 минут в рабочее время</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              )}
+
             </CardContent>
           </Card>
         </div>
       </div>
-
-      <SuccessModal
-        isOpen={showSuccessModal}
-        onClose={() => setShowSuccessModal(false)}
-        title="Заявка на расчет успешно отправлена!"
-        message="Спасибо! Мы получили вашу заявку на расчет стоимости утилизации и свяжемся с вами в ближайшее время."
-      />
     </section>
   );
 }

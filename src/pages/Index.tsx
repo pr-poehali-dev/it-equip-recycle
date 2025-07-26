@@ -10,7 +10,6 @@ import FAQSection from '@/components/sections/FAQSection';
 import ContactsSection from '@/components/sections/ContactsSection';
 import CalculatorSection from '@/components/sections/CalculatorSection';
 import Footer from '@/components/sections/Footer';
-import { sendEmailWithFiles } from '@/lib/email-final';
 
 export default function Index() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -164,18 +163,7 @@ export default function Index() {
         <HeroSection />
         <ServicesSection />
         <PricesSection onPlanSelect={handlePlanSelect} selectedPlan={formData.selectedPlan} />
-        <CalculatorSection 
-          formData={formData}
-          setFormData={setFormData}
-          agreed={agreed}
-          setAgreed={setAgreed}
-          handleSubmit={handleSubmit}
-          handleFileChange={handleFileChange}
-          removeFile={removeFile}
-          isSubmitting={isSubmitting}
-          showSuccessModal={showSuccessModal}
-          setShowSuccessModal={setShowSuccessModal}
-        />
+        <CalculatorSection />
         <AboutSection />
         <ClientsSection />
         <LicensesSection />
