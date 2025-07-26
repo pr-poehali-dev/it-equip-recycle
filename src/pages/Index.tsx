@@ -84,12 +84,11 @@ export default function Index() {
 
       const response = await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
         method: 'POST',
-        body: formDataToSend,
-        mode: 'no-cors'
+        body: formDataToSend
       });
 
-      // Показываем успешное сообщение (formsubmit всегда возвращает успех в no-cors режиме)
-      setShowSuccessModal(true);
+      if (response.ok) {
+        setShowSuccessModal(true);
         setFormData({
           name: '',
           email: '',
@@ -102,6 +101,9 @@ export default function Index() {
           files: []
         });
         setAgreed(false);
+      } else {
+        throw new Error('Ошибка отправки');
+      }
 
     } catch (error) {
       alert('❌ Произошла ошибка при отправке формы. Попробуйте еще раз.');
