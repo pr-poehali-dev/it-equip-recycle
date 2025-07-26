@@ -340,11 +340,11 @@ export default function CalculatorSection({
                   />
                   <label htmlFor="calculator-agreement" className="text-sm text-gray-600">
                     Согласен с{' '}
-                    <a href="/privacy" className="text-emerald-600 hover:underline">
+                    <a href="/privacy" className="text-professional-rolexGreen hover:underline">
                       политикой конфиденциальности
                     </a>
                     ,{' '}
-                    <a href="/terms" className="text-emerald-600 hover:underline">
+                    <a href="/terms" className="text-professional-rolexGreen hover:underline">
                       условиями использования
                     </a>{' '}
                     и обработкой персональных данных.
@@ -358,7 +358,7 @@ export default function CalculatorSection({
                 <Button
                   onClick={handleLocalSubmit}
                   disabled={!formData.name || !formData.phone || !formData.email || !formData.city || formData.city === 'Выберите город' || !agreed || localSubmitting}
-                  className="w-full bg-professional-rolexGreen text-white font-semibold py-3 px-6 text-lg"
+                  className="w-full bg-white border border-professional-rolexGreen text-professional-rolexGreen font-semibold py-3 px-6 text-lg hover:bg-emerald-50"
                 >
                   <Icon name="Calculator" size={20} className="mr-2 text-professional-rolexGold" />
                   {localSubmitting ? 'Отправляем...' : 'Получить расчет стоимости'}
@@ -376,7 +376,7 @@ export default function CalculatorSection({
                   Обсудить по телефону
                 </Button>
 
-                <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 text-center">
+                <div className="bg-white border border-professional-rolexGreen rounded-lg p-4 text-center">
                   <div className="flex items-center justify-center text-professional-rolexGreen">
                     <Icon name="Clock" size={20} className="mr-2 text-professional-rolexGreen" />
                     <span className="font-medium">Ответим в течение 30 минут в рабочее время</span>
