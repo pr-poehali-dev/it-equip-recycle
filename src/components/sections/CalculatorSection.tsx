@@ -166,19 +166,10 @@ export default function CalculatorSection({
                       <option value="">Выберите город</option>
                       <option value="Москва">Москва</option>
                       <option value="Санкт-Петербург">Санкт-Петербург</option>
-                      <option value="Новосибирск">Новосибирск</option>
                       <option value="Екатеринбург">Екатеринбург</option>
+                      <option value="Новосибирск">Новосибирск</option>
                       <option value="Казань">Казань</option>
                       <option value="Нижний Новгород">Нижний Новгород</option>
-                      <option value="Челябинск">Челябинск</option>
-                      <option value="Самара">Самара</option>
-                      <option value="Омск">Омск</option>
-                      <option value="Ростов-на-Дону">Ростов-на-Дону</option>
-                      <option value="Уфа">Уфа</option>
-                      <option value="Красноярск">Красноярск</option>
-                      <option value="Воронеж">Воронеж</option>
-                      <option value="Пермь">Пермь</option>
-                      <option value="Волгоград">Волгоград</option>
                       <option value="Другой город">Другой город</option>
                     </select>
                   </div>
@@ -200,7 +191,7 @@ export default function CalculatorSection({
                 <div className="space-y-6">
                   <div>
                     <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">
-                      📄 Документы (необязательно)
+                      📄 Документы (ОБЯЗАТЕЛЬНО)
                       <span className="text-xs text-gray-600 block mt-1">Прикрепите спецификацию оборудования для точного расчета (до 5 файлов, максимум 20МБ каждый)</span>
                     </label>
                     
@@ -377,27 +368,16 @@ export default function CalculatorSection({
             </div>
             
             <div className="text-center">
-              <h3 className="text-2xl font-bold text-gray-900 mb-3">Запрос отправлен!</h3>
-              <p className="text-gray-600 mb-6">
-                Спасибо за обращение! Мы получили ваш запрос и свяжемся с вами в течение 30 минут в рабочее время.
+              <h3 className="text-xl font-bold text-gray-900 mb-4">Заявка отправлена!</h3>
+              <p className="text-gray-600 mb-4">
+                Спасибо! Ваша заявка принята. Мы свяжемся с вами в ближайшее время.
               </p>
-              
-              <div className="space-y-3 mb-6">
-                <div className="flex items-center justify-center text-sm text-gray-500">
-                  <Icon name="Mail" size={16} className="mr-2 text-professional-rolexGold" />
-                  Уведомление отправлено на ваш email
-                </div>
-                <div className="flex items-center justify-center text-sm text-gray-500">
-                  <Icon name="Phone" size={16} className="mr-2 text-professional-rolexGold" />
-                  Наш менеджер свяжется с вами по телефону
-                </div>
-              </div>
               
               <Button 
                 onClick={() => setShowSuccessModal(false)}
                 className="w-full bg-primary hover:bg-primary/90"
               >
-                Отлично!
+                ОК
               </Button>
             </div>
           </div>
