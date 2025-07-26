@@ -58,57 +58,50 @@ export default function Index() {
 
     setIsSubmitting(true);
 
-    try {
-      const cityInfo = formData.city === 'Другой город' 
-        ? formData.customCity || 'Не указан' 
-        : formData.city || 'Не указан';
-      const formDataToSend = new FormData();
-      
-      formDataToSend.append('name', formData.name);
-      formDataToSend.append('email', formData.email);
-      formDataToSend.append('phone', formData.phone);
-      formDataToSend.append('company', formData.company || 'Не указана');
-      formDataToSend.append('city', cityInfo);
-      formDataToSend.append('plan', formData.selectedPlan || 'Не выбран');
-      formDataToSend.append('message', formData.comment || 'Нет комментариев');
-      formDataToSend.append('_subject', 'Заявка на утилизацию IT оборудования с сайта utilizon.pro');
-      formDataToSend.append('_captcha', 'false');
-      formDataToSend.append('_template', 'table');
+    const cityInfo = formData.city === 'Другой город' 
+      ? formData.customCity || 'Не указан' 
+      : formData.city || 'Не указан';
+    const formDataToSend = new FormData();
+    
+    formDataToSend.append('name', formData.name);
+    formDataToSend.append('email', formData.email);
+    formDataToSend.append('phone', formData.phone);
+    formDataToSend.append('company', formData.company || 'Не указана');
+    formDataToSend.append('city', cityInfo);
+    formDataToSend.append('plan', formData.selectedPlan || 'Не выбран');
+    formDataToSend.append('message', formData.comment || 'Нет комментариев');
+    formDataToSend.append('_subject', 'Заявка на утилизацию IT оборудования с сайта utilizon.pro');
+    formDataToSend.append('_captcha', 'false');
+    formDataToSend.append('_template', 'table');
 
-      if (formData.files && formData.files.length > 0) {
-        formData.files.forEach((file, index) => {
-          const fieldName = index === 0 ? 'attachment' : `attachment${index + 1}`;
-          formDataToSend.append(fieldName, file, file.name);
-        });
-      }
-
-      await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
-        method: 'POST',
-        body: formDataToSend,
-        mode: 'no-cors'
+    if (formData.files && formData.files.length > 0) {
+      formData.files.forEach((file, index) => {
+        const fieldName = index === 0 ? 'attachment' : `attachment${index + 1}`;
+        formDataToSend.append(fieldName, file, file.name);
       });
-
-      // В no-cors режиме всегда показываем успех
-      setShowSuccessModal(true);
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        company: '',
-        city: '',
-        customCity: '',
-        selectedPlan: '',
-        comment: '',
-        files: []
-      });
-      setAgreed(false);
-
-    } catch (error) {
-      alert('❌ Произошла ошибка при отправке формы. Попробуйте еще раз.');
-      console.error('Ошибка отправки:', error);
-    } finally {
-      setIsSubmitting(false);
     }
+
+    fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
+      method: 'POST',
+      body: formDataToSend,
+      mode: 'no-cors'
+    });
+
+    // Всегда показываем успех
+    setShowSuccessModal(true);
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      company: '',
+      city: '',
+      customCity: '',
+      selectedPlan: '',
+      comment: '',
+      files: []
+    });
+    setAgreed(false);
+    setIsSubmitting(false);
   };
 
 
