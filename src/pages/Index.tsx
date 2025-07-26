@@ -10,7 +10,7 @@ import FAQSection from '@/components/sections/FAQSection';
 import ContactsSection from '@/components/sections/ContactsSection';
 import CalculatorSection from '@/components/sections/CalculatorSection';
 import Footer from '@/components/sections/Footer';
-import { sendEmailWithFiles } from '@/lib/email-final';
+import { sendEmailWithFiles } from '@/lib/email-simple-working';
 
 export default function Index() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -104,24 +104,24 @@ export default function Index() {
     // Ограничиваем до 5 файлов (лимит FormSubmit)
     const filesToAdd = selectedFiles.slice(0, 5);
     
-    // Проверяем размер каждого файла (до 5 МБ для надежной отправки)
+    // Проверяем размер каждого файла (до 15 МБ)
     const validFiles = filesToAdd.filter(file => {
-      const maxSize = 5 * 1024 * 1024; // 5 МБ
+      const maxSize = 15 * 1024 * 1024; // 15 МБ
       if (file.size > maxSize) {
-        alert(`Файл "${file.name}" слишком большой. Максимальный размер: 5 МБ для гарантированной доставки`);
+        alert(`Файл "${file.name}" слишком большой. Максимальный размер: 15 МБ`);
         return false;
       }
       return true;
     });
     
-    // Проверяем общий размер всех файлов (до 5 МБ общий лимит для файлов)
+    // Проверяем общий размер всех файлов (до 50 МБ общий лимит)
     const currentFiles = formData.files || [];
     const allFiles = [...currentFiles, ...validFiles];
     const totalSize = allFiles.reduce((sum, file) => sum + file.size, 0);
-    const maxTotalSize = 5 * 1024 * 1024; // 5 МБ общий лимит
+    const maxTotalSize = 50 * 1024 * 1024; // 50 МБ общий лимит
     
     if (totalSize > maxTotalSize) {
-      alert(`Общий размер файлов превышает 5 МБ. Текущий размер: ${(totalSize / 1024 / 1024).toFixed(2)} МБ. Для больших файлов свяжитесь с нами по телефону.`);
+      alert(`Общий размер файлов превышает 50 МБ. Текущий размер: ${(totalSize / 1024 / 1024).toFixed(2)} МБ`);
       return;
     }
     

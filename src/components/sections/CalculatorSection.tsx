@@ -259,7 +259,7 @@ export default function CalculatorSection({
                             <span className="text-gray-600 font-semibold">Добавить файлы</span> или перетащите сюда
                           </p>
                           <p className="text-xs text-gray-600">
-                            Excel, Word, PDF • до 5 МБ каждый • общий лимит 5 МБ для гарантированной доставки
+                            Excel, Word, PDF • до 15 МБ каждый • общий лимит 50 МБ
                           </p>
                         </div>
                       )}
