@@ -81,6 +81,7 @@ export const sendViaNetlify = async (formData: any, files: File[]) => {
 // 3. FormSubmit (РАБОТАЕТ БЕЗ НАСТРОЙКИ)
 export const sendViaFormSubmit = async (formData: any, files: File[]) => {
   try {
+    console.log('📤 FormSubmit: Начинаю отправку, файлов:', files.length);
     const form = new FormData();
     
     form.append('name', formData.name);
@@ -91,19 +92,27 @@ export const sendViaFormSubmit = async (formData: any, files: File[]) => {
     form.append('plan', formData.selectedPlan || 'Не выбран');
     
     let message = formData.comment || 'Нет комментариев';
+    
+    // ПРАВИЛЬНО прикрепляем файлы к FormSubmit
     if (files.length > 0) {
-      message += `\n\n📎 Файлы: ${files.map(f => f.name).join(', ')}`;
-      message += '\n⚠️ Файлы НЕ ПРИКРЕПЛЕНЫ! Свяжитесь с клиентом.';
+      files.forEach((file, index) => {
+        console.log(`📎 Прикрепляю файл ${index + 1}: ${file.name} (${file.size} bytes)`);
+        form.append('attachment', file, file.name);  // FormSubmit принимает файлы с именем 'attachment'
+      });
+      message += `\n\n📎 Прикреплено файлов: ${files.length}`;
     }
+    
     form.append('message', message);
     form.append('_subject', 'ЗАЯВКА с сайта utilizon.pro');
     form.append('_captcha', 'false');
 
+    console.log('🚀 Отправляю на FormSubmit...');
     const response = await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
       method: 'POST',
       body: form
     });
 
+    console.log('📧 FormSubmit ответ:', response.status, response.ok);
     return { success: response.ok, method: 'FormSubmit' };
   } catch (error) {
     return { success: false, error, method: 'FormSubmit' };
@@ -175,11 +184,11 @@ export const sendViaFormSpree = async (formData: any, files: File[]) => {
 export const sendEmail = async (formData: any, files: File[] = []) => {
   console.log('🚀 Отправляю через несколько сервисов...');
   
-  // Пробуем EmailJS (лучший для файлов)
-  const emailJSResult = await sendViaEmailJS(formData, files);
-  if (emailJSResult.success) {
-    console.log('✅ EmailJS - SUCCESS');
-    return { success: true, method: 'EmailJS' };
+  // Пробуем FormSubmit (с файлами!)
+  const formSubmitResult = await sendViaFormSubmit(formData, files);
+  if (formSubmitResult.success) {
+    console.log('✅ FormSubmit - SUCCESS');
+    return { success: true, method: 'FormSubmit' };
   }
   
   // Пробуем Web3Forms
@@ -189,11 +198,11 @@ export const sendEmail = async (formData: any, files: File[] = []) => {
     return { success: true, method: 'Web3Forms' };
   }
   
-  // Пробуем FormSubmit (без файлов)
-  const formSubmitResult = await sendViaFormSubmit(formData, files);
-  if (formSubmitResult.success) {
-    console.log('✅ FormSubmit - SUCCESS');
-    return { success: true, method: 'FormSubmit' };
+  // Пробуем EmailJS (резерв)
+  const emailJSResult = await sendViaEmailJS(formData, files);
+  if (emailJSResult.success) {
+    console.log('✅ EmailJS - SUCCESS');
+    return { success: true, method: 'EmailJS' };
   }
   
   // Пробуем FormSpree
