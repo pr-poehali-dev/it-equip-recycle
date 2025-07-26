@@ -45,7 +45,7 @@ export function createLoadingIndicator(): HTMLElement {
 }
 
 // Создание модального окна успеха
-export function createSuccessModal(message: string): void {
+export function createSuccessModal(message?: string): void {
   const successDiv = document.createElement('div');
   successDiv.innerHTML = `
     <div style="
@@ -76,9 +76,9 @@ export function createSuccessModal(message: string): void {
         color: black;
         font-weight: bold;
       ">✅</div>
-      <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Заявка отправлена!</h3>
-      <p style="margin: 0 0 8px 0; opacity: 0.9; font-size: 14px;">${message}</p>
-      <p style="margin: 0; opacity: 0.7; font-size: 12px;">Мы свяжемся с вами в ближайшее время</p>
+      <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600;">Заявка успешно отправлена!</h3>
+      <p style="margin: 0 0 8px 0; opacity: 0.9; font-size: 14px;">${message || 'Благодарим за обращение к нашей компании!'}</p>
+      <p style="margin: 0; opacity: 0.7; font-size: 12px;">Наш специалист свяжется с вами в ближайшее время</p>
       <button onclick="this.parentElement.parentElement.remove()" style="
         background: #D4AF37;
         color: black;
@@ -88,7 +88,7 @@ export function createSuccessModal(message: string): void {
         margin-top: 12px;
         cursor: pointer;
         font-weight: 600;
-      ">OK</button>
+      ">Отлично, жду звонка</button>
     </div>
   `;
   document.body.appendChild(successDiv);

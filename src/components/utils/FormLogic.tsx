@@ -8,17 +8,3 @@ export {
   createErrorModal,
   createFileSizeErrorModal
 } from './ModalComponents';
-
-// Импортируем функции отправки файлов
-export {
-  sendSmallFilesSingle,
-  sendSmallFilesMultiple,
-  sendSmallFiles,
-  sendLargeFiles
-} from './FileSubmission';
-
-// Импортируем функции отправки форм
-export {
-  sendFormWithoutFiles,
-  sendFallbackForm
-} from './FormSender';

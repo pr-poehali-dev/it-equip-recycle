@@ -84,7 +84,10 @@ export default function Index() {
 
       const response = await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
         method: 'POST',
-        body: formDataToSend
+        body: formDataToSend,
+        headers: {
+          'Accept': 'application/json'
+        }
       });
 
       if (response.ok) {

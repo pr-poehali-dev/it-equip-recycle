@@ -42,7 +42,7 @@ export default function ContactsSection() {
       formDataToSend.append('_captcha', 'false');
       formDataToSend.append('_template', 'table');
       
-      // Отправляем через FormSubmit
+      // Отправляем через FormSubmit (рабочий метод от 12:42)
       const response = await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
         method: 'POST',
         body: formDataToSend
