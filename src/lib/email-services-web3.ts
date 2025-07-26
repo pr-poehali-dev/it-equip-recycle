@@ -53,15 +53,29 @@ EMAIL: ${formData.email || 'Не указан'}
     // ОТКЛЮЧАЕМ редирект!
     form.append('redirect', 'false');
 
-    const response = await fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json'
-      },
-      body: form
+    // Используем XMLHttpRequest чтобы избежать навигации
+    const response = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'https://api.web3forms.com/submit', true);
+      xhr.setRequestHeader('Accept', 'application/json');
+      
+      xhr.onload = () => {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          try {
+            resolve(JSON.parse(xhr.responseText));
+          } catch {
+            resolve({ success: true, message: 'Отправлено' });
+          }
+        } else {
+          reject(new Error(`HTTP ${xhr.status}`));
+        }
+      };
+      
+      xhr.onerror = () => reject(new Error('Сетевая ошибка'));
+      xhr.send(form);
     });
 
-    const result = await response.json();
+    const result = response as any;
     
     if (result.success) {
       console.log('✅ Письмо отправлено через Web3Forms!');
