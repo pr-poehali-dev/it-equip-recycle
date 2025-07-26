@@ -163,7 +163,7 @@ export default function CalculatorSection({
           <Card className="bg-white border border-gray-200 shadow-lg">
             <div className="bg-emerald-600 p-6 text-white">
               <div className="flex items-center justify-center mb-4">
-                <Icon name="Calculator" size={32} className="text-yellow-400 mr-3" />
+                <Icon name="Calculator" size={32} className="text-professional-rolexGold mr-3" />
                 <h3 className="text-xl font-bold">Калькулятор стоимости утилизации</h3>
               </div>
               <p className="text-emerald-100 text-center">
@@ -261,7 +261,7 @@ export default function CalculatorSection({
                 </p>
                 
                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center bg-gray-50 hover:bg-gray-100 transition-colors">
-                  <Icon name="Upload" size={32} className="text-gray-400 mx-auto mb-3" />
+                  <Icon name="Upload" size={32} className="text-professional-rolexGold mx-auto mb-3" />
                   <input
                     type="file"
                     id="calculator-files"
@@ -360,7 +360,7 @@ export default function CalculatorSection({
                   disabled={!formData.name || !formData.phone || !formData.email || !formData.city || formData.city === 'Выберите город' || !agreed || localSubmitting}
                   className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 text-lg"
                 >
-                  <Icon name="Calculator" size={20} className="mr-2" />
+                  <Icon name="Calculator" size={20} className="mr-2 text-professional-rolexGold" />
                   {localSubmitting ? 'Отправляем...' : 'Получить расчет стоимости'}
                 </Button>
 
