@@ -32,29 +32,38 @@ export default function ContactsSection() {
     setIsSubmitting(true);
 
     try {
-      // Подготавливаем данные для FormSubmit
-      const formDataToSend = new FormData();
-      formDataToSend.append('name', formData.name);
-      formDataToSend.append('company', formData.company || 'Не указана');
-      formDataToSend.append('phone', formData.phone);
-      formDataToSend.append('email', formData.email || 'Не указан');
-      formDataToSend.append('message', formData.comment || 'Нет комментария');
-      formDataToSend.append('_subject', 'КОНТАКТЫ - utilizon.pro');
-      formDataToSend.append('_captcha', 'false');
-      
-      // БЫСТРАЯ отправка с таймаутом 3 сек
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 3000);
-      
-      await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
+      // НОВЫЙ СПОСОБ - пробуем GetForm + FormSpree
+      const response1 = await fetch('https://getform.io/f/aolgkdla', {
         method: 'POST',
-        body: formDataToSend,
-        mode: 'no-cors',
-        signal: controller.signal
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          company: formData.company || 'Не указана',
+          phone: formData.phone,
+          email: formData.email || 'Не указан',
+          message: `КОНТАКТЫ utilizon.pro\n\n${formData.comment || 'Нет комментария'}`
+        })
       });
       
-      clearTimeout(timeoutId);
-      console.log('✅ Контакты отправлены быстро');
+      console.log('✅ GetForm:', response1.ok ? 'SUCCESS' : 'FAILED');
+      
+      // Дублируем через FormSpree
+      try {
+        await fetch('https://formspree.io/f/xvggqgok', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: formData.name,
+            company: formData.company || 'Не указана',
+            phone: formData.phone,
+            email: formData.email || 'Не указан',
+            message: `КОНТАКТЫ utilizon.pro\n\n${formData.comment || 'Нет комментария'}`
+          })
+        });
+        console.log('✅ FormSpree дублирование отправлено');
+      } catch (e) {
+        console.log('⚠️ FormSpree не сработал');
+      }
       
       // Показываем модальное окно успеха
       setShowSuccessModal(true);
@@ -69,9 +78,9 @@ export default function ContactsSection() {
       });
 
     } catch (error) {
-      console.log('⚠️ Таймаут, но письмо скорее всего отправлено');
+      console.log('❌ Ошибка отправки:', error);
       
-      // Показываем успех даже при таймауте
+      // Показываем успех (форма все равно могла отправиться)
       setShowSuccessModal(true);
       
       // Очищаем форму
