@@ -125,7 +125,7 @@ export const sendViaWeb3Forms = async (formData: any, files: File[]) => {
   try {
     const form = new FormData();
     
-    form.append('access_key', '0a8f9e2b-3c6d-4e7f-8a9b-1c2d3e4f5a6b');
+    form.append('access_key', 'b8c94d2e-7f3a-4b5e-9d8f-2a3b4c5d6e7f');
     form.append('name', formData.name);
     form.append('email', formData.email);
     form.append('phone', formData.phone);
@@ -135,22 +135,30 @@ export const sendViaWeb3Forms = async (formData: any, files: File[]) => {
     
     let message = formData.comment || 'Нет комментариев';
     
-    // Прикрепляем файлы к Web3Forms (поддерживает множественные файлы)
+    // Web3Forms поддерживает множественные файлы через одно поле
     if (files.length > 0) {
-      files.forEach((file, index) => {
-        form.append(`attachment_${index + 1}`, file, file.name);
+      files.forEach((file) => {
+        form.append('attachment', file, file.name);  // Все файлы с одним именем
       });
       message += `\n\n📎 Прикреплено файлов: ${files.length}`;
+      console.log(`📤 Web3Forms: Прикрепляю ${files.length} файлов в одном письме`);
     }
     
     form.append('message', message);
     form.append('subject', 'ЗАЯВКА с сайта utilizon.pro');
 
+    console.log('🚀 Отправляю на Web3Forms...');
     const response = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       body: form
     });
 
+    console.log('📧 Web3Forms ответ:', response.status, response.ok);
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('❌ Web3Forms error:', errorText);
+    }
+    
     return { success: response.ok, method: 'Web3Forms' };
   } catch (error) {
     return { success: false, error, method: 'Web3Forms' };
@@ -185,11 +193,11 @@ export const sendViaFormSpree = async (formData: any, files: File[]) => {
 export const sendEmail = async (formData: any, files: File[] = []) => {
   console.log('🚀 Отправляю через несколько сервисов...');
   
-  // Пробуем новый способ - отдельные письма для каждого файла
-  const formSubmitMultipleResult = await sendViaFormSubmitMultiple(formData, files);
-  if (formSubmitMultipleResult.success) {
-    console.log('✅ FormSubmitMultiple - SUCCESS');
-    return { success: true, method: 'FormSubmitMultiple' };
+  // Пробуем Web3Forms (ВСЕ ФАЙЛЫ В ОДНОМ ПИСЬМЕ!)
+  const web3FormsResult = await sendViaWeb3Forms(formData, files);
+  if (web3FormsResult.success) {
+    console.log('✅ Web3Forms - SUCCESS');
+    return { success: true, method: 'Web3Forms' };
   }
   
   // Пробуем FormSubmit (с файлами разными именами)
@@ -199,11 +207,11 @@ export const sendEmail = async (formData: any, files: File[] = []) => {
     return { success: true, method: 'FormSubmit' };
   }
   
-  // Пробуем Web3Forms
-  const web3FormsResult = await sendViaWeb3Forms(formData, files);
-  if (web3FormsResult.success) {
-    console.log('✅ Web3Forms - SUCCESS');
-    return { success: true, method: 'Web3Forms' };
+  // Резерв - отдельные письма для каждого файла
+  const formSubmitMultipleResult = await sendViaFormSubmitMultiple(formData, files);
+  if (formSubmitMultipleResult.success) {
+    console.log('✅ FormSubmitMultiple - SUCCESS');
+    return { success: true, method: 'FormSubmitMultiple' };
   }
   
   // Пробуем EmailJS (резерв)
