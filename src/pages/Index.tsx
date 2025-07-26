@@ -22,7 +22,6 @@ export default function Index() {
     customCity: '',
     comment: '',
     files: [] as File[],
-    photos: [] as File[],
     selectedPlan: ''
   });
   const [agreed, setAgreed] = useState(false);
@@ -93,8 +92,7 @@ export default function Index() {
         customCity: '',
         selectedPlan: '',
         comment: '',
-        files: [],
-        photos: []
+        files: []
       });
       setAgreed(false);
 
@@ -109,8 +107,7 @@ export default function Index() {
         customCity: '',
         selectedPlan: '',
         comment: '',
-        files: [],
-        photos: []
+        files: []
       });
       setAgreed(false);
       
@@ -245,52 +242,7 @@ export default function Index() {
     }));
   };
 
-  const handlePhotoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedPhotos = Array.from(e.target.files || []);
-    
-    // Ограничиваем до 3 фото
-    const photosToAdd = selectedPhotos.slice(0, 3);
-    
-    // Проверяем размер каждого фото (до 10 МБ)
-    const sizeValidPhotos = photosToAdd.filter(photo => {
-      const maxSize = 10 * 1024 * 1024; // 10 МБ
-      if (photo.size > maxSize) {
-        alert(`Фото "${photo.name}" слишком большое. Максимальный размер: 10 МБ`);
-        return false;
-      }
-      return true;
-    });
-    
-    // Проверяем тип файла
-    const validPhotos = sizeValidPhotos.filter(photo => {
-      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/heic', 'image/webp'];
-      if (!allowedTypes.includes(photo.type)) {
-        alert(`Файл "${photo.name}" не является изображением. Поддерживаются: JPG, PNG, HEIC, WEBP`);
-        return false;
-      }
-      return true;
-    });
-    
-    // Проверяем общее количество фото (до 3)
-    const currentPhotos = formData.photos || [];
-    const allPhotos = [...currentPhotos, ...validPhotos];
-    const totalPhotos = allPhotos.slice(0, 3);
-    
-    if (totalPhotos.length > currentPhotos.length) {
-      setFormData(prev => ({ ...prev, photos: totalPhotos }));
-    }
-    
-    if (selectedPhotos.length > 3) {
-      alert('Максимум 3 фото за одну отправку. Первые 3 фото были добавлены.');
-    }
-  };
 
-  const removePhoto = (indexToRemove: number) => {
-    setFormData(prev => ({
-      ...prev,
-      photos: prev.photos.filter((_, index) => index !== indexToRemove)
-    }));
-  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -306,9 +258,7 @@ export default function Index() {
           setAgreed={setAgreed}
           handleSubmit={handleSubmit}
           handleFileChange={handleFileChange}
-          handlePhotoChange={handlePhotoChange}
           removeFile={removeFile}
-          removePhoto={removePhoto}
           isSubmitting={isSubmitting}
           showSuccessModal={showSuccessModal}
           setShowSuccessModal={setShowSuccessModal}
