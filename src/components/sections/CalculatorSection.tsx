@@ -50,11 +50,6 @@ export default function CalculatorSection({
 }: CalculatorSectionProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handlePhoneCall = () => {
-    window.open('tel:+79000000000', '_self');
-  };
-
-
 
   const handlePhoneCall = (e?: React.MouseEvent) => {
     if (e) {
