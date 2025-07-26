@@ -54,7 +54,7 @@ export default function Index() {
     setIsSubmitting(true);
 
     try {
-      const cityInfo = formData.city === 'Другой город' ? formData.customCity : formData.city;
+      const cityInfo = formData.city || 'Не указан';
       const formDataToSend = new FormData();
       
       formDataToSend.append('name', formData.name);
