@@ -41,28 +41,22 @@ export default function Index() {
   const handleSubmit = async (e?: React.MouseEvent) => {
     e?.preventDefault();
     
-    // Проверяем обязательные поля
     if (!formData.name.trim() || !formData.phone.trim() || !formData.email.trim()) {
       alert('❌ Пожалуйста, заполните обязательные поля: Имя, Телефон, Email');
       return;
     }
     
-    // Проверяем согласие
     if (!agreed) {
       alert('❌ Пожалуйста, подтвердите согласие с политикой конфиденциальности');
       return;
     }
 
     setIsSubmitting(true);
-    console.log('🚀 Начинаю отправку формы...');
 
     try {
-      // Формируем данные для отправки
       const cityInfo = formData.city === 'Другой город' ? formData.customCity : formData.city;
-      
       const formDataToSend = new FormData();
       
-      // Добавляем текстовые поля
       formDataToSend.append('name', formData.name);
       formDataToSend.append('email', formData.email);
       formDataToSend.append('phone', formData.phone);
@@ -74,29 +68,19 @@ export default function Index() {
       formDataToSend.append('_captcha', 'false');
       formDataToSend.append('_template', 'table');
 
-      // Добавляем файлы
       if (formData.files && formData.files.length > 0) {
         formData.files.forEach((file, index) => {
           const fieldName = index === 0 ? 'attachment' : `attachment${index + 1}`;
           formDataToSend.append(fieldName, file, file.name);
-          console.log(`📎 Прикреплен файл: ${file.name} как ${fieldName}`);
         });
       }
 
-      console.log('📧 Отправляю заявку на FormSubmit...');
-
-      // Простой запрос без таймаута - пусть FormSubmit обрабатывает полностью
-      const response = await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
+      await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
         method: 'POST',
         body: formDataToSend
       });
 
-      console.log('✅ Ответ от FormSubmit получен, статус:', response.status);
-      
-      // Показываем успех
       setShowSuccessModal(true);
-      
-      // Очищаем форму
       setFormData({
         name: '',
         email: '',
@@ -111,13 +95,7 @@ export default function Index() {
       setAgreed(false);
 
     } catch (error) {
-      console.error('❌ Ошибка при отправке:', error);
-      
-      // FormSubmit может блокировать fetch, но письмо всё равно отправляется
-      // Поэтому показываем успех в любом случае
       setShowSuccessModal(true);
-      
-      // Очищаем форму
       setFormData({
         name: '',
         email: '',
@@ -133,7 +111,6 @@ export default function Index() {
       
     } finally {
       setIsSubmitting(false);
-      console.log('✅ Отправка завершена, кнопка разблокирована');
     }
   };
 
