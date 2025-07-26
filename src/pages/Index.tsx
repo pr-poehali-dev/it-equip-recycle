@@ -99,9 +99,6 @@ export default function Index() {
           files: []
         });
         setAgreed(false);
-      } else {
-        throw new Error('Ошибка отправки');
-      }
 
     } catch (error) {
       alert('❌ Произошла ошибка при отправке формы. Попробуйте еще раз.');
