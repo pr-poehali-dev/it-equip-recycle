@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
 import SuccessModal from "@/components/ui/success-modal";
-import { sendEmail } from "@/lib/email-final";
+import { sendFormData } from "@/lib/mail-sender";
 
 export default function ContactsSection() {
   const [formData, setFormData] = useState({
@@ -34,19 +34,22 @@ export default function ContactsSection() {
 
     try {
       console.log('🚀 Отправляю заявку из контактной формы...');
-      const result = await sendEmail({
+      const result = await sendFormData({
         name: formData.name,
         company: formData.company || 'Не указана',
         phone: formData.phone,
         email: formData.email || 'Не указан',
         comment: formData.comment || 'Нет комментария',
         city: 'Не указан',
-        selectedPlan: 'Не выбран'
+        plan: 'Не выбран'
       }, []);
       
       console.log(`📧 Результат отправки:`, result);
-      // Всегда показываем успех для UX
-      setShowSuccessModal(true);
+      if (result) {
+        setShowSuccessModal(true);
+      } else {
+        alert('Ошибка отправки');
+      }
       setFormData({
         name: '',
         company: '',
