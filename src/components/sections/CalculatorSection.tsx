@@ -395,7 +395,7 @@ export default function CalculatorSection({
             {/* Логотип компании */}
             <div className="mb-6">
               <img 
-                src="https://cdn.jsdelivr.net/gh/yourusername/yourrepo/assets/logo.png" 
+                src="https://i.postimg.cc/nVpjdh0s/utilizon-logo.png" 
                 alt="Utilizon логотип" 
                 className="w-20 h-20 mx-auto rounded-full object-cover border-2 border-professional-rolexGold/30"
               />
