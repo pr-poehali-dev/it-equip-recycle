@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
 import SuccessModal from "@/components/ui/success-modal";
-import { sendEmail } from "@/lib/email-services-simple";
+import { sendEmail } from "@/lib/email-services-clean";
 
 export default function ContactsSection() {
   const [formData, setFormData] = useState({
@@ -60,7 +60,6 @@ export default function ContactsSection() {
       
     } catch (error) {
       console.error('❌ Ошибка отправки:', error);
-      alert('Заявка отправлена! Мы получили ваши данные и свяжемся с вами в ближайшее время.');
       setShowSuccessModal(true);
       setFormData({
         name: '',

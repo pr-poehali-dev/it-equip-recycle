@@ -10,7 +10,7 @@ import FAQSection from '@/components/sections/FAQSection';
 import ContactsSection from '@/components/sections/ContactsSection';
 import CalculatorSection from '@/components/sections/CalculatorSection';
 import Footer from '@/components/sections/Footer';
-import { sendEmailWithFiles } from '@/lib/email-services-simple';
+import { sendEmailWithFiles } from '@/lib/email-services-clean';
 
 export default function Index() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -104,36 +104,12 @@ export default function Index() {
   };
 
   const sendViaFormSubmit = async () => {
-    const cityInfo = formData.city === 'Другой город' 
-      ? formData.customCity || 'Не указан' 
-      : formData.city || 'Не указан';
+    const result = await sendEmailWithFiles(formData, formData.files || []);
     
-    const formDataToSend = new FormData();
-    formDataToSend.append('name', formData.name);
-    formDataToSend.append('email', formData.email);
-    formDataToSend.append('phone', formData.phone);
-    formDataToSend.append('company', formData.company || 'Не указана');
-    formDataToSend.append('city', cityInfo);
-    formDataToSend.append('plan', formData.selectedPlan || 'Не выбран');
-    formDataToSend.append('message', formData.comment || 'Нет комментариев');
-    formDataToSend.append('_subject', 'Заявка на утилизацию IT оборудования с сайта utilizon.pro');
-    formDataToSend.append('_captcha', 'false');
-    formDataToSend.append('_template', 'table');
-    
-    // Добавляем информацию о файлах в текст
-    if (formData.files && formData.files.length > 0) {
-      const filesList = formData.files.map(f => `- ${f.name} (${(f.size/1024/1024).toFixed(2)}МБ)`).join('\n');
-      formDataToSend.append('files_info', `Клиент пытался прикрепить ${formData.files.length} файл(ов):\n${filesList}\n\nСвяжитесь с клиентом для получения файлов.`);
+    if (result.success) {
+      setShowSuccessModal(true);
+      resetForm();
     }
-
-    await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
-      method: 'POST',
-      body: formDataToSend
-    });
-    
-    console.log('📤 FormSubmit: Основные данные отправлены (без файлов)');
-    setShowSuccessModal(true);
-    resetForm();
   };
 
 
