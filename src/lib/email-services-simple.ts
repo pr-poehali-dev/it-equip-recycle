@@ -15,19 +15,13 @@ export const sendViaFormSubmit = async (formData: any, files: File[]) => {
     
     let message = formData.comment || 'Нет комментариев';
     
-    // Прикрепляем первый файл (FormSubmit принимает только 1 файл)
+    // Прикрепляем ВСЕ файлы через FormSubmit (РАБОТАЛО 2 дня назад!)
     if (files.length > 0) {
-      console.log(`📎 Прикрепляю ПЕРВЫЙ файл: ${files[0].name} (${files[0].size} bytes)`);
-      form.append('attachment', files[0], files[0].name);
-      
-      if (files.length > 1) {
-        message += `\n\n📎 Прикреплен 1 файл из ${files.length}:`;
-        message += `\n✅ ${files[0].name}`;
-        message += `\n❗ Остальные файлы: ${files.slice(1).map(f => f.name).join(', ')}`;
-        message += `\n⚠️ ОТПРАВЬТЕ ОСТАЛЬНЫЕ ФАЙЛЫ ОТДЕЛЬНО!`;
-      } else {
-        message += `\n\n📎 Прикреплен файл: ${files[0].name}`;
-      }
+      files.forEach((file, index) => {
+        console.log(`📎 Прикрепляю файл ${index + 1}: ${file.name} (${file.size} bytes)`);
+        form.append('attachment', file, file.name);  // ВСЕ файлы с одним именем
+      });
+      message += `\n\n📎 Прикреплено файлов: ${files.length}`;
     }
     
     form.append('message', message);
