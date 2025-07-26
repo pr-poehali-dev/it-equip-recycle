@@ -75,122 +75,47 @@ export default function Index() {
         });
       }
 
-
-
-      await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
+      const response = await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
         method: 'POST',
         body: formDataToSend
       });
 
-      setShowSuccessModal(true);
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        company: '',
-        city: '',
-        customCity: '',
-        selectedPlan: '',
-        comment: '',
-        files: []
-      });
-      setAgreed(false);
+      if (response.ok) {
+        setShowSuccessModal(true);
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          company: '',
+          city: '',
+          customCity: '',
+          selectedPlan: '',
+          comment: '',
+          files: []
+        });
+        setAgreed(false);
+      } else {
+        throw new Error('Ошибка отправки');
+      }
 
     } catch (error) {
-      setShowSuccessModal(true);
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        company: '',
-        city: '',
-        customCity: '',
-        selectedPlan: '',
-        comment: '',
-        files: []
-      });
-      setAgreed(false);
-      
+      alert('❌ Произошла ошибка при отправке формы. Попробуйте еще раз.');
+      console.error('Ошибка отправки:', error);
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // Антивирусная проверка файлов
-  const scanFileForVirus = async (file: File): Promise<boolean> => {
-    try {
-      // Базовая проверка расширения
-      const allowedExtensions = ['.xlsx', '.xls', '.docx', '.doc', '.pdf'];
-      const fileExtension = file.name.toLowerCase().substring(file.name.lastIndexOf('.'));
-      
-      if (!allowedExtensions.includes(fileExtension)) {
-        throw new Error(`Недопустимый формат файла: ${fileExtension}`);
-      }
-      
-      // Проверка MIME-типа
-      const allowedMimeTypes = [
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // .xlsx
-        'application/vnd.ms-excel', // .xls
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // .docx
-        'application/msword', // .doc
-        'application/pdf' // .pdf
-      ];
-      
-      if (file.type && !allowedMimeTypes.includes(file.type)) {
-        console.warn(`⚠️ Необычный MIME-тип для ${file.name}: ${file.type} (файл будет проверен дополнительно)`);
-        // Не блокируем файл, просто предупреждаем
-      }
-      
-      // Проверка на подозрительные последовательности байтов
-      const arrayBuffer = await file.arrayBuffer();
-      const bytes = new Uint8Array(arrayBuffer);
-      
-      // Проверяем первые байты на соответствие формату
-      const pdfSignature = [0x25, 0x50, 0x44, 0x46]; // %PDF
-      const zipSignature = [0x50, 0x4B, 0x03, 0x04]; // PK (для .docx, .xlsx)
-      const docSignature = [0xD0, 0xCF, 0x11, 0xE0]; // для старых .doc, .xls
-      
-      const startsWithSignature = (
-        bytes.slice(0, 4).every((byte, i) => byte === pdfSignature[i]) ||
-        bytes.slice(0, 4).every((byte, i) => byte === zipSignature[i]) ||
-        bytes.slice(0, 4).every((byte, i) => byte === docSignature[i])
-      );
-      
-      if (!startsWithSignature) {
-        throw new Error('Файл не соответствует заявленному формату');
-      }
-      
-      // Проверка на подозрительные строки в начале файла
-      const fileStart = new TextDecoder('utf-8', { fatal: false }).decode(bytes.slice(0, 1024));
-      const suspiciousPatterns = [
-        'javascript:', 'vbscript:', '<script', 'eval(', 'document.write',
-        'shell.application', 'wscript.shell', '.exe', '.bat', '.cmd'
-      ];
-      
-      for (const pattern of suspiciousPatterns) {
-        if (fileStart.toLowerCase().includes(pattern)) {
-          throw new Error(`Обнаружена подозрительная последовательность: ${pattern}`);
-        }
-      }
-      
-      console.log(`✅ Файл ${file.name} прошёл антивирусную проверку`);
-      return true;
-      
-    } catch (error) {
-      console.error(`❌ Антивирусная проверка файла ${file.name}:`, error);
-      alert(`⚠️ Файл "${file.name}" не прошёл проверку безопасности: ${error.message}`);
-      return false;
-    }
-  };
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = Array.from(e.target.files || []);
     
     // Ограничиваем до 5 файлов (лимит FormSubmit)
     const filesToAdd = selectedFiles.slice(0, 5);
     
     // Проверяем размер каждого файла (до 20 МБ)
-    const sizeValidFiles = filesToAdd.filter(file => {
+    const validFiles = filesToAdd.filter(file => {
       const maxSize = 20 * 1024 * 1024; // 20 МБ
       if (file.size > maxSize) {
         alert(`Файл "${file.name}" слишком большой. Максимальный размер: 20 МБ`);
@@ -198,15 +123,6 @@ export default function Index() {
       }
       return true;
     });
-    
-    // Проводим антивирусную проверку для каждого файла
-    const validFiles = [];
-    for (const file of sizeValidFiles) {
-      const isClean = await scanFileForVirus(file);
-      if (isClean) {
-        validFiles.push(file);
-      }
-    }
     
     // Проверяем общий размер всех файлов (до 100 МБ общий лимит)
     const currentFiles = formData.files || [];
@@ -228,10 +144,6 @@ export default function Index() {
     
     if (selectedFiles.length > 5) {
       alert('Максимум 5 файлов за одну отправку. Первые 5 файлов были добавлены.');
-    }
-    
-    if (validFiles.length < sizeValidFiles.length) {
-      alert('Некоторые файлы не прошли проверку безопасности и были исключены.');
     }
   };
 
