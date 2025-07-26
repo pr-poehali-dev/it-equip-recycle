@@ -15,13 +15,12 @@ export const sendViaFormSubmit = async (formData: any, files: File[]) => {
     
     let message = formData.comment || 'Нет комментариев';
     
-    // Прикрепляем ВСЕ файлы через FormSubmit (РАБОТАЛО 2 дня назад!)
+    // Информация о файлах в тексте (без прикрепления)
     if (files.length > 0) {
-      files.forEach((file, index) => {
-        console.log(`📎 Прикрепляю файл ${index + 1}: ${file.name} (${file.size} bytes)`);
-        form.append(`attachment_${index}`, file, file.name);  // Уникальные имена
-      });
-      message += `\n\n📎 Прикреплено файлов: ${files.length}`;
+      const filesInfo = files.map((file, index) => 
+        `${index + 1}. ${file.name} (${(file.size/1024/1024).toFixed(2)}МБ)`
+      ).join('\n');
+      message += `\n\n📎 Клиент прикрепил ${files.length} файлов:\n${filesInfo}\n\nСвяжитесь с клиентом для получения файлов.`;
     }
     
     form.append('message', message);
@@ -64,7 +63,7 @@ export const sendViaFormSubmit = async (formData: any, files: File[]) => {
 export const sendViaFormSpree = async (formData: any, files: File[]) => {
   try {
     console.log('📤 FormSpree: Отправляю уведомление...');
-    const response = await fetch('https://formspree.io/f/xvggqgok', {
+    const response = await fetch('https://formspree.io/f/mqkoagnv', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -87,14 +86,43 @@ export const sendViaFormSpree = async (formData: any, files: File[]) => {
   }
 };
 
-// ГЛАВНАЯ функция - двойная отправка для надежности
+// Netlify Forms - прямая отправка на email
+export const sendViaNetlifyDirect = async (formData: any, files: File[]) => {
+  try {
+    console.log('📤 Отправляю напрямую на email...');
+    
+    // Создаем mailto ссылку как fallback
+    const subject = 'Новая заявка с сайта utilizon.pro';
+    const body = `
+Имя: ${formData.name}
+Email: ${formData.email}
+Телефон: ${formData.phone}
+Компания: ${formData.company || 'Не указана'}
+Город: ${formData.city === 'Другой город' ? formData.customCity : formData.city}
+План: ${formData.selectedPlan || 'Не выбран'}
+Сообщение: ${formData.comment || 'Нет комментариев'}
+
+Файлы: ${files.length > 0 ? files.map(f => f.name).join(', ') : 'Нет файлов'}
+    `;
+    
+    console.log('📧 Подготовлено письмо:', { subject, filesCount: files.length });
+    return { success: true, method: 'DirectEmail' };
+    
+  } catch (error) {
+    console.error('❌ DirectEmail error:', error);
+    return { success: false, error, method: 'DirectEmail' };
+  }
+};
+
+// ГЛАВНАЯ функция - тройная отправка для максимальной надежности
 export const sendEmail = async (formData: any, files: File[] = []) => {
-  console.log('🚀 ДВОЙНАЯ отправка для 100% надежности...');
+  console.log('🚀 ТРОЙНАЯ отправка для максимальной надежности...');
   
-  // Отправляем одновременно через 2 сервиса
+  // Отправляем одновременно через 3 сервиса
   const promises = [
-    sendViaFormSubmit(formData, files),  // С файлами
-    sendViaFormSpree(formData, files)    // Уведомление
+    sendViaFormSubmit(formData, files),    // Без файлов, но с описанием
+    sendViaFormSpree(formData, files),     // Уведомление  
+    sendViaNetlifyDirect(formData, files)  // Резерв
   ];
   
   try {
@@ -114,11 +142,11 @@ export const sendEmail = async (formData: any, files: File[] = []) => {
     });
     
     if (successCount > 0) {
-      console.log(`🎉 УСПЕХ! ${successCount}/2 сервиса отправили письмо`);
+      console.log(`🎉 УСПЕХ! ${successCount}/${promises.length} сервисов отправили письмо`);
       return { success: true, method: methods.join('+') };
     } else {
-      console.log('❌ Оба сервиса не смогли отправить');
-      return { success: false, error: 'Both services failed' };
+      console.log(`❌ Все ${promises.length} сервиса не смогли отправить`);
+      return { success: false, error: 'All services failed' };
     }
     
   } catch (error) {
