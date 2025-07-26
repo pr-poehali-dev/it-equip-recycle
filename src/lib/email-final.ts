@@ -45,40 +45,66 @@ EMAIL: ${formData.email || 'Не указан'}
 
   // XMLHttpRequest БЕЗ РЕДИРЕКТА
   return new Promise((resolve) => {
+    console.log('🚀 ЗАПУСК XMLHttpRequest к Web3Forms...');
+    console.log('📋 Access Key:', '364693fd-da09-4ed2-a039-ae99a5d01f42');
+    console.log('📨 Данные для отправки:');
+    console.log('  Имя:', formData.name);
+    console.log('  Email:', formData.email);
+    console.log('  Телефон:', formData.phone);
+    console.log('  Компания:', formData.company);
+    console.log('  Комментарий:', formData.comment);
+    
     const xhr = new XMLHttpRequest();
     
     xhr.onload = () => {
+      console.log('📡 ОТВЕТ ПОЛУЧЕН!');
       console.log('✅ Статус отправки:', xhr.status);
-      console.log('📧 Ответ сервера:', xhr.responseText);
+      console.log('📧 Полный ответ сервера:', xhr.responseText);
+      console.log('📊 Ready State:', xhr.readyState);
       
       if (xhr.status >= 200 && xhr.status < 300) {
         try {
           const response = JSON.parse(xhr.responseText);
+          console.log('📦 Парсим JSON ответ:', response);
           if (response.success) {
             console.log('🎉 Web3Forms подтвердил отправку!');
+            console.log('✅ SUCCESS = TRUE в ответе');
             resolve({ success: true, method: 'Web3Forms с файлами' });
           } else {
             console.log('❌ Web3Forms ошибка:', response.message);
+            console.log('❌ SUCCESS = FALSE в ответе');
             resolve({ success: false, error: response.message });
           }
-        } catch {
+        } catch (parseError) {
+          console.log('⚠️ Ошибка парсинга JSON:', parseError);
           console.log('✅ Ответ получен, считаем успешным');
           resolve({ success: true, method: 'Web3Forms с файлами' });
         }
       } else {
         console.log('❌ HTTP ошибка:', xhr.status);
+        console.log('❌ Статус НЕ 2xx');
         resolve({ success: false, error: `HTTP ${xhr.status}` });
       }
     };
     
-    xhr.onerror = () => {
-      console.log('❌ Ошибка сети');
-      resolve({ success: true, method: 'Локально сохранено' });
+    xhr.onerror = (error) => {
+      console.log('💥 КРИТИЧЕСКАЯ ОШИБКА СЕТИ!');
+      console.log('❌ Детали ошибки:', error);
+      console.log('❌ НЕ ПОДКЛЮЧЕНИЕ к серверу Web3Forms');
+      resolve({ success: false, error: 'Ошибка сети' });
     };
     
+    xhr.ontimeout = () => {
+      console.log('⏰ ТАЙМАУТ запроса!');
+      resolve({ success: false, error: 'Таймаут' });
+    };
+    
+    console.log('📤 Отправляю POST запрос...');
     xhr.open('POST', 'https://api.web3forms.com/submit');
     xhr.setRequestHeader('Accept', 'application/json');
+    xhr.timeout = 30000; // 30 секунд таймаут
     xhr.send(form);
+    console.log('🚀 XMLHttpRequest отправлен!');
   });
 };
 
