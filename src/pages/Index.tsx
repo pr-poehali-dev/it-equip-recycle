@@ -10,7 +10,7 @@ import FAQSection from '@/components/sections/FAQSection';
 import ContactsSection from '@/components/sections/ContactsSection';
 import CalculatorSection from '@/components/sections/CalculatorSection';
 import Footer from '@/components/sections/Footer';
-import { sendEmailWithFiles, sendViaFormSpree, sendViaNetlifyForms } from '@/lib/email-services';
+import { sendEmailWithFiles } from '@/lib/email-services';
 
 export default function Index() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
