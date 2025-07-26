@@ -191,8 +191,8 @@ export default function CalculatorSection({
                 <div className="space-y-6">
                   <div>
                     <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">
-                      📄 Документы (ОБЯЗАТЕЛЬНО)
-                      <span className="text-xs text-gray-600 block mt-1">Прикрепите спецификацию оборудования для точного расчета (до 5 файлов, максимум 20МБ каждый)</span>
+                      📎 Спецификация оборудования *
+                      <span className="text-xs text-gray-600 block mt-1">Прикрепите файлы с описанием оборудования (до 5 файлов, максимум 20МБ каждый)</span>
                     </label>
                     
                     {formData.files && formData.files.length > 0 && (
