@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
 import SuccessModal from "@/components/ui/success-modal";
-import { sendEmail } from "@/lib/email-services-simple-working";
+import { sendEmail } from "@/lib/email-services-web3";
 
 export default function ContactsSection() {
   const [formData, setFormData] = useState({
