@@ -13,6 +13,7 @@ interface CalculatorSectionProps {
     customCity: string;
     comment: string;
     files: File[];
+    photos: File[];
     selectedPlan: string;
   };
   setFormData: React.Dispatch<React.SetStateAction<{
@@ -24,13 +25,16 @@ interface CalculatorSectionProps {
     customCity: string;
     comment: string;
     files: File[];
+    photos: File[];
     selectedPlan: string;
   }>>;
   agreed: boolean;
   setAgreed: React.Dispatch<React.SetStateAction<boolean>>;
   handleSubmit: (e?: React.MouseEvent) => Promise<void>;
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handlePhotoChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   removeFile: (index: number) => void;
+  removePhoto: (index: number) => void;
   isSubmitting: boolean;
   showSuccessModal: boolean;
   setShowSuccessModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -43,12 +47,15 @@ export default function CalculatorSection({
   setAgreed, 
   handleSubmit, 
   handleFileChange,
+  handlePhotoChange,
   removeFile,
+  removePhoto,
   isSubmitting,
   showSuccessModal,
   setShowSuccessModal
 }: CalculatorSectionProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const photoInputRef = useRef<HTMLInputElement>(null);
 
 
 
@@ -282,6 +289,78 @@ export default function CalculatorSection({
                         multiple
                         onChange={handleFileChange}
                         disabled={formData.files && formData.files.length >= 5}
+                      />
+                    </div>
+                  </div>
+                  
+                  {/* Секция для загрузки фото */}
+                  <div>
+                    <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">
+                      📷 Фото оборудования (необязательно)
+                      <span className="text-xs text-gray-600 block mt-1">Добавьте фото оборудования для более точной оценки (до 3 фото, максимум 10МБ каждое)</span>
+                    </label>
+                    
+                    {/* Показываем загруженные фото */}
+                    {formData.photos && formData.photos.length > 0 && (
+                      <div className="mb-4 space-y-2">
+                        <p className="text-sm font-medium text-gray-700">Загруженные фото ({formData.photos.length} из 3):</p>
+                        <div className="grid grid-cols-2 gap-3">
+                          {formData.photos.map((photo, index) => (
+                            <div key={index} className="relative bg-green-50 border border-green-200 rounded-lg p-3">
+                              <div className="flex items-center space-x-3">
+                                <div className="flex-shrink-0">
+                                  <Icon name="Image" size={16} className="text-green-600" />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <p className="text-sm font-medium text-green-800 truncate">{photo.name}</p>
+                                  <p className="text-xs text-green-600">{(photo.size / 1024 / 1024).toFixed(2)} МБ</p>
+                                </div>
+                              </div>
+                              <button
+                                type="button"
+                                onClick={() => removePhoto(index)}
+                                className="absolute top-1 right-1 text-red-600 hover:text-red-800 transition-colors p-1"
+                              >
+                                <Icon name="X" size={14} />
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    
+                    <div 
+                      className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-primary transition-all duration-300 bg-gray-50/50 cursor-pointer"
+                      onClick={() => photoInputRef.current?.click()}
+                    >
+                      <Icon name="Camera" size={32} className="text-gray-400 mx-auto mb-3" />
+                      {formData.photos && formData.photos.length > 0 ? (
+                        <div>
+                          <p className="text-sm premium-body text-green-700 mb-2 font-semibold">
+                            ✓ Загружено фото: {formData.photos.length}
+                          </p>
+                          <p className="text-xs text-gray-600">
+                            {formData.photos.length < 3 ? 'Нажмите для добавления еще фото' : 'Достигнут лимит в 3 фото'}
+                          </p>
+                        </div>
+                      ) : (
+                        <div>
+                          <p className="text-sm premium-body text-gray-700 mb-2">
+                            <span className="text-gray-600 font-semibold">Добавить фото</span> или перетащите сюда
+                          </p>
+                          <p className="text-xs text-gray-600">
+                            JPG, PNG, HEIC • до 10 МБ каждое • до 3 фото
+                          </p>
+                        </div>
+                      )}
+                      <input 
+                        type="file" 
+                        ref={photoInputRef}
+                        className="hidden" 
+                        accept=".jpg,.jpeg,.png,.heic,.webp" 
+                        multiple
+                        onChange={handlePhotoChange}
+                        disabled={formData.photos && formData.photos.length >= 3}
                       />
                     </div>
                   </div>
