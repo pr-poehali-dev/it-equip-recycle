@@ -425,7 +425,7 @@ export default function CalculatorSection({
                   <span className="font-semibold">Время ответа</span>
                 </div>
                 <p className="text-sm text-gray-700">
-                  Наш специалист свяжется с вами в <strong>самое ближайшее время</strong> для обсуждения деталей утилизации
+                  Наш специалист свяжется с вами в течение <strong>30 минут</strong> для обсуждения деталей утилизации
                 </p>
               </div>
               <div className="flex items-center justify-center text-sm text-gray-500">
