@@ -161,7 +161,7 @@ export default function CalculatorSection({
 
         <div className="max-w-2xl mx-auto">
           <Card className="bg-white border border-gray-200 shadow-lg">
-            <div className="bg-emerald-600 p-6 text-white">
+            <div className="bg-emerald-800 p-6 text-white">
               <div className="flex items-center justify-center mb-4">
                 <Icon name="Calculator" size={32} className="text-professional-rolexGold mr-3" />
                 <h3 className="text-xl font-bold">Калькулятор стоимости утилизации</h3>
@@ -358,7 +358,7 @@ export default function CalculatorSection({
                 <Button
                   onClick={handleLocalSubmit}
                   disabled={!formData.name || !formData.phone || !formData.email || !formData.city || formData.city === 'Выберите город' || !agreed || localSubmitting}
-                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 text-lg"
+                  className="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-semibold py-3 px-6 text-lg"
                 >
                   <Icon name="Calculator" size={20} className="mr-2 text-professional-rolexGold" />
                   {localSubmitting ? 'Отправляем...' : 'Получить расчет стоимости'}
