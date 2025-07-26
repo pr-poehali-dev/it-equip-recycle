@@ -84,10 +84,11 @@ export default function Index() {
 
       await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
         method: 'POST',
-        body: formDataToSend
+        body: formDataToSend,
+        mode: 'no-cors'
       });
 
-      // FormSubmit всегда работает, показываем успех
+      // В no-cors режиме всегда показываем успех
       setShowSuccessModal(true);
       setFormData({
         name: '',
