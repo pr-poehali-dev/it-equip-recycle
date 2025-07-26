@@ -153,7 +153,7 @@ export default function PricesSection({ onPlanSelect, selectedPlan }: PricesSect
                 {selectedPlan === 'Премиум' ? (
                   <span className="text-gray-900 font-semibold">✓ Выбранный план</span>
                 ) : (
-                  'Связаться с нами'
+                  'Выбрать план'
                 )}
               </Button>
             </CardContent>

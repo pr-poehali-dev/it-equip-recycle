@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
+import SuccessModal from "@/components/ui/success-modal";
 
 interface CalculatorSectionProps {
   formData: {
@@ -373,31 +374,12 @@ export default function CalculatorSection({
         </div>
       </div>
 
-      {showSuccessModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl p-8 max-w-lg mx-4 text-center shadow-2xl border border-professional-rolexGold/20">
-            <div className="mb-6">
-              <div className="w-20 h-20 mx-auto rounded-full bg-professional-rolexGold/10 flex items-center justify-center border-2 border-professional-rolexGold/30">
-                <Icon name="CheckCircle" size={40} className="text-professional-rolexGold" />
-              </div>
-            </div>
-            
-            <div className="text-center">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Заявка отправлена!</h3>
-              <p className="text-gray-600 mb-4">
-                Спасибо! Ваша заявка принята. Мы свяжемся с вами в ближайшее время.
-              </p>
-              
-              <Button 
-                onClick={() => setShowSuccessModal(false)}
-                className="w-full bg-primary hover:bg-primary/90"
-              >
-                ОК
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
+      <SuccessModal
+        isOpen={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+        title="Заявка на расчет успешно отправлена!"
+        message="Спасибо! Мы получили вашу заявку на расчет стоимости утилизации и свяжемся с вами в ближайшее время."
+      />
     </section>
   );
 }

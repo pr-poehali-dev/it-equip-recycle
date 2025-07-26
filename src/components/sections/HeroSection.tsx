@@ -14,7 +14,7 @@ export default function HeroSection() {
           Соответствие всем требованиям законодательства.
         </p>
         <div className="flex justify-center">
-          <Button size="lg" className="bg-white text-primary hover:bg-gray-100 min-h-[48px] px-6" onClick={() => document.getElementById('calculator')?.scrollIntoView({behavior: 'smooth'})}>
+          <Button size="lg" className="bg-white text-primary hover:bg-gray-100 min-h-[48px] px-6" onClick={() => document.getElementById('prices')?.scrollIntoView({behavior: 'smooth'})}>
             <Icon name="Calculator" size={60} className="mr-2 text-professional-rolexGold" />
             Рассчитать стоимость
           </Button>
