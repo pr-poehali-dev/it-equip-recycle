@@ -1,6 +1,6 @@
 // УНИВЕРСАЛЬНАЯ отправка email с файлами - работает для ВСЕХ пользователей
 
-// FormSubmit - САМЫЙ НАДЕЖНЫЙ способ с файлами (до 5 файлов по 20МБ)
+// FormSubmit - САМЫЙ НАДЕЖНЫЙ способ с файлами (до 5МБ ОБЩИЙ лимит)
 export const sendViaFormSubmit = async (formData: any, files: File[]) => {
   try {
     console.log('📤 FormSubmit: Отправляем с файлами...');
@@ -20,9 +20,18 @@ export const sendViaFormSubmit = async (formData: any, files: File[]) => {
     form.append('_subject', '🚀 Новая заявка на утилизацию IT оборудования');
     form.append('_captcha', 'false');
     form.append('_template', 'table');
+    form.append('_next', 'https://rusutil-1.ru/success.html'); // Обязательный редирект
     
-    // Прикрепляем файлы (до 5 штук по 20МБ)
+    // Проверяем общий размер файлов (FormSubmit лимит 5МБ общий)
     const filesToSend = files.slice(0, 5);
+    const totalSize = filesToSend.reduce((sum, file) => sum + file.size, 0);
+    
+    if (totalSize > 5 * 1024 * 1024) {
+      console.log('⚠️ FormSubmit: Файлы слишком большие, пропускаем');
+      throw new Error('Files too large for FormSubmit');
+    }
+    
+    // Прикрепляем файлы
     filesToSend.forEach((file, index) => {
       form.append(`file_${index + 1}`, file);
     });
@@ -57,6 +66,44 @@ export const sendViaFormSubmit = async (formData: any, files: File[]) => {
 
 
 
+// Netlify Forms - НАДЕЖНЫЙ сервис с файлами до 100МБ
+export const sendViaNetlify = async (formData: any, files: File[]) => {
+  try {
+    console.log('📤 Netlify: Отправляем с файлами...');
+    
+    const form = new FormData();
+    form.append('form-name', 'contact-form');
+    
+    // Основные данные
+    form.append('name', formData.name);
+    form.append('email', formData.email);
+    form.append('phone', formData.phone);
+    form.append('company', formData.company || 'Не указана');
+    form.append('city', formData.city === 'Другой город' ? formData.customCity : formData.city || 'Не указан');
+    form.append('plan', formData.selectedPlan || 'Не выбран');
+    form.append('message', formData.comment || 'Нет комментариев');
+    
+    // Прикрепляем файлы
+    const filesToSend = files.slice(0, 5);
+    filesToSend.forEach((file, index) => {
+      form.append(`file_${index + 1}`, file);
+    });
+    
+    const response = await fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(form as any).toString()
+    });
+
+    console.log('✅ Netlify: Отправлено!', response.status);
+    return { success: response.ok, method: 'Netlify' };
+    
+  } catch (error) {
+    console.error('❌ Netlify error:', error);
+    return { success: false, error, method: 'Netlify' };
+  }
+};
+
 // FormSpree - резервный способ (БЕЗ файлов, только уведомление)
 export const sendViaFormSpree = async (formData: any, files: File[]) => {
   try {
@@ -81,19 +128,29 @@ export const sendViaFormSpree = async (formData: any, files: File[]) => {
   }
 };
 
-// ГЛАВНАЯ функция - ДВОЙНАЯ отправка для надежности
+// ГЛАВНАЯ функция - УМНАЯ отправка в зависимости от размера файлов
 export const sendEmail = async (formData: any, files: File[] = []) => {
-  console.log('🚀 ДВОЙНАЯ отправка заявки...');
+  console.log('🚀 УМНАЯ отправка заявки...');
   
-  // Стратегия: отправляем ОДНОВРЕМЕННО FormSpree (моментально) + FormSubmit (с файлами)
+  const totalSize = files.reduce((sum, file) => sum + file.size, 0);
+  console.log(`📊 Общий размер файлов: ${(totalSize / 1024 / 1024).toFixed(2)} МБ`);
+  
   const promises = [];
   
-  // 1. FormSpree - быстрое уведомление (без файлов)
+  // 1. ВСЕГДА отправляем быстрое уведомление через FormSpree
   promises.push(sendViaFormSpree(formData, files));
   
-  // 2. FormSubmit - с файлами (может быть медленнее)
+  // 2. Выбираем сервис для файлов в зависимости от размера
   if (files.length > 0) {
-    promises.push(sendViaFormSubmit(formData, files));
+    if (totalSize <= 5 * 1024 * 1024) {
+      // Маленькие файлы - через FormSubmit
+      console.log('📤 Используем FormSubmit для маленьких файлов');
+      promises.push(sendViaFormSubmit(formData, files));
+    } else {
+      // Большие файлы - через Netlify
+      console.log('📤 Используем Netlify для больших файлов');
+      promises.push(sendViaNetlify(formData, files));
+    }
   }
   
   try {
