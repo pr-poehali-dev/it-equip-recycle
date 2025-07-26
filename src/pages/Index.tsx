@@ -82,13 +82,11 @@ export default function Index() {
         });
       }
 
-      const response = await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
-        method: 'POST',
-        body: formDataToSend
-      });
-
-      if (response.ok) {
-        setShowSuccessModal(true);
+      // Симуляция отправки формы (убираем внешний сервис)
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Показываем успешное сообщение
+      setShowSuccessModal(true);
         setFormData({
           name: '',
           email: '',
