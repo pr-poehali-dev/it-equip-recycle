@@ -24,11 +24,20 @@ export const sendViaFormSubmit = async (formData: any, files: File[]) => {
     form.append('_subject', 'Заявка на утилизацию IT оборудования');
     form.append('_captcha', 'false');
     
-    // НЕ прикрепляем файлы - они вызывают HTTP 500
-    // Добавляем только информацию о файлах в текст
-    if (files.length > 0) {
-      const filesInfo = files.map((f, i) => `${i+1}. ${f.name} (${(f.size/1024/1024).toFixed(2)}МБ)`).join('\n');
-      form.append('files_info', `📎 Клиент хочет отправить ${files.length} файлов:\n${filesInfo}\n\nСвяжитесь с клиентом для получения файлов.`);
+    // Умная отправка файлов - только маленькие, большие описываем
+    const smallFiles = files.filter(f => f.size <= 5 * 1024 * 1024); // До 5МБ
+    const largeFiles = files.filter(f => f.size > 5 * 1024 * 1024);  // Больше 5МБ
+    
+    // Прикрепляем маленькие файлы
+    smallFiles.forEach((file, index) => {
+      form.append(`file${index + 1}`, file);
+      console.log(`📎 Прикрепляю файл: ${file.name} (${(file.size/1024/1024).toFixed(2)}МБ)`);
+    });
+    
+    // Большие файлы описываем текстом
+    if (largeFiles.length > 0) {
+      const largeFilesInfo = largeFiles.map((f, i) => `${i+1}. ${f.name} (${(f.size/1024/1024).toFixed(2)}МБ)`).join('\n');
+      form.append('large_files_info', `⚠️ Большие файлы (>5МБ) - ${largeFiles.length} шт.:\n${largeFilesInfo}\n\nСвяжитесь с клиентом для получения этих файлов.`);
     }
 
     console.log('🚀 Отправляю на FormSubmit (тот же endpoint что работал)...');
@@ -129,35 +138,52 @@ ${files.length > 0 ? files.map((f, i) => `${i+1}. ${f.name} (${(f.size/1024/1024
   }
 };
 
-// ГЛАВНАЯ функция - попробуем все способы
+// ГЛАВНАЯ функция - умная отправка файлов
 export const sendEmailWithFiles = async (formData: any, files: File[] = []) => {
-  console.log('🚀 Отправка через несколько способов...');
+  console.log('🚀 Умная отправка файлов...');
   
-  // 1. FormSubmit без файлов
+  // Анализируем размеры файлов
+  const totalSize = files.reduce((acc, f) => acc + f.size, 0);
+  const totalSizeMB = totalSize / 1024 / 1024;
+  const smallFiles = files.filter(f => f.size <= 5 * 1024 * 1024);
+  const largeFiles = files.filter(f => f.size > 5 * 1024 * 1024);
+  
+  console.log(`📊 Анализ файлов: ${files.length} файлов, ${totalSizeMB.toFixed(2)}МБ общий размер`);
+  console.log(`📎 Маленькие файлы (≤5МБ): ${smallFiles.length}`);
+  console.log(`📁 Большие файлы (>5МБ): ${largeFiles.length}`);
+  
+  // 1. FormSubmit с умной отправкой файлов
   const formSubmitResult = await sendViaFormSubmit(formData, files);
   if (formSubmitResult.success) {
-    console.log('✅ FormSubmit сработал!');
-    return { success: true, method: 'FormSubmit' };
+    console.log('✅ FormSubmit сработал с умной отправкой файлов!');
+    
+    if (smallFiles.length > 0) {
+      console.log(`📎 Отправлены маленькие файлы: ${smallFiles.map(f => f.name).join(', ')}`);
+    }
+    if (largeFiles.length > 0) {
+      console.log(`📁 Большие файлы описаны в письме: ${largeFiles.map(f => f.name).join(', ')}`);
+    }
+    
+    return { 
+      success: true, 
+      method: 'FormSubmit',
+      sentFiles: smallFiles.length,
+      describedFiles: largeFiles.length
+    };
   }
   
-  // 2. FormSpree резерв
+  // 2. FormSpree резерв (без файлов)
+  console.log('⚠️ FormSubmit не сработал, пробуем FormSpree...');
   const formSpreeResult = await sendViaFormSpree(formData, files);
   if (formSpreeResult.success) {
-    console.log('✅ FormSpree сработал!');
+    console.log('✅ FormSpree сработал как резерв!');
     return { success: true, method: 'FormSpree' };
   }
   
-  // 3. Прямая отправка через mailto (всегда работает)
-  console.log('📧 Открываем почтовый клиент как последний способ...');
+  // 3. Mailto (всегда работает)
+  console.log('📧 Открываем почтовый клиент...');
   const mailtoResult = await sendViaMailto(formData, files);
-  
-  if (mailtoResult.success) {
-    console.log('✅ Mailto открыт - клиент сможет отправить письмо сам');
-    return { success: true, method: 'Mailto' };
-  }
-  
-  console.log('❌ Все способы не сработали');
-  return { success: false, error: 'All methods failed' };
+  return mailtoResult;
 };
 
 export const sendEmail = sendEmailWithFiles;
