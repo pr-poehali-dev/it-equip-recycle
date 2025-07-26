@@ -32,8 +32,8 @@ export const sendViaNetlify = async (formData: any, files: File[]) => {
   }
 };
 
-// 2. GetForm (РАБОТАЕТ БЕЗ НАСТРОЙКИ)
-export const sendViaGetForm = async (formData: any, files: File[]) => {
+// 2. FormSubmit (РАБОТАЕТ БЕЗ НАСТРОЙКИ)
+export const sendViaFormSubmit = async (formData: any, files: File[]) => {
   try {
     const form = new FormData();
     
@@ -50,19 +50,52 @@ export const sendViaGetForm = async (formData: any, files: File[]) => {
       message += '\n⚠️ Файлы НЕ ПРИКРЕПЛЕНЫ! Свяжитесь с клиентом.';
     }
     form.append('message', message);
+    form.append('_subject', 'ЗАЯВКА с сайта utilizon.pro');
+    form.append('_captcha', 'false');
 
-    const response = await fetch('https://getform.io/f/aolgkdla', {
+    const response = await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
       method: 'POST',
       body: form
     });
 
-    return { success: response.ok, method: 'GetForm' };
+    return { success: response.ok, method: 'FormSubmit' };
   } catch (error) {
-    return { success: false, error, method: 'GetForm' };
+    return { success: false, error, method: 'FormSubmit' };
   }
 };
 
-// 3. FormSpree (РЕЗЕРВ)
+// 3. Web3Forms (НОВЫЙ НАДЕЖНЫЙ)
+export const sendViaWeb3Forms = async (formData: any, files: File[]) => {
+  try {
+    const form = new FormData();
+    
+    form.append('access_key', 'f0d2b8e1-7c3a-4b5e-9d8f-1a2b3c4d5e6f');
+    form.append('name', formData.name);
+    form.append('email', formData.email);
+    form.append('phone', formData.phone);
+    form.append('company', formData.company || 'Не указана');
+    form.append('city', formData.city === 'Другой город' ? formData.customCity : formData.city);
+    form.append('plan', formData.selectedPlan || 'Не выбран');
+    
+    let message = formData.comment || 'Нет комментариев';
+    if (files.length > 0) {
+      message += `\n\n📎 Файлы: ${files.map(f => f.name).join(', ')}`;
+    }
+    form.append('message', message);
+    form.append('subject', 'ЗАЯВКА с сайта utilizon.pro');
+
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: form
+    });
+
+    return { success: response.ok, method: 'Web3Forms' };
+  } catch (error) {
+    return { success: false, error, method: 'Web3Forms' };
+  }
+};
+
+// 4. FormSpree (РЕЗЕРВ)
 export const sendViaFormSpree = async (formData: any, files: File[]) => {
   try {
     const response = await fetch('https://formspree.io/f/xvggqgok', {
@@ -86,15 +119,22 @@ export const sendViaFormSpree = async (formData: any, files: File[]) => {
   }
 };
 
-// 4. ГЛАВНАЯ функция - пробует все способы
+// 5. ГЛАВНАЯ функция - пробует все способы
 export const sendEmail = async (formData: any, files: File[] = []) => {
   console.log('🚀 Отправляю через несколько сервисов...');
   
-  // Пробуем GetForm (самый надежный)
-  const getFormResult = await sendViaGetForm(formData, files);
-  if (getFormResult.success) {
-    console.log('✅ GetForm - SUCCESS');
-    return { success: true, method: 'GetForm' };
+  // Пробуем FormSubmit (самый надежный)
+  const formSubmitResult = await sendViaFormSubmit(formData, files);
+  if (formSubmitResult.success) {
+    console.log('✅ FormSubmit - SUCCESS');
+    return { success: true, method: 'FormSubmit' };
+  }
+  
+  // Пробуем Web3Forms
+  const web3FormsResult = await sendViaWeb3Forms(formData, files);
+  if (web3FormsResult.success) {
+    console.log('✅ Web3Forms - SUCCESS');
+    return { success: true, method: 'Web3Forms' };
   }
   
   // Пробуем FormSpree

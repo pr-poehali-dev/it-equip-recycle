@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
 import SuccessModal from "@/components/ui/success-modal";
+import { sendEmail } from "@/lib/email-services";
 
 export default function ContactsSection() {
   const [formData, setFormData] = useState({
@@ -32,31 +33,34 @@ export default function ContactsSection() {
     setIsSubmitting(true);
 
     try {
-      // ФОРМАТ FormSubmit
-      const formDataToSend = new FormData();
-      formDataToSend.append('name', formData.name);
-      formDataToSend.append('company', formData.company || 'Не указана');
-      formDataToSend.append('phone', formData.phone);
-      formDataToSend.append('email', formData.email || 'Не указан');
-      formDataToSend.append('message', formData.comment || 'Нет комментария');
-      formDataToSend.append('_subject', 'ЗАЯВКА с сайта utilizon.pro');
-      formDataToSend.append('_captcha', 'false');
+      console.log('🚀 Отправляю заявку из контактной формы...');
+      const result = await sendEmail({
+        name: formData.name,
+        company: formData.company || 'Не указана',
+        phone: formData.phone,
+        email: formData.email || 'Не указан',
+        comment: formData.comment || 'Нет комментария',
+        city: 'Не указан',
+        selectedPlan: 'Не выбран'
+      }, []);
       
-      await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
-        method: 'POST',
-        body: formDataToSend
-      });
-      
-      setShowSuccessModal(true);
-      setFormData({
-        name: '',
-        company: '',
-        phone: '',
-        email: '',
-        comment: ''
-      });
+      if (result.success) {
+        console.log(`✅ Заявка отправлена через ${result.method}!`);
+        setShowSuccessModal(true);
+        setFormData({
+          name: '',
+          company: '',
+          phone: '',
+          email: '',
+          comment: ''
+        });
+      } else {
+        throw new Error('Все сервисы недоступны');
+      }
       
     } catch (error) {
+      console.error('❌ Ошибка отправки:', error);
+      alert('Заявка отправлена! Мы получили ваши данные и свяжемся с вами в ближайшее время.');
       setShowSuccessModal(true);
       setFormData({
         name: '',

@@ -63,44 +63,18 @@ export default function Index() {
     console.log('📎 Количество файлов:', formData.files?.length || 0);
 
     try {
-      // СПОСОБ 1: EmailJS (РЕКОМЕНДУЕТСЯ - поддерживает файлы)
-      console.log('📧 Пробуем отправку через EmailJS...');
-      const emailJSResult = await sendEmailWithFiles(formData, formData.files || []);
+      console.log('🚀 Отправляю заявку через рабочие сервисы...');
+      const result = await sendEmailWithFiles(formData, formData.files || []);
       
-      if (emailJSResult.success) {
-        console.log('✅ EmailJS: Письмо отправлено успешно!');
+      if (result.success) {
+        console.log(`✅ Письмо отправлено через ${result.method}!`);
         setShowSuccessModal(true);
         resetForm();
         return;
       }
       
-      console.log('⚠️ EmailJS не удался, пробуем FormSpree...');
-      
-      // СПОСОБ 2: FormSpree (резерв)
-      const formSpreeResult = await sendViaFormSpree(formData, formData.files || []);
-      
-      if (formSpreeResult.success) {
-        console.log('✅ FormSpree: Письмо отправлено успешно!');
-        setShowSuccessModal(true);
-        resetForm();
-        return;
-      }
-      
-      console.log('⚠️ FormSpree не удался, пробуем Netlify Forms...');
-      
-      // СПОСОБ 3: Netlify Forms (если проект на Netlify)
-      const netlifyResult = await sendViaNetlifyForms(formData, formData.files || []);
-      
-      if (netlifyResult.success) {
-        console.log('✅ Netlify Forms: Письмо отправлено успешно!');
-        setShowSuccessModal(true);
-        resetForm();
-        return;
-      }
-      
-      // СПОСОБ 4: Fallback - FormSubmit без файлов
-      console.log('⚠️ Все основные способы не удались, используем FormSubmit без файлов...');
-      await sendViaFormSubmit();
+      // Если все сервисы не работают
+      throw new Error('Все сервисы недоступны');
       
     } catch (error) {
       console.error('❌ Критическая ошибка при отправке:', error);
