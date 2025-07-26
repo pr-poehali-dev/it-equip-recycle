@@ -50,7 +50,25 @@ EMAIL: ${formData.email || 'Не указан'}
     xhr.onload = () => {
       console.log('✅ Статус отправки:', xhr.status);
       console.log('📧 Ответ сервера:', xhr.responseText);
-      resolve({ success: true, method: 'Web3Forms с файлами' });
+      
+      if (xhr.status >= 200 && xhr.status < 300) {
+        try {
+          const response = JSON.parse(xhr.responseText);
+          if (response.success) {
+            console.log('🎉 Web3Forms подтвердил отправку!');
+            resolve({ success: true, method: 'Web3Forms с файлами' });
+          } else {
+            console.log('❌ Web3Forms ошибка:', response.message);
+            resolve({ success: false, error: response.message });
+          }
+        } catch {
+          console.log('✅ Ответ получен, считаем успешным');
+          resolve({ success: true, method: 'Web3Forms с файлами' });
+        }
+      } else {
+        console.log('❌ HTTP ошибка:', xhr.status);
+        resolve({ success: false, error: `HTTP ${xhr.status}` });
+      }
     };
     
     xhr.onerror = () => {

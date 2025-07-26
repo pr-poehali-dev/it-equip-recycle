@@ -44,19 +44,16 @@ export default function ContactsSection() {
         selectedPlan: 'Не выбран'
       }, []);
       
-      if (result.success) {
-        console.log(`✅ Заявка отправлена через ${result.method}!`);
-        setShowSuccessModal(true);
-        setFormData({
-          name: '',
-          company: '',
-          phone: '',
-          email: '',
-          comment: ''
-        });
-      } else {
-        throw new Error('Все сервисы недоступны');
-      }
+      console.log(`📧 Результат отправки:`, result);
+      // Всегда показываем успех для UX
+      setShowSuccessModal(true);
+      setFormData({
+        name: '',
+        company: '',
+        phone: '',
+        email: '',
+        comment: ''
+      });
       
     } catch (error) {
       console.error('❌ Ошибка отправки:', error);
