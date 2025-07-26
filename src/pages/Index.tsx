@@ -163,7 +163,18 @@ export default function Index() {
         <HeroSection />
         <ServicesSection />
         <PricesSection onPlanSelect={handlePlanSelect} selectedPlan={formData.selectedPlan} />
-        <CalculatorSection />
+        <CalculatorSection 
+          formData={formData}
+          setFormData={setFormData}
+          agreed={agreed}
+          setAgreed={setAgreed}
+          handleSubmit={handleSubmit}
+          handleFileChange={handleFileChange}
+          removeFile={removeFile}
+          isSubmitting={isSubmitting}
+          showSuccessModal={showSuccessModal}
+          setShowSuccessModal={setShowSuccessModal}
+        />
         <AboutSection />
         <ClientsSection />
         <LicensesSection />
