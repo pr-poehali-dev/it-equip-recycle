@@ -372,36 +372,7 @@ export default function CalculatorSection({
                     <Icon name="Phone" size={20} className="mr-2 text-professional-rolexGold" />
                     Обсудить по телефону
                   </Button>
-                  
-                  {/* Кнопка активации FormSubmit (временно) */}
-                  <Button 
-                    onClick={async () => {
-                      const formData = new FormData();
-                      formData.append('name', 'Активация FormSubmit');
-                      formData.append('email', 'test@utilizon.pro');
-                      formData.append('phone', '+7 (901) 862-81-81');
-                      formData.append('message', 'Тест активации FormSubmit - 26 июля 2025');
-                      formData.append('_subject', 'АКТИВАЦИЯ FormSubmit для Utilizon.pro');
-                      formData.append('_captcha', 'false');
-                      formData.append('_template', 'table');
-                      
-                      try {
-                        await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
-                          method: 'POST',
-                          body: formData
-                        });
-                        alert('✅ Активация отправлена! Проверьте почту commerce@rusutil-1.ru');
-                      } catch (error) {
-                        alert('📧 Запрос отправлен! Проверьте почту через несколько минут.');
-                      }
-                    }}
-                    variant="outline"
-                    className="w-full min-h-[48px] border-orange-500 text-orange-600 hover:bg-orange-500 hover:text-white bg-orange-50"
-                    size="lg"
-                  >
-                    <Icon name="Mail" size={20} className="mr-2" />
-                    🔧 Активировать FormSubmit (временно)
-                  </Button>
+
                 </div>
                 
                 <div className="mt-4 text-center">

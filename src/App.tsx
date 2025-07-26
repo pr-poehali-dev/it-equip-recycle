@@ -10,7 +10,7 @@ import Terms from "./pages/Terms";
 import Success from "./pages/Success";
 import Error from "./pages/Error";
 import NotFound from "./pages/NotFound";
-import FormSubmitTest from "./pages/FormSubmitTest";
+
 
 const queryClient = new QueryClient();
 
@@ -26,7 +26,7 @@ const App = () => (
           <Route path="/terms" element={<Terms />} />
           <Route path="/success" element={<Success />} />
           <Route path="/error" element={<Error />} />
-          <Route path="/formsubmit-test" element={<FormSubmitTest />} />
+
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
