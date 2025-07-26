@@ -1,6 +1,6 @@
 // УНИВЕРСАЛЬНАЯ отправка email с файлами - работает для ВСЕХ пользователей
 
-// FormSubmit - САМЫЙ НАДЕЖНЫЙ способ с файлами (до 5 файлов по 5МБ)
+// FormSubmit - САМЫЙ НАДЕЖНЫЙ способ с файлами (до 5 файлов по 20МБ)
 export const sendViaFormSubmit = async (formData: any, files: File[]) => {
   try {
     console.log('📤 FormSubmit: Отправляем с файлами...');
@@ -16,13 +16,12 @@ export const sendViaFormSubmit = async (formData: any, files: File[]) => {
     form.append('plan', formData.selectedPlan || 'Не выбран');
     form.append('message', formData.comment || 'Нет комментариев');
     
-    // Настройки FormSubmit
-    form.append('_subject', 'Новая заявка на утилизацию IT оборудования');
+    // Настройки FormSubmit для быстрой доставки
+    form.append('_subject', '🚀 Новая заявка на утилизацию IT оборудования');
     form.append('_captcha', 'false');
     form.append('_template', 'table');
-    form.append('_next', window.location.origin + '?success=true');
     
-    // Прикрепляем файлы (до 5 штук)
+    // Прикрепляем файлы (до 5 штук по 20МБ)
     const filesToSend = files.slice(0, 5);
     filesToSend.forEach((file, index) => {
       form.append(`file_${index + 1}`, file);
@@ -33,14 +32,20 @@ export const sendViaFormSubmit = async (formData: any, files: File[]) => {
       const filesInfo = filesToSend.map((f, i) => 
         `${i + 1}. ${f.name} (${(f.size/1024/1024).toFixed(2)}МБ)`
       ).join('\n');
-      form.append('files_info', `Прикреплено файлов: ${filesToSend.length}\n${filesInfo}`);
+      form.append('files_info', `📎 Прикреплено файлов: ${filesToSend.length}\n${filesInfo}`);
     }
+
+    // Контроллер для таймаута
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 сек таймаут
 
     const response = await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
       method: 'POST',
-      body: form
+      body: form,
+      signal: controller.signal
     });
 
+    clearTimeout(timeoutId);
     console.log('✅ FormSubmit: Отправлено!', response.status);
     return { success: response.ok, method: 'FormSubmit' };
     
@@ -76,28 +81,41 @@ export const sendViaFormSpree = async (formData: any, files: File[]) => {
   }
 };
 
-// ГЛАВНАЯ функция - FormSubmit ПЕРВЫМ (с файлами), потом резерв
+// ГЛАВНАЯ функция - ДВОЙНАЯ отправка для надежности
 export const sendEmail = async (formData: any, files: File[] = []) => {
-  console.log('🚀 Отправляю заявку с файлами...');
+  console.log('🚀 ДВОЙНАЯ отправка заявки...');
   
-  // СПОСОБ 1: FormSubmit с файлами (ОСНОВНОЙ)
-  const formSubmitResult = await sendViaFormSubmit(formData, files);
-  if (formSubmitResult.success) {
-    console.log('✅ FormSubmit - SUCCESS с файлами!');
-    return { success: true, method: 'FormSubmit' };
+  // Стратегия: отправляем ОДНОВРЕМЕННО FormSpree (моментально) + FormSubmit (с файлами)
+  const promises = [];
+  
+  // 1. FormSpree - быстрое уведомление (без файлов)
+  promises.push(sendViaFormSpree(formData, files));
+  
+  // 2. FormSubmit - с файлами (может быть медленнее)
+  if (files.length > 0) {
+    promises.push(sendViaFormSubmit(formData, files));
   }
   
-  console.log('⚠️ FormSubmit не удался, пробуем FormSpree...');
-  
-  // СПОСОБ 2: FormSpree без файлов (РЕЗЕРВ)
-  const formSpreeResult = await sendViaFormSpree(formData, files);
-  if (formSpreeResult.success) {
-    console.log('✅ FormSpree - SUCCESS (без файлов)');
-    return { success: true, method: 'FormSpree' };
+  try {
+    const results = await Promise.allSettled(promises);
+    
+    // Проверяем результаты
+    const successResults = results.filter(r => 
+      r.status === 'fulfilled' && r.value.success
+    );
+    
+    if (successResults.length > 0) {
+      console.log(`✅ SUCCESS! Отправлено через ${successResults.length} сервис(а)`);
+      return { success: true, method: 'Multiple' };
+    }
+    
+    console.log('⚠️ Отправка через основные сервисы не удалась');
+    return { success: false, error: 'Сервисы недоступны' };
+    
+  } catch (error) {
+    console.error('❌ Критическая ошибка при отправке:', error);
+    return { success: false, error };
   }
-  
-  console.log('❌ Все способы не сработали');
-  return { success: false, error: 'Сервисы недоступны' };
 };
 
 // Для совместимости
