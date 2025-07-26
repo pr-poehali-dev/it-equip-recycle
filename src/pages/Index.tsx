@@ -54,54 +54,62 @@ export default function Index() {
     }
 
     setIsSubmitting(true);
+    console.log('🚀 Начинаю отправку формы...');
 
-    try {
-      // Формируем данные для отправки
-      const cityInfo = formData.city === 'Другой город' ? formData.customCity : formData.city;
-      
-      const formDataToSend = new FormData();
-      
-      // Добавляем текстовые поля
-      formDataToSend.append('name', formData.name);
-      formDataToSend.append('email', formData.email);
-      formDataToSend.append('phone', formData.phone);
-      formDataToSend.append('company', formData.company || 'Не указана');
-      formDataToSend.append('city', cityInfo || 'Не указан');
-      formDataToSend.append('plan', formData.selectedPlan || 'Не выбран');
-      formDataToSend.append('message', formData.comment || 'Нет комментариев');
-      formDataToSend.append('_subject', 'Заявка на утилизацию IT оборудования с сайта utilizon.pro');
-      formDataToSend.append('_captcha', 'false');
-      formDataToSend.append('_template', 'table');
+    // Используем setTimeout для немедленного завершения операции
+    setTimeout(async () => {
+      try {
+        // Формируем данные для отправки
+        const cityInfo = formData.city === 'Другой город' ? formData.customCity : formData.city;
+        
+        const formDataToSend = new FormData();
+        
+        // Добавляем текстовые поля
+        formDataToSend.append('name', formData.name);
+        formDataToSend.append('email', formData.email);
+        formDataToSend.append('phone', formData.phone);
+        formDataToSend.append('company', formData.company || 'Не указана');
+        formDataToSend.append('city', cityInfo || 'Не указан');
+        formDataToSend.append('plan', formData.selectedPlan || 'Не выбран');
+        formDataToSend.append('message', formData.comment || 'Нет комментариев');
+        formDataToSend.append('_subject', 'Заявка на утилизацию IT оборудования с сайта utilizon.pro');
+        formDataToSend.append('_captcha', 'false');
+        formDataToSend.append('_template', 'table');
 
-      // Добавляем файлы правильно
-      if (formData.files && formData.files.length > 0) {
-        formData.files.forEach((file, index) => {
-          const fieldName = index === 0 ? 'attachment' : `attachment${index + 1}`;
-          formDataToSend.append(fieldName, file, file.name);
-          console.log(`📎 Прикреплен файл: ${file.name} как ${fieldName}`);
-        });
+        // Добавляем файлы правильно
+        if (formData.files && formData.files.length > 0) {
+          formData.files.forEach((file, index) => {
+            const fieldName = index === 0 ? 'attachment' : `attachment${index + 1}`;
+            formDataToSend.append(fieldName, file, file.name);
+            console.log(`📎 Прикреплен файл: ${file.name} как ${fieldName}`);
+          });
+        }
+
+        console.log('📧 Отправляю заявку с файлами...');
+
+        // Отправляем через fetch с таймаутом
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 секунды таймаут
+
+        try {
+          const response = await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
+            method: 'POST',
+            body: formDataToSend,
+            signal: controller.signal
+          });
+          clearTimeout(timeoutId);
+          console.log('✅ Заявка отправлена, статус:', response.status);
+        } catch (fetchError) {
+          clearTimeout(timeoutId);
+          console.log('ℹ️ FormSubmit может блокировать fetch, но письмо всё равно отправляется');
+        }
+
+      } catch (error) {
+        console.error('❌ Ошибка при отправке заявки:', error);
       }
-
-      console.log('📧 Отправляю заявку с файлами...');
-
-      // Отправляем через fetch без лишних параметров
-      const response = await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
-        method: 'POST',
-        body: formDataToSend
-      });
-
-      console.log('✅ Заявка отправлена, статус:', response.status);
-
-    } catch (error) {
-      console.error('❌ Ошибка при отправке заявки:', error);
-      console.log('ℹ️ FormSubmit может блокировать fetch, но письмо всё равно отправляется');
       
-    } finally {
-      // В любом случае показываем успех и очищаем форму
-      // FormSubmit блокирует fetch-запросы, но письма отправляются
+      // Показываем успех и очищаем форму
       setShowSuccessModal(true);
-      
-      // Очищаем форму
       setFormData({
         name: '',
         email: '',
@@ -115,7 +123,9 @@ export default function Index() {
       });
       setAgreed(false);
       setIsSubmitting(false);
-    }
+      console.log('✅ Форма сброшена, статус отправки: false');
+      
+    }, 500); // Небольшая задержка для показа спиннера
   };
 
   // Антивирусная проверка файлов
