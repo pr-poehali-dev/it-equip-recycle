@@ -358,9 +358,9 @@ export default function CalculatorSection({
                 <Button
                   onClick={handleLocalSubmit}
                   disabled={!formData.name || !formData.phone || !formData.email || !formData.city || formData.city === 'Выберите город' || !agreed || localSubmitting}
-                  className="w-full bg-emerald-800 text-white font-semibold py-3 px-6 text-lg"
+                  className="w-full bg-professional-rolexGreen text-white font-semibold py-3 px-6 text-lg"
                 >
-                  <Icon name="Calculator" size={20} className="mr-2 text-professional-rolexGold" />
+                  <Icon name="Phone" size={20} className="mr-2 text-professional-rolexGold" />
                   {localSubmitting ? 'Отправляем...' : 'Получить расчет стоимости'}
                 </Button>
 
