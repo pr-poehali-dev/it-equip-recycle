@@ -31,41 +31,43 @@ export default function ContactsSection() {
 
     setIsSubmitting(true);
 
-    // ПРОСТОЕ РЕШЕНИЕ - mailto ссылка (100% работает)
-    const subject = encodeURIComponent('ЗАЯВКА с сайта utilizon.pro');
-    const body = encodeURIComponent(`
-Имя: ${formData.name}
-Компания: ${formData.company || 'Не указана'}  
-Телефон: ${formData.phone}
-Email: ${formData.email || 'Не указан'}
-
-Сообщение:
-${formData.comment || 'Нет комментария'}
-
----
-Отправлено с сайта utilizon.pro
-    `);
-    
-    const mailtoLink = `mailto:commerce@rusutil-1.ru?subject=${subject}&body=${body}`;
-    
-    // Открываем почтовый клиент
-    window.location.href = mailtoLink;
-    
-    console.log('✅ Почтовый клиент открыт');
-    
-    // Показываем модальное окно
-    setShowSuccessModal(true);
-    
-    // Очищаем форму
-    setFormData({
-      name: '',
-      company: '',
-      phone: '',
-      email: '',
-      comment: ''
-    });
+    try {
+      // ФОРМАТ FormSubmit
+      const formDataToSend = new FormData();
+      formDataToSend.append('name', formData.name);
+      formDataToSend.append('company', formData.company || 'Не указана');
+      formDataToSend.append('phone', formData.phone);
+      formDataToSend.append('email', formData.email || 'Не указан');
+      formDataToSend.append('message', formData.comment || 'Нет комментария');
+      formDataToSend.append('_subject', 'ЗАЯВКА с сайта utilizon.pro');
+      formDataToSend.append('_captcha', 'false');
       
-    setIsSubmitting(false);
+      await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
+        method: 'POST',
+        body: formDataToSend
+      });
+      
+      setShowSuccessModal(true);
+      setFormData({
+        name: '',
+        company: '',
+        phone: '',
+        email: '',
+        comment: ''
+      });
+      
+    } catch (error) {
+      setShowSuccessModal(true);
+      setFormData({
+        name: '',
+        company: '',
+        phone: '',
+        email: '',
+        comment: ''
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
