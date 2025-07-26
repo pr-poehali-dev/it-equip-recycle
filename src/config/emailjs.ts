@@ -2,17 +2,11 @@
 // Получи эти данные в личном кабинете EmailJS
 
 export const EMAILJS_CONFIG = {
-  // 1. Твой Public Key (из Account -> General)
-  PUBLIC_KEY: 'YOUR_PUBLIC_KEY_HERE',
-  
-  // 2. Service ID (из Email Services)
-  SERVICE_ID: 'YOUR_SERVICE_ID_HERE',
-  
-  // 3. Template ID для основного письма
-  TEMPLATE_ID: 'YOUR_TEMPLATE_ID_HERE',
-  
-  // 4. Template ID для файлов (опционально)
-  FILE_TEMPLATE_ID: 'YOUR_FILE_TEMPLATE_ID_HERE'
+  // Читаем из переменных окружения (безопасно)
+  PUBLIC_KEY: import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '',
+  SERVICE_ID: import.meta.env.VITE_EMAILJS_SERVICE_ID || '',
+  TEMPLATE_ID: import.meta.env.VITE_EMAILJS_TEMPLATE_ID || '',
+  FILE_TEMPLATE_ID: import.meta.env.VITE_EMAILJS_FILE_TEMPLATE_ID || ''
 };
 
 // Как получить эти данные:
