@@ -45,7 +45,7 @@ export default {
 					lightTeal: '#14B8A6',
 					cyan: '#F0FDFA',
 					// Rolex-inspired colors
-					rolexGreen: '#165d47',
+					rolexGreen: '#006847',
 					rolexDarkGreen: '#005239',
 					rolexDeepGreen: '#003d2b',
 					rolexCream: '#F7F7F7',
