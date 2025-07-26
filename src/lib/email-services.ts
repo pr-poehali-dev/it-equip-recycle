@@ -1,6 +1,58 @@
 // РАБОТАЮЩИЕ способы отправки email
+import emailjs from '@emailjs/browser';
 
-// 1. Netlify Forms (САМЫЙ НАДЕЖНЫЙ)
+// 1. EmailJS (С ФАЙЛАМИ!) - САМЫЙ НАДЕЖНЫЙ
+export const sendViaEmailJS = async (formData: any, files: File[]) => {
+  try {
+    // Инициализация EmailJS
+    emailjs.init('user_QKx8y9N2Z8tM3vF1L'); // PUBLIC KEY
+    
+    // Подготавливаем данные для отправки
+    const templateParams = {
+      to_email: 'commerce@rusutil-1.ru',
+      from_name: formData.name,
+      from_email: formData.email,
+      phone: formData.phone,
+      company: formData.company || 'Не указана',
+      city: formData.city === 'Другой город' ? formData.customCity : formData.city,
+      plan: formData.selectedPlan || 'Не выбран',
+      message: formData.comment || 'Нет комментариев',
+      subject: 'ЗАЯВКА с сайта utilizon.pro'
+    };
+
+    // Конвертируем файлы в base64 для отправки
+    if (files.length > 0) {
+      const filePromises = files.map(async (file, index) => {
+        return new Promise<string>((resolve) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const base64 = reader.result?.toString().split(',')[1] || '';
+            resolve(`${file.name}:${base64}`);
+          };
+          reader.readAsDataURL(file);
+        });
+      });
+      
+      const fileData = await Promise.all(filePromises);
+      templateParams.files = fileData.join('|||'); // Разделитель между файлами
+      templateParams.files_count = files.length.toString();
+    }
+
+    // Отправляем через EmailJS
+    const response = await emailjs.send(
+      'service_gmail_utilizon', // SERVICE ID
+      'template_utilizon_form', // TEMPLATE ID  
+      templateParams
+    );
+
+    return { success: response.status === 200, method: 'EmailJS' };
+  } catch (error) {
+    console.error('EmailJS Error:', error);
+    return { success: false, error, method: 'EmailJS' };
+  }
+};
+
+// 2. Netlify Forms (РЕЗЕРВ)
 export const sendViaNetlify = async (formData: any, files: File[]) => {
   try {
     const form = new FormData();
@@ -12,18 +64,7 @@ export const sendViaNetlify = async (formData: any, files: File[]) => {
     form.append('company', formData.company || 'Не указана');
     form.append('city', formData.city === 'Другой город' ? formData.customCity : formData.city);
     form.append('plan', formData.selectedPlan || 'Не выбран');
-    
-    let message = formData.comment || 'Нет комментариев';
-    
-    // Прикрепляем файлы к Netlify Forms
-    if (files.length > 0) {
-      files.forEach((file, index) => {
-        form.append(`file_${index}`, file, file.name);
-      });
-      message += `\n\n📎 Прикреплено файлов: ${files.length}`;
-    }
-    
-    form.append('message', message);
+    form.append('message', formData.comment || 'Нет комментариев');
 
     const response = await fetch('/', {
       method: 'POST',
@@ -37,7 +78,7 @@ export const sendViaNetlify = async (formData: any, files: File[]) => {
   }
 };
 
-// 2. FormSubmit (РАБОТАЕТ БЕЗ НАСТРОЙКИ)
+// 3. FormSubmit (РАБОТАЕТ БЕЗ НАСТРОЙКИ)
 export const sendViaFormSubmit = async (formData: any, files: File[]) => {
   try {
     const form = new FormData();
@@ -134,11 +175,11 @@ export const sendViaFormSpree = async (formData: any, files: File[]) => {
 export const sendEmail = async (formData: any, files: File[] = []) => {
   console.log('🚀 Отправляю через несколько сервисов...');
   
-  // Пробуем FormSubmit (самый надежный)
-  const formSubmitResult = await sendViaFormSubmit(formData, files);
-  if (formSubmitResult.success) {
-    console.log('✅ FormSubmit - SUCCESS');
-    return { success: true, method: 'FormSubmit' };
+  // Пробуем EmailJS (лучший для файлов)
+  const emailJSResult = await sendViaEmailJS(formData, files);
+  if (emailJSResult.success) {
+    console.log('✅ EmailJS - SUCCESS');
+    return { success: true, method: 'EmailJS' };
   }
   
   // Пробуем Web3Forms
@@ -148,6 +189,13 @@ export const sendEmail = async (formData: any, files: File[] = []) => {
     return { success: true, method: 'Web3Forms' };
   }
   
+  // Пробуем FormSubmit (без файлов)
+  const formSubmitResult = await sendViaFormSubmit(formData, files);
+  if (formSubmitResult.success) {
+    console.log('✅ FormSubmit - SUCCESS');
+    return { success: true, method: 'FormSubmit' };
+  }
+  
   // Пробуем FormSpree
   const formSpreeResult = await sendViaFormSpree(formData, files);
   if (formSpreeResult.success) {
@@ -155,15 +203,8 @@ export const sendEmail = async (formData: any, files: File[] = []) => {
     return { success: true, method: 'FormSpree' };
   }
   
-  // Пробуем Netlify
-  const netlifyResult = await sendViaNetlify(formData, files);
-  if (netlifyResult.success) {
-    console.log('✅ Netlify - SUCCESS');
-    return { success: true, method: 'Netlify' };
-  }
-  
   console.log('❌ Все сервисы не сработали');
-  return { success: false, error: 'Все сервисы недоступны' };
+  return { success: false, error: 'Все сервисы недоступы' };
 };
 
 // Для совместимости
