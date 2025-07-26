@@ -154,8 +154,7 @@ export default function Index() {
 
     await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
       method: 'POST',
-      body: formDataToSend,
-      mode: 'no-cors'
+      body: formDataToSend
     });
     
     console.log('📤 FormSubmit: Основные данные отправлены (без файлов)');
