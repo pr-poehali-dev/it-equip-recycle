@@ -169,7 +169,7 @@ export default function Index() {
       <main>
         <HeroSection />
         <ServicesSection />
-        <PricesSection onPlanSelect={handlePlanSelect} />
+        <PricesSection onPlanSelect={handlePlanSelect} selectedPlan={formData.selectedPlan} />
         <CalculatorSection 
           formData={formData}
           setFormData={setFormData}

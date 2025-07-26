@@ -5,9 +5,10 @@ import Icon from "@/components/ui/icon";
 
 interface PricesSectionProps {
   onPlanSelect: (planName: string) => void;
+  selectedPlan?: string;
 }
 
-export default function PricesSection({ onPlanSelect }: PricesSectionProps) {
+export default function PricesSection({ onPlanSelect, selectedPlan }: PricesSectionProps) {
   return (
     <section id="prices" className="py-20 bg-professional-darkChocolate">
       <div className="container mx-auto px-4">
@@ -50,10 +51,15 @@ export default function PricesSection({ onPlanSelect }: PricesSectionProps) {
                 </li>
               </ul>
               <Button 
-                className="w-full mt-6 min-h-[44px]"
+                className={`w-full mt-6 min-h-[44px] ${selectedPlan === 'Стандартный' ? 'bg-professional-rolexGold hover:bg-professional-rolexLightGold text-gray-900 font-semibold' : ''}`}
                 onClick={() => onPlanSelect('Стандартный')}
+                disabled={selectedPlan === 'Стандартный'}
               >
-                Выбрать план
+                {selectedPlan === 'Стандартный' ? (
+                  <span className="text-gray-900 font-semibold">✓ Выбранный план</span>
+                ) : (
+                  'Выбрать план'
+                )}
               </Button>
             </CardContent>
           </Card>
@@ -94,10 +100,15 @@ export default function PricesSection({ onPlanSelect }: PricesSectionProps) {
                 </li>
               </ul>
               <Button 
-                className="w-full mt-6 min-h-[44px]"
+                className={`w-full mt-6 min-h-[44px] ${selectedPlan === 'Корпоративный' ? 'bg-professional-rolexGold hover:bg-professional-rolexLightGold text-gray-900 font-semibold' : ''}`}
                 onClick={() => onPlanSelect('Корпоративный')}
+                disabled={selectedPlan === 'Корпоративный'}
               >
-                Выбрать план
+                {selectedPlan === 'Корпоративный' ? (
+                  <span className="text-gray-900 font-semibold">✓ Выбранный план</span>
+                ) : (
+                  'Выбрать план'
+                )}
               </Button>
             </CardContent>
           </Card>
@@ -135,10 +146,15 @@ export default function PricesSection({ onPlanSelect }: PricesSectionProps) {
                 </li>
               </ul>
               <Button 
-                className="w-full mt-6 min-h-[44px]"
+                className={`w-full mt-6 min-h-[44px] ${selectedPlan === 'Премиум' ? 'bg-professional-rolexGold hover:bg-professional-rolexLightGold text-gray-900 font-semibold' : ''}`}
                 onClick={() => onPlanSelect('Премиум')}
+                disabled={selectedPlan === 'Премиум'}
               >
-                Связаться с нами
+                {selectedPlan === 'Премиум' ? (
+                  <span className="text-gray-900 font-semibold">✓ Выбранный план</span>
+                ) : (
+                  'Связаться с нами'
+                )}
               </Button>
             </CardContent>
           </Card>
