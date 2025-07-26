@@ -50,6 +50,10 @@ export default function CalculatorSection({
 }: CalculatorSectionProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const handlePhoneCall = () => {
+    window.open('tel:+79000000000', '_self');
+  };
+
 
 
   const handlePhoneCall = (e?: React.MouseEvent) => {
@@ -396,7 +400,7 @@ export default function CalculatorSection({
             {/* Логотип компании */}
             <div className="mb-6">
               <img 
-                src="https://cdn.poehali.dev/files/3f8628d1-3cdf-4ed9-af8d-bc6c760aba18.PNG" 
+                src="https://cdn.jsdelivr.net/gh/yourusername/yourrepo/assets/logo.png" 
                 alt="Utilizon логотип" 
                 className="w-20 h-20 mx-auto rounded-full object-cover border-2 border-professional-rolexGold/30"
               />
