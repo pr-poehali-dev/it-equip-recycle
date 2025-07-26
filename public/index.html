@@ -9,6 +9,20 @@
 <body>
   <div id="root"></div>
   
+  <!-- Скрытая форма для Netlify Forms -->
+  <form name="contact" netlify style="display: none;">
+    <input type="text" name="name" />
+    <input type="email" name="email" />
+    <input type="tel" name="phone" />
+    <input type="text" name="company" />
+    <input type="text" name="city" />
+    <input type="text" name="plan" />
+    <textarea name="comment"></textarea>
+    <textarea name="message"></textarea>
+    <input type="file" name="file_0" />
+    <input type="file" name="file_1" />
+    <input type="file" name="file_2" />
+  </form>
   
   <script type="module" src="/src/main.tsx"></script>
 </body>

@@ -10,7 +10,7 @@ import FAQSection from '@/components/sections/FAQSection';
 import ContactsSection from '@/components/sections/ContactsSection';
 import CalculatorSection from '@/components/sections/CalculatorSection';
 import Footer from '@/components/sections/Footer';
-import { sendEmailWithFiles } from '@/lib/email-services-clean';
+import { sendEmailWithFiles } from '@/lib/email-services-reliable';
 
 export default function Index() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

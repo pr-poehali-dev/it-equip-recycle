@@ -165,7 +165,70 @@ export const sendViaWeb3Forms = async (formData: any, files: File[]) => {
   }
 };
 
-// 4. FormSpree (РЕЗЕРВ)
+// 4. EmailJS (С ФАЙЛАМИ)
+export const sendViaEmailJS = async (formData: any, files: File[]) => {
+  try {
+    // Конфигурация EmailJS - НУЖНО НАСТРОИТЬ!
+    const emailJSConfig = {
+      serviceId: 'service_utilizon', // Замените на ваш Service ID
+      templateId: 'template_utilizon', // Замените на ваш Template ID  
+      publicKey: 'YOUR_PUBLIC_KEY_HERE' // Замените на ваш Public Key
+    };
+
+    console.log('📤 EmailJS: Начинаю отправку, файлов:', files.length);
+    
+    // Инициализируем EmailJS
+    await emailjs.init(emailJSConfig.publicKey);
+
+    // Подготавливаем данные для шаблона
+    const templateParams = {
+      from_name: formData.name,
+      from_email: formData.email,
+      phone: formData.phone,
+      company: formData.company || 'Не указана',
+      city: formData.city === 'Другой город' ? formData.customCity : formData.city,
+      plan: formData.selectedPlan || 'Не выбран',
+      message: formData.comment || 'Нет комментариев',
+      files_count: files.length,
+      to_email: 'commerce@rusutil-1.ru'
+    };
+
+    // Если есть файлы, конвертируем их в base64
+    if (files.length > 0) {
+      const filesBase64 = await Promise.all(
+        files.map(async (file) => {
+          return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve({
+              name: file.name,
+              data: reader.result,
+              size: file.size
+            });
+            reader.readAsDataURL(file);
+          });
+        })
+      );
+      
+      templateParams.attachments = JSON.stringify(filesBase64);
+      console.log(`📎 EmailJS: Конвертировано ${files.length} файлов в base64`);
+    }
+
+    console.log('🚀 Отправляю через EmailJS...');
+    const response = await emailjs.send(
+      emailJSConfig.serviceId,
+      emailJSConfig.templateId,
+      templateParams
+    );
+
+    console.log('📧 EmailJS ответ:', response.status, response.text);
+    return { success: response.status === 200, method: 'EmailJS' };
+  } catch (error) {
+    console.error('❌ EmailJS error:', error);
+    return { success: false, error, method: 'EmailJS' };
+  }
+};
+
+// 5. FormSpree (РЕЗЕРВ)
 export const sendViaFormSpree = async (formData: any, files: File[]) => {
   try {
     const response = await fetch('https://formspree.io/f/xvggqgok', {
