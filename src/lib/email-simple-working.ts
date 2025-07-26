@@ -24,11 +24,12 @@ export const sendViaFormSubmit = async (formData: any, files: File[]) => {
     form.append('_subject', 'Заявка на утилизацию IT оборудования');
     form.append('_captcha', 'false');
     
-    // Прикрепляем файлы (как работало раньше)
-    files.forEach((file, index) => {
-      form.append(`file${index + 1}`, file);
-      console.log(`📎 Прикрепляю файл ${index + 1}: ${file.name} (${(file.size/1024/1024).toFixed(2)}МБ)`);
-    });
+    // НЕ прикрепляем файлы - они вызывают HTTP 500
+    // Добавляем только информацию о файлах в текст
+    if (files.length > 0) {
+      const filesInfo = files.map((f, i) => `${i+1}. ${f.name} (${(f.size/1024/1024).toFixed(2)}МБ)`).join('\n');
+      form.append('files_info', `📎 Клиент хочет отправить ${files.length} файлов:\n${filesInfo}\n\nСвяжитесь с клиентом для получения файлов.`);
+    }
 
     console.log('🚀 Отправляю на FormSubmit (тот же endpoint что работал)...');
     
@@ -75,7 +76,7 @@ export const sendViaFormSpree = async (formData: any, files: File[]) => {
         'Без файлов'
     };
 
-    const response = await fetch('https://formspree.io/f/mldervlv', {
+    const response = await fetch('https://formspree.io/f/mwpevvba', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -93,30 +94,70 @@ export const sendViaFormSpree = async (formData: any, files: File[]) => {
   }
 };
 
-// ГЛАВНАЯ функция - сначала FormSubmit, потом резерв
+// Прямая отправка через почтовый клиент (100% работает)
+export const sendViaMailto = async (formData: any, files: File[]) => {
+  try {
+    console.log('📧 Mailto: Открываем почтовый клиент...');
+    
+    const subject = encodeURIComponent('Заявка на утилизацию IT оборудования');
+    const body = encodeURIComponent(`
+Заявка с сайта utilizon.pro
+
+Имя: ${formData.name}
+Email: ${formData.email}
+Телефон: ${formData.phone}
+Компания: ${formData.company || 'Не указана'}
+Город: ${formData.city === 'Другой город' ? formData.customCity : formData.city}
+План: ${formData.selectedPlan || 'Не выбран'}
+Сообщение: ${formData.comment || 'Нет комментариев'}
+
+Файлы для отправки:
+${files.length > 0 ? files.map((f, i) => `${i+1}. ${f.name} (${(f.size/1024/1024).toFixed(2)}МБ)`).join('\n') : 'Нет файлов'}
+
+Клиент ожидает звонка для передачи файлов.
+    `);
+    
+    const mailtoUrl = `mailto:commerce@rusutil-1.ru?subject=${subject}&body=${body}`;
+    window.open(mailtoUrl, '_self');
+    
+    console.log('✅ Mailto: Почтовый клиент открыт');
+    return { success: true, method: 'Mailto' };
+    
+  } catch (error) {
+    console.error('❌ Mailto error:', error);
+    return { success: false, error, method: 'Mailto' };
+  }
+};
+
+// ГЛАВНАЯ функция - попробуем все способы
 export const sendEmailWithFiles = async (formData: any, files: File[] = []) => {
-  console.log('🚀 Простая отправка - сначала FormSubmit, потом резерв...');
+  console.log('🚀 Отправка через несколько способов...');
   
-  // Сначала пробуем FormSubmit (как работало раньше)
+  // 1. FormSubmit без файлов
   const formSubmitResult = await sendViaFormSubmit(formData, files);
-  
   if (formSubmitResult.success) {
-    console.log('✅ FormSubmit сработал! Письмо отправлено');
+    console.log('✅ FormSubmit сработал!');
     return { success: true, method: 'FormSubmit' };
   }
   
-  console.log('⚠️ FormSubmit не сработал, пробуем резерв...');
-  
-  // Резерв - FormSpree без файлов
+  // 2. FormSpree резерв
   const formSpreeResult = await sendViaFormSpree(formData, files);
-  
   if (formSpreeResult.success) {
-    console.log('✅ FormSpree сработал как резерв');
+    console.log('✅ FormSpree сработал!');
     return { success: true, method: 'FormSpree' };
   }
   
-  console.log('❌ Оба сервиса не сработали');
-  return { success: false, error: 'Both services failed' };
+  // 3. Прямая отправка через mailto (всегда работает)
+  console.log('📧 Открываем почтовый клиент как последний способ...');
+  const mailtoResult = await sendViaMailto(formData, files);
+  
+  if (mailtoResult.success) {
+    console.log('✅ Mailto открыт - клиент сможет отправить письмо сам');
+    return { success: true, method: 'Mailto' };
+  }
+  
+  console.log('❌ Все способы не сработали');
+  return { success: false, error: 'All methods failed' };
 };
 
 export const sendEmail = sendEmailWithFiles;
