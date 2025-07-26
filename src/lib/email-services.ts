@@ -1,54 +1,55 @@
 // РАБОТАЮЩИЕ способы отправки email
 import emailjs from '@emailjs/browser';
 
-// 1. EmailJS (С ФАЙЛАМИ!) - САМЫЙ НАДЕЖНЫЙ
-export const sendViaEmailJS = async (formData: any, files: File[]) => {
+// 1. НОВЫЙ способ - отправляем каждый файл отдельно через FormSubmit
+export const sendViaFormSubmitMultiple = async (formData: any, files: File[]) => {
   try {
-    // Инициализация EmailJS
-    emailjs.init('user_QKx8y9N2Z8tM3vF1L'); // PUBLIC KEY
+    console.log('📤 Отправляю основную форму + каждый файл отдельно');
     
-    // Подготавливаем данные для отправки
-    const templateParams = {
-      to_email: 'commerce@rusutil-1.ru',
-      from_name: formData.name,
-      from_email: formData.email,
-      phone: formData.phone,
-      company: formData.company || 'Не указана',
-      city: formData.city === 'Другой город' ? formData.customCity : formData.city,
-      plan: formData.selectedPlan || 'Не выбран',
-      message: formData.comment || 'Нет комментариев',
-      subject: 'ЗАЯВКА с сайта utilizon.pro'
-    };
+    // Основная форма без файлов
+    const mainForm = new FormData();
+    mainForm.append('name', formData.name);
+    mainForm.append('email', formData.email);
+    mainForm.append('phone', formData.phone);
+    mainForm.append('company', formData.company || 'Не указана');
+    mainForm.append('city', formData.city === 'Другой город' ? formData.customCity : formData.city);
+    mainForm.append('plan', formData.selectedPlan || 'Не выбран');
+    mainForm.append('message', formData.comment || 'Нет комментариев' + (files.length > 0 ? `\n\n📎 К заявке прикреплено ${files.length} файлов` : ''));
+    mainForm.append('_subject', 'ЗАЯВКА с сайта utilizon.pro');
+    mainForm.append('_captcha', 'false');
 
-    // Конвертируем файлы в base64 для отправки
+    // Отправляем основную форму
+    const mainResponse = await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
+      method: 'POST',
+      body: mainForm
+    });
+
+    // Отправляем каждый файл отдельно
     if (files.length > 0) {
-      const filePromises = files.map(async (file, index) => {
-        return new Promise<string>((resolve) => {
-          const reader = new FileReader();
-          reader.onload = () => {
-            const base64 = reader.result?.toString().split(',')[1] || '';
-            resolve(`${file.name}:${base64}`);
-          };
-          reader.readAsDataURL(file);
+      for (let i = 0; i < files.length; i++) {
+        const fileForm = new FormData();
+        fileForm.append('name', `${formData.name} - ФАЙЛ ${i + 1}/${files.length}`);
+        fileForm.append('email', formData.email);
+        fileForm.append('message', `Файл ${i + 1} к заявке от ${formData.name}`);
+        fileForm.append('attachment', files[i], files[i].name);
+        fileForm.append('_subject', `ФАЙЛ ${i + 1}/${files.length} к заявке - ${files[i].name}`);
+        fileForm.append('_captcha', 'false');
+
+        console.log(`📎 Отправляю файл ${i + 1}: ${files[i].name}`);
+        await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
+          method: 'POST',
+          body: fileForm
         });
-      });
-      
-      const fileData = await Promise.all(filePromises);
-      templateParams.files = fileData.join('|||'); // Разделитель между файлами
-      templateParams.files_count = files.length.toString();
+        
+        // Пауза между отправками
+        await new Promise(resolve => setTimeout(resolve, 500));
+      }
     }
 
-    // Отправляем через EmailJS
-    const response = await emailjs.send(
-      'service_gmail_utilizon', // SERVICE ID
-      'template_utilizon_form', // TEMPLATE ID  
-      templateParams
-    );
-
-    return { success: response.status === 200, method: 'EmailJS' };
+    return { success: mainResponse.ok, method: 'FormSubmitMultiple' };
   } catch (error) {
-    console.error('EmailJS Error:', error);
-    return { success: false, error, method: 'EmailJS' };
+    console.error('FormSubmitMultiple Error:', error);
+    return { success: false, error, method: 'FormSubmitMultiple' };
   }
 };
 
@@ -97,7 +98,7 @@ export const sendViaFormSubmit = async (formData: any, files: File[]) => {
     if (files.length > 0) {
       files.forEach((file, index) => {
         console.log(`📎 Прикрепляю файл ${index + 1}: ${file.name} (${file.size} bytes)`);
-        form.append('attachment', file, file.name);  // FormSubmit принимает файлы с именем 'attachment'
+        form.append(`attachment${index + 1}`, file, file.name);  // Разные имена для каждого файла
       });
       message += `\n\n📎 Прикреплено файлов: ${files.length}`;
     }
@@ -134,10 +135,10 @@ export const sendViaWeb3Forms = async (formData: any, files: File[]) => {
     
     let message = formData.comment || 'Нет комментариев';
     
-    // Прикрепляем файлы к Web3Forms
+    // Прикрепляем файлы к Web3Forms (поддерживает множественные файлы)
     if (files.length > 0) {
       files.forEach((file, index) => {
-        form.append(`file_${index}`, file, file.name);
+        form.append(`attachment_${index + 1}`, file, file.name);
       });
       message += `\n\n📎 Прикреплено файлов: ${files.length}`;
     }
@@ -184,7 +185,14 @@ export const sendViaFormSpree = async (formData: any, files: File[]) => {
 export const sendEmail = async (formData: any, files: File[] = []) => {
   console.log('🚀 Отправляю через несколько сервисов...');
   
-  // Пробуем FormSubmit (с файлами!)
+  // Пробуем новый способ - отдельные письма для каждого файла
+  const formSubmitMultipleResult = await sendViaFormSubmitMultiple(formData, files);
+  if (formSubmitMultipleResult.success) {
+    console.log('✅ FormSubmitMultiple - SUCCESS');
+    return { success: true, method: 'FormSubmitMultiple' };
+  }
+  
+  // Пробуем FormSubmit (с файлами разными именами)
   const formSubmitResult = await sendViaFormSubmit(formData, files);
   if (formSubmitResult.success) {
     console.log('✅ FormSubmit - SUCCESS');
