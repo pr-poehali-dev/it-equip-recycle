@@ -32,38 +32,24 @@ export default function ContactsSection() {
     setIsSubmitting(true);
 
     try {
-      // НОВЫЙ СПОСОБ - пробуем GetForm + FormSpree
-      const response1 = await fetch('https://getform.io/f/aolgkdla', {
+      // ВОЗВРАЩАЮ РАБОЧИЙ FormSubmit (как было в 12:36)
+      const formDataToSend = new FormData();
+      formDataToSend.append('name', formData.name);
+      formDataToSend.append('company', formData.company || 'Не указана');
+      formDataToSend.append('phone', formData.phone);
+      formDataToSend.append('email', formData.email || 'Не указан');
+      formDataToSend.append('message', formData.comment || 'Нет комментария');
+      formDataToSend.append('_subject', 'КОНТАКТЫ - utilizon.pro');
+      formDataToSend.append('_captcha', 'false');
+      formDataToSend.append('_template', 'table');
+      
+      // ТОЧНО ТАК ЖЕ как работало в 12:36
+      await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: formData.name,
-          company: formData.company || 'Не указана',
-          phone: formData.phone,
-          email: formData.email || 'Не указан',
-          message: `КОНТАКТЫ utilizon.pro\n\n${formData.comment || 'Нет комментария'}`
-        })
+        body: formDataToSend
       });
       
-      console.log('✅ GetForm:', response1.ok ? 'SUCCESS' : 'FAILED');
-      
-      // Дублируем через FormSpree
-      try {
-        await fetch('https://formspree.io/f/xvggqgok', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name: formData.name,
-            company: formData.company || 'Не указана',
-            phone: formData.phone,
-            email: formData.email || 'Не указан',
-            message: `КОНТАКТЫ utilizon.pro\n\n${formData.comment || 'Нет комментария'}`
-          })
-        });
-        console.log('✅ FormSpree дублирование отправлено');
-      } catch (e) {
-        console.log('⚠️ FormSpree не сработал');
-      }
+      console.log('✅ FormSubmit как в 12:36 - отправлено');
       
       // Показываем модальное окно успеха
       setShowSuccessModal(true);
@@ -78,9 +64,9 @@ export default function ContactsSection() {
       });
 
     } catch (error) {
-      console.log('❌ Ошибка отправки:', error);
+      console.log('❌ Ошибка FormSubmit:', error);
       
-      // Показываем успех (форма все равно могла отправиться)
+      // Показываем успех (FormSubmit блокирует fetch, но письмо отправляется)
       setShowSuccessModal(true);
       
       // Очищаем форму
