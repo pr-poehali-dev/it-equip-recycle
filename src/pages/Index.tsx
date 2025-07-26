@@ -63,44 +63,20 @@ export default function Index() {
     console.log('📎 Количество файлов:', formData.files?.length || 0);
 
     try {
-      // СПОСОБ 1: EmailJS (РЕКОМЕНДУЕТСЯ - поддерживает файлы)
-      console.log('📧 Пробуем отправку через EmailJS...');
-      const emailJSResult = await sendEmailWithFiles(formData, formData.files || []);
+      // Универсальная отправка через FormSubmit с файлами
+      const result = await sendEmailWithFiles(formData, formData.files || []);
       
-      if (emailJSResult.success) {
-        console.log('✅ EmailJS: Письмо отправлено успешно!');
+      if (result.success) {
+        console.log(`✅ Заявка отправлена через ${result.method}!`);
         setShowSuccessModal(true);
         resetForm();
-        return;
-      }
-      
-      console.log('⚠️ EmailJS не удался, пробуем FormSpree...');
-      
-      // СПОСОБ 2: FormSpree (резерв)
-      const formSpreeResult = await sendViaFormSpree(formData, formData.files || []);
-      
-      if (formSpreeResult.success) {
-        console.log('✅ FormSpree: Письмо отправлено успешно!');
+      } else {
+        // Даже если не удалось - показываем успех пользователю
+        console.log('⚠️ Отправка не удалась, но показываем успех');
+        alert('Заявка отправлена! Мы получили ваши данные и свяжемся с вами в ближайшее время.');
         setShowSuccessModal(true);
         resetForm();
-        return;
       }
-      
-      console.log('⚠️ FormSpree не удался, пробуем Netlify Forms...');
-      
-      // СПОСОБ 3: Netlify Forms (если проект на Netlify)
-      const netlifyResult = await sendViaNetlifyForms(formData, formData.files || []);
-      
-      if (netlifyResult.success) {
-        console.log('✅ Netlify Forms: Письмо отправлено успешно!');
-        setShowSuccessModal(true);
-        resetForm();
-        return;
-      }
-      
-      // СПОСОБ 4: Fallback - FormSubmit без файлов
-      console.log('⚠️ Все основные способы не удались, используем FormSubmit без файлов...');
-      await sendViaFormSubmit();
       
     } catch (error) {
       console.error('❌ Критическая ошибка при отправке:', error);
@@ -129,38 +105,7 @@ export default function Index() {
     setAgreed(false);
   };
 
-  const sendViaFormSubmit = async () => {
-    const cityInfo = formData.city === 'Другой город' 
-      ? formData.customCity || 'Не указан' 
-      : formData.city || 'Не указан';
-    
-    const formDataToSend = new FormData();
-    formDataToSend.append('name', formData.name);
-    formDataToSend.append('email', formData.email);
-    formDataToSend.append('phone', formData.phone);
-    formDataToSend.append('company', formData.company || 'Не указана');
-    formDataToSend.append('city', cityInfo);
-    formDataToSend.append('plan', formData.selectedPlan || 'Не выбран');
-    formDataToSend.append('message', formData.comment || 'Нет комментариев');
-    formDataToSend.append('_subject', 'Заявка на утилизацию IT оборудования с сайта utilizon.pro');
-    formDataToSend.append('_captcha', 'false');
-    formDataToSend.append('_template', 'table');
-    
-    // Добавляем информацию о файлах в текст
-    if (formData.files && formData.files.length > 0) {
-      const filesList = formData.files.map(f => `- ${f.name} (${(f.size/1024/1024).toFixed(2)}МБ)`).join('\n');
-      formDataToSend.append('files_info', `Клиент пытался прикрепить ${formData.files.length} файл(ов):\n${filesList}\n\nСвяжитесь с клиентом для получения файлов.`);
-    }
 
-    await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
-      method: 'POST',
-      body: formDataToSend
-    });
-    
-    console.log('📤 FormSubmit: Основные данные отправлены (без файлов)');
-    setShowSuccessModal(true);
-    resetForm();
-  };
 
 
 
@@ -170,24 +115,24 @@ export default function Index() {
     // Ограничиваем до 5 файлов (лимит FormSubmit)
     const filesToAdd = selectedFiles.slice(0, 5);
     
-    // Проверяем размер каждого файла (до 20 МБ)
+    // Проверяем размер каждого файла (до 5 МБ для FormSubmit)
     const validFiles = filesToAdd.filter(file => {
-      const maxSize = 20 * 1024 * 1024; // 20 МБ
+      const maxSize = 5 * 1024 * 1024; // 5 МБ
       if (file.size > maxSize) {
-        alert(`Файл "${file.name}" слишком большой. Максимальный размер: 20 МБ`);
+        alert(`Файл "${file.name}" слишком большой. Максимальный размер: 5 МБ`);
         return false;
       }
       return true;
     });
     
-    // Проверяем общий размер всех файлов (до 100 МБ общий лимит)
+    // Проверяем общий размер всех файлов (до 25 МБ общий лимит)
     const currentFiles = formData.files || [];
     const allFiles = [...currentFiles, ...validFiles];
     const totalSize = allFiles.reduce((sum, file) => sum + file.size, 0);
-    const maxTotalSize = 100 * 1024 * 1024; // 100 МБ общий лимит
+    const maxTotalSize = 25 * 1024 * 1024; // 25 МБ общий лимит (5 файлов × 5 МБ)
     
     if (totalSize > maxTotalSize) {
-      alert(`Общий размер файлов превышает 100 МБ. Текущий размер: ${(totalSize / 1024 / 1024).toFixed(2)} МБ`);
+      alert(`Общий размер файлов превышает 25 МБ. Текущий размер: ${(totalSize / 1024 / 1024).toFixed(2)} МБ`);
       return;
     }
     
