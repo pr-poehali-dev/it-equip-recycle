@@ -10,7 +10,7 @@ import FAQSection from '@/components/sections/FAQSection';
 import ContactsSection from '@/components/sections/ContactsSection';
 import CalculatorSection from '@/components/sections/CalculatorSection';
 import Footer from '@/components/sections/Footer';
-import { sendEmailWithFiles } from '@/lib/email-services';
+import { sendEmailWithFiles, sendViaFormSpree, sendViaNetlify } from '@/lib/email-services';
 
 export default function Index() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -89,7 +89,7 @@ export default function Index() {
       console.log('⚠️ FormSpree не удался, пробуем Netlify Forms...');
       
       // СПОСОБ 3: Netlify Forms (если проект на Netlify)
-      const netlifyResult = await sendViaNetlifyForms(formData, formData.files || []);
+      const netlifyResult = await sendViaNetlify(formData, formData.files || []);
       
       if (netlifyResult.success) {
         console.log('✅ Netlify Forms: Письмо отправлено успешно!');
