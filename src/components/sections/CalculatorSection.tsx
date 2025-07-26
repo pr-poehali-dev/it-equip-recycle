@@ -50,7 +50,6 @@ export default function CalculatorSection({
 }: CalculatorSectionProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-
   const handlePhoneCall = (e?: React.MouseEvent) => {
     if (e) {
       e.preventDefault();
@@ -62,12 +61,9 @@ export default function CalculatorSection({
     const phoneNumber = '+79018628181';
     
     try {
-      // Пробуем разные способы открытия звонка
       if (navigator.userAgent.match(/Android|iPhone|iPad|iPod|BlackBerry|Windows Phone/i)) {
-        // Мобильные устройства
         window.location.href = `tel:${phoneNumber}`;
       } else {
-        // Десктоп - копируем номер в буфер обмена и показываем уведомление
         if (navigator.clipboard) {
           navigator.clipboard.writeText(phoneNumber).then(() => {
             alert(`📞 Номер телефона скопирован в буфер обмена: ${phoneNumber}`);
@@ -107,8 +103,6 @@ export default function CalculatorSection({
                   Заполните форму и прикрепите спецификацию оборудования для точного расчета
                 </CardDescription>
               </div>
-              
-
             </CardHeader>
             <CardContent className="p-4 sm:p-6 lg:p-8">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -123,7 +117,6 @@ export default function CalculatorSection({
                         className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                         placeholder="Ваше имя"
                         required
-
                       />
                     </div>
                     <div>
@@ -134,7 +127,6 @@ export default function CalculatorSection({
                         onChange={(e) => setFormData(prev => ({...prev, company: e.target.value}))}
                         className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
                         placeholder="Название компании"
-
                       />
                     </div>
                   </div>
@@ -147,9 +139,8 @@ export default function CalculatorSection({
                         value={formData.phone}
                         onChange={(e) => setFormData(prev => ({...prev, phone: e.target.value}))}
                         className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
-                        placeholder="+7 (___) ___-__-__"
+                        placeholder="+7 (000) 000-00-00"
                         required
-
                       />
                     </div>
                     <div>
@@ -159,58 +150,49 @@ export default function CalculatorSection({
                         value={formData.email}
                         onChange={(e) => setFormData(prev => ({...prev, email: e.target.value}))}
                         className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
-                        placeholder="your@email.com"
+                        placeholder="example@company.ru"
                         required
-
                       />
                     </div>
                   </div>
-
+                  
                   <div>
                     <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Город</label>
                     <select 
                       value={formData.city}
-                      onChange={(e) => setFormData(prev => ({...prev, city: e.target.value, customCity: e.target.value !== 'Другой город' ? '' : prev.customCity}))}
+                      onChange={(e) => setFormData(prev => ({...prev, city: e.target.value, customCity: ''}))}
                       className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base"
-
                     >
                       <option value="">Выберите город</option>
-                      <option value="Москва и Московская область">Москва и Московская область</option>
-                      <option value="Санкт-Петербург и Ленинградская область">Санкт-Петербург и Ленинградская область</option>
+                      <option value="Москва">Москва</option>
+                      <option value="Санкт-Петербург">Санкт-Петербург</option>
                       <option value="Новосибирск">Новосибирск</option>
                       <option value="Екатеринбург">Екатеринбург</option>
                       <option value="Казань">Казань</option>
                       <option value="Нижний Новгород">Нижний Новгород</option>
+                      <option value="Челябинск">Челябинск</option>
+                      <option value="Самара">Самара</option>
+                      <option value="Омск">Омск</option>
+                      <option value="Ростов-на-Дону">Ростов-на-Дону</option>
+                      <option value="Уфа">Уфа</option>
+                      <option value="Красноярск">Красноярск</option>
+                      <option value="Воронеж">Воронеж</option>
+                      <option value="Пермь">Пермь</option>
+                      <option value="Волгоград">Волгоград</option>
                       <option value="Другой город">Другой город</option>
                     </select>
-                    {formData.city === 'Другой город' && (
+                  </div>
+                  
+                  {formData.city === 'Другой город' && (
+                    <div>
+                      <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">Укажите ваш город</label>
                       <input 
                         type="text" 
                         value={formData.customCity}
                         onChange={(e) => setFormData(prev => ({...prev, customCity: e.target.value}))}
-                        className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base mt-3" 
-                        placeholder="Укажите ваш город"
-
+                        className="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base" 
+                        placeholder="Название города"
                       />
-                    )}
-                  </div>
-                  
-                  {/* Окошко выбранного плана */}
-                  {formData.selectedPlan && (
-                    <div className="mt-4 p-4 bg-black border border-professional-rolexGold rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-professional-rolexGold rounded-full flex items-center justify-center flex-shrink-0">
-                          <Icon name="Check" size={18} className="text-black font-bold" />
-                        </div>
-                        <div>
-                          <h4 className="text-sm font-semibold premium-body text-professional-rolexGold mb-1">
-                            Выбранный план утилизации:
-                          </h4>
-                          <p className="text-sm premium-body text-white font-medium">
-                            {formData.selectedPlan}
-                          </p>
-                        </div>
-                      </div>
                     </div>
                   )}
                 </div>
@@ -218,39 +200,40 @@ export default function CalculatorSection({
                 <div className="space-y-6">
                   <div>
                     <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">
-                      📎 Спецификация оборудования *
-                      <span className="text-xs text-gray-600 block mt-1">Прикрепите файлы с описанием оборудования (до 5 файлов, максимум 20МБ каждый)</span>
+                      📄 Документы (необязательно)
+                      <span className="text-xs text-gray-600 block mt-1">Прикрепите спецификацию оборудования для точного расчета (до 5 файлов, максимум 20МБ каждый)</span>
                     </label>
                     
-                    {/* Показываем загруженные файлы */}
                     {formData.files && formData.files.length > 0 && (
                       <div className="mb-4 space-y-2">
                         <p className="text-sm font-medium text-gray-700">Загруженные файлы ({formData.files.length} из 5):</p>
-                        {formData.files.map((file, index) => (
-                          <div key={index} className="flex items-center justify-between bg-green-50 border border-green-200 rounded-lg p-3">
-                            <div className="flex items-center space-x-3">
-                              <div className="flex-shrink-0">
-                                <Icon name="FileText" size={16} className="text-green-600" />
+                        <div className="space-y-2">
+                          {formData.files.map((file, index) => (
+                            <div key={index} className="flex items-center justify-between bg-green-50 border border-green-200 rounded-lg p-3">
+                              <div className="flex items-center space-x-3">
+                                <div className="flex-shrink-0">
+                                  <Icon name="File" size={16} className="text-green-600" />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <p className="text-sm font-medium text-green-800 truncate">{file.name}</p>
+                                  <p className="text-xs text-green-600">{(file.size / 1024 / 1024).toFixed(2)} МБ</p>
+                                </div>
                               </div>
-                              <div>
-                                <p className="text-sm font-medium text-green-800">{file.name}</p>
-                                <p className="text-xs text-green-600">{(file.size / 1024 / 1024).toFixed(2)} МБ</p>
-                              </div>
+                              <button
+                                type="button"
+                                onClick={() => removeFile(index)}
+                                className="text-red-600 hover:text-red-800 transition-colors p-1"
+                              >
+                                <Icon name="X" size={16} />
+                              </button>
                             </div>
-                            <button
-                              type="button"
-                              onClick={() => removeFile(index)}
-                              className="text-red-600 hover:text-red-800 transition-colors p-1"
-                            >
-                              <Icon name="X" size={16} />
-                            </button>
-                          </div>
-                        ))}
+                          ))}
+                        </div>
                       </div>
                     )}
                     
                     <div 
-                      className="border-2 border-dashed border-primary/30 rounded-lg p-6 text-center hover:border-primary transition-all duration-300 bg-black/5 cursor-pointer"
+                      className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-primary transition-all duration-300 bg-gray-50/50 cursor-pointer"
                       onClick={() => fileInputRef.current?.click()}
                     >
                       <Icon name="Upload" size={32} className="text-professional-rolexGold mx-auto mb-3" />
@@ -266,10 +249,10 @@ export default function CalculatorSection({
                       ) : (
                         <div>
                           <p className="text-sm premium-body text-gray-700 mb-2">
-                            <span className="text-primary font-semibold">Выберите файлы</span> или перетащите сюда
+                            <span className="text-gray-600 font-semibold">Добавить файлы</span> или перетащите сюда
                           </p>
                           <p className="text-xs text-gray-600">
-                            Excel (.xlsx, .xls), Word (.docx, .doc), PDF • до 20 МБ каждый • до 5 файлов • до 100 МБ всего
+                            Excel, Word, PDF • до 20 МБ каждый • до 5 файлов
                           </p>
                         </div>
                       )}
@@ -290,9 +273,8 @@ export default function CalculatorSection({
                     <textarea 
                       value={formData.comment}
                       onChange={(e) => setFormData(prev => ({...prev, comment: e.target.value}))}
-                      className="w-full px-4 py-3 min-h-[88px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base resize-none" 
-                      placeholder="Укажите срочность, особые требования, вопросы по утилизации..."
-
+                      className="w-full px-4 py-3 min-h-[120px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base resize-none" 
+                      placeholder="Опишите ваше оборудование, количество, особые требования к утилизации..."
                     />
                   </div>
                 </div>
@@ -308,7 +290,6 @@ export default function CalculatorSection({
                       onChange={(e) => setAgreed(e.target.checked)}
                       className="sr-only" 
                       required 
-
                     />
                     <div 
                       onClick={() => setAgreed(!agreed)}
@@ -366,12 +347,10 @@ export default function CalculatorSection({
                     variant="outline" 
                     className="w-full min-h-[48px] border-primary text-primary hover:bg-primary hover:text-white" 
                     size="lg"
-
                   >
                     <Icon name="Phone" size={20} className="mr-2 text-professional-rolexGold" />
                     Обсудить по телефону
                   </Button>
-
                 </div>
                 
                 <div className="mt-4 text-center">
@@ -388,59 +367,39 @@ export default function CalculatorSection({
         </div>
       </div>
 
-      {/* Премиальное модальное окно успешной отправки */}
       {showSuccessModal && (
         <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 backdrop-blur-sm">
           <div className="bg-white rounded-2xl p-8 max-w-lg mx-4 text-center shadow-2xl border border-professional-rolexGold/20">
-            {/* Логотип компании */}
             <div className="mb-6">
-              <img 
-                src="https://via.placeholder.com/80x80/f59e0b/ffffff?text=U" 
-                alt="Utilizon логотип" 
-                className="w-20 h-20 mx-auto rounded-full object-cover border-2 border-professional-rolexGold/30"
-              />
-            </div>
-            
-            {/* Иконка успеха */}
-            <div className="mb-6">
-              <div className="w-16 h-16 mx-auto bg-professional-rolexGold/10 rounded-full flex items-center justify-center">
+              <div className="w-20 h-20 mx-auto rounded-full bg-professional-rolexGold/10 flex items-center justify-center border-2 border-professional-rolexGold/30">
                 <Icon name="CheckCircle" size={40} className="text-professional-rolexGold" />
               </div>
             </div>
             
-            {/* Заголовок */}
-            <h3 className="text-2xl font-bold text-gray-900 mb-3 premium-heading">
-              Заявка успешно отправлена!
-            </h3>
-            
-            {/* Описание */}
-            <div className="mb-8">
-              <p className="text-gray-600 premium-body mb-4 leading-relaxed">
-                Благодарим за обращение к нашей компании! 
+            <div className="text-center">
+              <h3 className="text-2xl font-bold text-gray-900 mb-3">Запрос отправлен!</h3>
+              <p className="text-gray-600 mb-6">
+                Спасибо за обращение! Мы получили ваш запрос и свяжемся с вами в течение 30 минут в рабочее время.
               </p>
-              <div className="bg-gradient-to-r from-professional-rolexGold/10 to-primary/10 rounded-lg p-4 mb-4">
-                <div className="flex items-center justify-center text-primary mb-2">
-                  <Icon name="Clock" size={20} className="mr-2 text-professional-rolexGold" />
-                  <span className="font-semibold">Время ответа</span>
+              
+              <div className="space-y-3 mb-6">
+                <div className="flex items-center justify-center text-sm text-gray-500">
+                  <Icon name="Mail" size={16} className="mr-2 text-professional-rolexGold" />
+                  Уведомление отправлено на ваш email
                 </div>
-                <p className="text-sm text-gray-700">
-                  Наш специалист свяжется с вами в течение <strong>30 минут</strong> для обсуждения деталей утилизации
-                </p>
+                <div className="flex items-center justify-center text-sm text-gray-500">
+                  <Icon name="Phone" size={16} className="mr-2 text-professional-rolexGold" />
+                  Наш менеджер свяжется с вами по телефону
+                </div>
               </div>
-              <div className="flex items-center justify-center text-sm text-gray-500">
-                <Icon name="Shield" size={16} className="mr-2 text-professional-rolexGold" />
-                Ваши данные защищены и не передаются третьим лицам
-              </div>
+              
+              <Button 
+                onClick={() => setShowSuccessModal(false)}
+                className="w-full bg-primary hover:bg-primary/90"
+              >
+                Отлично!
+              </Button>
             </div>
-            
-            {/* Кнопка */}
-            <Button
-              onClick={() => setShowSuccessModal(false)}
-              className="w-full bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
-            >
-              <Icon name="ThumbsUp" size={20} className="mr-2 text-professional-rolexGold" />
-              Отлично, жду звонка
-            </Button>
           </div>
         </div>
       )}
