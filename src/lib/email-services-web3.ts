@@ -49,10 +49,15 @@ EMAIL: ${formData.email || 'Не указан'}
     // Настройки
     form.append('subject', 'ЗАЯВКА с сайта utilizon.pro');
     form.append('from_name', 'utilizon.pro');
-    form.append('to_email', 'commerce@rusutil-1.ru');
+    
+    // ОТКЛЮЧАЕМ редирект!
+    form.append('redirect', 'false');
 
     const response = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
+      headers: {
+        'Accept': 'application/json'
+      },
       body: form
     });
 
