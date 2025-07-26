@@ -14,10 +14,15 @@ export const sendViaNetlify = async (formData: any, files: File[]) => {
     form.append('plan', formData.selectedPlan || 'Не выбран');
     
     let message = formData.comment || 'Нет комментариев';
+    
+    // Прикрепляем файлы к Netlify Forms
     if (files.length > 0) {
-      message += `\n\n📎 Файлы: ${files.map(f => f.name).join(', ')}`;
-      message += '\n⚠️ Файлы НЕ ПРИКРЕПЛЕНЫ! Свяжитесь с клиентом.';
+      files.forEach((file, index) => {
+        form.append(`file_${index}`, file, file.name);
+      });
+      message += `\n\n📎 Прикреплено файлов: ${files.length}`;
     }
+    
     form.append('message', message);
 
     const response = await fetch('/', {
@@ -69,7 +74,7 @@ export const sendViaWeb3Forms = async (formData: any, files: File[]) => {
   try {
     const form = new FormData();
     
-    form.append('access_key', 'f0d2b8e1-7c3a-4b5e-9d8f-1a2b3c4d5e6f');
+    form.append('access_key', '0a8f9e2b-3c6d-4e7f-8a9b-1c2d3e4f5a6b');
     form.append('name', formData.name);
     form.append('email', formData.email);
     form.append('phone', formData.phone);
@@ -78,9 +83,15 @@ export const sendViaWeb3Forms = async (formData: any, files: File[]) => {
     form.append('plan', formData.selectedPlan || 'Не выбран');
     
     let message = formData.comment || 'Нет комментариев';
+    
+    // Прикрепляем файлы к Web3Forms
     if (files.length > 0) {
-      message += `\n\n📎 Файлы: ${files.map(f => f.name).join(', ')}`;
+      files.forEach((file, index) => {
+        form.append(`file_${index}`, file, file.name);
+      });
+      message += `\n\n📎 Прикреплено файлов: ${files.length}`;
     }
+    
     form.append('message', message);
     form.append('subject', 'ЗАЯВКА с сайта utilizon.pro');
 
