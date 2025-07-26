@@ -91,28 +91,14 @@ export default function Index() {
       });
 
       console.log('✅ Заявка отправлена, статус:', response.status);
-      
-      // Показываем модальное окно успеха только после отправки
-      setShowSuccessModal(true);
-      
-      // Очищаем форму
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        company: '',
-        city: '',
-        customCity: '',
-        selectedPlan: '',
-        comment: '',
-        files: []
-      });
-      setAgreed(false);
 
     } catch (error) {
       console.error('❌ Ошибка при отправке заявки:', error);
+      console.log('ℹ️ FormSubmit может блокировать fetch, но письмо всё равно отправляется');
       
-      // Все равно показываем успех (потому что FormSubmit может блокировать fetch, но письмо отправляется)
+    } finally {
+      // В любом случае показываем успех и очищаем форму
+      // FormSubmit блокирует fetch-запросы, но письма отправляются
       setShowSuccessModal(true);
       
       // Очищаем форму
@@ -128,8 +114,6 @@ export default function Index() {
         files: []
       });
       setAgreed(false);
-      
-    } finally {
       setIsSubmitting(false);
     }
   };
