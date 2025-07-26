@@ -85,11 +85,18 @@ export default function Index() {
 
       console.log('📧 Отправляю заявку на FormSubmit...');
 
-      // Отправляем без AbortController - пусть FormSubmit обрабатывает запрос полностью
-      const response = await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
+      // Используем Promise.race для таймаута, но не прерываем запрос
+      const fetchPromise = fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
         method: 'POST',
         body: formDataToSend
       });
+
+      // Таймаут для UI, но запрос продолжает работать в фоне
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('UI_TIMEOUT')), 5000)
+      );
+
+      const response = await Promise.race([fetchPromise, timeoutPromise]);
 
       console.log('✅ Ответ от FormSubmit получен, статус:', response.status);
       
