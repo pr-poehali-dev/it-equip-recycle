@@ -46,6 +46,11 @@ export default function Index() {
       return;
     }
     
+    if (formData.city === 'Другой город' && !formData.customCity.trim()) {
+      alert('❌ Пожалуйста, укажите название вашего города');
+      return;
+    }
+    
     if (!agreed) {
       alert('❌ Пожалуйста, подтвердите согласие с политикой конфиденциальности');
       return;
@@ -54,14 +59,16 @@ export default function Index() {
     setIsSubmitting(true);
 
     try {
-      const cityInfo = formData.city || 'Не указан';
+      const cityInfo = formData.city === 'Другой город' 
+        ? formData.customCity || 'Не указан' 
+        : formData.city || 'Не указан';
       const formDataToSend = new FormData();
       
       formDataToSend.append('name', formData.name);
       formDataToSend.append('email', formData.email);
       formDataToSend.append('phone', formData.phone);
       formDataToSend.append('company', formData.company || 'Не указана');
-      formDataToSend.append('city', cityInfo || 'Не указан');
+      formDataToSend.append('city', cityInfo);
       formDataToSend.append('plan', formData.selectedPlan || 'Не выбран');
       formDataToSend.append('message', formData.comment || 'Нет комментариев');
       formDataToSend.append('_subject', 'Заявка на утилизацию IT оборудования с сайта utilizon.pro');
