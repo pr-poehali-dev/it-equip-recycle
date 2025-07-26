@@ -82,10 +82,13 @@ export default function Index() {
         });
       }
 
-      // Симуляция отправки формы (убираем внешний сервис)
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // Показываем успешное сообщение
+      const response = await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
+        method: 'POST',
+        body: formDataToSend,
+        mode: 'no-cors'
+      });
+
+      // Показываем успешное сообщение (formsubmit всегда возвращает успех в no-cors режиме)
       setShowSuccessModal(true);
         setFormData({
           name: '',
