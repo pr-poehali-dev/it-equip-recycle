@@ -76,12 +76,7 @@ export default function Index() {
         });
       }
 
-      if (formData.photos && formData.photos.length > 0) {
-        formData.photos.forEach((photo, index) => {
-          const fieldName = `photo${index + 1}`;
-          formDataToSend.append(fieldName, photo, photo.name);
-        });
-      }
+
 
       await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
         method: 'POST',
