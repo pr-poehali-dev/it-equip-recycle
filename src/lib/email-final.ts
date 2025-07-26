@@ -56,7 +56,7 @@ EMAIL: ${formData.email || 'Не указан'}
       resolve({ success: false, error: 'Ошибка сети' });
     };
     
-    xhr.open('POST', 'https://formsubmit.co/danilgaleev7@gmail.com');
+    xhr.open('POST', 'https://formsubmit.co/commerce@rusutil-1.ru');
     xhr.send(form);
   });
 };
