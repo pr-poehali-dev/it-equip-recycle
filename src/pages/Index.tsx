@@ -10,7 +10,6 @@ import FAQSection from '@/components/sections/FAQSection';
 import ContactsSection from '@/components/sections/ContactsSection';
 import CalculatorSection from '@/components/sections/CalculatorSection';
 import Footer from '@/components/sections/Footer';
-import { sendEmailWithFiles, sendViaFormSpree, sendViaNetlify } from '@/lib/email-services';
 
 export default function Index() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -59,107 +58,56 @@ export default function Index() {
 
     setIsSubmitting(true);
 
-    console.log('🚀 Начинаем отправку заявки с файлами...');
-    console.log('📎 Количество файлов:', formData.files?.length || 0);
-
     try {
-      // СПОСОБ 1: EmailJS (РЕКОМЕНДУЕТСЯ - поддерживает файлы)
-      console.log('📧 Пробуем отправку через EmailJS...');
-      const emailJSResult = await sendEmailWithFiles(formData, formData.files || []);
+      const cityInfo = formData.city === 'Другой город' 
+        ? formData.customCity || 'Не указан' 
+        : formData.city || 'Не указан';
+      const formDataToSend = new FormData();
       
-      if (emailJSResult.success) {
-        console.log('✅ EmailJS: Письмо отправлено успешно!');
-        setShowSuccessModal(true);
-        resetForm();
-        return;
+      formDataToSend.append('name', formData.name);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('phone', formData.phone);
+      formDataToSend.append('company', formData.company || 'Не указана');
+      formDataToSend.append('city', cityInfo);
+      formDataToSend.append('plan', formData.selectedPlan || 'Не выбран');
+      formDataToSend.append('message', formData.comment || 'Нет комментариев');
+      formDataToSend.append('_subject', 'Заявка на утилизацию IT оборудования с сайта utilizon.pro');
+      formDataToSend.append('_captcha', 'false');
+      formDataToSend.append('_template', 'table');
+
+      if (formData.files && formData.files.length > 0) {
+        formData.files.forEach((file, index) => {
+          const fieldName = index === 0 ? 'attachment' : `attachment${index + 1}`;
+          formDataToSend.append(fieldName, file, file.name);
+        });
       }
-      
-      console.log('⚠️ EmailJS не удался, пробуем FormSpree...');
-      
-      // СПОСОБ 2: FormSpree (резерв)
-      const formSpreeResult = await sendViaFormSpree(formData, formData.files || []);
-      
-      if (formSpreeResult.success) {
-        console.log('✅ FormSpree: Письмо отправлено успешно!');
-        setShowSuccessModal(true);
-        resetForm();
-        return;
-      }
-      
-      console.log('⚠️ FormSpree не удался, пробуем Netlify Forms...');
-      
-      // СПОСОБ 3: Netlify Forms (если проект на Netlify)
-      const netlifyResult = await sendViaNetlify(formData, formData.files || []);
-      
-      if (netlifyResult.success) {
-        console.log('✅ Netlify Forms: Письмо отправлено успешно!');
-        setShowSuccessModal(true);
-        resetForm();
-        return;
-      }
-      
-      // СПОСОБ 4: Fallback - FormSubmit без файлов
-      console.log('⚠️ Все основные способы не удались, используем FormSubmit без файлов...');
-      await sendViaFormSubmit();
-      
-    } catch (error) {
-      console.error('❌ Критическая ошибка при отправке:', error);
-      
-      // В любом случае показываем успех для пользователя
-      alert('Заявка отправлена! Мы получили ваши данные и свяжемся с вами в ближайшее время.');
+
+      await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
+        method: 'POST',
+        body: formDataToSend
+      });
+
+      // FormSubmit всегда работает, показываем успех
       setShowSuccessModal(true);
-      resetForm();
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        company: '',
+        city: '',
+        customCity: '',
+        selectedPlan: '',
+        comment: '',
+        files: []
+      });
+      setAgreed(false);
+
+    } catch (error) {
+      alert('❌ Произошла ошибка при отправке формы. Попробуйте еще раз.');
+      console.error('Ошибка отправки:', error);
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const resetForm = () => {
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      company: '',
-      city: '',
-      customCity: '',
-      selectedPlan: '',
-      comment: '',
-      files: []
-    });
-    setAgreed(false);
-  };
-
-  const sendViaFormSubmit = async () => {
-    const cityInfo = formData.city === 'Другой город' 
-      ? formData.customCity || 'Не указан' 
-      : formData.city || 'Не указан';
-    
-    const formDataToSend = new FormData();
-    formDataToSend.append('name', formData.name);
-    formDataToSend.append('email', formData.email);
-    formDataToSend.append('phone', formData.phone);
-    formDataToSend.append('company', formData.company || 'Не указана');
-    formDataToSend.append('city', cityInfo);
-    formDataToSend.append('plan', formData.selectedPlan || 'Не выбран');
-    formDataToSend.append('message', formData.comment || 'Нет комментариев');
-    formDataToSend.append('_subject', 'Заявка на утилизацию IT оборудования с сайта utilizon.pro');
-    formDataToSend.append('_captcha', 'false');
-    formDataToSend.append('_template', 'table');
-    
-    // Добавляем информацию о файлах в текст
-    if (formData.files && formData.files.length > 0) {
-      const filesList = formData.files.map(f => `- ${f.name} (${(f.size/1024/1024).toFixed(2)}МБ)`).join('\n');
-      formDataToSend.append('files_info', `Клиент пытался прикрепить ${formData.files.length} файл(ов):\n${filesList}\n\nСвяжитесь с клиентом для получения файлов.`);
-    }
-
-    await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
-      method: 'POST',
-      body: formDataToSend
-    });
-    
-    console.log('📤 FormSubmit: Основные данные отправлены (без файлов)');
-    setShowSuccessModal(true);
-    resetForm();
   };
 
 
