@@ -360,25 +360,25 @@ export default function CalculatorSection({
                   disabled={!formData.name || !formData.phone || !formData.email || !formData.city || formData.city === 'Выберите город' || !agreed || localSubmitting}
                   className="w-full bg-professional-rolexGreen text-white font-semibold py-3 px-6 text-lg"
                 >
-                  <Icon name="Phone" size={20} className="mr-2 text-professional-rolexGold" />
+                  <Icon name="Calculator" size={20} className="mr-2 text-professional-rolexGold" />
                   {localSubmitting ? 'Отправляем...' : 'Получить расчет стоимости'}
                 </Button>
 
                 <Button
                   variant="outline"
-                  className="w-full border-emerald-600 text-emerald-600 hover:bg-emerald-50 font-medium py-2"
+                  className="w-full border-professional-rolexGreen text-professional-rolexGreen hover:bg-emerald-50 font-medium py-3 px-6 bg-white"
                   onClick={() => {
                     const phone = '+7 (495) 123-45-67';
                     window.open(`tel:${phone}`);
                   }}
                 >
-                  <Icon name="Phone" size={18} className="mr-2" />
+                  <Icon name="Phone" size={20} className="mr-2 text-professional-rolexGold" />
                   Обсудить по телефону
                 </Button>
 
-                <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
-                  <div className="flex items-center justify-center text-green-700">
-                    <Icon name="Clock" size={18} className="mr-2" />
+                <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 text-center">
+                  <div className="flex items-center justify-center text-professional-rolexGreen">
+                    <Icon name="Clock" size={20} className="mr-2 text-professional-rolexGreen" />
                     <span className="font-medium">Ответим в течение 30 минут в рабочее время</span>
                   </div>
                 </div>
