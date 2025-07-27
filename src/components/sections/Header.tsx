@@ -22,7 +22,7 @@ export default function Header({ mobileMenuOpen, setMobileMenuOpen }: HeaderProp
           
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
-            <a href="/#services" className="text-white hover:text-professional-rolexGold transition-colors">Услуги</a>
+            <a href="/services" className="text-white hover:text-professional-rolexGold transition-colors">Услуги</a>
             <a href="/#prices" className="text-white hover:text-professional-rolexGold transition-colors">Цены</a>
             <a href="/#about" className="text-white hover:text-professional-rolexGold transition-colors">О нас</a>
             <a href="/#clients" className="text-white hover:text-professional-rolexGold transition-colors">Клиенты</a>
@@ -59,7 +59,7 @@ export default function Header({ mobileMenuOpen, setMobileMenuOpen }: HeaderProp
                     
                     <nav className="flex flex-col space-y-4 flex-1">
                       <a 
-                        href="/#services" 
+                        href="/services" 
                         className="text-gray-700 hover:text-professional-rolexGold py-3 px-4 rounded-lg hover:bg-gray-50 transition-all"
                         onClick={() => setMobileMenuOpen(false)}
                       >
