@@ -37,7 +37,6 @@ export default function ContactsSection() {
       const form = document.createElement('form');
       form.method = 'POST';
       form.action = 'https://formsubmit.co/commerce@rusutil-1.ru';
-      form.target = '_blank';
       form.style.display = 'none';
       
       const fields = {
@@ -47,7 +46,7 @@ export default function ContactsSection() {
         'email': formData.email || 'Не указан',
         'message': formData.comment || 'Нет комментария',
         '_subject': 'ЗАЯВКА с сайта utilizon.pro',
-        '_next': window.location.origin + '?success=true',
+        '_next': 'https://utilizon.pro?success=contact',
         '_captcha': 'false'
       };
       
