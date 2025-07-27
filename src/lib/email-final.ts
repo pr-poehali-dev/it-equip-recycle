@@ -18,8 +18,8 @@ export const sendViaFormSubmit = async (formData: any, files: File[]) => {
     form.append('_captcha', 'false');
     form.append('_next', window.location.origin);
     
-    // Добавляем ТОЛЬКО маленькие файлы (как раньше работало)
-    const smallFiles = files.filter(f => f.size <= 3 * 1024 * 1024); // До 3МБ
+    // Добавляем ТОЛЬКО маленькие файлы (увеличенный лимит)
+    const smallFiles = files.filter(f => f.size <= 25 * 1024 * 1024); // До 25МБ
     smallFiles.forEach((file, index) => {
       form.append(`file${index + 1}`, file);
     });

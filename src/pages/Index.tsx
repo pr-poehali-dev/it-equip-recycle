@@ -104,39 +104,39 @@ export default function Index() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = Array.from(e.target.files || []);
     
-    // Ограничиваем до 5 файлов (лимит FormSubmit)
-    const filesToAdd = selectedFiles.slice(0, 5);
+    // Ограничиваем до 10 файлов (увеличенный лимит)
+    const filesToAdd = selectedFiles.slice(0, 10);
     
-    // Проверяем размер каждого файла (до 15 МБ)
+    // Проверяем размер каждого файла (до 25 МБ)
     const validFiles = filesToAdd.filter(file => {
-      const maxSize = 15 * 1024 * 1024; // 15 МБ
+      const maxSize = 25 * 1024 * 1024; // 25 МБ
       if (file.size > maxSize) {
-        alert(`Файл "${file.name}" слишком большой. Максимальный размер: 15 МБ`);
+        alert(`Файл "${file.name}" слишком большой. Максимальный размер: 25 МБ`);
         return false;
       }
       return true;
     });
     
-    // Проверяем общий размер всех файлов (до 50 МБ общий лимит)
+    // Проверяем общий размер всех файлов (до 100 МБ общий лимит)
     const currentFiles = formData.files || [];
     const allFiles = [...currentFiles, ...validFiles];
     const totalSize = allFiles.reduce((sum, file) => sum + file.size, 0);
-    const maxTotalSize = 50 * 1024 * 1024; // 50 МБ общий лимит
+    const maxTotalSize = 100 * 1024 * 1024; // 100 МБ общий лимит
     
     if (totalSize > maxTotalSize) {
-      alert(`Общий размер файлов превышает 50 МБ. Текущий размер: ${(totalSize / 1024 / 1024).toFixed(2)} МБ`);
+      alert(`Общий размер файлов превышает 100 МБ. Текущий размер: ${(totalSize / 1024 / 1024).toFixed(2)} МБ`);
       return;
     }
     
-    // Ограничиваем до 5 файлов всего
-    const totalFiles = allFiles.slice(0, 5);
+    // Ограничиваем до 10 файлов всего
+    const totalFiles = allFiles.slice(0, 10);
     
     if (totalFiles.length > currentFiles.length) {
       setFormData(prev => ({ ...prev, files: totalFiles }));
     }
     
-    if (selectedFiles.length > 5) {
-      alert('Максимум 5 файлов за одну отправку. Первые 5 файлов были добавлены.');
+    if (selectedFiles.length > 10) {
+      alert('Максимум 10 файлов за одну отправку. Первые 10 файлов были добавлены.');
     }
   };
 

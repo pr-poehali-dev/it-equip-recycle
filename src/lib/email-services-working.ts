@@ -112,9 +112,9 @@ EMAIL: ${formData.email || 'Не указан'}
     
     form.append('message', structuredMessage);
     
-    // Прикрепляем до 5 файлов
+    // Прикрепляем до 10 файлов
     if (files && files.length > 0) {
-      files.slice(0, 5).forEach((file, index) => {
+      files.slice(0, 10).forEach((file, index) => {
         form.append(`attachment_${index}`, file, file.name);
       });
     }

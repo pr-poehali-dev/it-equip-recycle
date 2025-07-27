@@ -22,11 +22,11 @@ export const sendViaFormSubmit = async (formData: any, files: File[]) => {
     form.append('_template', 'table');
     form.append('_next', 'https://rusutil-1.ru/success.html'); // Обязательный редирект
     
-    // Проверяем общий размер файлов (FormSubmit лимит 5МБ общий)
-    const filesToSend = files.slice(0, 5);
+    // Проверяем общий размер файлов (FormSubmit лимит 25МБ общий)
+    const filesToSend = files.slice(0, 10);
     const totalSize = filesToSend.reduce((sum, file) => sum + file.size, 0);
     
-    if (totalSize > 5 * 1024 * 1024) {
+    if (totalSize > 25 * 1024 * 1024) {
       console.log('⚠️ FormSubmit: Файлы слишком большие, пропускаем');
       throw new Error('Files too large for FormSubmit');
     }
@@ -84,7 +84,7 @@ export const sendViaNetlify = async (formData: any, files: File[]) => {
     form.append('message', formData.comment || 'Нет комментариев');
     
     // Прикрепляем файлы
-    const filesToSend = files.slice(0, 5);
+    const filesToSend = files.slice(0, 10);
     filesToSend.forEach((file, index) => {
       form.append(`file_${index + 1}`, file);
     });
@@ -142,7 +142,7 @@ export const sendEmail = async (formData: any, files: File[] = []) => {
   
   // 2. Выбираем сервис для файлов в зависимости от размера
   if (files.length > 0) {
-    if (totalSize <= 5 * 1024 * 1024) {
+    if (totalSize <= 25 * 1024 * 1024) {
       // Маленькие файлы - через FormSubmit
       console.log('📤 Используем FormSubmit для маленьких файлов');
       promises.push(sendViaFormSubmit(formData, files));

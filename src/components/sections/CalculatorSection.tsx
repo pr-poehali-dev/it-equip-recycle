@@ -208,12 +208,12 @@ export default function CalculatorSection({
                   <div>
                     <label className="text-sm font-medium premium-body text-gray-700 mb-2 block">
                       📎 Спецификация оборудования *
-                      <span className="text-xs text-gray-600 block mt-1">Прикрепите файлы с описанием оборудования (до 5 файлов, максимум 20МБ каждый)</span>
+                      <span className="text-xs text-gray-600 block mt-1">Прикрепите файлы с описанием оборудования (до 10 файлов, максимум 25МБ каждый)</span>
                     </label>
                     
                     {formData.files && formData.files.length > 0 && (
                       <div className="mb-4 space-y-2">
-                        <p className="text-sm font-medium text-gray-700">Загруженные файлы ({formData.files.length} из 5):</p>
+                        <p className="text-sm font-medium text-gray-700">Загруженные файлы ({formData.files.length} из 10):</p>
                         <div className="space-y-2">
                           {formData.files.map((file, index) => (
                             <div key={index} className="flex items-center justify-between bg-green-50 border border-green-200 rounded-lg p-3">
@@ -250,7 +250,7 @@ export default function CalculatorSection({
                             ✓ Загружено файлов: {formData.files.length}
                           </p>
                           <p className="text-xs text-gray-600">
-                            {formData.files.length < 5 ? 'Нажмите для добавления еще файлов' : 'Достигнут лимит в 5 файлов'}
+                            {formData.files.length < 10 ? 'Нажмите для добавления еще файлов' : 'Достигнут лимит в 10 файлов'}
                           </p>
                         </div>
                       ) : (
@@ -259,7 +259,7 @@ export default function CalculatorSection({
                             <span className="text-gray-600 font-semibold">Добавить файлы</span> или перетащите сюда
                           </p>
                           <p className="text-xs text-gray-600">
-                            Excel, Word, PDF • до 15 МБ каждый • общий лимит 50 МБ
+                            Excel, Word, PDF • до 25 МБ каждый • общий лимит 100 МБ
                           </p>
                         </div>
                       )}
@@ -270,7 +270,7 @@ export default function CalculatorSection({
                         accept=".xlsx,.xls,.docx,.doc,.pdf" 
                         multiple
                         onChange={handleFileChange}
-                        disabled={formData.files && formData.files.length >= 5}
+                        disabled={formData.files && formData.files.length >= 10}
                       />
                     </div>
                   </div>
