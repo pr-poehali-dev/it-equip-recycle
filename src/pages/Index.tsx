@@ -7,7 +7,7 @@ import ClientTypesSection from '@/components/sections/ClientTypesSection';
 import ServicesSection from '@/components/sections/ServicesSection';
 import ProcessSection from '@/components/sections/ProcessSection';
 import LegalSection from '@/components/sections/LegalSection';
-import ClientsSection from '@/components/sections/ClientsSection';
+
 
 import LicensesSection from '@/components/sections/LicensesSection';
 import FAQSection from '@/components/sections/FAQSection';
@@ -159,7 +159,7 @@ export default function Index() {
         <ServicesSection />
         <ProcessSection />
         <LegalSection />
-        <ClientsSection />
+
 
         <CalculatorSection 
           formData={formData}
