@@ -6,12 +6,12 @@ export default function LegalSection() {
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <h2 className="section-title text-center text-gray-900 mb-4">
-            Мы гарантируем <span className="text-primary">законность</span> всех процедур
+            Мы гарантируем <span className="text-green-600">законность</span> всех процедур
           </h2>
           
-          <div className="bg-white rounded-lg p-6 mb-8 border-l-4 border-primary">
+          <div className="bg-white rounded-lg p-6 mb-8 border-l-4 border-green-600">
             <div className="flex items-start space-x-4">
-              <Icon name="Shield" size={24} className="text-primary mt-1 flex-shrink-0" />
+              <Icon name="Shield" size={24} className="text-green-600 mt-1 flex-shrink-0" />
               <div>
                 <h3 className="font-bold text-gray-900 mb-2">
                   Работая с нами, вы можете быть уверены в правильности 
@@ -27,7 +27,7 @@ export default function LegalSection() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             {/* Штрафы за ошибки в списании */}
-            <div className="bg-primary text-white rounded-lg p-6">
+            <div className="bg-green-600 text-white rounded-lg p-6">
               <h3 className="text-xl font-bold mb-4">Штрафы за ошибки в списании</h3>
               <p className="text-sm mb-6">
                 налагаются за неправильное ведение бухгалтерского учета
@@ -52,15 +52,15 @@ export default function LegalSection() {
             </div>
 
             {/* Нарушение процедуры списания */}
-            <div className="bg-white border-2 border-primary rounded-lg p-6">
-              <div className="text-primary mb-4">
+            <div className="bg-white border-2 border-green-600 rounded-lg p-6">
+              <div className="text-green-600 mb-4">
                 <h4 className="font-bold">Нарушение процедуры списания</h4>
                 <p className="text-sm">
                   ущерба администрированной и иной уголовной ответственности, поэтому что техника 
                   представляет собой материальную ценность.
                 </p>
               </div>
-              <div className="text-primary mb-4">
+              <div className="text-green-600 mb-4">
                 <h4 className="font-bold">Неверное определение остаточной стоимости отходов</h4>
                 <p className="text-sm">
                   приводит к ошибкам и влияниям бухгалтерского учета и 
@@ -73,7 +73,7 @@ export default function LegalSection() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             {/* Санкции за нарушение */}
-            <div className="bg-primary text-white rounded-lg p-6">
+            <div className="bg-green-600 text-white rounded-lg p-6">
               <h3 className="text-xl font-bold mb-4">
                 Санкции за нарушение правил обращения с отходами
               </h3>
@@ -95,7 +95,7 @@ export default function LegalSection() {
             </div>
 
             {/* Штрафы за нанесение вреда */}
-            <div className="bg-primary text-white rounded-lg p-6">
+            <div className="bg-green-600 text-white rounded-lg p-6">
               <h3 className="text-xl font-bold mb-4">
                 Штрафы за нанесение вреда окружающей среде
               </h3>
@@ -116,7 +116,7 @@ export default function LegalSection() {
                     <div className="text-xs">для юридических лиц</div>
                   </div>
                 </div>
-                <div className="bg-secondary rounded p-2 mt-3">
+                <div className="bg-green-700 rounded p-2 mt-3">
                   <div className="flex items-center space-x-2">
                     <Icon name="Clock" size={16} />
                     <span className="text-sm font-semibold">Закрытие на срок до 3-х месяцев</span>
@@ -130,7 +130,7 @@ export default function LegalSection() {
           </div>
 
           {/* Дополнительные штрафы */}
-          <div className="bg-primary text-white rounded-lg p-6 mb-8">
+          <div className="bg-green-600 text-white rounded-lg p-6 mb-8">
             <h3 className="text-xl font-bold mb-4">
               Штрафы за выявление негативного воздействия на ОС и сокрытие 
               экологических сведений о процессе утилизации компьютеров и оргтехники
@@ -155,9 +155,9 @@ export default function LegalSection() {
           </div>
 
           {/* Призыв к действию */}
-          <div className="text-center bg-white rounded-lg p-8 border-2 border-primary">
+          <div className="text-center bg-white rounded-lg p-8 border-2 border-green-600">
             <h3 className="text-2xl font-bold text-gray-900 mb-4">
-              Мы справимся с <span className="text-primary">любым объемом</span> отходов
+              Мы справимся с <span className="text-green-600">любым объемом</span> отходов
             </h3>
             <p className="text-gray-700 mb-6">
               У нас есть все необходимые технические возможности, чтобы утилизировать большое количество отходов
