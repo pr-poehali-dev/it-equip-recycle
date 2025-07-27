@@ -6,6 +6,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Services from "./pages/Services";
+import ComputerEquipment from "./pages/services/ComputerEquipment";
+import OfficeEquipment from "./pages/services/OfficeEquipment";
+import TelecomEquipment from "./pages/services/TelecomEquipment";
+import ServerEquipment from "./pages/services/ServerEquipment";
+import SpecializedServices from "./pages/services/SpecializedServices";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Success from "./pages/Success";
@@ -24,6 +29,11 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/services/computer-equipment" element={<ComputerEquipment />} />
+          <Route path="/services/office-equipment" element={<OfficeEquipment />} />
+          <Route path="/services/telecom-equipment" element={<TelecomEquipment />} />
+          <Route path="/services/server-equipment" element={<ServerEquipment />} />
+          <Route path="/services/specialized-services" element={<SpecializedServices />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/success" element={<Success />} />

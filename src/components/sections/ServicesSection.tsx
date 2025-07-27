@@ -7,6 +7,7 @@ export default function ServicesSection() {
     {
       category: "Компьютерная техника",
       icon: "Monitor",
+      link: "/services/computer-equipment",
       items: [
         "Утилизация компьютерной техники (компьютеров, системных блоков)",
         "Утилизация ноутбуков",
@@ -17,6 +18,7 @@ export default function ServicesSection() {
     {
       category: "Офисная техника",
       icon: "Printer",
+      link: "/services/office-equipment",
       items: [
         "Утилизация МФУ в Москве и других регионах РФ",
         "Утилизация Принтеров",
@@ -29,6 +31,7 @@ export default function ServicesSection() {
     {
       category: "Телекоммуникационное оборудование",
       icon: "Wifi",
+      link: "/services/telecom-equipment",
       items: [
         "Утилизация аналоговых ТВ передатчиков",
         "Утилизация Сетевого оборудования (коммутаторы, свитчи, роутеры, маршрутизаторы и т.д)",
@@ -39,6 +42,7 @@ export default function ServicesSection() {
     {
       category: "Серверное оборудование",
       icon: "Server",
+      link: "/services/server-equipment",
       items: [
         "Утилизация Серверов",
         "Утилизация Серверных шкафов в сборе",
@@ -51,6 +55,7 @@ export default function ServicesSection() {
     {
       category: "Специализированные услуги",
       icon: "Settings",
+      link: "/services/specialized-services",
       items: [
         "Утилизация оборудования (любого)",
         "Утилизация, демонтаж и вывоз любой старой техники, где есть платы",
@@ -72,26 +77,28 @@ export default function ServicesSection() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {services.map((service, index) => (
-            <Card key={index} className="h-full hover:shadow-lg transition-shadow duration-300">
-              <CardHeader className="text-center">
-                <div className="mx-auto mb-4 w-16 h-16 bg-professional-rolexGold/10 rounded-full flex items-center justify-center">
-                  <Icon name={service.icon} size={32} className="text-professional-rolexGold" />
-                </div>
-                <CardTitle className="text-xl font-bold text-gray-900">
-                  {service.category}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-3">
-                  {service.items.map((item, itemIndex) => (
-                    <li key={itemIndex} className="flex items-start gap-3">
-                      <Icon name="Check" size={16} className="text-professional-rolexGold mt-1 flex-shrink-0" />
-                      <span className="text-gray-700 text-sm leading-relaxed">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
+            <a key={index} href={service.link} className="block h-full">
+              <Card className="h-full hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-105">
+                <CardHeader className="text-center">
+                  <div className="mx-auto mb-4 w-16 h-16 bg-professional-rolexGold/10 rounded-full flex items-center justify-center">
+                    <Icon name={service.icon} size={32} className="text-professional-rolexGold" />
+                  </div>
+                  <CardTitle className="text-xl font-bold text-gray-900">
+                    {service.category}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-3">
+                    {service.items.map((item, itemIndex) => (
+                      <li key={itemIndex} className="flex items-start gap-3">
+                        <Icon name="Check" size={16} className="text-professional-rolexGold mt-1 flex-shrink-0" />
+                        <span className="text-gray-700 text-sm leading-relaxed">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            </a>
           ))}
         </div>
 
