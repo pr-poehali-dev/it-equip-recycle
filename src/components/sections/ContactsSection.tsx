@@ -33,20 +33,40 @@ export default function ContactsSection() {
     setIsSubmitting(true);
 
     try {
-      // ФОРМАТ FormSubmit
-      const formDataToSend = new FormData();
-      formDataToSend.append('name', formData.name);
-      formDataToSend.append('company', formData.company || 'Не указана');
-      formDataToSend.append('phone', formData.phone);
-      formDataToSend.append('email', formData.email || 'Не указан');
-      formDataToSend.append('message', formData.comment || 'Нет комментария');
-      formDataToSend.append('_subject', 'ЗАЯВКА с сайта utilizon.pro');
-      formDataToSend.append('_captcha', 'false');
+      // ОБХОДИМ CORS - прямая отправка формы
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = 'https://formsubmit.co/commerce@rusutil-1.ru';
+      form.target = '_blank';
+      form.style.display = 'none';
       
-      await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
-        method: 'POST',
-        body: formDataToSend
+      const fields = {
+        'name': formData.name,
+        'company': formData.company || 'Не указана',
+        'phone': formData.phone,
+        'email': formData.email || 'Не указан',
+        'message': formData.comment || 'Нет комментария',
+        '_subject': 'ЗАЯВКА с сайта utilizon.pro',
+        '_next': window.location.origin + '?success=true',
+        '_captcha': 'false'
+      };
+      
+      Object.entries(fields).forEach(([name, value]) => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = name;
+        input.value = value;
+        form.appendChild(input);
       });
+      
+      document.body.appendChild(form);
+      form.submit();
+      
+      setTimeout(() => {
+        if (document.body.contains(form)) {
+          document.body.removeChild(form);
+        }
+      }, 1000);
       
       setShowSuccessModal(true);
       setFormData({
