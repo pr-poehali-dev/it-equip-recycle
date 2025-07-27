@@ -81,7 +81,7 @@ export default function CalculatorSection({
   };
 
   return (
-    <section id="calculator" className="py-20 bg-gradient-to-br from-gray-50 to-gray-100">
+    <section id="calculator" className="py-20 bg-gradient-to-br from-gray-50 to-gray-100 scroll-mt-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="section-title text-gray-900 mb-4">Быстрая оценка стоимости</h2>
