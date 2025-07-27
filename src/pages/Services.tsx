@@ -120,8 +120,8 @@ export default function Services() {
               {services.map((service, index) => (
                 <Card key={index} className="h-full hover:shadow-lg transition-shadow duration-300">
                   <CardHeader className="text-center">
-                    <div className="mx-auto mb-4 w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center">
-                      <Icon name={service.icon} size={32} className="text-emerald-600" />
+                    <div className="mx-auto mb-4 w-16 h-16 bg-professional-rolexGold/10 rounded-full flex items-center justify-center">
+                      <Icon name={service.icon} size={32} className="text-professional-rolexGold" />
                     </div>
                     <CardTitle className="text-xl font-bold text-gray-900">
                       {service.category}
@@ -131,7 +131,7 @@ export default function Services() {
                     <ul className="space-y-3">
                       {service.items.map((item, itemIndex) => (
                         <li key={itemIndex} className="flex items-start gap-3">
-                          <Icon name="Check" size={16} className="text-emerald-600 mt-1 flex-shrink-0" />
+                          <Icon name="Check" size={16} className="text-professional-rolexGold mt-1 flex-shrink-0" />
                           <span className="text-gray-700 text-sm leading-relaxed">{item}</span>
                         </li>
                       ))}
@@ -162,8 +162,8 @@ export default function Services() {
               {documents.map((doc, index) => (
                 <Card key={index} className="text-center hover:shadow-lg transition-shadow duration-300">
                   <CardHeader>
-                    <div className="mx-auto mb-4 w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center">
-                      <Icon name={doc.icon} size={24} className="text-emerald-600" />
+                    <div className="mx-auto mb-4 w-14 h-14 bg-professional-rolexGold/10 rounded-full flex items-center justify-center">
+                      <Icon name={doc.icon} size={24} className="text-professional-rolexGold" />
                     </div>
                     <CardTitle className="text-lg font-semibold text-gray-900">
                       {doc.name}
