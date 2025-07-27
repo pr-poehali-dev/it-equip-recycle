@@ -22,7 +22,11 @@ export default function EmailActivationPanel() {
     try {
       const result = await createFormSubmitActivation();
       if (result.success) {
-        alert(`✅ ${result.message}\n\nТеперь проверьте почту commerce@rusutil-1.ru и нажмите ссылку подтверждения!`);
+        if (result.isLocalhost) {
+          alert(`⚠️ ${result.message}\n\n🚀 РЕШЕНИЕ:\n1. Нажмите "Опубликовать" в редакторе\n2. Откройте реальный URL сайта\n3. Там активируйте FormSubmit`);
+        } else {
+          alert(`✅ ${result.message}\n\nТеперь проверьте почту commerce@rusutil-1.ru и нажмите ссылку подтверждения!`);
+        }
       } else {
         alert(`❌ ${result.message}\nОшибка: ${result.error}`);
       }
@@ -87,14 +91,30 @@ export default function EmailActivationPanel() {
         <CardContent className="space-y-4">
           
           {/* ИНСТРУКЦИИ */}
-          <div className="p-3 bg-blue-900 rounded border border-blue-700">
-            <h4 className="font-semibold text-blue-200 mb-2">📋 {instructions.title}</h4>
-            <div className="text-xs text-blue-300 space-y-1">
+          <div className={`p-3 rounded border ${
+            instructions.title.includes('LOCALHOST') 
+              ? 'bg-red-900 border-red-700' 
+              : 'bg-blue-900 border-blue-700'
+          }`}>
+            <h4 className={`font-semibold mb-2 ${
+              instructions.title.includes('LOCALHOST') 
+                ? 'text-red-200' 
+                : 'text-blue-200'
+            }`}>📋 {instructions.title}</h4>
+            <div className={`text-xs space-y-1 ${
+              instructions.title.includes('LOCALHOST') 
+                ? 'text-red-300' 
+                : 'text-blue-300'
+            }`}>
               {instructions.steps.map((step, index) => (
                 <div key={index}>{step}</div>
               ))}
             </div>
-            <div className="mt-2 p-2 bg-yellow-900 rounded text-yellow-300 text-xs">
+            <div className={`mt-2 p-2 rounded text-xs ${
+              instructions.title.includes('LOCALHOST') 
+                ? 'bg-orange-900 text-orange-300' 
+                : 'bg-yellow-900 text-yellow-300'
+            }`}>
               ⚠️ {instructions.note}
             </div>
           </div>
