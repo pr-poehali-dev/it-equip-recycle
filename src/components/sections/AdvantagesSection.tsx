@@ -19,60 +19,37 @@ export default function AdvantagesSection() {
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
-          <h2 className="section-title text-center text-gray-900 mb-12">
-            <span style={{color: '#1e7b54'}}>Преимущества</span> работы с нами
-          </h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            <div className="flex items-start space-x-4">
-              <div className="bg-yellow-50 p-3 rounded-lg flex-shrink-0">
-                <Icon name="Shield" size={24} className="text-rolexGold" />
+          <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-lg p-6 sm:p-8 lg:p-10 max-w-6xl mx-auto mb-12">
+            <Icon name="Award" size={32} className="text-rolexGold mx-auto mb-6" />
+            <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Почему нас выбирают</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div className="flex flex-col h-full">
+                <div className="flex items-start mb-3">
+                  <span className="text-xl mr-3 mt-1">🏆</span>
+                  <h4 className="font-semibold text-gray-900 text-base leading-tight">Проверенное качество</h4>
+                </div>
+                <p className="text-gray-700 text-base leading-relaxed flex-grow">Работаем с крупнейшими компаниями России с 2013 года</p>
               </div>
-              <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Работаем 100% легально</h3>
-                <p className="text-gray-700">
-                  Имеем лицензию на сбор, транспортирование, обработку и 
-                  утилизацию отходов.
-                </p>
+              <div className="flex flex-col h-full">
+                <div className="flex items-start mb-3">
+                  <span className="text-xl mr-3 mt-1">📋</span>
+                  <h4 className="font-semibold text-gray-900 text-base leading-tight">Полный комплаенс</h4>
+                </div>
+                <p className="text-gray-700 text-base leading-relaxed flex-grow">Соответствие всем требованиям корпоративного документооборота</p>
               </div>
-            </div>
-
-            <div className="flex items-start space-x-4">
-              <div className="bg-yellow-50 p-3 rounded-lg flex-shrink-0">
-                <Icon name="PiggyBank" size={24} className="text-rolexGold" />
+              <div className="flex flex-col h-full">
+                <div className="flex items-start mb-3">
+                  <span className="text-xl mr-3 mt-1">🔒</span>
+                  <h4 className="font-semibold text-gray-900 text-base leading-tight">Конфиденциальность</h4>
+                </div>
+                <p className="text-gray-700 text-base leading-relaxed flex-grow">Гарантированное уничтожение данных с носителей информации</p>
               </div>
-              <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Гарантируем низкую цену</h3>
-                <p className="text-gray-700">
-                  Стараемся любыми способами уложиться в ваш бюджет. 
-                  Найдете дешевле — верним разницу без лишних вопросов.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4">
-              <div className="bg-yellow-50 p-3 rounded-lg flex-shrink-0">
-                <Icon name="Leaf" size={24} className="text-rolexGold" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Заботимся об экологии</h3>
-                <p className="text-gray-700">
-                  Занимаемся реальной утилизацией отходов с соблюдением 
-                  экологических норм на всех этапах обращения с ними.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4">
-              <div className="bg-yellow-50 p-3 rounded-lg flex-shrink-0">
-                <Icon name="MapPin" size={24} className="text-rolexGold" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Работаем по всей России</h3>
-                <p className="text-gray-700">
-                  С 2012 года успешно собираем, транспортируем и утилизируем 
-                  отходы предприятий и частных лиц в 85-ти регионах РФ.
-                </p>
+              <div className="flex flex-col h-full">
+                <div className="flex items-start mb-3">
+                  <Icon name="Clock" size={20} className="text-rolexGold mr-3 mt-1 flex-shrink-0" />
+                  <h4 className="font-semibold text-gray-900 text-base leading-tight">Экономия времени</h4>
+                </div>
+                <p className="text-gray-700 text-base leading-relaxed flex-grow">Время — самый ценный ресурс. Мы берём на себя все заботы по утилизации, чтобы вы могли сосредоточиться на своём бизнесе.</p>
               </div>
             </div>
           </div>
