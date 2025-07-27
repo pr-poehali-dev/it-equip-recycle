@@ -28,7 +28,7 @@ export default function AdvantagesSection() {
                   <span className="text-xl mr-3 mt-1">🏆</span>
                   <h4 className="font-semibold text-gray-900 text-base leading-tight">Проверенное качество</h4>
                 </div>
-                <p className="text-gray-700 text-base leading-relaxed flex-grow">Работаем с крупнейшими компаниями России с 2013 года</p>
+                <p className="text-gray-700 text-base leading-relaxed flex-grow">С 2013 года успешно собираем, транспортируем и утилизируем отходы предприятий в 85-ти регионах РФ.</p>
               </div>
               <div className="flex flex-col h-full">
                 <div className="flex items-start mb-3">
