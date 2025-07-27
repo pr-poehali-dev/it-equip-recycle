@@ -61,7 +61,7 @@ export default function AboutSection() {
             </Card>
             <Card className="text-center p-3 sm:p-6">
               <CardContent className="space-y-1 sm:space-y-2">
-                <div className="text-2xl sm:text-3xl font-bold text-primary">700</div>
+                <div className="text-2xl sm:text-3xl font-bold text-primary">3279</div>
                 <div className="text-gray-600 text-xs sm:text-sm leading-tight">довольных клиентов</div>
               </CardContent>
             </Card>
