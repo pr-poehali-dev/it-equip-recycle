@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
 import SuccessModal from "@/components/ui/success-modal";
+import { activateFormSubmit } from "@/lib/email-final";
 
 export default function ContactsSection() {
   const [formData, setFormData] = useState({
@@ -70,6 +71,17 @@ export default function ContactsSection() {
     }
   };
 
+  // АКТИВАЦИЯ FormSubmit
+  const handleActivateFormSubmit = async () => {
+    console.log('🔑 Активируем FormSubmit...');
+    const result = await activateFormSubmit();
+    if (result.success) {
+      alert('📧 Письмо активации отправлено на commerce@rusutil-1.ru!\nПроверьте почту и нажмите ссылку подтверждения.');
+    } else {
+      alert('❌ Ошибка активации. Попробуйте позже.');
+    }
+  };
+
   return (
     <section id="contacts" className="py-20 bg-black">
       <div className="container mx-auto px-4">
@@ -110,6 +122,21 @@ export default function ContactsSection() {
                   <div className="text-white font-medium">Пн-Пт: 9:00-18:00</div>
                 </div>
               </div>
+            </div>
+            
+            {/* КНОПКА АКТИВАЦИИ */}
+            <div className="mt-8 p-4 bg-yellow-900 rounded-lg border border-yellow-700">
+              <h4 className="text-lg font-semibold text-yellow-200 mb-2">⚙️ Для администратора</h4>
+              <p className="text-yellow-300 text-sm mb-3">
+                Если письма не приходят, нужно активировать FormSubmit (только один раз)
+              </p>
+              <Button 
+                onClick={handleActivateFormSubmit}
+                className="bg-yellow-600 hover:bg-yellow-700 text-black font-medium"
+                size="sm"
+              >
+                🔑 Активировать FormSubmit
+              </Button>
             </div>
           </div>
           
