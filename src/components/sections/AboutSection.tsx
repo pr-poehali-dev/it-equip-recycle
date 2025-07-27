@@ -49,19 +49,19 @@ export default function AboutSection() {
             </Card>
             <Card className="text-center p-3 sm:p-6">
               <CardContent className="space-y-1 sm:space-y-2">
-                <div className="text-2xl sm:text-3xl font-bold text-primary">1.8М+</div>
-                <div className="text-gray-600 text-xs sm:text-sm leading-tight">утилизированных единиц</div>
+                <div className="text-2xl sm:text-3xl font-bold text-primary">2</div>
+                <div className="text-gray-600 text-xs sm:text-sm leading-tight">заказа в год в среднем делает клиент</div>
               </CardContent>
             </Card>
             <Card className="text-center p-3 sm:p-6">
               <CardContent className="space-y-1 sm:space-y-2">
-                <div className="text-2xl sm:text-3xl font-bold text-primary">18</div>
-                <div className="text-gray-600 text-xs sm:text-sm leading-tight">городов присутствия</div>
+                <div className="text-2xl sm:text-3xl font-bold text-primary">85</div>
+                <div className="text-gray-600 text-xs sm:text-sm leading-tight">регионов присутствия</div>
               </CardContent>
             </Card>
             <Card className="text-center p-3 sm:p-6">
               <CardContent className="space-y-1 sm:space-y-2">
-                <div className="text-2xl sm:text-3xl font-bold text-primary">14000+</div>
+                <div className="text-2xl sm:text-3xl font-bold text-primary">3279</div>
                 <div className="text-gray-600 text-xs sm:text-sm leading-tight">довольных клиентов</div>
               </CardContent>
             </Card>
