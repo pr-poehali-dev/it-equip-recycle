@@ -1,5 +1,4 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
 
 export default function LicensesSection() {
@@ -21,10 +20,7 @@ export default function LicensesSection() {
               <CardDescription>
                 Лицензия Росприроднадзора на деятельность по сбору, транспортированию и обезвреживанию отходов
               </CardDescription>
-              <Button variant="outline" className="mt-4 min-h-[44px]">
-                <Icon name="Download" size={16} className="mr-2" />
-                Скачать
-              </Button>
+
             </CardContent>
           </Card>
 
@@ -37,10 +33,7 @@ export default function LicensesSection() {
               <CardDescription>
                 Сертификат системы экологического менеджмента ISO 14001:2015
               </CardDescription>
-              <Button variant="outline" className="mt-4 min-h-[44px]">
-                <Icon name="Download" size={16} className="mr-2" />
-                Скачать
-              </Button>
+
             </CardContent>
           </Card>
 
@@ -53,10 +46,7 @@ export default function LicensesSection() {
               <CardDescription>
                 Полис страхования ответственности при обращении с отходами производства
               </CardDescription>
-              <Button variant="outline" className="mt-4 min-h-[44px]">
-                <Icon name="Download" size={16} className="mr-2" />
-                Скачать
-              </Button>
+
             </CardContent>
           </Card>
 
@@ -69,10 +59,7 @@ export default function LicensesSection() {
               <CardDescription>
                 Членство в саморегулируемой организации в области обращения с отходами
               </CardDescription>
-              <Button variant="outline" className="mt-4 min-h-[44px]">
-                <Icon name="Download" size={16} className="mr-2" />
-                Скачать
-              </Button>
+
             </CardContent>
           </Card>
         </div>
