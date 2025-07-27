@@ -11,6 +11,7 @@ import ComputerEquipment from "./pages/services/ComputerEquipment";
 import OfficeEquipment from "./pages/services/OfficeEquipment";
 import TelecomEquipment from "./pages/services/TelecomEquipment";
 import ServerEquipment from "./pages/services/ServerEquipment";
+import TradeBankingEquipment from "./pages/services/TradeBankingEquipment";
 import SpecializedServices from "./pages/services/SpecializedServices";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
@@ -35,6 +36,7 @@ const App = () => (
           <Route path="/services/office-equipment" element={<OfficeEquipment />} />
           <Route path="/services/telecom-equipment" element={<TelecomEquipment />} />
           <Route path="/services/server-equipment" element={<ServerEquipment />} />
+          <Route path="/services/trade-banking-equipment" element={<TradeBankingEquipment />} />
           <Route path="/services/specialized-services" element={<SpecializedServices />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
