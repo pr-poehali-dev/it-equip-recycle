@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import Icon from "@/components/ui/icon";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 export default function ClientsSection() {
   const [selectedClient, setSelectedClient] = useState<typeof clients[0] | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showAll, setShowAll] = useState(false);
 
   const clients = [
     { 
@@ -193,7 +195,7 @@ export default function ClientsSection() {
         </div>
         
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 max-w-7xl mx-auto">
-          {clients.map((client, index) => (
+          {clients.slice(0, showAll ? clients.length : 12).map((client, index) => (
             <div 
               key={index} 
               onClick={() => handleClientClick(client)}
@@ -207,6 +209,18 @@ export default function ClientsSection() {
             </div>
           ))}
         </div>
+        
+        {!showAll && (
+          <div className="text-center mt-8">
+            <Button 
+              onClick={() => setShowAll(true)}
+              variant="outline"
+              className="border-professional-rolexGold text-professional-rolexGold hover:bg-professional-rolexGold hover:text-white"
+            >
+              Показать остальных
+            </Button>
+          </div>
+        )}
 
         <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
           <DialogContent className="max-w-2xl">

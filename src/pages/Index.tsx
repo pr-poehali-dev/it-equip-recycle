@@ -1,10 +1,14 @@
 import { useState } from 'react';
 import Header from '@/components/sections/Header';
 import HeroSection from '@/components/sections/HeroSection';
-import ServicesSection from '@/components/sections/ServicesSection';
-import PricesSection from '@/components/sections/PricesSection';
+import AdvantagesSection from '@/components/sections/AdvantagesSection';
 import AboutSection from '@/components/sections/AboutSection';
+import ClientTypesSection from '@/components/sections/ClientTypesSection';
+import ServicesSection from '@/components/sections/ServicesSection';
+import ProcessSection from '@/components/sections/ProcessSection';
+import LegalSection from '@/components/sections/LegalSection';
 import ClientsSection from '@/components/sections/ClientsSection';
+import PricesSection from '@/components/sections/PricesSection';
 import LicensesSection from '@/components/sections/LicensesSection';
 import FAQSection from '@/components/sections/FAQSection';
 import ContactsSection from '@/components/sections/ContactsSection';
@@ -154,7 +158,13 @@ export default function Index() {
       <Header mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
       <main>
         <HeroSection />
+        <AdvantagesSection />
+        <AboutSection />
+        <ClientTypesSection />
         <ServicesSection />
+        <ProcessSection />
+        <LegalSection />
+        <ClientsSection />
         <PricesSection onPlanSelect={handlePlanSelect} selectedPlan={formData.selectedPlan} />
         <CalculatorSection 
           formData={formData}
@@ -168,8 +178,6 @@ export default function Index() {
           showSuccessModal={showSuccessModal}
           setShowSuccessModal={setShowSuccessModal}
         />
-        <AboutSection />
-        <ClientsSection />
         <LicensesSection />
         <FAQSection />
         <ContactsSection />
