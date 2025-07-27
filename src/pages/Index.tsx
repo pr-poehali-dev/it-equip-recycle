@@ -10,7 +10,7 @@ import FAQSection from '@/components/sections/FAQSection';
 import ContactsSection from '@/components/sections/ContactsSection';
 import CalculatorSection from '@/components/sections/CalculatorSection';
 import Footer from '@/components/sections/Footer';
-import EmailActivationPanel from '@/components/EmailActivationPanel';
+
 import { sendEmailWithFiles } from '@/lib/email-final';
 
 export default function Index() {
@@ -175,7 +175,7 @@ export default function Index() {
         <ContactsSection />
       </main>
       <Footer />
-      <EmailActivationPanel />
+
     </div>
   );
 }
