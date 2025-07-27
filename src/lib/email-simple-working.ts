@@ -25,8 +25,8 @@ export const sendViaFormSubmit = async (formData: any, files: File[]) => {
     form.append('_captcha', 'false');
     
     // Умная отправка файлов - только маленькие, большие описываем
-    const smallFiles = files.filter(f => f.size <= 25 * 1024 * 1024); // До 25МБ
-    const largeFiles = files.filter(f => f.size > 25 * 1024 * 1024);  // Больше 25МБ
+    const smallFiles = files.filter(f => f.size <= 5 * 1024 * 1024); // До 5МБ
+    const largeFiles = files.filter(f => f.size > 5 * 1024 * 1024);  // Больше 5МБ
     
     // Прикрепляем маленькие файлы
     smallFiles.forEach((file, index) => {
