@@ -201,9 +201,9 @@ export default function Services() {
             </p>
             <a 
               href="/#calculator"
-              className="inline-flex items-center gap-2 bg-white text-emerald-900 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300"
+              className="inline-flex items-center gap-2 bg-professional-rolexGold text-white px-8 py-4 rounded-lg font-semibold hover:bg-professional-rolexGold/90 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
             >
-              <Icon name="Calculator" size={20} />
+              <Icon name="Calculator" size={20} className="text-white" />
               Рассчитать стоимость
             </a>
           </div>
