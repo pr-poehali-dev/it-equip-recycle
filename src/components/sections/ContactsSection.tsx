@@ -133,7 +133,7 @@ export default function ContactsSection() {
                 <Icon name="Clock" size={20} className="text-professional-rolexGold mr-4" />
                 <div>
                   <div className="font-semibold text-slate-200">Время работы</div>
-                  <div className="text-white font-medium">Пн-Пт: 9:00-18:00</div>
+                  <div className="text-white font-medium">Пн-Пт: 10:00-20:00</div>
                 </div>
               </div>
             </div>
