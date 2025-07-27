@@ -2,10 +2,18 @@ import { useState } from "react";
 import Icon from "@/components/ui/icon";
 
 export default function AdvantagesSection() {
-  const [expandedCard, setExpandedCard] = useState<number | null>(null);
+  const [expandedCards, setExpandedCards] = useState<Set<number>>(new Set());
 
   const toggleCard = (cardIndex: number) => {
-    setExpandedCard(expandedCard === cardIndex ? null : cardIndex);
+    setExpandedCards(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(cardIndex)) {
+        newSet.delete(cardIndex);
+      } else {
+        newSet.add(cardIndex);
+      }
+      return newSet;
+    });
   };
   return (
     <section className="py-20 bg-white">
@@ -90,7 +98,11 @@ export default function AdvantagesSection() {
                 Каждый вид отхода на предприятии должен быть идентифицирован и отнесен к 
                 соответствующему классу опасности.
               </p>
-              {expandedCard === 1 && (
+              <div 
+                className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                  expandedCards.has(1) ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                }`}
+              >
                 <div className="mt-4 p-4 bg-gray-50 rounded-lg">
                   <p className="text-gray-700 text-sm mb-3">
                     Это первый этап утилизации отходов, который мы полностью берем на себя:
@@ -102,13 +114,13 @@ export default function AdvantagesSection() {
                     <li>• составляем и согласовываем в органах Росприроднадзора паспорт опасного отхода.</li>
                   </ul>
                 </div>
-              )}
+              </div>
               <div className="mt-4">
                 <button 
                   onClick={() => toggleCard(1)}
                   className="text-green-600 font-semibold hover:underline focus:outline-none"
                 >
-                  {expandedCard === 1 ? 'Скрыть ↑' : 'Подробнее →'}
+                  {expandedCards.has(1) ? 'Скрыть ↑' : 'Подробнее →'}
                 </button>
               </div>
             </div>
@@ -133,7 +145,11 @@ export default function AdvantagesSection() {
                 Сбор и транспортирование любых отходов является лицензируемой деятельностью и 
                 подразумевает специальную тару и защиту.
               </p>
-              {expandedCard === 2 && (
+              <div 
+                className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                  expandedCards.has(2) ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                }`}
+              >
                 <div className="mt-4 p-4 bg-gray-50 rounded-lg">
                   <p className="text-gray-700 text-sm mb-3">
                     Это второй этап утилизации отходов, на котором мы в согласованные с вами дату и время осуществляем сбор отходов в специальную тару (в зависимости от объема, вида и класса отходов) и погрузку в оптимальный транспорт.
@@ -142,13 +158,13 @@ export default function AdvantagesSection() {
                     Неправильная погрузка и перевозка отходов может угрожать здоровью и жизни людей. Мы гарантируем выполнение правил и законных предписаний при транспортировке отходов всех классов опасности.
                   </p>
                 </div>
-              )}
+              </div>
               <div className="mt-4">
                 <button 
                   onClick={() => toggleCard(2)}
                   className="text-green-600 font-semibold hover:underline focus:outline-none"
                 >
-                  {expandedCard === 2 ? 'Скрыть ↑' : 'Подробнее →'}
+                  {expandedCards.has(2) ? 'Скрыть ↑' : 'Подробнее →'}
                 </button>
               </div>
             </div>
@@ -173,7 +189,11 @@ export default function AdvantagesSection() {
                 Невыполнение нормативов преследуется по закону — предусмотрена административная и 
                 уголовная ответственность.
               </p>
-              {expandedCard === 3 && (
+              <div 
+                className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                  expandedCards.has(3) ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                }`}
+              >
                 <div className="mt-4 p-4 bg-gray-50 rounded-lg">
                   <p className="text-gray-700 text-sm mb-3">
                     Это третий и завершающий этап утилизации отходов. Оригиналы всех необходимых документов с подписями и печатями мы направляем Почтой России на фактический адрес вашей компании. По готовности высылаем электронной почтой скан-копии.
@@ -182,13 +202,13 @@ export default function AdvantagesSection() {
                     Вам останется только осуществить расчет экологического сбора и оплатить его до 15-го апреля года, следующего за отчетным, а также сдать отчетность по утилизации строго до 1-го апреля.
                   </p>
                 </div>
-              )}
+              </div>
               <div className="mt-4">
                 <button 
                   onClick={() => toggleCard(3)}
                   className="text-green-600 font-semibold hover:underline focus:outline-none"
                 >
-                  {expandedCard === 3 ? 'Скрыть ↑' : 'Подробнее →'}
+                  {expandedCards.has(3) ? 'Скрыть ↑' : 'Подробнее →'}
                 </button>
               </div>
             </div>
