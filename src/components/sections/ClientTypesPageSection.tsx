@@ -4,7 +4,7 @@ export default function ClientTypesPageSection() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero секция */}
-      <section className="pt-32 pb-20">
+      <section className="pt-32 pb-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <div className="inline-flex items-center justify-center w-16 h-16 bg-professional-rolexGold/20 rounded-full mb-6">
