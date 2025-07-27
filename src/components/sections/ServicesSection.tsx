@@ -2,73 +2,107 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import Icon from "@/components/ui/icon";
 
-interface Service {
-  icon: string;
-  title: string;
-  description: string;
-  price: string;
-}
-
-interface ServicesSectionProps {
-  services?: Service[];
-}
-
-export default function ServicesSection({ services = [] }: ServicesSectionProps) {
-  const defaultServices: Service[] = [
+export default function ServicesSection() {
+  const services = [
     {
+      category: "Компьютерная техника",
       icon: "Monitor",
-      title: "Компьютеры и ноутбуки",
-      description: "Утилизация настольных компьютеров, ноутбуков и планшетов",
-      price: "от 400₽"
+      items: [
+        "Утилизация компьютерной техники (компьютеров, системных блоков)",
+        "Утилизация ноутбуков",
+        "Утилизация Мониторов (ЭЛТ, ЖК)",
+        "Утилизация компьютерных ЗИП - запчасти, комплектующие"
+      ]
     },
     {
-      icon: "Server",
-      title: "Серверное оборудование",
-      description: "Профессиональная утилизация серверов и сетевого оборудования",
-      price: "от 250₽"
-    },
-    {
+      category: "Офисная техника",
       icon: "Printer",
-      title: "Офисная техника",
-      description: "Принтеры, сканеры, МФУ и другая офисная техника",
-      price: "от 300₽"
+      items: [
+        "Утилизация МФУ в Москве и других регионах РФ",
+        "Утилизация Принтеров",
+        "Утилизация оргтехники",
+        "Утилизация офисной техники",
+        "Утилизация клавиатур, компьютерных мышей",
+        "Утилизация офисных ЗИП - запчасти, комплектующие, картриджи"
+      ]
     },
     {
-      icon: "Smartphone",
-      title: "Мобильные устройства",
-      description: "Телефоны, планшеты и другие портативные устройства",
-      price: "от 200₽"
+      category: "Телекоммуникационное оборудование",
+      icon: "Wifi",
+      items: [
+        "Утилизация аналоговых ТВ передатчиков",
+        "Утилизация Сетевого оборудования (коммутаторы, свитчи, роутеры, маршрутизаторы и т.д)",
+        "Утилизация телефонов в Москве и других регионах РФ (мобильных и стационарных) а также средств связи",
+        "Утилизация GSM оборудования"
+      ]
+    },
+    {
+      category: "Серверное оборудование",
+      icon: "Server",
+      items: [
+        "Утилизация Серверов",
+        "Утилизация Серверных шкафов в сборе",
+        "Утилизация Систем хранения данных (СХД)",
+        "Системы охлаждения и управления",
+        "Блоки питания и защитные устройства",
+        "Источники бесперебойного питания (ИБП)"
+      ]
+    },
+    {
+      category: "Специализированные услуги",
+      icon: "Settings",
+      items: [
+        "Утилизация оборудования (любого)",
+        "Утилизация, демонтаж и вывоз любой старой техники, где есть платы",
+        "Утилизация аккумуляторов",
+        "Платы от компьютеров, а также любых других печатных плат с любых устройств"
+      ]
     }
   ];
 
-  const servicesToDisplay = services.length > 0 ? services : defaultServices;
   return (
     <section id="services" className="py-20 bg-professional-rolexCream">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="section-title text-gray-900 mb-4">Наши услуги</h2>
           <p className="premium-body text-gray-700 max-w-2xl mx-auto">
-            Комплексное решение по утилизации любого ИТ-оборудования с соблюдением экологических норм
+            Полный спектр услуг по утилизации IT-оборудования с оформлением всех необходимых документов
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {servicesToDisplay.map((service, index) => (
-            <Card key={index} className="hover:shadow-lg transition-shadow duration-300 hover-scale">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          {services.map((service, index) => (
+            <Card key={index} className="h-full hover:shadow-lg transition-shadow duration-300">
               <CardHeader className="text-center">
-                <div className="bg-primary/10 rounded-full p-6 w-28 h-28 mx-auto mb-4 flex items-center justify-center">
-                  <Icon name={service.icon as any} size={40} className="text-professional-rolexGold" />
+                <div className="mx-auto mb-4 w-16 h-16 bg-professional-rolexGold/10 rounded-full flex items-center justify-center">
+                  <Icon name={service.icon} size={32} className="text-professional-rolexGold" />
                 </div>
-                <CardTitle className="text-lg">{service.title}</CardTitle>
+                <CardTitle className="text-xl font-bold text-gray-900">
+                  {service.category}
+                </CardTitle>
               </CardHeader>
-              <CardContent className="text-center">
-                <CardDescription className="mb-4">{service.description}</CardDescription>
-                <Badge variant="outline" className="text-primary border-primary text-lg px-4 py-2">
-                  {service.price}
-                </Badge>
+              <CardContent>
+                <ul className="space-y-3">
+                  {service.items.map((item, itemIndex) => (
+                    <li key={itemIndex} className="flex items-start gap-3">
+                      <Icon name="Check" size={16} className="text-professional-rolexGold mt-1 flex-shrink-0" />
+                      <span className="text-gray-700 text-sm leading-relaxed">{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </CardContent>
             </Card>
           ))}
+        </div>
+
+        <div className="text-center">
+          <a 
+            href="/services"
+            className="inline-flex items-center gap-2 bg-professional-rolexGold text-white px-8 py-4 rounded-lg font-semibold hover:bg-professional-rolexGold/90 transition-colors duration-300"
+          >
+            <Icon name="ArrowRight" size={20} />
+            Подробнее об услугах
+          </a>
         </div>
       </div>
     </section>
