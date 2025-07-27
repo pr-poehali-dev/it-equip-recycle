@@ -14,7 +14,6 @@ interface CalculatorSectionProps {
     customCity: string;
     comment: string;
     files: File[];
-    selectedPlan: string;
   };
   setFormData: React.Dispatch<React.SetStateAction<{
     name: string;
@@ -25,7 +24,6 @@ interface CalculatorSectionProps {
     customCity: string;
     comment: string;
     files: File[];
-    selectedPlan: string;
   }>>;
   agreed: boolean;
   setAgreed: React.Dispatch<React.SetStateAction<boolean>>;
@@ -106,21 +104,7 @@ export default function CalculatorSection({
               </div>
             </CardHeader>
             <CardContent className="p-4 sm:p-6 lg:p-8">
-              {formData.selectedPlan && (
-                <div className="mb-6 p-4 bg-professional-rolexGold/10 border border-professional-rolexGold/30 rounded-lg">
-                  <div className="flex items-center">
-                    <Icon name="Check" size={20} className="text-professional-rolexGold mr-3" />
-                    <div>
-                      <span className="text-professional-rolexGold font-semibold text-lg">
-                        Выбранный план: {formData.selectedPlan}
-                      </span>
-                      <p className="text-sm text-gray-600 mt-1">
-                        Заполните форму ниже для получения точной стоимости утилизации
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
+
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div className="space-y-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

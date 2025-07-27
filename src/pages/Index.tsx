@@ -8,7 +8,7 @@ import ServicesSection from '@/components/sections/ServicesSection';
 import ProcessSection from '@/components/sections/ProcessSection';
 import LegalSection from '@/components/sections/LegalSection';
 import ClientsSection from '@/components/sections/ClientsSection';
-import PricesSection from '@/components/sections/PricesSection';
+
 import LicensesSection from '@/components/sections/LicensesSection';
 import FAQSection from '@/components/sections/FAQSection';
 import ContactsSection from '@/components/sections/ContactsSection';
@@ -27,8 +27,7 @@ export default function Index() {
     city: '',
     customCity: '',
     comment: '',
-    files: [] as File[],
-    selectedPlan: ''
+    files: [] as File[]
   });
   const [agreed, setAgreed] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -39,10 +38,7 @@ export default function Index() {
     calculatorSection?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const handlePlanSelect = (plan: string) => {
-    setFormData(prev => ({ ...prev, selectedPlan: plan }));
-    scrollToCalculator();
-  };
+
 
 
 
@@ -94,7 +90,6 @@ export default function Index() {
       company: '',
       city: '',
       customCity: '',
-      selectedPlan: '',
       comment: '',
       files: []
     });
@@ -165,7 +160,7 @@ export default function Index() {
         <ProcessSection />
         <LegalSection />
         <ClientsSection />
-        <PricesSection onPlanSelect={handlePlanSelect} selectedPlan={formData.selectedPlan} />
+
         <CalculatorSection 
           formData={formData}
           setFormData={setFormData}
