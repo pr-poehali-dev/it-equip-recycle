@@ -68,7 +68,7 @@ export default function AdvantagesSection() {
               <div className="relative mb-6">
                 <div className="absolute top-0 left-4 text-6xl font-bold text-green-200 z-0">1</div>
                 <img 
-                  src="https://cdn.poehali.dev/files/82d0ab0b-000c-4b63-ab02-35882251315b.PNG" 
+                  src="https://cdn.poehali.dev/files/6f1078c6-c77d-4799-9ca5-9af7fd8d917b.PNG" 
                   alt="Идентификация отходов"
                   className="relative z-10 w-full h-48 object-cover rounded-lg"
                 />
@@ -95,7 +95,7 @@ export default function AdvantagesSection() {
               <div className="relative mb-6">
                 <div className="absolute top-0 left-4 text-6xl font-bold text-green-200 z-0">2</div>
                 <img 
-                  src="https://cdn.poehali.dev/files/82d0ab0b-000c-4b63-ab02-35882251315b.PNG" 
+                  src="https://cdn.poehali.dev/files/9218ff2a-1bf7-45d5-ad8b-6d473699e438.PNG" 
                   alt="Транспортировка отходов"
                   className="relative z-10 w-full h-48 object-cover rounded-lg"
                 />
@@ -122,7 +122,7 @@ export default function AdvantagesSection() {
               <div className="relative mb-6">
                 <div className="absolute top-0 left-4 text-6xl font-bold text-green-200 z-0">3</div>
                 <img 
-                  src="https://cdn.poehali.dev/files/82d0ab0b-000c-4b63-ab02-35882251315b.PNG" 
+                  src="https://cdn.poehali.dev/files/e6fc3a46-d9cf-4dc9-bb99-7ca7c47eee9e.PNG" 
                   alt="Документооборот"
                   className="relative z-10 w-full h-48 object-cover rounded-lg"
                 />
