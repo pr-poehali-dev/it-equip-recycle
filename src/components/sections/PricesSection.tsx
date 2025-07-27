@@ -13,7 +13,7 @@ export default function PricesSection({ onPlanSelect, selectedPlan }: PricesSect
     <section id="prices" className="py-20 bg-professional-darkChocolate">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="section-title mb-4 text-[#ffffff]">Прозрачное ценообразование</h2>
+          <h2 className="section-title mb-4 text-[#ffffff]">Тарифы утилизации</h2>
           <p className="text-[#ffffff]">Стоимость зависит от типа и количества оборудования</p>
         </div>
         
