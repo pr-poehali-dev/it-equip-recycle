@@ -19,14 +19,14 @@ export default function AdvantagesSection() {
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
-          <h2 className="section-title text-center text-gray-900 mb-4">
-            <span className="text-green-600">Преимущества</span> работы с нами
+          <h2 className="section-title text-center text-gray-900 mb-12">
+            <span style={{color: '#1e7b54'}}>Преимущества</span> работы с нами
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
             <div className="flex items-start space-x-4">
-              <div className="bg-green-100 p-3 rounded-lg flex-shrink-0">
-                <Icon name="Shield" size={24} className="text-green-600" />
+              <div className="bg-yellow-50 p-3 rounded-lg flex-shrink-0">
+                <Icon name="Shield" size={24} className="text-rolexGold" />
               </div>
               <div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Работаем 100% легально</h3>
@@ -38,8 +38,8 @@ export default function AdvantagesSection() {
             </div>
 
             <div className="flex items-start space-x-4">
-              <div className="bg-green-100 p-3 rounded-lg flex-shrink-0">
-                <Icon name="PiggyBank" size={24} className="text-green-600" />
+              <div className="bg-yellow-50 p-3 rounded-lg flex-shrink-0">
+                <Icon name="PiggyBank" size={24} className="text-rolexGold" />
               </div>
               <div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Гарантируем низкую цену</h3>
@@ -51,8 +51,8 @@ export default function AdvantagesSection() {
             </div>
 
             <div className="flex items-start space-x-4">
-              <div className="bg-green-100 p-3 rounded-lg flex-shrink-0">
-                <Icon name="Leaf" size={24} className="text-green-600" />
+              <div className="bg-yellow-50 p-3 rounded-lg flex-shrink-0">
+                <Icon name="Leaf" size={24} className="text-rolexGold" />
               </div>
               <div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Заботимся об экологии</h3>
@@ -64,8 +64,8 @@ export default function AdvantagesSection() {
             </div>
 
             <div className="flex items-start space-x-4">
-              <div className="bg-green-100 p-3 rounded-lg flex-shrink-0">
-                <Icon name="MapPin" size={24} className="text-green-600" />
+              <div className="bg-yellow-50 p-3 rounded-lg flex-shrink-0">
+                <Icon name="MapPin" size={24} className="text-rolexGold" />
               </div>
               <div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Работаем по всей России</h3>
@@ -80,7 +80,7 @@ export default function AdvantagesSection() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="relative mb-6">
-                <div className="absolute top-0 left-4 text-6xl font-bold text-green-200 z-0">1</div>
+                <div className="absolute top-0 left-4 text-6xl font-bold text-rolexLightGold z-0">1</div>
                 <img 
                   src="https://cdn.poehali.dev/files/6f1078c6-c77d-4799-9ca5-9af7fd8d917b.PNG" 
                   alt="Идентификация отходов"
@@ -118,7 +118,7 @@ export default function AdvantagesSection() {
               <div className="mt-4">
                 <button 
                   onClick={() => toggleCard(1)}
-                  className="text-green-600 font-semibold hover:underline focus:outline-none"
+                  className="text-rolexGold font-semibold hover:underline focus:outline-none"
                 >
                   {expandedCards.has(1) ? 'Скрыть ↑' : 'Подробнее →'}
                 </button>
@@ -127,7 +127,7 @@ export default function AdvantagesSection() {
 
             <div className="text-center">
               <div className="relative mb-6">
-                <div className="absolute top-0 left-4 text-6xl font-bold text-green-200 z-0">2</div>
+                <div className="absolute top-0 left-4 text-6xl font-bold text-rolexLightGold z-0">2</div>
                 <img 
                   src="https://cdn.poehali.dev/files/9218ff2a-1bf7-45d5-ad8b-6d473699e438.PNG" 
                   alt="Транспортировка отходов"
@@ -162,7 +162,7 @@ export default function AdvantagesSection() {
               <div className="mt-4">
                 <button 
                   onClick={() => toggleCard(2)}
-                  className="text-green-600 font-semibold hover:underline focus:outline-none"
+                  className="text-rolexGold font-semibold hover:underline focus:outline-none"
                 >
                   {expandedCards.has(2) ? 'Скрыть ↑' : 'Подробнее →'}
                 </button>
@@ -171,7 +171,7 @@ export default function AdvantagesSection() {
 
             <div className="text-center">
               <div className="relative mb-6">
-                <div className="absolute top-0 left-4 text-6xl font-bold text-green-200 z-0">3</div>
+                <div className="absolute top-0 left-4 text-6xl font-bold text-rolexLightGold z-0">3</div>
                 <img 
                   src="https://cdn.poehali.dev/files/e6fc3a46-d9cf-4dc9-bb99-7ca7c47eee9e.PNG" 
                   alt="Документооборот"
@@ -206,7 +206,7 @@ export default function AdvantagesSection() {
               <div className="mt-4">
                 <button 
                   onClick={() => toggleCard(3)}
-                  className="text-green-600 font-semibold hover:underline focus:outline-none"
+                  className="text-rolexGold font-semibold hover:underline focus:outline-none"
                 >
                   {expandedCards.has(3) ? 'Скрыть ↑' : 'Подробнее →'}
                 </button>
