@@ -28,28 +28,28 @@ export default function AdvantagesSection() {
                   <span className="text-xl mr-3 mt-1">🏆</span>
                   <h4 className="font-semibold text-gray-900 text-base leading-tight">Проверенное качество</h4>
                 </div>
-                <p className="text-gray-700 text-base leading-relaxed flex-grow">С 2013 года успешно собираем, транспортируем и утилизируем отходы предприятий в 85-ти регионах РФ.</p>
+                <p className="text-gray-700 text-base leading-relaxed flex-grow">Более 10 лет работаем с крупнейшими компаниями России в 85 регионах</p>
               </div>
               <div className="flex flex-col h-full">
                 <div className="flex items-start mb-3">
                   <span className="text-xl mr-3 mt-1">📋</span>
                   <h4 className="font-semibold text-gray-900 text-base leading-tight">Полный комплаенс</h4>
                 </div>
-                <p className="text-gray-700 text-base leading-relaxed flex-grow">Соответствие всем требованиям корпоративного документооборота</p>
+                <p className="text-gray-700 text-base leading-relaxed flex-grow">Полное соответствие требованиям корпоративного документооборота</p>
               </div>
               <div className="flex flex-col h-full">
                 <div className="flex items-start mb-3">
                   <span className="text-xl mr-3 mt-1">🔒</span>
                   <h4 className="font-semibold text-gray-900 text-base leading-tight">Конфиденциальность</h4>
                 </div>
-                <p className="text-gray-700 text-base leading-relaxed flex-grow">Гарантированное уничтожение данных с носителей информации</p>
+                <p className="text-gray-700 text-base leading-relaxed flex-grow">Полное уничтожение данных с носителей информации</p>
               </div>
               <div className="flex flex-col h-full">
                 <div className="flex items-start mb-3">
                   <Icon name="Clock" size={20} className="mr-3 mt-1 flex-shrink-0" style={{color: '#D4AF37'}} />
                   <h4 className="font-semibold text-gray-900 text-base leading-tight">Экономия времени</h4>
                 </div>
-                <p className="text-gray-700 text-base leading-relaxed flex-grow">Время — самый ценный ресурс. Мы берём на себя все заботы по утилизации, чтобы вы могли сосредоточиться на своём бизнесе.</p>
+                <p className="text-gray-700 text-base leading-relaxed flex-grow">Мы возьмем на себя все заботы по утилизации, чтобы вы могли сосредоточиться на бизнесе</p>
               </div>
             </div>
           </div>
