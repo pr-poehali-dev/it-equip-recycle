@@ -20,7 +20,7 @@ export default function AdvantagesSection() {
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-lg p-6 sm:p-8 lg:p-10 max-w-6xl mx-auto mb-12">
-            <Icon name="Award" size={32} className="text-rolexGold mx-auto mb-6" />
+            <Icon name="Award" size={32} className="mx-auto mb-6" style={{color: '#D4AF37'}} />
             <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Почему нас выбирают</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               <div className="flex flex-col h-full">
@@ -46,7 +46,7 @@ export default function AdvantagesSection() {
               </div>
               <div className="flex flex-col h-full">
                 <div className="flex items-start mb-3">
-                  <Icon name="Clock" size={20} className="text-rolexGold mr-3 mt-1 flex-shrink-0" />
+                  <Icon name="Clock" size={20} className="mr-3 mt-1 flex-shrink-0" style={{color: '#D4AF37'}} />
                   <h4 className="font-semibold text-gray-900 text-base leading-tight">Экономия времени</h4>
                 </div>
                 <p className="text-gray-700 text-base leading-relaxed flex-grow">Время — самый ценный ресурс. Мы берём на себя все заботы по утилизации, чтобы вы могли сосредоточиться на своём бизнесе.</p>
