@@ -186,7 +186,7 @@ export default function ClientsSection() {
     <section id="clients" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="section-title text-gray-900 mb-4">Наши постоянные клиенты</h2>
+          <h2 className="section-title text-gray-900 mb-4">Нам доверяют</h2>
           <p className="premium-body text-gray-700 max-w-2xl mx-auto">
             Нам доверяют ведущие российские компании из различных отраслей экономики
           </p>
