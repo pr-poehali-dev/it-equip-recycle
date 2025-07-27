@@ -1,6 +1,12 @@
+import { useState } from "react";
 import Icon from "@/components/ui/icon";
 
 export default function AdvantagesSection() {
+  const [expandedCard, setExpandedCard] = useState<number | null>(null);
+
+  const toggleCard = (cardIndex: number) => {
+    setExpandedCard(expandedCard === cardIndex ? null : cardIndex);
+  };
   return (
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
@@ -84,10 +90,26 @@ export default function AdvantagesSection() {
                 Каждый вид отхода на предприятии должен быть идентифицирован и отнесен к 
                 соответствующему классу опасности.
               </p>
+              {expandedCard === 1 && (
+                <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+                  <p className="text-gray-700 text-sm mb-3">
+                    Это первый этап утилизации отходов, который мы полностью берем на себя:
+                  </p>
+                  <ul className="text-gray-600 text-sm space-y-2">
+                    <li>• идентифицируем отходы;</li>
+                    <li>• проводим необходимые для определения класса опасности отхода замеры и испытания на современном оборудовании с привлечением специализированной аккредитованной лаборатории;</li>
+                    <li>• определяем класс опасности отхода;</li>
+                    <li>• составляем и согласовываем в органах Росприроднадзора паспорт опасного отхода.</li>
+                  </ul>
+                </div>
+              )}
               <div className="mt-4">
-                <span className="text-green-600 font-semibold cursor-pointer hover:underline">
-                  Подробнее →
-                </span>
+                <button 
+                  onClick={() => toggleCard(1)}
+                  className="text-green-600 font-semibold hover:underline focus:outline-none"
+                >
+                  {expandedCard === 1 ? 'Скрыть ↑' : 'Подробнее →'}
+                </button>
               </div>
             </div>
 
@@ -111,10 +133,23 @@ export default function AdvantagesSection() {
                 Сбор и транспортирование любых отходов является лицензируемой деятельностью и 
                 подразумевает специальную тару и защиту.
               </p>
+              {expandedCard === 2 && (
+                <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+                  <p className="text-gray-700 text-sm mb-3">
+                    Это второй этап утилизации отходов, на котором мы в согласованные с вами дату и время осуществляем сбор отходов в специальную тару (в зависимости от объема, вида и класса отходов) и погрузку в оптимальный транспорт.
+                  </p>
+                  <p className="text-gray-600 text-sm">
+                    Неправильная погрузка и перевозка отходов может угрожать здоровью и жизни людей. Мы гарантируем выполнение правил и законных предписаний при транспортировке отходов всех классов опасности.
+                  </p>
+                </div>
+              )}
               <div className="mt-4">
-                <span className="text-green-600 font-semibold cursor-pointer hover:underline">
-                  Подробнее →
-                </span>
+                <button 
+                  onClick={() => toggleCard(2)}
+                  className="text-green-600 font-semibold hover:underline focus:outline-none"
+                >
+                  {expandedCard === 2 ? 'Скрыть ↑' : 'Подробнее →'}
+                </button>
               </div>
             </div>
 
@@ -138,10 +173,23 @@ export default function AdvantagesSection() {
                 Невыполнение нормативов преследуется по закону — предусмотрена административная и 
                 уголовная ответственность.
               </p>
+              {expandedCard === 3 && (
+                <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+                  <p className="text-gray-700 text-sm mb-3">
+                    Это третий и завершающий этап утилизации отходов. Оригиналы всех необходимых документов с подписями и печатями мы направляем Почтой России на фактический адрес вашей компании. По готовности высылаем электронной почтой скан-копии.
+                  </p>
+                  <p className="text-gray-600 text-sm">
+                    Вам останется только осуществить расчет экологического сбора и оплатить его до 15-го апреля года, следующего за отчетным, а также сдать отчетность по утилизации строго до 1-го апреля.
+                  </p>
+                </div>
+              )}
               <div className="mt-4">
-                <span className="text-green-600 font-semibold cursor-pointer hover:underline">
-                  Подробнее →
-                </span>
+                <button 
+                  onClick={() => toggleCard(3)}
+                  className="text-green-600 font-semibold hover:underline focus:outline-none"
+                >
+                  {expandedCard === 3 ? 'Скрыть ↑' : 'Подробнее →'}
+                </button>
               </div>
             </div>
           </div>
