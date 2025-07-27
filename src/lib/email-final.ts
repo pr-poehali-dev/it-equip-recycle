@@ -1,32 +1,6 @@
-// ФИНАЛЬНАЯ ВЕРСИЯ - ТОЛЬКО РАБОЧЕЕ БЕЗ ГЕММОРОЯ!
+// ФИНАЛЬНАЯ ВЕРСИЯ - УБРАЛ FormSubmit, ТОЛЬКО РАБОЧЕЕ!
 
-// 1. АКТИВАЦИЯ FormSubmit (кнопка активации)
-export const activateFormSubmit = async () => {
-  console.log('🔑 Активируем FormSubmit...');
-  
-  try {
-    const form = new FormData();
-    form.append('email', 'commerce@rusutil-1.ru');
-    form.append('message', 'Активация FormSubmit для utilizon.pro');
-    form.append('_next', window.location.origin);
-    form.append('_captcha', 'false');
-    
-    const response = await fetch('https://formsubmit.co/commerce@rusutil-1.ru', {
-      method: 'POST',
-      body: form
-    });
-    
-    console.log('✅ Активация отправлена! Проверьте почту и подтвердите.');
-    alert('📧 Письмо активации отправлено на commerce@rusutil-1.ru\nПроверьте почту и нажмите ссылку подтверждения!');
-    
-    return { success: true };
-  } catch (error) {
-    console.error('❌ Ошибка активации:', error);
-    return { success: false, error };
-  }
-};
-
-// 2. РАБОЧАЯ ОТПРАВКА (Formspree уже активирован)
+// 1. РАБОЧАЯ ОТПРАВКА (Formspree - работает стабильно)
 export const sendViaFormspree = async (formData: any, files: File[]) => {
   console.log('📧 Отправляем через Formspree...');
   
@@ -67,7 +41,7 @@ export const sendViaFormspree = async (formData: any, files: File[]) => {
   }
 };
 
-// 3. РЕЗЕРВ через mailto
+// 2. РЕЗЕРВ через mailto
 export const sendViaMailto = async (formData: any, files: File[]) => {
   console.log('📧 Открываем почтовый клиент...');
   
@@ -91,6 +65,32 @@ ${files.map(f => `- ${f.name} (${(f.size/1024/1024).toFixed(2)}МБ)`).join('\n'
   window.open(mailto);
   
   return { success: true };
+};
+
+// 3. ПРОВЕРКА ОТПРАВКИ (тестовая кнопка)
+export const testEmailSending = async () => {
+  console.log('🧪 Тестируем отправку...');
+  
+  const testData = {
+    name: 'Тестовая заявка',
+    phone: '+7 (999) 123-45-67',
+    email: 'test@example.com',
+    company: 'Тестовая компания',
+    equipment: 'Тестовое оборудование',
+    volume: 'Тестовый объем',
+    address: 'Тестовый адрес',
+    comment: 'Это тестовое сообщение для проверки работы отправки'
+  };
+  
+  const result = await sendViaFormspree(testData, []);
+  
+  if (result.success) {
+    alert('✅ Тест успешен! Проверьте почту commerce@rusutil-1.ru');
+  } else {
+    alert('❌ Тест не прошел. Formspree не работает.');
+  }
+  
+  return result;
 };
 
 // ГЛАВНАЯ функция - простая и надежная

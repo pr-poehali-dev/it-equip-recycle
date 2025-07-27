@@ -10,7 +10,7 @@ import FAQSection from '@/components/sections/FAQSection';
 import ContactsSection from '@/components/sections/ContactsSection';
 import CalculatorSection from '@/components/sections/CalculatorSection';
 import Footer from '@/components/sections/Footer';
-import { sendEmailWithFiles, activateFormSubmit } from '@/lib/email-final';
+import { sendEmailWithFiles } from '@/lib/email-final';
 
 export default function Index() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -39,16 +39,7 @@ export default function Index() {
     scrollToCalculator();
   };
 
-  // АКТИВАЦИЯ FormSubmit (один раз)
-  const handleActivateFormSubmit = async () => {
-    console.log('🔑 Активируем FormSubmit...');
-    const result = await activateFormSubmit();
-    if (result.success) {
-      alert('📧 Письмо активации отправлено на commerce@rusutil-1.ru!\nПроверьте почту и нажмите ссылку подтверждения.');
-    } else {
-      alert('❌ Ошибка активации. Попробуйте позже.');
-    }
-  };
+
 
   const handleSubmit = async (e?: React.MouseEvent) => {
     e?.preventDefault();

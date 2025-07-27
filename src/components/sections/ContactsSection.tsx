@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
 import SuccessModal from "@/components/ui/success-modal";
-import { activateFormSubmit } from "@/lib/email-final";
+import { testEmailSending } from "@/lib/email-final";
 
 export default function ContactsSection() {
   const [formData, setFormData] = useState({
@@ -71,15 +71,10 @@ export default function ContactsSection() {
     }
   };
 
-  // АКТИВАЦИЯ FormSubmit
-  const handleActivateFormSubmit = async () => {
-    console.log('🔑 Активируем FormSubmit...');
-    const result = await activateFormSubmit();
-    if (result.success) {
-      alert('📧 Письмо активации отправлено на commerce@rusutil-1.ru!\nПроверьте почту и нажмите ссылку подтверждения.');
-    } else {
-      alert('❌ Ошибка активации. Попробуйте позже.');
-    }
+  // ТЕСТ ОТПРАВКИ
+  const handleTestEmail = async () => {
+    console.log('🧪 Тестируем отправку...');
+    await testEmailSending();
   };
 
   return (
@@ -124,18 +119,18 @@ export default function ContactsSection() {
               </div>
             </div>
             
-            {/* КНОПКА АКТИВАЦИИ */}
-            <div className="mt-8 p-4 bg-yellow-900 rounded-lg border border-yellow-700">
-              <h4 className="text-lg font-semibold text-yellow-200 mb-2">⚙️ Для администратора</h4>
-              <p className="text-yellow-300 text-sm mb-3">
-                Если письма не приходят, нужно активировать FormSubmit (только один раз)
+            {/* КНОПКА ТЕСТА */}
+            <div className="mt-8 p-4 bg-blue-900 rounded-lg border border-blue-700">
+              <h4 className="text-lg font-semibold text-blue-200 mb-2">🧪 Тест отправки</h4>
+              <p className="text-blue-300 text-sm mb-3">
+                Проверить работу отправки писем (Formspree работает стабильно)
               </p>
               <Button 
-                onClick={handleActivateFormSubmit}
-                className="bg-yellow-600 hover:bg-yellow-700 text-black font-medium"
+                onClick={handleTestEmail}
+                className="bg-blue-600 hover:bg-blue-700 text-white font-medium"
                 size="sm"
               >
-                🔑 Активировать FormSubmit
+                🧪 Тест отправки
               </Button>
             </div>
           </div>
